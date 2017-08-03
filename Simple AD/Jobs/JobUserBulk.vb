@@ -20,9 +20,9 @@
             .Name = NewImportJobContainer.JobName
             .Text = NewImportJobContainer.JobName
             .Visible = True
-            .BackColor = SystemColors.Window
+            .BackColor = Color.FromArgb(124, 65, 153)
+            .ForeColor = SystemColors.ControlText
             .Controls.Add(NewImportJobContainer)
-            .Tag = "ADUserImport"
         End With
 
         FormMain.GetMainTabCtrl().TabPages.Add(TabPage)

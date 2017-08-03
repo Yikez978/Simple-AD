@@ -20,9 +20,9 @@ Public Class JobUserReport
             .Name = UserReportContainer.JobName
             .Text = UserReportContainer.JobName
             .Visible = True
-            .BackColor = SystemColors.Window
+            .BackColor = Color.FromArgb(124, 65, 153)
+            .ForeColor = SystemColors.ControlText
             .Controls.Add(UserReportContainer)
-            .Tag = "Report"
         End With
 
         FormMain.GetMainTabCtrl().TabPages.Add(TabPage)
@@ -30,7 +30,6 @@ Public Class JobUserReport
 
         FormMain.GetMainTabCtrl.SelectTab(FormMain.GetMainTabCtrl.TabCount - 1)
 
-        FormMain.GetMainTabCtrl.SelectedTab.BackColor = SystemColors.Window
         FormMain.GetMainTabCtrl.SelectedTab.Controls.Add(UserReportContainer)
         FormMain.GetMainTabCtrl.Visible = True
 

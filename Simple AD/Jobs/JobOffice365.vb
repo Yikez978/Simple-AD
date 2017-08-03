@@ -30,9 +30,9 @@ Public Class JobOffice365
             .Name = NewOffice365Container.JobName
             .Text = NewOffice365Container.JobName
             .Visible = True
-            .BackColor = SystemColors.Window
+            .BackColor = Color.FromArgb(124, 65, 153)
+            .ForeColor = SystemColors.ControlText
             .Controls.Add(NewOffice365Container)
-            .Tag = "365"
         End With
 
         FormMain.GetMainTabCtrl().TabPages.Add(TabPage)
@@ -174,4 +174,3 @@ Public Class JobOffice365
     End Sub
 
 End Class
-

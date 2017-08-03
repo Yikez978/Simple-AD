@@ -7,6 +7,7 @@
         InitializeComponent()
 
         Me.MainLb.Text = DisplayText
+        Me.Dock = DockStyle.Fill
         _ParentContainer = Container
 
     End Sub
@@ -30,14 +31,6 @@
         End Get
     End Property
 
-    Private Sub Center()
-        Me.Top = (FormMain.GetMainTabCtrl.ClientSize.Height / 2) - (Me.Height / 2)
-        Me.Left = (FormMain.GetMainTabCtrl.Parent.ClientSize.Width / 2) - (Me.Width / 2)
-
-        Me.Anchor = AnchorStyles.Top And AnchorStyles.Bottom And AnchorStyles.Left And AnchorStyles.Right
-
-    End Sub
-
     Public Property Tooltiptext
         Set(value)
             Me.SpinnerTooltip.SetToolTip(Me.MainLb, value)
@@ -46,9 +39,5 @@
             Return Me.SpinnerTooltip.GetToolTip(Me.MainLb)
         End Get
     End Property
-
-    Private Sub TabSpinner_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Center()
-    End Sub
 
 End Class

@@ -101,7 +101,7 @@ Partial Class ContainerUserBulk
         DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlLightLight
         Me.MainDataGrid.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
-        Me.MainDataGrid.BackgroundColor = System.Drawing.SystemColors.Control
+        Me.MainDataGrid.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.MainDataGrid.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.MainDataGrid.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None
         Me.MainDataGrid.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
@@ -249,7 +249,7 @@ Partial Class ContainerUserBulk
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.SystemColors.Window
+        Me.BackColor = System.Drawing.SystemColors.Control
         Me.Controls.Add(Me.MainSplitContainer0)
         Me.Controls.Add(Me.Panel1)
         Me.Name = "ContainerUserBulk"

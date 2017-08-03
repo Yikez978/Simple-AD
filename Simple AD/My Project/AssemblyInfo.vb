@@ -11,7 +11,7 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyTitle("Simple AD")>
 <Assembly: AssemblyDescription("Active Directory Managment ToolBox")>
-<Assembly: AssemblyCompany("Simple AD")>
+<Assembly: AssemblyCompany("Joel Crosby")>
 <Assembly: AssemblyProduct("Simple AD")>
 <Assembly: AssemblyCopyright("Copyright Joel Crosby ©  2017")>
 <Assembly: AssemblyTrademark("")>

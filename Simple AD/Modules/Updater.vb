@@ -1,4 +1,4 @@
-﻿Imports AutoUpdaterDotNET
+Imports AutoUpdaterDotNET
 
 Public Module Updater
 

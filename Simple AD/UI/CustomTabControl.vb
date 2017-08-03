@@ -114,7 +114,7 @@ Public Class CustomTabControl
             End If
             Select Case Me.Alignment
                 Case TabAlignment.Top
-                    Return New Rectangle(0, tabStripHeight, Width, Height - tabStripHeight - 0)
+                    Return New Rectangle(0, tabStripHeight, Width, Height - tabStripHeight)
                 Case TabAlignment.Bottom
                     Return New Rectangle(4, 4, Width - 8, Height - tabStripHeight - 4)
                 Case TabAlignment.Left
@@ -145,15 +145,6 @@ Public Class CustomTabControl
 
     Protected Overrides Sub OnSelectedIndexChanged(ByVal e As System.EventArgs)
         MyBase.OnSelectedIndexChanged(e)
-
-        For Each Itemtabpage As TabPage In Me.TabPages
-            If Itemtabpage.TabIndex = Me.SelectedIndex Then
-                Itemtabpage.BackColor = Color.FromArgb(241, 241, 241)
-            Else
-                Itemtabpage.BackColor = _InactiveTabBackColor
-            End If
-        Next
-
         Invalidate()
     End Sub
 
@@ -183,10 +174,22 @@ Public Class CustomTabControl
                 r = GetTabRect(index)
                 Dim bs As ButtonBorderStyle = ButtonBorderStyle.None
                 If index = SelectedIndex Then bs = ButtonBorderStyle.None
-                PaintBrush.Color = tp.BackColor
+
+                If index = SelectedIndex Then
+                    PaintBrush.Color = tp.BackColor
+                Else
+                    PaintBrush.Color = SystemColors.Window
+                End If
+
                 e.Graphics.FillRectangle(PaintBrush, r)
                 ControlPaint.DrawBorder(e.Graphics, r, PaintBrush.Color, bs)
-                PaintBrush.Color = tp.ForeColor
+
+                If index = SelectedIndex Then
+                    PaintBrush.Color = SystemColors.Window
+                Else
+                    PaintBrush.Color = tp.ForeColor
+                End If
+
 
                 'Set up rotation for left and right aligned tabs
                 If Alignment = TabAlignment.Left Or Alignment = TabAlignment.Right Then
@@ -198,8 +201,13 @@ Public Class CustomTabControl
                     r = New Rectangle(-(r.Height \ 2), -(r.Width \ 2), r.Height, r.Width)
                 End If
                 'Draw the Tab Text
+
                 If tp.Enabled Then
-                    e.Graphics.DrawString(tp.Text, Font, PaintBrush, RectangleF.op_Implicit(r), sf)
+                    If index = tp.TabIndex Then
+                        e.Graphics.DrawString(tp.Text, Font, PaintBrush, RectangleF.op_Implicit(r), sf)
+                    Else
+                        e.Graphics.DrawString(tp.Text, Font, PaintBrush, RectangleF.op_Implicit(r), sf)
+                    End If
                 Else
                     ControlPaint.DrawStringDisabled(e.Graphics, tp.Text, Font, tp.BackColor, RectangleF.op_Implicit(r), sf)
                 End If

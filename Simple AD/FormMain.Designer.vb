@@ -82,6 +82,7 @@ Partial Class FormMain
         Me.ToolStripStatusLabelStatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.SpacerToolStripStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ConnectionToolStripStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.VersionLb = New MetroFramework.Controls.MetroLabel()
         SADMenuStrip = New System.Windows.Forms.MenuStrip()
         SADMenuStrip.SuspendLayout()
         Me.NodeContextMenu.SuspendLayout()
@@ -368,7 +369,6 @@ Partial Class FormMain
         Me.MainTabCtrl.Padding = New System.Drawing.Point(0, 0)
         Me.MainTabCtrl.SelectedIndex = 0
         Me.MainTabCtrl.Size = New System.Drawing.Size(1223, 588)
-        Me.MainTabCtrl.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight
         Me.MainTabCtrl.TabIndex = 17
         '
         'StatusStrip
@@ -392,20 +392,20 @@ Partial Class FormMain
         Me.ToolStripStatusLabelContext.ForeColor = System.Drawing.SystemColors.ControlLightLight
         Me.ToolStripStatusLabelContext.Name = "ToolStripStatusLabelContext"
         Me.ToolStripStatusLabelContext.Padding = New System.Windows.Forms.Padding(10, 0, 10, 0)
-        Me.ToolStripStatusLabelContext.Size = New System.Drawing.Size(20, 23)
+        Me.ToolStripStatusLabelContext.Size = New System.Drawing.Size(20, 25)
         '
         'ToolStripStatusLabelStatus
         '
         Me.ToolStripStatusLabelStatus.ForeColor = System.Drawing.SystemColors.ControlLightLight
         Me.ToolStripStatusLabelStatus.Name = "ToolStripStatusLabelStatus"
         Me.ToolStripStatusLabelStatus.Padding = New System.Windows.Forms.Padding(10, 0, 10, 0)
-        Me.ToolStripStatusLabelStatus.Size = New System.Drawing.Size(20, 23)
+        Me.ToolStripStatusLabelStatus.Size = New System.Drawing.Size(20, 25)
         '
         'SpacerToolStripStatusLabel
         '
         Me.SpacerToolStripStatusLabel.BackColor = System.Drawing.Color.Transparent
         Me.SpacerToolStripStatusLabel.Name = "SpacerToolStripStatusLabel"
-        Me.SpacerToolStripStatusLabel.Size = New System.Drawing.Size(1120, 23)
+        Me.SpacerToolStripStatusLabel.Size = New System.Drawing.Size(1117, 25)
         Me.SpacerToolStripStatusLabel.Spring = True
         Me.SpacerToolStripStatusLabel.Text = " "
         '
@@ -415,12 +415,27 @@ Partial Class FormMain
         Me.ConnectionToolStripStatusLabel.ImageAlign = System.Drawing.ContentAlignment.TopCenter
         Me.ConnectionToolStripStatusLabel.Name = "ConnectionToolStripStatusLabel"
         Me.ConnectionToolStripStatusLabel.Padding = New System.Windows.Forms.Padding(20, 0, 0, 0)
-        Me.ConnectionToolStripStatusLabel.Size = New System.Drawing.Size(20, 23)
+        Me.ConnectionToolStripStatusLabel.Size = New System.Drawing.Size(20, 25)
         '
-        'MainApplicationForm
+        'VersionLb
+        '
+        Me.VersionLb.AutoSize = True
+        Me.VersionLb.FontSize = MetroFramework.MetroLabelSize.Small
+        Me.VersionLb.FontWeight = MetroFramework.MetroLabelWeight.Regular
+        Me.VersionLb.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.VersionLb.Location = New System.Drawing.Point(451, 34)
+        Me.VersionLb.Margin = New System.Windows.Forms.Padding(10, 0, 10, 0)
+        Me.VersionLb.Name = "VersionLb"
+        Me.VersionLb.Size = New System.Drawing.Size(45, 15)
+        Me.VersionLb.TabIndex = 19
+        Me.VersionLb.Text = "Version"
+        Me.VersionLb.UseCustomForeColor = True
+        '
+        'FormMain
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.ClientSize = New System.Drawing.Size(1223, 701)
+        Me.Controls.Add(Me.VersionLb)
         Me.Controls.Add(Me.MainTabCtrl)
         Me.Controls.Add(SADMenuStrip)
         Me.Controls.Add(Me.StatusStrip)
@@ -428,7 +443,7 @@ Partial Class FormMain
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = SADMenuStrip
         Me.MinimumSize = New System.Drawing.Size(640, 480)
-        Me.Name = "MainApplicationForm"
+        Me.Name = "FormMain"
         Me.Padding = New System.Windows.Forms.Padding(0, 60, 0, 0)
         Me.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow
         Me.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultLocation
@@ -488,4 +503,5 @@ Partial Class FormMain
     Friend WithEvents ToolStripStatusLabelStatus As ToolStripStatusLabel
     Friend WithEvents SpacerToolStripStatusLabel As ToolStripStatusLabel
     Friend WithEvents ConnectionToolStripStatusLabel As ToolStripStatusLabel
+    Friend WithEvents VersionLb As Controls.MetroLabel
 End Class

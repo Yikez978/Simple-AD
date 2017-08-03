@@ -47,10 +47,10 @@ Partial Class ContainerUserReport
         Me.MainDataGrid.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None
         Me.MainDataGrid.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(124, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(153, Byte), Integer))
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(85, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(85, Byte), Integer))
         DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI Semilight", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(181, Byte), Integer), CType(CType(133, Byte), Integer), CType(CType(203, Byte), Integer))
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(153, Byte), Integer), CType(CType(153, Byte), Integer), CType(CType(153, Byte), Integer))
         DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer))
         DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.MainDataGrid.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
@@ -60,7 +60,7 @@ Partial Class ContainerUserReport
         DataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
         DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI Semilight", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(181, Byte), Integer), CType(CType(133, Byte), Integer), CType(CType(203, Byte), Integer))
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(153, Byte), Integer), CType(CType(153, Byte), Integer), CType(CType(153, Byte), Integer))
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer))
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.MainDataGrid.DefaultCellStyle = DataGridViewCellStyle3
@@ -74,10 +74,10 @@ Partial Class ContainerUserReport
         Me.MainDataGrid.ReadOnly = True
         Me.MainDataGrid.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
         DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(124, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(153, Byte), Integer))
+        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(85, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(85, Byte), Integer))
         DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel)
         DataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(181, Byte), Integer), CType(CType(133, Byte), Integer), CType(CType(203, Byte), Integer))
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(153, Byte), Integer), CType(CType(153, Byte), Integer), CType(CType(153, Byte), Integer))
         DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer))
         DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.MainDataGrid.RowHeadersDefaultCellStyle = DataGridViewCellStyle4
@@ -97,13 +97,13 @@ Partial Class ContainerUserReport
         Me.MainDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.MainDataGrid.ShowEditingIcon = False
         Me.MainDataGrid.Size = New System.Drawing.Size(749, 289)
-        Me.MainDataGrid.Style = MetroFramework.MetroColorStyle.Purple
+        Me.MainDataGrid.Style = MetroFramework.MetroColorStyle.Silver
         Me.MainDataGrid.TabIndex = 0
         Me.MainDataGrid.UseCustomBackColor = True
         '
         'SpacerPanel
         '
-        Me.SpacerPanel.BackColor = System.Drawing.SystemColors.Window
+        Me.SpacerPanel.BackColor = System.Drawing.SystemColors.Control
         Me.SpacerPanel.Controls.Add(Me.SearchBoxTb)
         Me.SpacerPanel.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.SpacerPanel.Location = New System.Drawing.Point(0, 289)
@@ -114,11 +114,12 @@ Partial Class ContainerUserReport
         '
         'SearchBoxTb
         '
+        Me.SearchBoxTb.BackColor = System.Drawing.SystemColors.Window
         '
         '
         '
         Me.SearchBoxTb.CustomButton.Image = Nothing
-        Me.SearchBoxTb.CustomButton.Location = New System.Drawing.Point(663, 2)
+        Me.SearchBoxTb.CustomButton.Location = New System.Drawing.Point(243, 2)
         Me.SearchBoxTb.CustomButton.Name = ""
         Me.SearchBoxTb.CustomButton.Size = New System.Drawing.Size(23, 23)
         Me.SearchBoxTb.CustomButton.Style = MetroFramework.MetroColorStyle.Blue
@@ -127,26 +128,25 @@ Partial Class ContainerUserReport
         Me.SearchBoxTb.CustomButton.UseSelectable = True
         Me.SearchBoxTb.CustomButton.Visible = False
         Me.SearchBoxTb.DisplayIcon = True
-        Me.SearchBoxTb.Dock = System.Windows.Forms.DockStyle.Top
         Me.SearchBoxTb.FontSize = MetroFramework.MetroTextBoxSize.Medium
         Me.SearchBoxTb.Lines = New String(-1) {}
         Me.SearchBoxTb.Location = New System.Drawing.Point(12, 12)
         Me.SearchBoxTb.MaxLength = 32767
         Me.SearchBoxTb.Name = "SearchBoxTb"
         Me.SearchBoxTb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
-        Me.SearchBoxTb.PromptText = "Search..."
+        Me.SearchBoxTb.PromptText = "Filter..."
         Me.SearchBoxTb.ScrollBars = System.Windows.Forms.ScrollBars.None
         Me.SearchBoxTb.SelectedText = ""
         Me.SearchBoxTb.SelectionLength = 0
         Me.SearchBoxTb.SelectionStart = 0
         Me.SearchBoxTb.ShortcutsEnabled = True
         Me.SearchBoxTb.ShowClearButton = True
-        Me.SearchBoxTb.Size = New System.Drawing.Size(689, 28)
+        Me.SearchBoxTb.Size = New System.Drawing.Size(269, 28)
         Me.SearchBoxTb.Style = MetroFramework.MetroColorStyle.Purple
         Me.SearchBoxTb.TabIndex = 3
         Me.SearchBoxTb.UseCustomBackColor = True
         Me.SearchBoxTb.UseSelectable = True
-        Me.SearchBoxTb.WaterMark = "Search..."
+        Me.SearchBoxTb.WaterMark = "Filter..."
         Me.SearchBoxTb.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
         Me.SearchBoxTb.WaterMarkFont = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         '

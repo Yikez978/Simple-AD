@@ -29,11 +29,13 @@ Partial Class ControlTabSpinner
         '
         'MainSpinner
         '
-        Me.MainSpinner.BackColor = System.Drawing.SystemColors.Control
-        Me.MainSpinner.Location = New System.Drawing.Point(145, 135)
+        Me.MainSpinner.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.MainSpinner.BackColor = System.Drawing.SystemColors.Window
+        Me.MainSpinner.Location = New System.Drawing.Point(173, 10)
         Me.MainSpinner.Maximum = 100
         Me.MainSpinner.Name = "MainSpinner"
-        Me.MainSpinner.Size = New System.Drawing.Size(100, 100)
+        Me.MainSpinner.Size = New System.Drawing.Size(80, 80)
+        Me.MainSpinner.Style = MetroFramework.MetroColorStyle.Purple
         Me.MainSpinner.TabIndex = 0
         Me.MainSpinner.UseCustomBackColor = True
         Me.MainSpinner.UseSelectable = True
@@ -41,15 +43,19 @@ Partial Class ControlTabSpinner
         '
         'MainLb
         '
+        Me.MainLb.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.MainLb.AutoSize = True
+        Me.MainLb.BackColor = System.Drawing.SystemColors.Window
         Me.MainLb.FontSize = MetroFramework.MetroLabelSize.Tall
-        Me.MainLb.Location = New System.Drawing.Point(121, 363)
+        Me.MainLb.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.MainLb.Location = New System.Drawing.Point(9, 65)
         Me.MainLb.Name = "MainLb"
         Me.MainLb.Size = New System.Drawing.Size(158, 25)
         Me.MainLb.TabIndex = 1
-        Me.MainLb.Text = "Main Spinner Lable"
+        Me.MainLb.Text = "Main Spinner Label"
         Me.MainLb.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.MainLb.UseCustomBackColor = True
+        Me.MainLb.UseCustomForeColor = True
         Me.MainLb.UseMnemonic = False
         Me.MainLb.WrapToLine = True
         '
@@ -60,15 +66,15 @@ Partial Class ControlTabSpinner
         Me.SpinnerTooltip.StyleManager = Nothing
         Me.SpinnerTooltip.Theme = MetroFramework.MetroThemeStyle.Light
         '
-        'TabSpinner
+        'ControlTabSpinner
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.SystemColors.Control
+        Me.BackColor = System.Drawing.SystemColors.Window
         Me.Controls.Add(Me.MainLb)
         Me.Controls.Add(Me.MainSpinner)
-        Me.Name = "TabSpinner"
-        Me.Size = New System.Drawing.Size(400, 400)
+        Me.Name = "ControlTabSpinner"
+        Me.Size = New System.Drawing.Size(342, 150)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
