@@ -1,4 +1,4 @@
-﻿Public Class SelectColumns
+﻿Public Class FormSelectColumns
 
     Dim CurItemsLength As Integer
     Dim AvaItemsLength As Integer
@@ -26,14 +26,14 @@
         GlobalVariables.ColumnsVisibleChangedByUser = True
         GlobalVariables.CustomColumns.Clear()
 
-        For Each column As DataGridViewColumn In MainApplicationForm.GetMainDataGrid.Columns
+        For Each column As DataGridViewColumn In FormMain.GetMainDataGrid.Columns
             If Not GlobalVariables.PersistantColumns.Contains(column.Name) Then
                 column.Visible = False
             End If
         Next
 
         For Each item As Object In CurrentColumnsLb.Items
-            For Each column As DataGridViewColumn In MainApplicationForm.GetMainDataGrid.Columns
+            For Each column As DataGridViewColumn In FormMain.GetMainDataGrid.Columns
                 If column.Name = CStr(item) Then
                     column.Visible = True
                     GlobalVariables.CustomColumns.Add(CStr(item))
@@ -41,8 +41,8 @@
             Next
         Next
 
-        If MainApplicationForm.GetMainDataGrid.Columns.Contains("Filler") Then
-            MainApplicationForm.GetMainDataGrid.Columns("Filler").DisplayIndex = MainApplicationForm.GetMainDataGrid.Columns.Count - 1
+        If FormMain.GetMainDataGrid.Columns.Contains("Filler") Then
+            FormMain.GetMainDataGrid.Columns("Filler").DisplayIndex = FormMain.GetMainDataGrid.Columns.Count - 1
         End If
 
         Me.Close()

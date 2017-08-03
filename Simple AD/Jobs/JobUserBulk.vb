@@ -1,13 +1,13 @@
 ﻿Public Class JobUserBulk
 
-    Dim ErForm As New ImportValidationForm
+    Dim ErForm As New FormImportValidation
     Dim DataGrid As DataGridView
 
     Private File As String
     Private DisplayNamebool As Boolean
     Private NewImportJobContainer As ContainerUserBulk
     Private TabPage As TabPage
-    Private Spinner As TabSpinner
+    Private Spinner As ControlTabSpinner
 
     Private ImportThread As New Threading.Thread(AddressOf ImportCSV)
 
@@ -25,13 +25,13 @@
             .Tag = "ADUserImport"
         End With
 
-        MainApplicationForm.GetMainTabCtrl().TabPages.Add(TabPage)
+        FormMain.GetMainTabCtrl().TabPages.Add(TabPage)
 
-        MainApplicationForm.GetMainTabCtrl.SelectTab(MainApplicationForm.GetMainTabCtrl.TabCount - 1)
+        FormMain.GetMainTabCtrl.SelectTab(FormMain.GetMainTabCtrl.TabCount - 1)
 
-        DataGrid = MainApplicationForm.GetMainDataGrid
+        DataGrid = FormMain.GetMainDataGrid
 
-        Spinner = New TabSpinner("Importing Data...", NewImportJobContainer)
+        Spinner = New ControlTabSpinner("Importing Data...", NewImportJobContainer)
         Spinner.SpinnerVisible = True
 
         NewImportJobContainer.Controls.Add(Spinner)
@@ -54,7 +54,7 @@
         If datagrid.InvokeRequired Then
             datagrid.Invoke(New Action(Of DataGridView, DataTable)(AddressOf ApplyDataSource), datagrid, datasource)
         Else
-            If Not MainApplicationForm.IsDisposed Then
+            If Not FormMain.IsDisposed Then
 
                 If ErForm.Errors.Count > 0 Then
                     Spinner.SpinnerVisible = False
@@ -119,12 +119,12 @@
                 datagrid.Columns("Description").Width = 200
                 datagrid.Columns("Status").Width = 300
 
-                MainApplicationForm.ToolStripStatusLabelStatus.Text = "Select an Organizational Unit"
+                FormMain.ToolStripStatusLabelStatus.Text = "Select an Organizational Unit"
 
                 Dim Index As Integer = 0
 
-                MainApplicationForm.GetMainDataGrid.Columns("Filler").DisplayIndex = MainApplicationForm.GetMainDataGrid.Columns.Count - 1
-                MainApplicationForm.GetMainDataGrid.Columns("Filler").AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                FormMain.GetMainDataGrid.Columns("Filler").DisplayIndex = FormMain.GetMainDataGrid.Columns.Count - 1
+                FormMain.GetMainDataGrid.Columns("Filler").AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
 
                 For Each column As DataGridViewColumn In datagrid.Columns
                     If Not GlobalVariables.DefaultColumns.Contains(column.Name) Then

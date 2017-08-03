@@ -7,7 +7,7 @@
         Dim DomainItem As ToolStripMenuItem
 
         If btn.Name = "ViewToolStripMenuItem" Then
-            If MainApplicationForm.GetMainDataGrid() Is Nothing Then
+            If FormMain.GetMainDataGrid() Is Nothing Then
                 btn.DropDownItems.Item("HideEmptyColumnsToolStripMenuItem").Enabled = False
                 btn.DropDownItems.Item("SelectColumnsToolStripMenuItem").Enabled = False
                 btn.DropDownItems.Item("DomainPanelToolStripMenuItem").Enabled = False
@@ -22,8 +22,8 @@
                 DomainItem = DirectCast(btn.DropDownItems.Item("DomainPanelToolStripMenuItem"), ToolStripMenuItem)
 
                 Try
-                    PropertiesItem.Checked = Not MainApplicationForm.GetMainSplitContainer1().Panel2Collapsed
-                    DomainItem.Checked = Not MainApplicationForm.GetMainSplitContainer0().Panel1Collapsed
+                    PropertiesItem.Checked = Not FormMain.GetMainSplitContainer1().Panel2Collapsed
+                    DomainItem.Checked = Not FormMain.GetMainSplitContainer0().Panel1Collapsed
 
                     PropertiesItem.Enabled = True
                     DomainItem.Enabled = True

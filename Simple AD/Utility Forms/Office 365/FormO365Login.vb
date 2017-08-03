@@ -1,6 +1,6 @@
 ﻿Imports System.Threading
 
-Public Class O365Login
+Public Class FormO365Login
 
     Private LoginThread As Thread
 

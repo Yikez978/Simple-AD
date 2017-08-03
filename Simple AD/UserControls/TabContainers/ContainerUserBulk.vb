@@ -1,8 +1,8 @@
 ﻿Public Class ContainerUserBulk
     Inherits UserControl
 
-    Public Properties As New UserProperties
-    Private DomainTree As New DomianTree(Me)
+    Public Properties As New ControlUserProperties
+    Private DomainTree As New ControlDomianTree(Me)
 
     Private Worker As BulkADWorker
 
@@ -67,7 +67,7 @@
         Return Me.MainSplitContainer1
     End Function
 
-    Public Function GetPropertisPanel() As UserProperties
+    Public Function GetPropertisPanel() As ControlUserProperties
         Return Me.Properties
     End Function
 
@@ -82,7 +82,7 @@
     Private Sub MainDataGrid_RowStateChanged(sender As Object, e As DataGridViewRowStateChangedEventArgs) Handles MainDataGrid.RowStateChanged
         PopulateSidePanel()
 
-        MainApplicationForm.ToolStripStatusLabelContext.Text = GetMainDataGrid().SelectedRows.Count & " Object(s) Selected of " & GetMainDataGrid().Rows.Count
+        FormMain.ToolStripStatusLabelContext.Text = GetMainDataGrid().SelectedRows.Count & " Object(s) Selected of " & GetMainDataGrid().Rows.Count
     End Sub
 
     Private Sub MainDataGrid_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles MainDataGrid.CellMouseClick
@@ -90,10 +90,10 @@
     End Sub
 
     Private Sub AcceptBn_Click(sender As Object, e As EventArgs) Handles AcceptBt.Click
-        MainApplicationForm.GetMainDataGrid.ReadOnly = True
-        MainApplicationForm.StatusStrip.BackColor = Color.Orange
-        MainApplicationForm.ToolStripStatusLabelStatus.Text = "Processing Users..."
-        MainApplicationForm.ToolStripStatusLabelContext.Text = ""
+        FormMain.GetMainDataGrid.ReadOnly = True
+        FormMain.StatusStrip.BackColor = Color.Orange
+        FormMain.ToolStripStatusLabelStatus.Text = "Processing Users..."
+        FormMain.ToolStripStatusLabelContext.Text = ""
         Me.ProgressBar.Show()
         Me.ProgressBar.BringToFront()
 

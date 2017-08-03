@@ -1,6 +1,6 @@
 ﻿Imports System.DirectoryServices
 
-Public Class GroupSelectionForm
+Public Class FormGroupSelection
 
     Private Enum GroupType
         Security = 0

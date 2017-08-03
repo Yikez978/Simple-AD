@@ -1,7 +1,7 @@
 ﻿Imports System.Text
 Imports Microsoft.WindowsAPICodePack.Dialogs
 
-Public Class BulkUserForm
+Public Class FormBulkUser
 
     Private FNDefualtText As String = "Paste a list Of forenames here.."
     Private SNDefaultText As String = "Paste a list of Surnames here.."
@@ -108,7 +108,7 @@ Public Class BulkUserForm
     End Sub
 
     Private Sub TextBox2_DragDrop(ByVal sender As Object, ByVal e As DragEventArgs) Handles MainFlow.DragDrop
-        Dim NewConstructor = New UsernameContructorChunk(e.Data.GetData(DataFormats.Text))
+        Dim NewConstructor = New ControlUsernameContructorChunk(e.Data.GetData(DataFormats.Text))
 
         MainFlow.Controls.Add(NewConstructor)
     End Sub
@@ -116,7 +116,7 @@ Public Class BulkUserForm
     Private Sub UpdateUsername()
         Dim PatternBuilder As New StringBuilder
 
-        For Each button As UsernameContructorChunk In MainFlow.Controls
+        For Each button As ControlUsernameContructorChunk In MainFlow.Controls
             PatternBuilder.Append("\" & button.GetText)
         Next
 
@@ -196,6 +196,6 @@ Public Class BulkUserForm
     End Sub
 
     Private Sub GroupBn_Click(sender As Object, e As EventArgs) Handles GroupBn.Click
-        GroupSelectionForm.ShowDialog()
+        FormGroupSelection.ShowDialog()
     End Sub
 End Class

@@ -1,4 +1,4 @@
-﻿Public Class OptionsForm
+﻿Public Class FormOptions
 
     Private _ForcePwdReset As Boolean
     Private _CreateHomeFolders As Boolean

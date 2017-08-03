@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class BulkUserForm
+Partial Class FormBulkUser
     Inherits MetroFramework.Forms.MetroForm
 
     'Form overrides dispose to clean up the component list.
@@ -22,7 +22,7 @@ Partial Class BulkUserForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(BulkUserForm))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormBulkUser))
         Me.CancelBn = New MetroFramework.Controls.MetroButton()
         Me.AcceptBn = New MetroFramework.Controls.MetroButton()
         Me.MainTabControl = New MetroFramework.Controls.MetroTabControl()

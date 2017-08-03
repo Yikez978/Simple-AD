@@ -306,14 +306,14 @@ Public Class BulkADWorker
         _BulkUserContainer.GetSpinner().Visible = False
         _BulkUserContainer.GetSpinner().Spinning = False
 
-        MainApplicationForm.StatusStrip.BackColor = SystemColors.Highlight
+        FormMain.StatusStrip.BackColor = SystemColors.Highlight
 
         If e.Cancelled = True Then
-            MainApplicationForm.ToolStripStatusLabelStatus.Text = "Operation Canceled"
+            FormMain.ToolStripStatusLabelStatus.Text = "Operation Canceled"
         ElseIf e.Error IsNot Nothing Then
-            MainApplicationForm.ToolStripStatusLabelStatus.Text = "Error: " & e.Error.Message
+            FormMain.ToolStripStatusLabelStatus.Text = "Error: " & e.Error.Message
         Else
-            MainApplicationForm.ToolStripStatusLabelStatus.Text = "Operation Complete!"
+            FormMain.ToolStripStatusLabelStatus.Text = "Operation Complete!"
         End If
 
     End Sub

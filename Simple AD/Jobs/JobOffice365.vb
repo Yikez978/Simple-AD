@@ -6,7 +6,7 @@ Public Class JobOffice365
     Private DataGrid As DataGridView
     Private TabPage As TabPage
     Private NewOffice365Container As ContainerOffice365
-    Private Spinner As TabSpinner
+    Private Spinner As ControlTabSpinner
     Private Connect365Thread As New Threading.Thread(AddressOf GetOffice365Users)
 
     Private _Email
@@ -35,16 +35,16 @@ Public Class JobOffice365
             .Tag = "365"
         End With
 
-        MainApplicationForm.GetMainTabCtrl().TabPages.Add(TabPage)
+        FormMain.GetMainTabCtrl().TabPages.Add(TabPage)
         DataGrid = NewOffice365Container.GetMainDataGrid()
 
-        MainApplicationForm.GetMainTabCtrl.SelectTab(MainApplicationForm.GetMainTabCtrl.TabCount - 1)
+        FormMain.GetMainTabCtrl.SelectTab(FormMain.GetMainTabCtrl.TabCount - 1)
 
-        MainApplicationForm.GetMainTabCtrl.SelectedTab.BackColor = SystemColors.Window
-        MainApplicationForm.GetMainTabCtrl.SelectedTab.Controls.Add(NewOffice365Container)
-        MainApplicationForm.GetMainTabCtrl.Visible = True
+        FormMain.GetMainTabCtrl.SelectedTab.BackColor = SystemColors.Window
+        FormMain.GetMainTabCtrl.SelectedTab.Controls.Add(NewOffice365Container)
+        FormMain.GetMainTabCtrl.Visible = True
 
-        Spinner = New TabSpinner("Connecting to " & Domain(1).ToString, NewOffice365Container)
+        Spinner = New ControlTabSpinner("Connecting to " & Domain(1).ToString, NewOffice365Container)
         Spinner.SpinnerVisible = True
 
         TabPage.Controls.Add(Spinner)
@@ -73,7 +73,7 @@ Public Class JobOffice365
         If datagrid.InvokeRequired Then
             datagrid.Invoke(New Action(Of DataGridView, DataTable)(AddressOf ApplyDataSource), datagrid, datasource)
         Else
-            If Not MainApplicationForm.IsDisposed Then
+            If Not FormMain.IsDisposed Then
                 NewOffice365Container.Datasource = datasource
 
                 For Each column As DataGridViewColumn In datagrid.Columns

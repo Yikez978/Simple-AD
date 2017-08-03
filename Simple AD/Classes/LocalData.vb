@@ -59,7 +59,7 @@ Public Class LocalData
             Dim RecntFileStreamReader As New StreamReader(GlobalVariables.appData & "\Simple_AD.txt")
             Dim recentFilesList As New List(Of String)
 
-            For Each item As ToolStripDropDownItem In MainApplicationForm.RecentFilesToolStripMenuItem.DropDownItems
+            For Each item As ToolStripDropDownItem In FormMain.RecentFilesToolStripMenuItem.DropDownItems
                 recentFilesList.Add(CStr(item.Text))
             Next
 
@@ -67,7 +67,7 @@ Public Class LocalData
                 Dim Line As String = RecntFileStreamReader.ReadLine
                 If Not recentFilesList.Contains(Line) AndAlso Not String.IsNullOrEmpty(Line) Then
                     If File.Exists(Line) Then
-                        Dim RecentFileItem As ToolStripMenuItem = MainApplicationForm.RecentFilesToolStripMenuItem.DropDownItems.Add(Line)
+                        Dim RecentFileItem As ToolStripMenuItem = FormMain.RecentFilesToolStripMenuItem.DropDownItems.Add(Line)
                         AddHandler RecentFileItem.Click, Sub(Sender, e) RecentFileMenuIte_CLick(Line)
 
                         Try

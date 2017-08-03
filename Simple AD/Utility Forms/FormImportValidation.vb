@@ -1,4 +1,4 @@
-﻿Public Class ImportValidationForm
+﻿Public Class FormImportValidation
 
     Private DataTable As New DataTable()
     Private view As DataView
@@ -65,7 +65,7 @@
     End Sub
 
     Private Sub ImportBtn_Click(sender As Object, e As EventArgs) Handles ImportBtn.Click
-        MainApplicationForm.BulkUserInit()
+        FormMain.BulkUserInit()
         Me.Dispose()
     End Sub
 

@@ -5,7 +5,7 @@ Public Class JobUserReport
     Private DataGrid As DataGridView
     Private TabPage As TabPage
     Private UserReportContainer As ContainerUserReport
-    Private Spinner As TabSpinner
+    Private Spinner As ControlTabSpinner
     Private GetUsersThread As New Threading.Thread(AddressOf GetUsers)
     Private _LDAPQuery As String
 
@@ -25,20 +25,20 @@ Public Class JobUserReport
             .Tag = "Report"
         End With
 
-        MainApplicationForm.GetMainTabCtrl().TabPages.Add(TabPage)
+        FormMain.GetMainTabCtrl().TabPages.Add(TabPage)
         DataGrid = UserReportContainer.GetMainDataGrid()
 
-        MainApplicationForm.GetMainTabCtrl.SelectTab(MainApplicationForm.GetMainTabCtrl.TabCount - 1)
+        FormMain.GetMainTabCtrl.SelectTab(FormMain.GetMainTabCtrl.TabCount - 1)
 
-        MainApplicationForm.GetMainTabCtrl.SelectedTab.BackColor = SystemColors.Window
-        MainApplicationForm.GetMainTabCtrl.SelectedTab.Controls.Add(UserReportContainer)
-        MainApplicationForm.GetMainTabCtrl.Visible = True
+        FormMain.GetMainTabCtrl.SelectedTab.BackColor = SystemColors.Window
+        FormMain.GetMainTabCtrl.SelectedTab.Controls.Add(UserReportContainer)
+        FormMain.GetMainTabCtrl.Visible = True
 
         If LDAPQuery IsNot Nothing Then
             _LDAPQuery = LDAPQuery
         End If
 
-        Spinner = New TabSpinner("Generating Report...", UserReportContainer)
+        Spinner = New ControlTabSpinner("Generating Report...", UserReportContainer)
         Spinner.SpinnerVisible = True
 
         TabPage.Controls.Add(Spinner)
@@ -69,7 +69,7 @@ Public Class JobUserReport
         If datagrid.InvokeRequired Then
             datagrid.Invoke(New Action(Of DataGridView, DataTable)(AddressOf ApplyDataSource), datagrid, datasource)
         Else
-            If Not MainApplicationForm.IsDisposed Then
+            If Not FormMain.IsDisposed Then
                 UserReportContainer.Datasource = datasource
 
                 datagrid.Columns.Remove("name")

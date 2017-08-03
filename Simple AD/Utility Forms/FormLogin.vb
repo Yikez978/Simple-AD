@@ -1,6 +1,6 @@
 ﻿Imports System.Threading
 
-Public Class LoginForm
+Public Class FormLogin
 
     Private LoginThread As Thread
 
@@ -24,7 +24,7 @@ Public Class LoginForm
     End Sub
 
     Private Sub LoginForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        If Not Application.OpenForms().OfType(Of MainApplicationForm).Any Then
+        If Not Application.OpenForms().OfType(Of FormMain).Any Then
             AutoLogin()
         End If
 
@@ -150,7 +150,7 @@ Public Class LoginForm
         If Me.InvokeRequired Then
             Me.Invoke(New Action(AddressOf LoginSuccess))
         Else
-            MainApplicationForm.Show()
+            FormMain.Show()
 
             Dim ADC = New ADConnectionChecker
 

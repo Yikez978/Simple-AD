@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class LoginForm
+Partial Class FormLogin
     Inherits MetroFramework.Forms.MetroForm
 
     'Form overrides dispose to clean up the component list.
@@ -22,7 +22,7 @@ Partial Class LoginForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(LoginForm))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormLogin))
         Me.PwdTb = New MetroFramework.Controls.MetroTextBox()
         Me.UnTb = New MetroFramework.Controls.MetroTextBox()
         Me.ErLb = New MetroFramework.Controls.MetroLabel()

@@ -1,6 +1,6 @@
 ﻿Imports Simple_AD.FileSystemHelper
 
-Public Class MainApplicationForm
+Public Class FormMain
 
     Private ftdt As New DataTable
 
@@ -17,7 +17,7 @@ Public Class MainApplicationForm
 
     Private Sub DataReviewForm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        RunUpdater()
+        StartUpdateCheck()
 
         GlobalVariables.ColumnsVisibleChangedByUser = False
 
@@ -64,7 +64,7 @@ Public Class MainApplicationForm
     End Sub
 
     Private Sub OptionsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OptionsToolStripMenuItem.Click
-        OptionsForm.ShowDialog()
+        FormOptions.ShowDialog()
     End Sub
 
     Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs)
@@ -73,9 +73,9 @@ Public Class MainApplicationForm
 
     Private Sub SelectColumnsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectColumnsToolStripMenuItem.Click
 
-        If Not SelectColumns.Visible Then
-            SelectColumns.FillCheckListBox(GetMainDataGrid())
-            SelectColumns.ShowDialog()
+        If Not FormSelectColumns.Visible Then
+            FormSelectColumns.FillCheckListBox(GetMainDataGrid())
+            FormSelectColumns.ShowDialog()
         End If
     End Sub
 
@@ -132,7 +132,7 @@ Public Class MainApplicationForm
 
     Public Shared Function GetMainSplitContainer0() As SplitContainer
         Try
-            Dim CurrentTab As TabPage = MainApplicationForm.GetMainTabCtrl.SelectedTab
+            Dim CurrentTab As TabPage = FormMain.GetMainTabCtrl.SelectedTab
             Dim MainContainer As Object = CurrentTab.Controls.Item(0)
             Return MainContainer.GetMainSplitContainer0()
         Catch Ex As Exception
@@ -143,7 +143,7 @@ Public Class MainApplicationForm
 
     Public Shared Function GetMainSplitContainer1() As SplitContainer
         Try
-            Dim CurrentTab As TabPage = MainApplicationForm.GetMainTabCtrl.SelectedTab
+            Dim CurrentTab As TabPage = FormMain.GetMainTabCtrl.SelectedTab
             Dim MainContainer As Object = CurrentTab.Controls.Item(0)
             Return MainContainer.GetMainSplitContainer1()
         Catch Ex As Exception
@@ -154,7 +154,7 @@ Public Class MainApplicationForm
 
     Public Shared Function GetMainDataGrid() As DataGridView
         Try
-            Dim CurrentTab As TabPage = MainApplicationForm.GetMainTabCtrl.SelectedTab
+            Dim CurrentTab As TabPage = FormMain.GetMainTabCtrl.SelectedTab
             Dim MainContainer As Object = CurrentTab.Controls.Item(0)
             Return MainContainer.GetMainDataGrid()
         Catch Ex As Exception
@@ -164,13 +164,13 @@ Public Class MainApplicationForm
     End Function
 
     Public Shared Function GetBulkUserContainer() As ContainerUserBulk
-        Dim CurrentTab As ContainerUserBulk = MainApplicationForm.GetMainTabCtrl.SelectedTab.Controls.Item(0)
+        Dim CurrentTab As ContainerUserBulk = FormMain.GetMainTabCtrl.SelectedTab.Controls.Item(0)
         Return CurrentTab
     End Function
 
-    Public Shared Function GetPropertisPanel() As UserProperties
+    Public Shared Function GetPropertisPanel() As ControlUserProperties
         Try
-            Dim CurrentTab As ContainerUserBulk = MainApplicationForm.GetMainTabCtrl.SelectedTab.Controls.Item(0)
+            Dim CurrentTab As ContainerUserBulk = FormMain.GetMainTabCtrl.SelectedTab.Controls.Item(0)
             Return CurrentTab.GetPropertisPanel()
         Catch Ex As Exception
             Debug.WriteLine(Ex.Message.ToString)
@@ -186,8 +186,8 @@ Public Class MainApplicationForm
     End Sub
 
     Private Sub ToolStripMenuItemLogin_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItemLogin.Click
-        LoginForm.Text = "Switch User"
-        LoginForm.ShowDialog()
+        FormLogin.Text = "Switch User"
+        FormLogin.ShowDialog()
     End Sub
 
     Private Sub DomainPanelToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DomainPanelToolStripMenuItem.Click
@@ -195,7 +195,7 @@ Public Class MainApplicationForm
     End Sub
 
     Private Sub BulkUserWizardToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BulkUserWizardToolStripMenuItem.Click
-        BulkUserForm.ShowDialog()
+        FormBulkUser.ShowDialog()
     End Sub
 
     Public Sub CloseTab(TabPage As TabPage)
@@ -219,7 +219,7 @@ Public Class MainApplicationForm
     End Sub
 
     Private Sub CustomQueryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CustomQueryToolStripMenuItem.Click
-        LDAPQueryForm.ShowDialog()
+        FormLDAPQuery.ShowDialog()
     End Sub
 
     Private Sub CloseToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CloseToolStripMenuItem.Click
@@ -240,7 +240,7 @@ Public Class MainApplicationForm
     End Sub
 
     Private Sub ConnectToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConnectToolStripMenuItem.Click
-        O365Login.ShowDialog()
+        FormO365Login.ShowDialog()
     End Sub
 
     Private Sub MainTabCtrl_Selected(sender As Object, e As TabControlEventArgs)

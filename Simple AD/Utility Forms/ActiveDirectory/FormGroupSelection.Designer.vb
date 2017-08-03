@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class GroupSelectionForm
+Partial Class FormGroupSelection
     Inherits MetroFramework.Forms.MetroForm
 
     'Form overrides dispose to clean up the component list.

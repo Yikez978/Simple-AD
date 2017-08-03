@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class ImportValidationForm
+Partial Class FormImportValidation
     Inherits MetroFramework.Forms.MetroForm
 
     'Form overrides dispose to clean up the component list.
@@ -25,7 +25,7 @@ Partial Class ImportValidationForm
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ImportValidationForm))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormImportValidation))
         Me.HeaderLb = New System.Windows.Forms.Label()
         Me.ErrorDataGrid = New MetroFramework.Controls.MetroGrid()
         Me.CancelBtn = New MetroFramework.Controls.MetroButton()

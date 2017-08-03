@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class MainApplicationForm
+Partial Class FormMain
     Inherits MetroFramework.Forms.MetroForm
 
     'Form overrides dispose to clean up the component list.
@@ -40,7 +40,7 @@ Partial Class MainApplicationForm
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim SADMenuStrip As System.Windows.Forms.MenuStrip
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainApplicationForm))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormMain))
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ImportCSVToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BulkUserWizardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()

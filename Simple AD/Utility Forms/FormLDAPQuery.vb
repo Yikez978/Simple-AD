@@ -1,4 +1,4 @@
-﻿Public Class LDAPQueryForm
+﻿Public Class FormLDAPQuery
     Private Sub LDAPQueryForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         RunBn.Enabled = False
         QueryTb.Select()

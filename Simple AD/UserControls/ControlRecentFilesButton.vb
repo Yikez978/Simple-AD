@@ -1,4 +1,4 @@
-﻿Public Class RecentFilesButton
+﻿Public Class ControlRecentFilesButton
 
     Private _Path As String
 

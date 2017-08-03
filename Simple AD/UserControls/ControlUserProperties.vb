@@ -1,4 +1,4 @@
-﻿Public Class UserProperties
+﻿Public Class ControlUserProperties
     Inherits UserControl
 
     Dim User As UserObject
@@ -55,11 +55,11 @@
     End Sub
 
     Private Sub ToolStripStatusLabel2_Click(sender As Object, e As EventArgs)
-        MainApplicationForm.GetMainSplitContainer1.Panel2Collapsed = True
+        FormMain.GetMainSplitContainer1.Panel2Collapsed = True
     End Sub
 
     Private Sub DataGridView_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView.CellEndEdit
-        MainApplicationForm.GetMainDataGrid.SelectedRows.Item(0).Cells(DataGridView.Rows(e.RowIndex).Cells.Item(0).Value.ToString).Value = DataGridView.Rows(e.RowIndex).Cells.Item(1).Value
+        FormMain.GetMainDataGrid.SelectedRows.Item(0).Cells(DataGridView.Rows(e.RowIndex).Cells.Item(0).Value.ToString).Value = DataGridView.Rows(e.RowIndex).Cells.Item(1).Value
     End Sub
 
     Private Sub DataGridView_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DataGridView.CellMouseClick

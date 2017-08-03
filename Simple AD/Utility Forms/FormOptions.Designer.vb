@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class OptionsForm
+Partial Class FormOptions
     Inherits MetroFramework.Forms.MetroForm
 
     'Form overrides dispose to clean up the component list.
@@ -22,7 +22,7 @@ Partial Class OptionsForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(OptionsForm))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormOptions))
         Me.OKBt = New MetroFramework.Controls.MetroButton()
         Me.CnBt = New MetroFramework.Controls.MetroButton()
         Me.LDAPTabPage = New MetroFramework.Controls.MetroTabPage()

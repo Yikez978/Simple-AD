@@ -1,7 +1,7 @@
 ﻿Imports System.DirectoryServices
 Imports System.DirectoryServices.ActiveDirectory
 
-Public Class DomianTree
+Public Class ControlDomianTree
 
     Private _Container As Object
 
@@ -56,7 +56,7 @@ Public Class DomianTree
     Private Sub TreeView_AfterSelect(sender As System.Object, e As System.Windows.Forms.TreeViewEventArgs)
         If Not (OUTreeView.SelectedNode Is Nothing) Then
             GlobalVariables.SelectedOU = DirectCast(OUTreeView.SelectedNode, AdTreeNode).DistinguishedName
-            MainApplicationForm.ToolStripStatusLabelStatus.Text = GlobalVariables.SelectedOU
+            FormMain.ToolStripStatusLabelStatus.Text = GlobalVariables.SelectedOU
             _Container.AcceptBt.Enabled = True
         End If
 

@@ -1,4 +1,4 @@
-﻿Public Class TabSpinner
+﻿Public Class ControlTabSpinner
     Inherits UserControl
 
     Private _ParentContainer As Control
@@ -31,8 +31,8 @@
     End Property
 
     Private Sub Center()
-        Me.Top = (MainApplicationForm.GetMainTabCtrl.ClientSize.Height / 2) - (Me.Height / 2)
-        Me.Left = (MainApplicationForm.GetMainTabCtrl.Parent.ClientSize.Width / 2) - (Me.Width / 2)
+        Me.Top = (FormMain.GetMainTabCtrl.ClientSize.Height / 2) - (Me.Height / 2)
+        Me.Left = (FormMain.GetMainTabCtrl.Parent.ClientSize.Width / 2) - (Me.Width / 2)
 
         Me.Anchor = AnchorStyles.Top And AnchorStyles.Bottom And AnchorStyles.Left And AnchorStyles.Right
 

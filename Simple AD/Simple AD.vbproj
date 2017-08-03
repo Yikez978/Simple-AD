@@ -81,7 +81,7 @@
     </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
+    <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>true</SignManifests>
@@ -93,6 +93,9 @@
     <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoUpdater.NET, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autoupdater.NET.Official.1.4.3\lib\net452\AutoUpdater.NET.dll</HintPath>
+    </Reference>
     <Reference Include="Interop.ActiveDs, Version=1.0.0.0, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -102,10 +105,6 @@
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>bin\Debug\Interop.TSUSEREXLib.dll</HintPath>
-    </Reference>
-    <Reference Include="Ionic.Zip.Reduced, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\Ionic.Zip.Reduced.dll</HintPath>
     </Reference>
     <Reference Include="MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
       <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.dll</HintPath>
@@ -121,14 +120,6 @@
     </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\WindowsAPICodePack-Shell.1.1.1\lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
-    </Reference>
-    <Reference Include="RedCell.Diagnostics.Update, Version=1.0.0.39161, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\RedCell.Diagnostics.Update.dll</HintPath>
-    </Reference>
-    <Reference Include="RedCell.Net, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\RedCell.Net.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Private>False</Private>
@@ -193,23 +184,29 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="UI\TabDragger.vb" />
-    <Compile Include="Updater.vb" />
-    <Compile Include="Utility Forms\LDAPQueryForm.Designer.vb">
-      <DependentUpon>LDAPQueryForm.vb</DependentUpon>
+    <Compile Include="Modules\Updater.vb" />
+    <Compile Include="Utility Forms\FormUpdate.Designer.vb">
+      <DependentUpon>FormUpdate.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utility Forms\LDAPQueryForm.vb">
+    <Compile Include="Utility Forms\FormUpdate.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Utility Forms\ActiveDirectory\GroupSelectionForm.Designer.vb">
-      <DependentUpon>GroupSelectionForm.vb</DependentUpon>
+    <Compile Include="Utility Forms\FormLDAPQuery.Designer.vb">
+      <DependentUpon>FormLDAPQuery.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utility Forms\ActiveDirectory\GroupSelectionForm.vb">
+    <Compile Include="Utility Forms\FormLDAPQuery.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Utility Forms\BulkUserForm.Designer.vb">
-      <DependentUpon>BulkUserForm.vb</DependentUpon>
+    <Compile Include="Utility Forms\ActiveDirectory\FormGroupSelection.Designer.vb">
+      <DependentUpon>FormGroupSelection.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utility Forms\BulkUserForm.vb">
+    <Compile Include="Utility Forms\ActiveDirectory\FormGroupSelection.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Utility Forms\FormBulkUser.Designer.vb">
+      <DependentUpon>FormBulkUser.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Utility Forms\FormBulkUser.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Modules\ActiveDirectoryHelper.vb" />
@@ -233,10 +230,10 @@
     <Compile Include="Classes\LocalData.vb" />
     <Compile Include="Classes\MenuStripHelper.vb" />
     <Compile Include="Classes\StringHelper.vb" />
-    <Compile Include="Utility Forms\ImportValidationForm.Designer.vb">
-      <DependentUpon>ImportValidationForm.vb</DependentUpon>
+    <Compile Include="Utility Forms\FormImportValidation.Designer.vb">
+      <DependentUpon>FormImportValidation.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utility Forms\ImportValidationForm.vb">
+    <Compile Include="Utility Forms\FormImportValidation.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UserControls\TabContainers\ContainerUserBulk.Designer.vb">
@@ -245,27 +242,27 @@
     <Compile Include="UserControls\TabContainers\ContainerUserBulk.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\DomianTree.Designer.vb">
-      <DependentUpon>DomianTree.vb</DependentUpon>
+    <Compile Include="UserControls\ControlDomianTree.Designer.vb">
+      <DependentUpon>ControlDomianTree.vb</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\DomianTree.vb">
+    <Compile Include="UserControls\ControlDomianTree.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Classes\SelectAdContainerDialog.vb" />
     <Compile Include="Classes\TextAndImageColumn.vb" />
-    <Compile Include="Utility Forms\SelectColumns.Designer.vb">
-      <DependentUpon>SelectColumns.vb</DependentUpon>
+    <Compile Include="Utility Forms\FormSelectColumns.Designer.vb">
+      <DependentUpon>FormSelectColumns.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utility Forms\SelectColumns.vb">
+    <Compile Include="Utility Forms\FormSelectColumns.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Classes\WindowsApi.vb" />
     <Compile Include="Classes\DataGridTools.vb" />
     <Compile Include="Classes\GlobalSuppressions.vb" />
-    <Compile Include="Utility Forms\LoginForm.Designer.vb">
-      <DependentUpon>LoginForm.vb</DependentUpon>
+    <Compile Include="Utility Forms\FormLogin.Designer.vb">
+      <DependentUpon>FormLogin.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utility Forms\LoginForm.vb">
+    <Compile Include="Utility Forms\FormLogin.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -278,24 +275,24 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="MainApplicationForm.Designer.vb">
-      <DependentUpon>MainApplicationForm.vb</DependentUpon>
+    <Compile Include="FormMain.Designer.vb">
+      <DependentUpon>FormMain.vb</DependentUpon>
     </Compile>
-    <Compile Include="MainApplicationForm.vb">
+    <Compile Include="FormMain.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Utility Forms\OptionsForm.Designer.vb">
-      <DependentUpon>OptionsForm.vb</DependentUpon>
+    <Compile Include="Utility Forms\FormOptions.Designer.vb">
+      <DependentUpon>FormOptions.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utility Forms\OptionsForm.vb">
+    <Compile Include="Utility Forms\FormOptions.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Classes\References.vb" />
     <Compile Include="Classes\UserObject.vb" />
-    <Compile Include="UserControls\RecentFilesButton.Designer.vb">
-      <DependentUpon>RecentFilesButton.vb</DependentUpon>
+    <Compile Include="UserControls\ControlRecentFilesButton.Designer.vb">
+      <DependentUpon>ControlRecentFilesButton.vb</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\RecentFilesButton.vb">
+    <Compile Include="UserControls\ControlRecentFilesButton.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UserControls\TabContainers\ContainerUserReport.Designer.vb">
@@ -310,46 +307,46 @@
     <Compile Include="UserControls\TabContainers\ContainerOffice365.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\TabSpinner.Designer.vb">
-      <DependentUpon>TabSpinner.vb</DependentUpon>
+    <Compile Include="UserControls\ControlTabSpinner.Designer.vb">
+      <DependentUpon>ControlTabSpinner.vb</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\TabSpinner.vb">
+    <Compile Include="UserControls\ControlTabSpinner.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\UsernameContructorChunk.Designer.vb">
-      <DependentUpon>UsernameContructorChunk.vb</DependentUpon>
+    <Compile Include="UserControls\ControlUsernameContructorChunk.Designer.vb">
+      <DependentUpon>ControlUsernameContructorChunk.vb</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\UsernameContructorChunk.vb">
+    <Compile Include="UserControls\ControlUsernameContructorChunk.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\UserProperties.Designer.vb">
-      <DependentUpon>UserProperties.vb</DependentUpon>
+    <Compile Include="UserControls\ControlUserProperties.Designer.vb">
+      <DependentUpon>ControlUserProperties.vb</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\UserProperties.vb">
+    <Compile Include="UserControls\ControlUserProperties.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Utility Forms\Office 365\O365Login.Designer.vb">
-      <DependentUpon>O365Login.vb</DependentUpon>
+    <Compile Include="Utility Forms\Office 365\FormO365Login.Designer.vb">
+      <DependentUpon>FormO365Login.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utility Forms\Office 365\O365Login.vb">
+    <Compile Include="Utility Forms\Office 365\FormO365Login.vb">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Utility Forms\ActiveDirectory\GroupSelectionForm.resx">
-      <DependentUpon>GroupSelectionForm.vb</DependentUpon>
+    <EmbeddedResource Include="Utility Forms\ActiveDirectory\FormGroupSelection.resx">
+      <DependentUpon>FormGroupSelection.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Utility Forms\BulkUserForm.resx">
-      <DependentUpon>BulkUserForm.vb</DependentUpon>
+    <EmbeddedResource Include="Utility Forms\FormBulkUser.resx">
+      <DependentUpon>FormBulkUser.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Utility Forms\ImportValidationForm.resx">
-      <DependentUpon>ImportValidationForm.vb</DependentUpon>
+    <EmbeddedResource Include="Utility Forms\FormImportValidation.resx">
+      <DependentUpon>FormImportValidation.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Utility Forms\LDAPQueryForm.resx">
-      <DependentUpon>LDAPQueryForm.vb</DependentUpon>
+    <EmbeddedResource Include="Utility Forms\FormLDAPQuery.resx">
+      <DependentUpon>FormLDAPQuery.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Utility Forms\LoginForm.resx">
-      <DependentUpon>LoginForm.vb</DependentUpon>
+    <EmbeddedResource Include="Utility Forms\FormLogin.resx">
+      <DependentUpon>FormLogin.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -357,26 +354,29 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainApplicationForm.resx">
-      <DependentUpon>MainApplicationForm.vb</DependentUpon>
+    <EmbeddedResource Include="FormMain.resx">
+      <DependentUpon>FormMain.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Utility Forms\Office 365\O365Login.resx">
-      <DependentUpon>O365Login.vb</DependentUpon>
+    <EmbeddedResource Include="Utility Forms\FormUpdate.resx">
+      <DependentUpon>FormUpdate.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Utility Forms\OptionsForm.resx">
-      <DependentUpon>OptionsForm.vb</DependentUpon>
+    <EmbeddedResource Include="Utility Forms\Office 365\FormO365Login.resx">
+      <DependentUpon>FormO365Login.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Utility Forms\SelectColumns.resx">
-      <DependentUpon>SelectColumns.vb</DependentUpon>
+    <EmbeddedResource Include="Utility Forms\FormOptions.resx">
+      <DependentUpon>FormOptions.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Utility Forms\FormSelectColumns.resx">
+      <DependentUpon>FormSelectColumns.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\TabContainers\ContainerUserBulk.resx">
       <DependentUpon>ContainerUserBulk.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\DomianTree.resx">
-      <DependentUpon>DomianTree.vb</DependentUpon>
+    <EmbeddedResource Include="UserControls\ControlDomianTree.resx">
+      <DependentUpon>ControlDomianTree.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\RecentFilesButton.resx">
-      <DependentUpon>RecentFilesButton.vb</DependentUpon>
+    <EmbeddedResource Include="UserControls\ControlRecentFilesButton.resx">
+      <DependentUpon>ControlRecentFilesButton.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\TabContainers\ContainerUserReport.resx">
       <DependentUpon>ContainerUserReport.vb</DependentUpon>
@@ -384,14 +384,14 @@
     <EmbeddedResource Include="UserControls\TabContainers\ContainerOffice365.resx">
       <DependentUpon>ContainerOffice365.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\TabSpinner.resx">
-      <DependentUpon>TabSpinner.vb</DependentUpon>
+    <EmbeddedResource Include="UserControls\ControlTabSpinner.resx">
+      <DependentUpon>ControlTabSpinner.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\UsernameContructorChunk.resx">
-      <DependentUpon>UsernameContructorChunk.vb</DependentUpon>
+    <EmbeddedResource Include="UserControls\ControlUsernameContructorChunk.resx">
+      <DependentUpon>ControlUsernameContructorChunk.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\UserProperties.resx">
-      <DependentUpon>UserProperties.vb</DependentUpon>
+    <EmbeddedResource Include="UserControls\ControlUserProperties.resx">
+      <DependentUpon>ControlUserProperties.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

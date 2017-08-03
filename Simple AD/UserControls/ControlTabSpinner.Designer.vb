@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class TabSpinner
+Partial Class ControlTabSpinner
     Inherits System.Windows.Forms.UserControl
 
     'UserControl overrides dispose to clean up the component list.

@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class SelectColumns
+Partial Class FormSelectColumns
     Inherits MetroFramework.Forms.MetroForm
 
     'Form overrides dispose to clean up the component list.
@@ -22,7 +22,7 @@ Partial Class SelectColumns
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(SelectColumns))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormSelectColumns))
         Me.CnBt = New MetroFramework.Controls.MetroButton()
         Me.AcBt = New MetroFramework.Controls.MetroButton()
         Me.AvailableColumnsLb = New System.Windows.Forms.ListBox()
