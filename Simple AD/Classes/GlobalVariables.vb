@@ -19,6 +19,8 @@ Public Class GlobalVariables
     Public Shared Property Office365Username As String
     Public Shared Property Office365Password As String
 
+    Public Shared UpdateURI As String = "http://storage.googleapis.com/simple-ad.appspot.com/SimpleAD/versioninfo.xml"
+
     Public Shared Property GroupImage As Image = ActiveDirectoryIcon.GetIcon(ActiveDirectoryIcon.ActiveDirectoryIconType.Group).ToBitmap
 
     Public Shared HiddenColums As New List(Of String)

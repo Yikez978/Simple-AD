@@ -22,40 +22,42 @@ Partial Class FormUpdate
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.MetroLabel1 = New MetroFramework.Controls.MetroLabel()
-        Me.MetroToggle1 = New MetroFramework.Controls.MetroToggle()
+        Me.BodyLb = New MetroFramework.Controls.MetroLabel()
+        Me.UpdateToggle = New MetroFramework.Controls.MetroToggle()
         Me.MetroLabel2 = New MetroFramework.Controls.MetroLabel()
-        Me.updateBn = New MetroFramework.Controls.MetroButton()
+        Me.UpdateBn = New MetroFramework.Controls.MetroButton()
         Me.CancelBn = New MetroFramework.Controls.MetroButton()
         Me.MetroPanel1 = New MetroFramework.Controls.MetroPanel()
         Me.OldVerLb = New MetroFramework.Controls.MetroLabel()
         Me.OldBuildLb = New MetroFramework.Controls.MetroLabel()
-        Me.MetroPanel2 = New MetroFramework.Controls.MetroPanel()
+        Me.NewBuildPl = New MetroFramework.Controls.MetroPanel()
         Me.NewVerLb = New MetroFramework.Controls.MetroLabel()
         Me.NewBuildLb = New MetroFramework.Controls.MetroLabel()
+        Me.Spinner = New MetroFramework.Controls.MetroProgressSpinner()
         Me.MetroPanel1.SuspendLayout()
-        Me.MetroPanel2.SuspendLayout()
+        Me.NewBuildPl.SuspendLayout()
         Me.SuspendLayout()
         '
-        'MetroLabel1
+        'BodyLb
         '
-        Me.MetroLabel1.AutoSize = True
-        Me.MetroLabel1.Location = New System.Drawing.Point(23, 72)
-        Me.MetroLabel1.Name = "MetroLabel1"
-        Me.MetroLabel1.Size = New System.Drawing.Size(100, 19)
-        Me.MetroLabel1.TabIndex = 0
-        Me.MetroLabel1.Text = "Main Body Text"
+        Me.BodyLb.AutoSize = True
+        Me.BodyLb.Location = New System.Drawing.Point(23, 72)
+        Me.BodyLb.Name = "BodyLb"
+        Me.BodyLb.Size = New System.Drawing.Size(98, 19)
+        Me.BodyLb.TabIndex = 0
+        Me.BodyLb.Text = "Main Body Text"
         '
-        'MetroToggle1
+        'UpdateToggle
         '
-        Me.MetroToggle1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.MetroToggle1.AutoSize = True
-        Me.MetroToggle1.Location = New System.Drawing.Point(23, 186)
-        Me.MetroToggle1.Name = "MetroToggle1"
-        Me.MetroToggle1.Size = New System.Drawing.Size(80, 17)
-        Me.MetroToggle1.TabIndex = 3
-        Me.MetroToggle1.Text = "Off"
-        Me.MetroToggle1.UseSelectable = True
+        Me.UpdateToggle.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.UpdateToggle.AutoSize = True
+        Me.UpdateToggle.Location = New System.Drawing.Point(23, 186)
+        Me.UpdateToggle.Name = "UpdateToggle"
+        Me.UpdateToggle.Size = New System.Drawing.Size(80, 17)
+        Me.UpdateToggle.Style = MetroFramework.MetroColorStyle.Purple
+        Me.UpdateToggle.TabIndex = 3
+        Me.UpdateToggle.Text = "Off"
+        Me.UpdateToggle.UseSelectable = True
         '
         'MetroLabel2
         '
@@ -67,15 +69,16 @@ Partial Class FormUpdate
         Me.MetroLabel2.TabIndex = 4
         Me.MetroLabel2.Text = "Check for updates on Launch"
         '
-        'updateBn
+        'UpdateBn
         '
-        Me.updateBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.updateBn.Location = New System.Drawing.Point(321, 184)
-        Me.updateBn.Name = "updateBn"
-        Me.updateBn.Size = New System.Drawing.Size(75, 23)
-        Me.updateBn.TabIndex = 5
-        Me.updateBn.Text = "Update"
-        Me.updateBn.UseSelectable = True
+        Me.UpdateBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.UpdateBn.Enabled = False
+        Me.UpdateBn.Location = New System.Drawing.Point(321, 184)
+        Me.UpdateBn.Name = "UpdateBn"
+        Me.UpdateBn.Size = New System.Drawing.Size(75, 23)
+        Me.UpdateBn.TabIndex = 5
+        Me.UpdateBn.Text = "Update"
+        Me.UpdateBn.UseSelectable = True
         '
         'CancelBn
         '
@@ -85,12 +88,12 @@ Partial Class FormUpdate
         Me.CancelBn.Name = "CancelBn"
         Me.CancelBn.Size = New System.Drawing.Size(75, 23)
         Me.CancelBn.TabIndex = 6
-        Me.CancelBn.Text = "Cancel"
+        Me.CancelBn.Text = "Close"
         Me.CancelBn.UseSelectable = True
         '
         'MetroPanel1
         '
-        Me.MetroPanel1.BackColor = System.Drawing.Color.FromArgb(CType(CType(41, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(185, Byte), Integer))
+        Me.MetroPanel1.BackColor = System.Drawing.SystemColors.ControlDark
         Me.MetroPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.MetroPanel1.Controls.Add(Me.OldVerLb)
         Me.MetroPanel1.Controls.Add(Me.OldBuildLb)
@@ -137,25 +140,26 @@ Partial Class FormUpdate
         Me.OldBuildLb.UseCustomBackColor = True
         Me.OldBuildLb.UseCustomForeColor = True
         '
-        'MetroPanel2
+        'NewBuildPl
         '
-        Me.MetroPanel2.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(174, Byte), Integer), CType(CType(219, Byte), Integer))
-        Me.MetroPanel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.MetroPanel2.Controls.Add(Me.NewVerLb)
-        Me.MetroPanel2.Controls.Add(Me.NewBuildLb)
-        Me.MetroPanel2.HorizontalScrollbarBarColor = True
-        Me.MetroPanel2.HorizontalScrollbarHighlightOnWheel = False
-        Me.MetroPanel2.HorizontalScrollbarSize = 10
-        Me.MetroPanel2.Location = New System.Drawing.Point(240, 107)
-        Me.MetroPanel2.Name = "MetroPanel2"
-        Me.MetroPanel2.Padding = New System.Windows.Forms.Padding(10, 16, 10, 10)
-        Me.MetroPanel2.Size = New System.Drawing.Size(211, 53)
-        Me.MetroPanel2.Style = MetroFramework.MetroColorStyle.Silver
-        Me.MetroPanel2.TabIndex = 8
-        Me.MetroPanel2.UseCustomBackColor = True
-        Me.MetroPanel2.VerticalScrollbarBarColor = True
-        Me.MetroPanel2.VerticalScrollbarHighlightOnWheel = False
-        Me.MetroPanel2.VerticalScrollbarSize = 10
+        Me.NewBuildPl.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.NewBuildPl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.NewBuildPl.Controls.Add(Me.NewVerLb)
+        Me.NewBuildPl.Controls.Add(Me.NewBuildLb)
+        Me.NewBuildPl.HorizontalScrollbarBarColor = True
+        Me.NewBuildPl.HorizontalScrollbarHighlightOnWheel = False
+        Me.NewBuildPl.HorizontalScrollbarSize = 10
+        Me.NewBuildPl.Location = New System.Drawing.Point(240, 107)
+        Me.NewBuildPl.Name = "NewBuildPl"
+        Me.NewBuildPl.Padding = New System.Windows.Forms.Padding(10, 16, 10, 10)
+        Me.NewBuildPl.Size = New System.Drawing.Size(211, 53)
+        Me.NewBuildPl.Style = MetroFramework.MetroColorStyle.Silver
+        Me.NewBuildPl.TabIndex = 8
+        Me.NewBuildPl.UseCustomBackColor = True
+        Me.NewBuildPl.UseStyleColors = True
+        Me.NewBuildPl.VerticalScrollbarBarColor = True
+        Me.NewBuildPl.VerticalScrollbarHighlightOnWheel = False
+        Me.NewBuildPl.VerticalScrollbarSize = 10
         '
         'NewVerLb
         '
@@ -166,9 +170,9 @@ Partial Class FormUpdate
         Me.NewVerLb.ForeColor = System.Drawing.SystemColors.ControlLightLight
         Me.NewVerLb.Location = New System.Drawing.Point(108, 16)
         Me.NewVerLb.Name = "NewVerLb"
-        Me.NewVerLb.Size = New System.Drawing.Size(64, 25)
+        Me.NewVerLb.Size = New System.Drawing.Size(79, 25)
         Me.NewVerLb.TabIndex = 3
-        Me.NewVerLb.Text = "0.1.0.6"
+        Me.NewVerLb.Text = "Fetching"
         Me.NewVerLb.UseCustomBackColor = True
         Me.NewVerLb.UseCustomForeColor = True
         '
@@ -186,45 +190,59 @@ Partial Class FormUpdate
         Me.NewBuildLb.UseCustomBackColor = True
         Me.NewBuildLb.UseCustomForeColor = True
         '
+        'Spinner
+        '
+        Me.Spinner.Location = New System.Drawing.Point(427, 21)
+        Me.Spinner.Maximum = 100
+        Me.Spinner.Name = "Spinner"
+        Me.Spinner.Size = New System.Drawing.Size(50, 52)
+        Me.Spinner.Style = MetroFramework.MetroColorStyle.Purple
+        Me.Spinner.TabIndex = 9
+        Me.Spinner.UseSelectable = True
+        Me.Spinner.Value = 10
+        '
         'FormUpdate
         '
-        Me.AcceptButton = Me.updateBn
+        Me.AcceptButton = Me.UpdateBn
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.CancelBn
         Me.ClientSize = New System.Drawing.Size(500, 226)
-        Me.Controls.Add(Me.MetroPanel2)
+        Me.Controls.Add(Me.Spinner)
+        Me.Controls.Add(Me.NewBuildPl)
         Me.Controls.Add(Me.MetroPanel1)
         Me.Controls.Add(Me.CancelBn)
-        Me.Controls.Add(Me.updateBn)
+        Me.Controls.Add(Me.UpdateBn)
         Me.Controls.Add(Me.MetroLabel2)
-        Me.Controls.Add(Me.MetroToggle1)
-        Me.Controls.Add(Me.MetroLabel1)
+        Me.Controls.Add(Me.UpdateToggle)
+        Me.Controls.Add(Me.BodyLb)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "FormUpdate"
         Me.Resizable = False
         Me.ShowIcon = False
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
+        Me.Style = MetroFramework.MetroColorStyle.Purple
         Me.Text = "Update"
         Me.MetroPanel1.ResumeLayout(False)
         Me.MetroPanel1.PerformLayout()
-        Me.MetroPanel2.ResumeLayout(False)
-        Me.MetroPanel2.PerformLayout()
+        Me.NewBuildPl.ResumeLayout(False)
+        Me.NewBuildPl.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
 
-    Friend WithEvents MetroLabel1 As Controls.MetroLabel
-    Friend WithEvents MetroToggle1 As Controls.MetroToggle
+    Friend WithEvents BodyLb As Controls.MetroLabel
+    Friend WithEvents UpdateToggle As Controls.MetroToggle
     Friend WithEvents MetroLabel2 As Controls.MetroLabel
-    Friend WithEvents updateBn As Controls.MetroButton
+    Friend WithEvents UpdateBn As Controls.MetroButton
     Friend WithEvents CancelBn As Controls.MetroButton
     Friend WithEvents MetroPanel1 As Controls.MetroPanel
-    Friend WithEvents MetroPanel2 As Controls.MetroPanel
+    Friend WithEvents NewBuildPl As Controls.MetroPanel
     Friend WithEvents NewVerLb As Controls.MetroLabel
     Friend WithEvents OldVerLb As Controls.MetroLabel
     Friend WithEvents OldBuildLb As Controls.MetroLabel
     Friend WithEvents NewBuildLb As Controls.MetroLabel
+    Friend WithEvents Spinner As Controls.MetroProgressSpinner
 End Class

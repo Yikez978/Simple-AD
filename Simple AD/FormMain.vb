@@ -1,4 +1,5 @@
-﻿Imports Simple_AD.FileSystemHelper
+﻿Imports AutoUpdaterDotNET
+Imports Simple_AD.FileSystemHelper
 
 Public Class FormMain
 
@@ -16,9 +17,6 @@ Public Class FormMain
     End Sub
 
     Private Sub DataReviewForm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-
-        StartUpdateCheck()
-
         VersionLb.Text = My.Application.Info.Version.ToString
 
         GlobalVariables.ColumnsVisibleChangedByUser = False
@@ -26,9 +24,11 @@ Public Class FormMain
         Importer.PopulateRecentFileList()
         UserToolStripMenuItem.Text = GetDisplayName()
 
-        Me.BackColor = SystemColors.Control
-
         Dim DragTabs As New TabDragger(MainTabCtrl, TabDragBehavior.TabDragOut)
+
+        If My.Settings.CheckForUpdatesOnStart = True Then
+            Dim RunUpdateCheck As New FormUpdate
+        End If
 
     End Sub
 
@@ -322,5 +322,9 @@ Public Class FormMain
 
     Private Sub MainTabCtrl_MouseClick(sender As Object, e As EventArgs) Handles MainTabCtrl.Click
 
+    End Sub
+
+    Private Sub CheckForUpdatesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CheckForUpdatesToolStripMenuItem.Click
+        FormUpdate.Show()
     End Sub
 End Class
