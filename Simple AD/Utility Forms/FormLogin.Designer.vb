@@ -57,12 +57,14 @@ Partial Class FormLogin
         Me.PwdTb.MaxLength = 32767
         Me.PwdTb.Name = "PwdTb"
         Me.PwdTb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(9679)
+        Me.PwdTb.PromptText = "Password"
         Me.PwdTb.ScrollBars = System.Windows.Forms.ScrollBars.None
         Me.PwdTb.SelectedText = ""
         Me.PwdTb.SelectionLength = 0
         Me.PwdTb.SelectionStart = 0
         Me.PwdTb.ShortcutsEnabled = True
         Me.PwdTb.Size = New System.Drawing.Size(376, 23)
+        Me.PwdTb.Style = MetroFramework.MetroColorStyle.Purple
         Me.PwdTb.TabIndex = 18
         Me.PwdTb.UseSelectable = True
         Me.PwdTb.WaterMark = "Password"
@@ -92,12 +94,14 @@ Partial Class FormLogin
         Me.UnTb.MaxLength = 32767
         Me.UnTb.Name = "UnTb"
         Me.UnTb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
+        Me.UnTb.PromptText = "Username"
         Me.UnTb.ScrollBars = System.Windows.Forms.ScrollBars.None
         Me.UnTb.SelectedText = ""
         Me.UnTb.SelectionLength = 0
         Me.UnTb.SelectionStart = 0
         Me.UnTb.ShortcutsEnabled = True
         Me.UnTb.Size = New System.Drawing.Size(376, 23)
+        Me.UnTb.Style = MetroFramework.MetroColorStyle.Purple
         Me.UnTb.TabIndex = 17
         Me.UnTb.UseSelectable = True
         Me.UnTb.WaterMark = "Username"
@@ -112,7 +116,7 @@ Partial Class FormLogin
         Me.ErLb.ForeColor = System.Drawing.Color.IndianRed
         Me.ErLb.Location = New System.Drawing.Point(12, 142)
         Me.ErLb.Name = "ErLb"
-        Me.ErLb.Size = New System.Drawing.Size(180, 15)
+        Me.ErLb.Size = New System.Drawing.Size(181, 15)
         Me.ErLb.TabIndex = 16
         Me.ErLb.Text = "Username or Password is Incorrect"
         Me.ErLb.Visible = False
@@ -146,6 +150,7 @@ Partial Class FormLogin
         Me.Spinner.Name = "Spinner"
         Me.Spinner.Size = New System.Drawing.Size(36, 34)
         Me.Spinner.Speed = 2.0!
+        Me.Spinner.Style = MetroFramework.MetroColorStyle.Purple
         Me.Spinner.TabIndex = 19
         Me.Spinner.UseSelectable = True
         Me.Spinner.Visible = False
@@ -157,11 +162,12 @@ Partial Class FormLogin
         Me.RememberCheckBox.Location = New System.Drawing.Point(23, 121)
         Me.RememberCheckBox.Name = "RememberCheckBox"
         Me.RememberCheckBox.Size = New System.Drawing.Size(101, 15)
+        Me.RememberCheckBox.Style = MetroFramework.MetroColorStyle.Purple
         Me.RememberCheckBox.TabIndex = 20
         Me.RememberCheckBox.Text = "Remember Me"
         Me.RememberCheckBox.UseSelectable = True
         '
-        'LoginForm
+        'FormLogin
         '
         Me.AcceptButton = Me.OKBn
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
@@ -178,9 +184,10 @@ Partial Class FormLogin
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "LoginForm"
+        Me.Name = "FormLogin"
         Me.Resizable = False
         Me.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow
+        Me.Style = MetroFramework.MetroColorStyle.Purple
         Me.Text = "Simple AD"
         Me.ResumeLayout(False)
         Me.PerformLayout()

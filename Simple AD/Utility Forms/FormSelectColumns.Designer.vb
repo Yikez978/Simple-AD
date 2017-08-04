@@ -60,24 +60,24 @@ Partial Class FormSelectColumns
         '
         Me.AvailableColumnsLb.BackColor = System.Drawing.SystemColors.Window
         Me.AvailableColumnsLb.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.AvailableColumnsLb.Font = New System.Drawing.Font("Microsoft YaHei UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.AvailableColumnsLb.ItemHeight = 17
-        Me.AvailableColumnsLb.Location = New System.Drawing.Point(23, 102)
+        Me.AvailableColumnsLb.Font = New System.Drawing.Font("Segoe UI Semilight", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.AvailableColumnsLb.ItemHeight = 15
+        Me.AvailableColumnsLb.Location = New System.Drawing.Point(23, 117)
         Me.AvailableColumnsLb.Name = "AvailableColumnsLb"
         Me.AvailableColumnsLb.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
-        Me.AvailableColumnsLb.Size = New System.Drawing.Size(262, 255)
+        Me.AvailableColumnsLb.Size = New System.Drawing.Size(262, 240)
         Me.AvailableColumnsLb.Sorted = True
         Me.AvailableColumnsLb.TabIndex = 3
         '
         'CurrentColumnsLb
         '
         Me.CurrentColumnsLb.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.CurrentColumnsLb.Font = New System.Drawing.Font("Microsoft YaHei UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CurrentColumnsLb.ItemHeight = 17
-        Me.CurrentColumnsLb.Location = New System.Drawing.Point(372, 102)
+        Me.CurrentColumnsLb.Font = New System.Drawing.Font("Segoe UI Semilight", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CurrentColumnsLb.ItemHeight = 15
+        Me.CurrentColumnsLb.Location = New System.Drawing.Point(372, 117)
         Me.CurrentColumnsLb.Name = "CurrentColumnsLb"
         Me.CurrentColumnsLb.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
-        Me.CurrentColumnsLb.Size = New System.Drawing.Size(266, 255)
+        Me.CurrentColumnsLb.Size = New System.Drawing.Size(266, 240)
         Me.CurrentColumnsLb.Sorted = True
         Me.CurrentColumnsLb.TabIndex = 4
         '
@@ -135,7 +135,7 @@ Partial Class FormSelectColumns
         Me.LoadedColumnsLabel.TabIndex = 10
         Me.LoadedColumnsLabel.Text = "Loaded Columns"
         '
-        'SelectColumns
+        'FormSelectColumns
         '
         Me.AcceptButton = Me.AcBt
         Me.CancelButton = Me.CnBt
@@ -153,9 +153,10 @@ Partial Class FormSelectColumns
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "SelectColumns"
+        Me.Name = "FormSelectColumns"
         Me.Resizable = False
         Me.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow
+        Me.Style = MetroFramework.MetroColorStyle.Purple
         Me.Text = "Select Columns"
         Me.ResumeLayout(False)
         Me.PerformLayout()

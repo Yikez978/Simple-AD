@@ -22,6 +22,7 @@ Partial Class FormLDAPQuery
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormLDAPQuery))
         Me.QueryTb = New MetroFramework.Controls.MetroTextBox()
         Me.RunBn = New MetroFramework.Controls.MetroButton()
         Me.SuspendLayout()
@@ -34,7 +35,7 @@ Partial Class FormLDAPQuery
         '
         '
         Me.QueryTb.CustomButton.Image = Nothing
-        Me.QueryTb.CustomButton.Location = New System.Drawing.Point(343, 1)
+        Me.QueryTb.CustomButton.Location = New System.Drawing.Point(374, 1)
         Me.QueryTb.CustomButton.Name = ""
         Me.QueryTb.CustomButton.Size = New System.Drawing.Size(21, 21)
         Me.QueryTb.CustomButton.Style = MetroFramework.MetroColorStyle.Blue
@@ -54,6 +55,7 @@ Partial Class FormLDAPQuery
         Me.QueryTb.SelectionStart = 0
         Me.QueryTb.ShortcutsEnabled = True
         Me.QueryTb.Size = New System.Drawing.Size(396, 23)
+        Me.QueryTb.Style = MetroFramework.MetroColorStyle.Silver
         Me.QueryTb.TabIndex = 0
         Me.QueryTb.UseSelectable = True
         Me.QueryTb.WaterMark = "LDAP Query"
@@ -70,7 +72,7 @@ Partial Class FormLDAPQuery
         Me.RunBn.Text = "Run"
         Me.RunBn.UseSelectable = True
         '
-        'LDAPQueryForm
+        'FormLDAPQuery
         '
         Me.AcceptButton = Me.RunBn
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -79,13 +81,15 @@ Partial Class FormLDAPQuery
         Me.Controls.Add(Me.RunBn)
         Me.Controls.Add(Me.QueryTb)
         Me.DisplayHeader = False
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "LDAPQueryForm"
+        Me.Name = "FormLDAPQuery"
         Me.Padding = New System.Windows.Forms.Padding(20, 30, 20, 20)
         Me.Resizable = False
         Me.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
+        Me.Style = MetroFramework.MetroColorStyle.Silver
         Me.Text = "LDAPQueryForm"
         Me.ResumeLayout(False)
 

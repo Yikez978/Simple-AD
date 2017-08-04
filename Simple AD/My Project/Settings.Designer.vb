@@ -125,6 +125,18 @@ Namespace My
                 Me("CheckForUpdatesOnStart") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property UseProxy() As Boolean
+            Get
+                Return CType(Me("UseProxy"),Boolean)
+            End Get
+            Set
+                Me("UseProxy") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

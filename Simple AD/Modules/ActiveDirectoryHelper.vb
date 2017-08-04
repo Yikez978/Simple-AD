@@ -41,9 +41,6 @@ Module ActiveDirectoryHelper
         Catch AuthEx As System.Security.Authentication.AuthenticationException
             Debug.WriteLine(AuthEx.InnerException.ToString)
             Return DomainName
-        Catch NoneExistantDirEx As System.DirectoryServices.ActiveDirectory.ActiveDirectoryObjectNotFoundException
-            Debug.WriteLine(NoneExistantDirEx.InnerException.ToString)
-            Return DomainName
         End Try
 
         Return DomainName

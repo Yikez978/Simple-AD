@@ -22,6 +22,7 @@ Partial Class FormO365Login
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormO365Login))
         Me.PwdTb = New MetroFramework.Controls.MetroTextBox()
         Me.UnTb = New MetroFramework.Controls.MetroTextBox()
         Me.ErLb = New MetroFramework.Controls.MetroLabel()
@@ -55,12 +56,14 @@ Partial Class FormO365Login
         Me.PwdTb.MaxLength = 32767
         Me.PwdTb.Name = "PwdTb"
         Me.PwdTb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(9679)
+        Me.PwdTb.PromptText = "Password"
         Me.PwdTb.ScrollBars = System.Windows.Forms.ScrollBars.None
         Me.PwdTb.SelectedText = ""
         Me.PwdTb.SelectionLength = 0
         Me.PwdTb.SelectionStart = 0
         Me.PwdTb.ShortcutsEnabled = True
         Me.PwdTb.Size = New System.Drawing.Size(330, 23)
+        Me.PwdTb.Style = MetroFramework.MetroColorStyle.Orange
         Me.PwdTb.TabIndex = 23
         Me.PwdTb.UseSelectable = True
         Me.PwdTb.WaterMark = "Password"
@@ -90,12 +93,14 @@ Partial Class FormO365Login
         Me.UnTb.MaxLength = 32767
         Me.UnTb.Name = "UnTb"
         Me.UnTb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
+        Me.UnTb.PromptText = "Email"
         Me.UnTb.ScrollBars = System.Windows.Forms.ScrollBars.None
         Me.UnTb.SelectedText = ""
         Me.UnTb.SelectionLength = 0
         Me.UnTb.SelectionStart = 0
         Me.UnTb.ShortcutsEnabled = True
         Me.UnTb.Size = New System.Drawing.Size(330, 23)
+        Me.UnTb.Style = MetroFramework.MetroColorStyle.Orange
         Me.UnTb.TabIndex = 22
         Me.UnTb.UseSelectable = True
         Me.UnTb.WaterMark = "Email"
@@ -139,16 +144,17 @@ Partial Class FormO365Login
         '
         'Spinner
         '
-        Me.Spinner.Location = New System.Drawing.Point(231, 20)
+        Me.Spinner.Location = New System.Drawing.Point(317, 23)
         Me.Spinner.Maximum = 100
         Me.Spinner.Name = "Spinner"
         Me.Spinner.Size = New System.Drawing.Size(36, 34)
         Me.Spinner.Speed = 2.0!
+        Me.Spinner.Style = MetroFramework.MetroColorStyle.Orange
         Me.Spinner.TabIndex = 24
         Me.Spinner.UseSelectable = True
         Me.Spinner.Visible = False
         '
-        'O365Login
+        'FormO365Login
         '
         Me.AcceptButton = Me.OKBn
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -161,9 +167,10 @@ Partial Class FormO365Login
         Me.Controls.Add(Me.ErLb)
         Me.Controls.Add(Me.CancelBn)
         Me.Controls.Add(Me.OKBn)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "O365Login"
+        Me.Name = "FormO365Login"
         Me.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
         Me.Style = MetroFramework.MetroColorStyle.Orange

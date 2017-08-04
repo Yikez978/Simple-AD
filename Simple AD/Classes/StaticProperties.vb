@@ -268,7 +268,14 @@
             "tsHomeDir",
             "tsHomeDirDrive",
             "preventDeletion",
-            "sAMAccountType"
+            "sAMAccountType",
+            "proxyAddresses",
+            "distinguishedName",
+            "131463067405347672",
+            "logonCount",
+            "lastLogon",
+            "whenCreated",
+            "whenChanged"
     }
 
 End Module

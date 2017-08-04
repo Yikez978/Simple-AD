@@ -57,7 +57,7 @@ Public Class ControlDomianTree
         If Not (OUTreeView.SelectedNode Is Nothing) Then
             GlobalVariables.SelectedOU = DirectCast(OUTreeView.SelectedNode, AdTreeNode).DistinguishedName
             FormMain.ToolStripStatusLabelStatus.Text = GlobalVariables.SelectedOU
-            _Container.AcceptBt.Enabled = True
+            _Container.GetAccecptButton().Enabled = True
         End If
 
         OUTreeView.SelectedNode = e.Node

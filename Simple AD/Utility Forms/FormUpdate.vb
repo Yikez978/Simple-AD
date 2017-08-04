@@ -13,7 +13,7 @@ Public Class FormUpdate
         InitializeComponent()
         NewBuildPl.BackColor = SystemColors.ControlDarkDark
         AddHandler AutoUpdater.CheckForUpdateEvent, AddressOf AutoUpdaterOnCheckForUpdateEvent
-
+        AutoUpdater.UseSystemProxy = My.Settings.UseProxy
         UpdateToggle.Checked = My.Settings.CheckForUpdatesOnStart
         CheckForUpdates()
     End Sub

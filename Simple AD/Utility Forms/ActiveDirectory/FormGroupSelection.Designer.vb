@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FormGroupSelection
     Inherits MetroFramework.Forms.MetroForm
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,60 +20,32 @@ Partial Class FormGroupSelection
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Me.MainTabControl = New MetroFramework.Controls.MetroTabControl()
-        Me.GroupsTab = New MetroFramework.Controls.MetroTabPage()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormGroupSelection))
         Me.SearchBn = New MetroFramework.Controls.MetroButton()
         Me.SelectGroupTb = New MetroFramework.Controls.MetroTextBox()
         Me.MainGrid = New MetroFramework.Controls.MetroGrid()
-        Me.NameColumn = New Simple_AD.TextAndImageColumn()
+        Me.NameCol = New Simple_AD.TextAndImageColumn()
         Me.TypeColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DescriptionColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.MainTabControl.SuspendLayout()
-        Me.GroupsTab.SuspendLayout()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Panel2 = New System.Windows.Forms.Panel()
         CType(Me.MainGrid, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel2.SuspendLayout()
         Me.SuspendLayout()
-        '
-        'MainTabControl
-        '
-        Me.MainTabControl.Controls.Add(Me.GroupsTab)
-        Me.MainTabControl.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.MainTabControl.Location = New System.Drawing.Point(20, 30)
-        Me.MainTabControl.Name = "MainTabControl"
-        Me.MainTabControl.SelectedIndex = 0
-        Me.MainTabControl.Size = New System.Drawing.Size(646, 314)
-        Me.MainTabControl.TabIndex = 0
-        Me.MainTabControl.UseSelectable = True
-        '
-        'GroupsTab
-        '
-        Me.GroupsTab.Controls.Add(Me.SearchBn)
-        Me.GroupsTab.Controls.Add(Me.SelectGroupTb)
-        Me.GroupsTab.Controls.Add(Me.MainGrid)
-        Me.GroupsTab.HorizontalScrollbarBarColor = True
-        Me.GroupsTab.HorizontalScrollbarHighlightOnWheel = False
-        Me.GroupsTab.HorizontalScrollbarSize = 10
-        Me.GroupsTab.Location = New System.Drawing.Point(4, 38)
-        Me.GroupsTab.Name = "GroupsTab"
-        Me.GroupsTab.Size = New System.Drawing.Size(638, 272)
-        Me.GroupsTab.TabIndex = 0
-        Me.GroupsTab.Text = "Select Groups"
-        Me.GroupsTab.VerticalScrollbarBarColor = True
-        Me.GroupsTab.VerticalScrollbarHighlightOnWheel = False
-        Me.GroupsTab.VerticalScrollbarSize = 10
         '
         'SearchBn
         '
         Me.SearchBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.SearchBn.Location = New System.Drawing.Point(562, 13)
+        Me.SearchBn.Location = New System.Drawing.Point(478, 6)
         Me.SearchBn.Name = "SearchBn"
         Me.SearchBn.Size = New System.Drawing.Size(76, 23)
-        Me.SearchBn.TabIndex = 4
+        Me.SearchBn.TabIndex = 7
         Me.SearchBn.Text = "Find"
         Me.SearchBn.UseSelectable = True
         '
@@ -83,7 +55,7 @@ Partial Class FormGroupSelection
         '
         '
         Me.SelectGroupTb.CustomButton.Image = Nothing
-        Me.SelectGroupTb.CustomButton.Location = New System.Drawing.Point(534, 1)
+        Me.SelectGroupTb.CustomButton.Location = New System.Drawing.Point(433, 1)
         Me.SelectGroupTb.CustomButton.Name = ""
         Me.SelectGroupTb.CustomButton.Size = New System.Drawing.Size(21, 21)
         Me.SelectGroupTb.CustomButton.Style = MetroFramework.MetroColorStyle.Blue
@@ -92,21 +64,23 @@ Partial Class FormGroupSelection
         Me.SelectGroupTb.CustomButton.UseSelectable = True
         Me.SelectGroupTb.CustomButton.Visible = False
         Me.SelectGroupTb.Lines = New String(-1) {}
-        Me.SelectGroupTb.Location = New System.Drawing.Point(0, 13)
+        Me.SelectGroupTb.Location = New System.Drawing.Point(17, 6)
         Me.SelectGroupTb.MaxLength = 32767
         Me.SelectGroupTb.Name = "SelectGroupTb"
         Me.SelectGroupTb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
+        Me.SelectGroupTb.PromptText = "Filter Groups.."
         Me.SelectGroupTb.ScrollBars = System.Windows.Forms.ScrollBars.None
         Me.SelectGroupTb.SelectedText = ""
         Me.SelectGroupTb.SelectionLength = 0
         Me.SelectGroupTb.SelectionStart = 0
         Me.SelectGroupTb.ShortcutsEnabled = True
-        Me.SelectGroupTb.Size = New System.Drawing.Size(556, 23)
-        Me.SelectGroupTb.TabIndex = 3
+        Me.SelectGroupTb.Size = New System.Drawing.Size(455, 23)
+        Me.SelectGroupTb.Style = MetroFramework.MetroColorStyle.Purple
+        Me.SelectGroupTb.TabIndex = 6
         Me.SelectGroupTb.UseSelectable = True
-        Me.SelectGroupTb.WaterMark = "Group Name"
+        Me.SelectGroupTb.WaterMark = "Filter Groups.."
         Me.SelectGroupTb.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
-        Me.SelectGroupTb.WaterMarkFont = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel)
+        Me.SelectGroupTb.WaterMarkFont = New System.Drawing.Font("Segoe UI Light", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         '
         'MainGrid
         '
@@ -115,40 +89,42 @@ Partial Class FormGroupSelection
         Me.MainGrid.AllowUserToResizeRows = False
         Me.MainGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.MainGrid.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.MainGrid.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.MainGrid.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.MainGrid.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None
         Me.MainGrid.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(174, Byte), Integer), CType(CType(219, Byte), Integer))
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(124, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(153, Byte), Integer))
         DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel)
         DataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(198, Byte), Integer), CType(CType(247, Byte), Integer))
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(73, Byte), Integer), CType(CType(173, Byte), Integer))
         DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer))
         DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.MainGrid.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.MainGrid.ColumnHeadersHeight = 24
         Me.MainGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
-        Me.MainGrid.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.NameColumn, Me.TypeColumn, Me.DescriptionColumn})
+        Me.MainGrid.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.NameCol, Me.TypeColumn, Me.DescriptionColumn})
         DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
         DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel)
         DataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(136, Byte), Integer), CType(CType(136, Byte), Integer))
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(198, Byte), Integer), CType(CType(247, Byte), Integer))
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(73, Byte), Integer), CType(CType(173, Byte), Integer))
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer))
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.MainGrid.DefaultCellStyle = DataGridViewCellStyle3
-        Me.MainGrid.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.MainGrid.Dock = System.Windows.Forms.DockStyle.Fill
         Me.MainGrid.EnableHeadersVisualStyles = False
         Me.MainGrid.Font = New System.Drawing.Font("Segoe UI", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel)
-        Me.MainGrid.Location = New System.Drawing.Point(0, 42)
+        Me.MainGrid.GridColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.MainGrid.Location = New System.Drawing.Point(0, 66)
+        Me.MainGrid.Margin = New System.Windows.Forms.Padding(0)
         Me.MainGrid.Name = "MainGrid"
         Me.MainGrid.ReadOnly = True
         Me.MainGrid.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
         DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(174, Byte), Integer), CType(CType(219, Byte), Integer))
+        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(124, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(153, Byte), Integer))
         DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel)
         DataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(198, Byte), Integer), CType(CType(247, Byte), Integer))
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(73, Byte), Integer), CType(CType(173, Byte), Integer))
         DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer))
         DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.MainGrid.RowHeadersDefaultCellStyle = DataGridViewCellStyle4
@@ -160,21 +136,21 @@ Partial Class FormGroupSelection
         Me.MainGrid.RowTemplate.Height = 20
         Me.MainGrid.RowTemplate.ReadOnly = True
         Me.MainGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.MainGrid.Size = New System.Drawing.Size(638, 230)
-        Me.MainGrid.Style = MetroFramework.MetroColorStyle.Blue
-        Me.MainGrid.TabIndex = 2
+        Me.MainGrid.Size = New System.Drawing.Size(686, 296)
+        Me.MainGrid.Style = MetroFramework.MetroColorStyle.Purple
+        Me.MainGrid.TabIndex = 5
         '
-        'NameColumn
+        'NameCol
         '
-        Me.NameColumn.columnName = "NameCol"
-        Me.NameColumn.DataPropertyName = "Name"
-        DataGridViewCellStyle2.Padding = New System.Windows.Forms.Padding(23, 0, 0, 0)
-        Me.NameColumn.DefaultCellStyle = DataGridViewCellStyle2
-        Me.NameColumn.FillWeight = 116.7513!
-        Me.NameColumn.HeaderText = "Name"
-        Me.NameColumn.Image = GlobalVariables.groupImage
-        Me.NameColumn.Name = "NameCol"
-        Me.NameColumn.ReadOnly = True
+        Me.NameCol.columnName = "NameCol"
+        Me.NameCol.DataPropertyName = "Name"
+        DataGridViewCellStyle2.Padding = New System.Windows.Forms.Padding(20, 0, 0, 0)
+        Me.NameCol.DefaultCellStyle = DataGridViewCellStyle2
+        Me.NameCol.FillWeight = 116.7513!
+        Me.NameCol.HeaderText = "Name"
+        Me.NameCol.Image = CType(resources.GetObject("NameCol.Image"), System.Drawing.Image)
+        Me.NameCol.Name = "NameCol"
+        Me.NameCol.ReadOnly = True
         '
         'TypeColumn
         '
@@ -192,36 +168,55 @@ Partial Class FormGroupSelection
         Me.DescriptionColumn.Name = "DescriptionColumn"
         Me.DescriptionColumn.ReadOnly = True
         '
-        'GroupSelectionForm
+        'Panel1
         '
-        Me.AcceptButton = Me.SearchBn
+        Me.Panel1.BackColor = System.Drawing.SystemColors.Control
+        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Panel1.Location = New System.Drawing.Point(0, 362)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(686, 36)
+        Me.Panel1.TabIndex = 8
+        '
+        'Panel2
+        '
+        Me.Panel2.Controls.Add(Me.SelectGroupTb)
+        Me.Panel2.Controls.Add(Me.SearchBn)
+        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel2.Location = New System.Drawing.Point(0, 30)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(686, 36)
+        Me.Panel2.TabIndex = 9
+        '
+        'FormGroupSelection
+        '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(686, 364)
-        Me.Controls.Add(Me.MainTabControl)
+        Me.ClientSize = New System.Drawing.Size(686, 398)
+        Me.Controls.Add(Me.MainGrid)
+        Me.Controls.Add(Me.Panel2)
+        Me.Controls.Add(Me.Panel1)
         Me.DisplayHeader = False
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "GroupSelectionForm"
-        Me.Padding = New System.Windows.Forms.Padding(20, 30, 20, 20)
+        Me.Name = "FormGroupSelection"
+        Me.Padding = New System.Windows.Forms.Padding(0, 30, 0, 0)
         Me.Resizable = False
         Me.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
+        Me.Style = MetroFramework.MetroColorStyle.Purple
         Me.Text = "GroupSelectionForm"
-        Me.MainTabControl.ResumeLayout(False)
-        Me.GroupsTab.ResumeLayout(False)
         CType(Me.MainGrid, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel2.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
-
-    Friend WithEvents MainTabControl As MetroFramework.Controls.MetroTabControl
-    Friend WithEvents MainGrid As MetroFramework.Controls.MetroGrid
-    Friend WithEvents GroupsTab As MetroFramework.Controls.MetroTabPage
-    Friend WithEvents SearchBn As MetroFramework.Controls.MetroButton
-    Friend WithEvents SelectGroupTb As MetroFramework.Controls.MetroTextBox
-    Friend WithEvents NameCol As TextAndImageColumn
     Friend WithEvents NameColumn As TextAndImageColumn
+    Friend WithEvents SearchBn As Controls.MetroButton
+    Friend WithEvents SelectGroupTb As Controls.MetroTextBox
+    Friend WithEvents MainGrid As Controls.MetroGrid
+    Friend WithEvents NameCol As TextAndImageColumn
     Friend WithEvents TypeColumn As DataGridViewTextBoxColumn
     Friend WithEvents DescriptionColumn As DataGridViewTextBoxColumn
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel2 As Panel
 End Class

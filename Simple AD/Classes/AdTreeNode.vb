@@ -1,4 +1,4 @@
-﻿Friend Class AdTreeNode : Inherits TreeNode
+﻿Public Class AdTreeNode : Inherits TreeNode
     Implements IComparable(Of AdTreeNode)
 
     Private _DisplayName As String
@@ -63,5 +63,8 @@
     Public Function CompareTo(ByVal other As AdTreeNode) As Integer Implements System.IComparable(Of AdTreeNode).CompareTo
         Return String.Compare(Me.DisplayName, other.DisplayName)
     End Function
+
+    Private Declare Unicode Function SetWindowTheme Lib "uxtheme.dll" (hWnd As IntPtr, pszSubAppName As String, pszSubIdList As String) As Integer
+
 
 End Class

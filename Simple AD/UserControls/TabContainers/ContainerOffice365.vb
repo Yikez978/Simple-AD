@@ -77,4 +77,12 @@
             End If
         End If
     End Sub
+
+    Private Sub FixedPanelSize() Handles SpacerPanel.Resize
+        SpacerPanel.Height = 36
+    End Sub
+
+    Private Sub SearchBoxTb_Resize(sender As Object, e As EventArgs) Handles SearchBoxTb.Resize
+        SearchBoxTb.Size = New Size(269, 24)
+    End Sub
 End Class

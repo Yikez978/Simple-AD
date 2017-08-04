@@ -45,6 +45,7 @@ Partial Class FormMain
         Me.ImportCSVToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BulkUserWizardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RecentFilesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CheckForUpdatesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Office365ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -82,9 +83,8 @@ Partial Class FormMain
         Me.ToolStripStatusLabelStatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.SpacerToolStripStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ConnectionToolStripStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.VersionLb = New MetroFramework.Controls.MetroLabel()
-        Me.CheckForUpdatesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.UpdateToolStripStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.VersionLb = New MetroFramework.Controls.MetroLabel()
         SADMenuStrip = New System.Windows.Forms.MenuStrip()
         SADMenuStrip.SuspendLayout()
         Me.NodeContextMenu.SuspendLayout()
@@ -133,6 +133,12 @@ Partial Class FormMain
         Me.RecentFilesToolStripMenuItem.Name = "RecentFilesToolStripMenuItem"
         Me.RecentFilesToolStripMenuItem.Size = New System.Drawing.Size(178, 22)
         Me.RecentFilesToolStripMenuItem.Text = "Recent Files"
+        '
+        'CheckForUpdatesToolStripMenuItem
+        '
+        Me.CheckForUpdatesToolStripMenuItem.Name = "CheckForUpdatesToolStripMenuItem"
+        Me.CheckForUpdatesToolStripMenuItem.Size = New System.Drawing.Size(178, 22)
+        Me.CheckForUpdatesToolStripMenuItem.Text = "&Check for Updates..."
         '
         'ToolStripSeparator1
         '
@@ -376,7 +382,7 @@ Partial Class FormMain
         'StatusStrip
         '
         Me.StatusStrip.AutoSize = False
-        Me.StatusStrip.BackColor = System.Drawing.SystemColors.Highlight
+        Me.StatusStrip.BackColor = System.Drawing.Color.FromArgb(CType(CType(124, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(153, Byte), Integer))
         Me.StatusStrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
         Me.StatusStrip.ImageScalingSize = New System.Drawing.Size(17, 17)
         Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabelContext, Me.ToolStripStatusLabelStatus, Me.SpacerToolStripStatusLabel, Me.ConnectionToolStripStatusLabel, Me.UpdateToolStripStatusLabel})
@@ -407,7 +413,7 @@ Partial Class FormMain
         '
         Me.SpacerToolStripStatusLabel.BackColor = System.Drawing.Color.Transparent
         Me.SpacerToolStripStatusLabel.Name = "SpacerToolStripStatusLabel"
-        Me.SpacerToolStripStatusLabel.Size = New System.Drawing.Size(1117, 23)
+        Me.SpacerToolStripStatusLabel.Size = New System.Drawing.Size(1148, 23)
         Me.SpacerToolStripStatusLabel.Spring = True
         Me.SpacerToolStripStatusLabel.Text = " "
         '
@@ -419,6 +425,12 @@ Partial Class FormMain
         Me.ConnectionToolStripStatusLabel.Padding = New System.Windows.Forms.Padding(20, 0, 0, 0)
         Me.ConnectionToolStripStatusLabel.Size = New System.Drawing.Size(20, 23)
         '
+        'UpdateToolStripStatusLabel
+        '
+        Me.UpdateToolStripStatusLabel.ForeColor = System.Drawing.SystemColors.Window
+        Me.UpdateToolStripStatusLabel.Name = "UpdateToolStripStatusLabel"
+        Me.UpdateToolStripStatusLabel.Size = New System.Drawing.Size(0, 23)
+        '
         'VersionLb
         '
         Me.VersionLb.AutoSize = True
@@ -428,22 +440,10 @@ Partial Class FormMain
         Me.VersionLb.Location = New System.Drawing.Point(451, 34)
         Me.VersionLb.Margin = New System.Windows.Forms.Padding(10, 0, 10, 0)
         Me.VersionLb.Name = "VersionLb"
-        Me.VersionLb.Size = New System.Drawing.Size(45, 15)
+        Me.VersionLb.Size = New System.Drawing.Size(46, 15)
         Me.VersionLb.TabIndex = 19
         Me.VersionLb.Text = "Version"
         Me.VersionLb.UseCustomForeColor = True
-        '
-        'CheckForUpdatesToolStripMenuItem
-        '
-        Me.CheckForUpdatesToolStripMenuItem.Name = "CheckForUpdatesToolStripMenuItem"
-        Me.CheckForUpdatesToolStripMenuItem.Size = New System.Drawing.Size(178, 22)
-        Me.CheckForUpdatesToolStripMenuItem.Text = "&Check for Updates..."
-        '
-        'UpdateToolStripStatusLabel
-        '
-        Me.UpdateToolStripStatusLabel.ForeColor = System.Drawing.SystemColors.Window
-        Me.UpdateToolStripStatusLabel.Name = "UpdateToolStripStatusLabel"
-        Me.UpdateToolStripStatusLabel.Size = New System.Drawing.Size(0, 23)
         '
         'FormMain
         '
@@ -461,7 +461,7 @@ Partial Class FormMain
         Me.Padding = New System.Windows.Forms.Padding(0, 60, 0, 0)
         Me.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow
         Me.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultLocation
-        Me.Style = MetroFramework.MetroColorStyle.[Default]
+        Me.Style = MetroFramework.MetroColorStyle.Purple
         Me.Text = "Simple AD - Active Directory Managment"
         Me.Theme = MetroFramework.MetroThemeStyle.[Default]
         SADMenuStrip.ResumeLayout(False)

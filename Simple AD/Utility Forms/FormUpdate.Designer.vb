@@ -22,6 +22,7 @@ Partial Class FormUpdate
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormUpdate))
         Me.BodyLb = New MetroFramework.Controls.MetroLabel()
         Me.UpdateToggle = New MetroFramework.Controls.MetroToggle()
         Me.MetroLabel2 = New MetroFramework.Controls.MetroLabel()
@@ -43,7 +44,7 @@ Partial Class FormUpdate
         Me.BodyLb.AutoSize = True
         Me.BodyLb.Location = New System.Drawing.Point(23, 72)
         Me.BodyLb.Name = "BodyLb"
-        Me.BodyLb.Size = New System.Drawing.Size(98, 19)
+        Me.BodyLb.Size = New System.Drawing.Size(100, 19)
         Me.BodyLb.TabIndex = 0
         Me.BodyLb.Text = "Main Body Text"
         '
@@ -216,10 +217,12 @@ Partial Class FormUpdate
         Me.Controls.Add(Me.MetroLabel2)
         Me.Controls.Add(Me.UpdateToggle)
         Me.Controls.Add(Me.BodyLb)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "FormUpdate"
         Me.Resizable = False
+        Me.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow
         Me.ShowIcon = False
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
         Me.Style = MetroFramework.MetroColorStyle.Purple

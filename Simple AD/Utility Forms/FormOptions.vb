@@ -17,6 +17,7 @@
         LaCb.Checked = My.Settings.LoadAdvLDAP
         URITb.Text = My.Settings.OfficeURI
         ShellURITb.Text = My.Settings.OfficeShellURI
+        ProxyToggle.Checked = My.Settings.UseProxy
 
         TabControl1.SelectedTab = TabControl1.TabPages.Item(0)
 
@@ -54,5 +55,9 @@
     Private Sub ResetShellURIBn_Click(sender As Object, e As EventArgs) Handles ResetShellURIBn.Click
         My.Settings.OfficeShellURI = "http://schemas.microsoft.com/powershell/Microsoft.Exchange"
         ShellURITb.Text = "http://schemas.microsoft.com/powershell/Microsoft.Exchange"
+    End Sub
+
+    Private Sub ProxyToggle_CheckedChanged(sender As Object, e As EventArgs) Handles ProxyToggle.CheckedChanged
+        My.Settings.UseProxy = ProxyToggle.Checked
     End Sub
 End Class

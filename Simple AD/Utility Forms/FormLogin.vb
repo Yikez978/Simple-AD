@@ -15,6 +15,18 @@ Public Class FormLogin
         GlobalVariables.Load()
     End Sub
 
+    Protected Overrides Sub SetVisibleCore(ByVal value As Boolean)
+        If Not Me.IsHandleCreated Then
+            Me.CreateHandle()
+            value = False
+        End If
+        MyBase.SetVisibleCore(value)
+
+        If Not Application.OpenForms().OfType(Of FormMain).Any Then
+            AutoLogin()
+        End If
+    End Sub
+
     Sub UnhandledExceptionEventRaised(ByVal sender As Object, ByVal e As UnhandledExceptionEventArgs)
         If e.IsTerminating Then
             Dim o As Object = e.ExceptionObject
@@ -55,6 +67,8 @@ Public Class FormLogin
             Catch Ex As Exception
                 Debug.WriteLine(Ex.Message)
             End Try
+        Else
+            Me.Show()
         End If
     End Sub
 

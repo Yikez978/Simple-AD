@@ -71,7 +71,7 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Config\LogoIcon.ico</ApplicationIcon>
+    <ApplicationIcon>SimpleADIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>4280BADFD947601AA8C1B5C9D71026B74F6F9073</ManifestCertificateThumbprint>
@@ -94,7 +94,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AutoUpdater.NET, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autoupdater.NET.Official.1.4.3\lib\net452\AutoUpdater.NET.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\AutoUpdater.NET.dll</HintPath>
     </Reference>
     <Reference Include="Interop.ActiveDs, Version=1.0.0.0, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
@@ -183,8 +184,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="UI\TabDragger.vb" />
-    <Compile Include="Modules\Updater.vb" />
+    <Compile Include="UI\NativeTreeView.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modules\TabDragger.vb" />
     <Compile Include="Utility Forms\FormUpdate.Designer.vb">
       <DependentUpon>FormUpdate.vb</DependentUpon>
     </Compile>
@@ -438,6 +441,8 @@
   <ItemGroup>
     <Content Include="Config\LogoIcon.ico" />
     <Content Include="Config\MetroFramework.txt" />
+    <None Include="Resources\SimpleADIcon.ico" />
+    <Content Include="SimpleADIcon.ico" />
     <None Include="Resources\appbar.check.png" />
     <None Include="Resources\appbar.network.server.disconnect.png" />
     <None Include="Resources\appbar.network.server.connecting.png" />

@@ -33,6 +33,9 @@ Partial Class FormOptions
         Me.FpCb = New MetroFramework.Controls.MetroCheckBox()
         Me.ChCb = New MetroFramework.Controls.MetroCheckBox()
         Me.Preferences = New MetroFramework.Controls.MetroTabPage()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.MetroLabel3 = New MetroFramework.Controls.MetroLabel()
+        Me.ProxyToggle = New MetroFramework.Controls.MetroToggle()
         Me.DbGb = New System.Windows.Forms.GroupBox()
         Me.CoCb = New MetroFramework.Controls.MetroCheckBox()
         Me.VbCb = New MetroFramework.Controls.MetroCheckBox()
@@ -52,6 +55,7 @@ Partial Class FormOptions
         Me.ReportsGb.SuspendLayout()
         Me.GnGb.SuspendLayout()
         Me.Preferences.SuspendLayout()
+        Me.GroupBox2.SuspendLayout()
         Me.DbGb.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.Ofice365TabPage.SuspendLayout()
@@ -111,6 +115,7 @@ Partial Class FormOptions
         Me.LaCb.Location = New System.Drawing.Point(13, 21)
         Me.LaCb.Name = "LaCb"
         Me.LaCb.Size = New System.Drawing.Size(160, 15)
+        Me.LaCb.Style = MetroFramework.MetroColorStyle.Purple
         Me.LaCb.TabIndex = 3
         Me.LaCb.Text = "Load Advanced Attributes"
         Me.LaCb.UseSelectable = True
@@ -136,6 +141,7 @@ Partial Class FormOptions
         Me.EaCb.Location = New System.Drawing.Point(13, 68)
         Me.EaCb.Name = "EaCb"
         Me.EaCb.Size = New System.Drawing.Size(176, 15)
+        Me.EaCb.Style = MetroFramework.MetroColorStyle.Purple
         Me.EaCb.TabIndex = 2
         Me.EaCb.Text = "Enable &Accounts on Creation"
         Me.EaCb.UseSelectable = True
@@ -148,6 +154,7 @@ Partial Class FormOptions
         Me.FpCb.Location = New System.Drawing.Point(13, 22)
         Me.FpCb.Name = "FpCb"
         Me.FpCb.Size = New System.Drawing.Size(211, 15)
+        Me.FpCb.Style = MetroFramework.MetroColorStyle.Purple
         Me.FpCb.TabIndex = 1
         Me.FpCb.Text = "&Force Password Reset on First Login"
         Me.FpCb.UseSelectable = True
@@ -160,12 +167,14 @@ Partial Class FormOptions
         Me.ChCb.Location = New System.Drawing.Point(13, 45)
         Me.ChCb.Name = "ChCb"
         Me.ChCb.Size = New System.Drawing.Size(134, 15)
+        Me.ChCb.Style = MetroFramework.MetroColorStyle.Purple
         Me.ChCb.TabIndex = 0
         Me.ChCb.Text = "Create &Home Folders"
         Me.ChCb.UseSelectable = True
         '
         'Preferences
         '
+        Me.Preferences.Controls.Add(Me.GroupBox2)
         Me.Preferences.Controls.Add(Me.DbGb)
         Me.Preferences.HorizontalScrollbarBarColor = True
         Me.Preferences.HorizontalScrollbarHighlightOnWheel = False
@@ -181,13 +190,47 @@ Partial Class FormOptions
         Me.Preferences.VerticalScrollbarHighlightOnWheel = False
         Me.Preferences.VerticalScrollbarSize = 10
         '
+        'GroupBox2
+        '
+        Me.GroupBox2.BackColor = System.Drawing.SystemColors.Window
+        Me.GroupBox2.Controls.Add(Me.MetroLabel3)
+        Me.GroupBox2.Controls.Add(Me.ProxyToggle)
+        Me.GroupBox2.Location = New System.Drawing.Point(7, 11)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(481, 172)
+        Me.GroupBox2.TabIndex = 4
+        Me.GroupBox2.TabStop = False
+        Me.GroupBox2.Text = "General"
+        '
+        'MetroLabel3
+        '
+        Me.MetroLabel3.AutoSize = True
+        Me.MetroLabel3.FontSize = MetroFramework.MetroLabelSize.Small
+        Me.MetroLabel3.Location = New System.Drawing.Point(99, 31)
+        Me.MetroLabel3.Name = "MetroLabel3"
+        Me.MetroLabel3.Size = New System.Drawing.Size(96, 15)
+        Me.MetroLabel3.TabIndex = 1
+        Me.MetroLabel3.Text = "Use System Proxy"
+        '
+        'ProxyToggle
+        '
+        Me.ProxyToggle.AutoSize = True
+        Me.ProxyToggle.Location = New System.Drawing.Point(13, 31)
+        Me.ProxyToggle.Name = "ProxyToggle"
+        Me.ProxyToggle.Size = New System.Drawing.Size(80, 17)
+        Me.ProxyToggle.Style = MetroFramework.MetroColorStyle.Purple
+        Me.ProxyToggle.TabIndex = 0
+        Me.ProxyToggle.Text = "Off"
+        Me.ProxyToggle.UseSelectable = True
+        '
         'DbGb
         '
+        Me.DbGb.BackColor = System.Drawing.SystemColors.Window
         Me.DbGb.Controls.Add(Me.CoCb)
         Me.DbGb.Controls.Add(Me.VbCb)
-        Me.DbGb.Location = New System.Drawing.Point(7, 11)
+        Me.DbGb.Location = New System.Drawing.Point(7, 189)
         Me.DbGb.Name = "DbGb"
-        Me.DbGb.Size = New System.Drawing.Size(481, 66)
+        Me.DbGb.Size = New System.Drawing.Size(481, 67)
         Me.DbGb.TabIndex = 3
         Me.DbGb.TabStop = False
         Me.DbGb.Text = "Debugging"
@@ -199,6 +242,7 @@ Partial Class FormOptions
         Me.CoCb.Location = New System.Drawing.Point(13, 42)
         Me.CoCb.Name = "CoCb"
         Me.CoCb.Size = New System.Drawing.Size(169, 15)
+        Me.CoCb.Style = MetroFramework.MetroColorStyle.Purple
         Me.CoCb.TabIndex = 3
         Me.CoCb.Text = "Enable Live &Console Output"
         Me.CoCb.UseSelectable = True
@@ -210,6 +254,7 @@ Partial Class FormOptions
         Me.VbCb.Location = New System.Drawing.Point(13, 19)
         Me.VbCb.Name = "VbCb"
         Me.VbCb.Size = New System.Drawing.Size(150, 15)
+        Me.VbCb.Style = MetroFramework.MetroColorStyle.Purple
         Me.VbCb.TabIndex = 2
         Me.VbCb.Text = "Enable &Verbose Logging"
         Me.VbCb.UseSelectable = True
@@ -221,8 +266,9 @@ Partial Class FormOptions
         Me.TabControl1.Controls.Add(Me.Ofice365TabPage)
         Me.TabControl1.Location = New System.Drawing.Point(12, 22)
         Me.TabControl1.Name = "TabControl1"
-        Me.TabControl1.SelectedIndex = 2
+        Me.TabControl1.SelectedIndex = 0
         Me.TabControl1.Size = New System.Drawing.Size(502, 298)
+        Me.TabControl1.Style = MetroFramework.MetroColorStyle.Purple
         Me.TabControl1.TabIndex = 0
         Me.TabControl1.UseSelectable = True
         '
@@ -263,6 +309,7 @@ Partial Class FormOptions
         Me.ResetShellURIBn.Location = New System.Drawing.Point(365, 53)
         Me.ResetShellURIBn.Name = "ResetShellURIBn"
         Me.ResetShellURIBn.Size = New System.Drawing.Size(97, 23)
+        Me.ResetShellURIBn.Style = MetroFramework.MetroColorStyle.Purple
         Me.ResetShellURIBn.TabIndex = 5
         Me.ResetShellURIBn.Text = "Restore Default"
         Me.ResetShellURIBn.UseSelectable = True
@@ -303,6 +350,7 @@ Partial Class FormOptions
         Me.ShellURITb.SelectionStart = 0
         Me.ShellURITb.ShortcutsEnabled = True
         Me.ShellURITb.Size = New System.Drawing.Size(244, 23)
+        Me.ShellURITb.Style = MetroFramework.MetroColorStyle.Purple
         Me.ShellURITb.TabIndex = 3
         Me.ShellURITb.UseSelectable = True
         Me.ShellURITb.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
@@ -313,6 +361,7 @@ Partial Class FormOptions
         Me.ResetURIBn.Location = New System.Drawing.Point(365, 24)
         Me.ResetURIBn.Name = "ResetURIBn"
         Me.ResetURIBn.Size = New System.Drawing.Size(97, 23)
+        Me.ResetURIBn.Style = MetroFramework.MetroColorStyle.Purple
         Me.ResetURIBn.TabIndex = 2
         Me.ResetURIBn.Text = "Restore Default"
         Me.ResetURIBn.UseSelectable = True
@@ -353,6 +402,7 @@ Partial Class FormOptions
         Me.URITb.SelectionStart = 0
         Me.URITb.ShortcutsEnabled = True
         Me.URITb.Size = New System.Drawing.Size(244, 23)
+        Me.URITb.Style = MetroFramework.MetroColorStyle.Purple
         Me.URITb.TabIndex = 0
         Me.URITb.UseSelectable = True
         Me.URITb.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
@@ -406,12 +456,13 @@ Partial Class FormOptions
         Me.results365Tb.SelectionStart = 0
         Me.results365Tb.ShortcutsEnabled = True
         Me.results365Tb.Size = New System.Drawing.Size(59, 23)
+        Me.results365Tb.Style = MetroFramework.MetroColorStyle.Purple
         Me.results365Tb.TabIndex = 0
         Me.results365Tb.UseSelectable = True
         Me.results365Tb.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
         Me.results365Tb.WaterMarkFont = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel)
         '
-        'OptionsForm
+        'FormOptions
         '
         Me.AcceptButton = Me.OKBt
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -425,11 +476,12 @@ Partial Class FormOptions
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "OptionsForm"
+        Me.Name = "FormOptions"
         Me.Padding = New System.Windows.Forms.Padding(20, 30, 20, 20)
         Me.Resizable = False
         Me.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
+        Me.Style = MetroFramework.MetroColorStyle.Purple
         Me.Text = "Options"
         Me.LDAPTabPage.ResumeLayout(False)
         Me.ReportsGb.ResumeLayout(False)
@@ -437,6 +489,8 @@ Partial Class FormOptions
         Me.GnGb.ResumeLayout(False)
         Me.GnGb.PerformLayout()
         Me.Preferences.ResumeLayout(False)
+        Me.GroupBox2.ResumeLayout(False)
+        Me.GroupBox2.PerformLayout()
         Me.DbGb.ResumeLayout(False)
         Me.DbGb.PerformLayout()
         Me.TabControl1.ResumeLayout(False)
@@ -473,4 +527,7 @@ Partial Class FormOptions
     Friend WithEvents ResetShellURIBn As Controls.MetroButton
     Friend WithEvents MetroLabel2 As Controls.MetroLabel
     Friend WithEvents ShellURITb As Controls.MetroTextBox
+    Friend WithEvents GroupBox2 As GroupBox
+    Friend WithEvents MetroLabel3 As Controls.MetroLabel
+    Friend WithEvents ProxyToggle As Controls.MetroToggle
 End Class

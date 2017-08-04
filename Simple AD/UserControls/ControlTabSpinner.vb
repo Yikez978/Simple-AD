@@ -3,12 +3,16 @@
 
     Private _ParentContainer As Control
 
-    Public Sub New(ByVal DisplayText As String, ByVal Container As Control)
+    Public Sub New(ByVal DisplayText As String, ByVal Container As Control, Optional Spinnercolor As Color = Nothing)
         InitializeComponent()
 
         Me.MainLb.Text = DisplayText
         Me.Dock = DockStyle.Fill
         _ParentContainer = Container
+
+        If Not Spinnercolor.IsEmpty Then
+            Me.MainSpinner.ForeColor = Spinnercolor
+        End If
 
     End Sub
 
@@ -37,6 +41,15 @@
         End Set
         Get
             Return Me.SpinnerTooltip.GetToolTip(Me.MainLb)
+        End Get
+    End Property
+
+    Public Property SpinnerColor As Color
+        Set(value As Color)
+            Me.MainSpinner.ForeColor = value
+        End Set
+        Get
+            Return Me.MainSpinner.ForeColor
         End Get
     End Property
 

@@ -1,8 +1,8 @@
 ﻿Public Class ContainerUserBulk
     Inherits UserControl
 
-    Public Properties As New ControlUserProperties
-    Private DomainTree As New ControlDomianTree(Me)
+    Public Properties As ControlUserProperties
+    Public DomainTree As ControlDomianTree
 
     Private Worker As BulkADWorker
 
@@ -36,6 +36,9 @@
 
         InitializeComponent()
 
+        Properties = New ControlUserProperties
+        DomainTree = New ControlDomianTree(Me)
+
         MainDataGrid.DoubleBuffered(True)
 
         With Properties
@@ -57,6 +60,10 @@
 
     Public Function GetMainDataGrid() As DataGridView
         Return Me.MainDataGrid
+    End Function
+
+    Public Function GetAccecptButton() As MetroFramework.Controls.MetroButton
+        Return Me.AcceptBt
     End Function
 
     Public Function GetMainSplitContainer0() As SplitContainer

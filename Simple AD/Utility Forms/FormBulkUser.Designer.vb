@@ -100,8 +100,9 @@ Partial Class FormBulkUser
         Me.MainTabControl.Controls.Add(Me.PropertiesTab)
         Me.MainTabControl.Location = New System.Drawing.Point(13, 63)
         Me.MainTabControl.Name = "MainTabControl"
-        Me.MainTabControl.SelectedIndex = 2
+        Me.MainTabControl.SelectedIndex = 0
         Me.MainTabControl.Size = New System.Drawing.Size(615, 289)
+        Me.MainTabControl.Style = MetroFramework.MetroColorStyle.Purple
         Me.MainTabControl.TabIndex = 2
         Me.MainTabControl.UseSelectable = True
         '
@@ -116,10 +117,10 @@ Partial Class FormBulkUser
         Me.InputTab.HorizontalScrollbarBarColor = True
         Me.InputTab.HorizontalScrollbarHighlightOnWheel = False
         Me.InputTab.HorizontalScrollbarSize = 10
-        Me.InputTab.Location = New System.Drawing.Point(4, 35)
+        Me.InputTab.Location = New System.Drawing.Point(4, 38)
         Me.InputTab.Name = "InputTab"
         Me.InputTab.Padding = New System.Windows.Forms.Padding(3)
-        Me.InputTab.Size = New System.Drawing.Size(607, 250)
+        Me.InputTab.Size = New System.Drawing.Size(607, 247)
         Me.InputTab.TabIndex = 0
         Me.InputTab.Text = "Data Input"
         Me.InputTab.VerticalScrollbarBarColor = True
@@ -129,7 +130,7 @@ Partial Class FormBulkUser
         'ValidateBn
         '
         Me.ValidateBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.ValidateBn.Location = New System.Drawing.Point(18, 209)
+        Me.ValidateBn.Location = New System.Drawing.Point(18, 221)
         Me.ValidateBn.Name = "ValidateBn"
         Me.ValidateBn.Size = New System.Drawing.Size(75, 23)
         Me.ValidateBn.TabIndex = 7
@@ -163,6 +164,7 @@ Partial Class FormBulkUser
         Me.SnTb.ShortcutsEnabled = True
         Me.SnTb.ShowClearButton = True
         Me.SnTb.Size = New System.Drawing.Size(257, 131)
+        Me.SnTb.Style = MetroFramework.MetroColorStyle.Purple
         Me.SnTb.TabIndex = 8
         Me.SnTb.UseSelectable = True
         Me.SnTb.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
@@ -195,6 +197,7 @@ Partial Class FormBulkUser
         Me.FnTb.ShortcutsEnabled = True
         Me.FnTb.ShowClearButton = True
         Me.FnTb.Size = New System.Drawing.Size(257, 131)
+        Me.FnTb.Style = MetroFramework.MetroColorStyle.Purple
         Me.FnTb.TabIndex = 7
         Me.FnTb.UseSelectable = True
         Me.FnTb.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
@@ -245,10 +248,10 @@ Partial Class FormBulkUser
         Me.UsernameConTab.HorizontalScrollbarBarColor = True
         Me.UsernameConTab.HorizontalScrollbarHighlightOnWheel = False
         Me.UsernameConTab.HorizontalScrollbarSize = 10
-        Me.UsernameConTab.Location = New System.Drawing.Point(4, 35)
+        Me.UsernameConTab.Location = New System.Drawing.Point(4, 38)
         Me.UsernameConTab.Name = "UsernameConTab"
         Me.UsernameConTab.Padding = New System.Windows.Forms.Padding(3)
-        Me.UsernameConTab.Size = New System.Drawing.Size(607, 250)
+        Me.UsernameConTab.Size = New System.Drawing.Size(607, 247)
         Me.UsernameConTab.TabIndex = 1
         Me.UsernameConTab.Text = "Username Constructor"
         Me.UsernameConTab.VerticalScrollbarBarColor = True
@@ -265,6 +268,7 @@ Partial Class FormBulkUser
         Me.NumberComboBox.Location = New System.Drawing.Point(375, 133)
         Me.NumberComboBox.Name = "NumberComboBox"
         Me.NumberComboBox.Size = New System.Drawing.Size(150, 25)
+        Me.NumberComboBox.Style = MetroFramework.MetroColorStyle.Purple
         Me.NumberComboBox.TabIndex = 13
         Me.NumberComboBox.UseSelectable = True
         '
@@ -273,6 +277,7 @@ Partial Class FormBulkUser
         Me.NumberBn.Location = New System.Drawing.Point(375, 105)
         Me.NumberBn.Name = "NumberBn"
         Me.NumberBn.Size = New System.Drawing.Size(150, 23)
+        Me.NumberBn.Style = MetroFramework.MetroColorStyle.Purple
         Me.NumberBn.TabIndex = 11
         Me.NumberBn.Text = "Number"
         Me.ToolTip.SetToolTip(Me.NumberBn, "Adds a dynamic number to the username based on if usernames that are current pres" &
@@ -298,12 +303,14 @@ Partial Class FormBulkUser
         Me.StringDragTb.MaxLength = 32767
         Me.StringDragTb.Name = "StringDragTb"
         Me.StringDragTb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
+        Me.StringDragTb.PromptText = "Enter String..."
         Me.StringDragTb.ScrollBars = System.Windows.Forms.ScrollBars.None
         Me.StringDragTb.SelectedText = ""
         Me.StringDragTb.SelectionLength = 0
         Me.StringDragTb.SelectionStart = 0
         Me.StringDragTb.ShortcutsEnabled = True
         Me.StringDragTb.Size = New System.Drawing.Size(150, 25)
+        Me.StringDragTb.Style = MetroFramework.MetroColorStyle.Purple
         Me.StringDragTb.TabIndex = 10
         Me.StringDragTb.UseSelectable = True
         Me.StringDragTb.WaterMark = "Enter String..."
@@ -315,6 +322,7 @@ Partial Class FormBulkUser
         Me.StringDragBn.Location = New System.Drawing.Point(219, 105)
         Me.StringDragBn.Name = "StringDragBn"
         Me.StringDragBn.Size = New System.Drawing.Size(150, 23)
+        Me.StringDragBn.Style = MetroFramework.MetroColorStyle.Purple
         Me.StringDragBn.TabIndex = 9
         Me.StringDragBn.Text = "String"
         Me.ToolTip.SetToolTip(Me.StringDragBn, "Allows a custom string to be inserted into a username")
@@ -325,7 +333,7 @@ Partial Class FormBulkUser
         Me.MainUnPreview.AutoSize = True
         Me.MainUnPreview.FontSize = MetroFramework.MetroLabelSize.Tall
         Me.MainUnPreview.FontWeight = MetroFramework.MetroLabelWeight.Regular
-        Me.MainUnPreview.ForeColor = System.Drawing.Color.DodgerBlue
+        Me.MainUnPreview.ForeColor = System.Drawing.SystemColors.ControlDarkDark
         Me.MainUnPreview.Location = New System.Drawing.Point(8, 198)
         Me.MainUnPreview.Name = "MainUnPreview"
         Me.MainUnPreview.Size = New System.Drawing.Size(156, 25)
@@ -348,6 +356,7 @@ Partial Class FormBulkUser
         Me.Sn1DragBn.Location = New System.Drawing.Point(87, 134)
         Me.Sn1DragBn.Name = "Sn1DragBn"
         Me.Sn1DragBn.Size = New System.Drawing.Size(75, 23)
+        Me.Sn1DragBn.Style = MetroFramework.MetroColorStyle.Purple
         Me.Sn1DragBn.TabIndex = 6
         Me.Sn1DragBn.Text = "Last Initial"
         Me.Sn1DragBn.UseSelectable = True
@@ -357,6 +366,7 @@ Partial Class FormBulkUser
         Me.Fn1DragBn.Location = New System.Drawing.Point(6, 134)
         Me.Fn1DragBn.Name = "Fn1DragBn"
         Me.Fn1DragBn.Size = New System.Drawing.Size(75, 23)
+        Me.Fn1DragBn.Style = MetroFramework.MetroColorStyle.Purple
         Me.Fn1DragBn.TabIndex = 5
         Me.Fn1DragBn.Text = "First Initial"
         Me.Fn1DragBn.UseSelectable = True
@@ -366,6 +376,7 @@ Partial Class FormBulkUser
         Me.SnDragBn.Location = New System.Drawing.Point(87, 105)
         Me.SnDragBn.Name = "SnDragBn"
         Me.SnDragBn.Size = New System.Drawing.Size(75, 23)
+        Me.SnDragBn.Style = MetroFramework.MetroColorStyle.Purple
         Me.SnDragBn.TabIndex = 4
         Me.SnDragBn.Text = "Surname"
         Me.SnDragBn.UseSelectable = True
@@ -375,6 +386,7 @@ Partial Class FormBulkUser
         Me.FnDragBn.Location = New System.Drawing.Point(6, 105)
         Me.FnDragBn.Name = "FnDragBn"
         Me.FnDragBn.Size = New System.Drawing.Size(75, 23)
+        Me.FnDragBn.Style = MetroFramework.MetroColorStyle.Purple
         Me.FnDragBn.TabIndex = 3
         Me.FnDragBn.Text = "FirstName"
         Me.FnDragBn.UseSelectable = True
@@ -429,6 +441,7 @@ Partial Class FormBulkUser
         Me.GroupBn.Location = New System.Drawing.Point(183, 111)
         Me.GroupBn.Name = "GroupBn"
         Me.GroupBn.Size = New System.Drawing.Size(34, 23)
+        Me.GroupBn.Style = MetroFramework.MetroColorStyle.Purple
         Me.GroupBn.TabIndex = 20
         Me.GroupBn.Text = "..."
         Me.GroupBn.UseSelectable = True
@@ -487,6 +500,7 @@ Partial Class FormBulkUser
         Me.MetroTextBox2.SelectionStart = 0
         Me.MetroTextBox2.ShortcutsEnabled = True
         Me.MetroTextBox2.Size = New System.Drawing.Size(240, 23)
+        Me.MetroTextBox2.Style = MetroFramework.MetroColorStyle.Purple
         Me.MetroTextBox2.TabIndex = 16
         Me.MetroTextBox2.UseSelectable = True
         Me.MetroTextBox2.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
@@ -526,6 +540,7 @@ Partial Class FormBulkUser
         Me.PagerTb.SelectionStart = 0
         Me.PagerTb.ShortcutsEnabled = True
         Me.PagerTb.Size = New System.Drawing.Size(240, 23)
+        Me.PagerTb.Style = MetroFramework.MetroColorStyle.Purple
         Me.PagerTb.TabIndex = 14
         Me.PagerTb.UseSelectable = True
         Me.PagerTb.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
@@ -565,6 +580,7 @@ Partial Class FormBulkUser
         Me.MetroTextBox1.SelectionStart = 0
         Me.MetroTextBox1.ShortcutsEnabled = True
         Me.MetroTextBox1.Size = New System.Drawing.Size(240, 23)
+        Me.MetroTextBox1.Style = MetroFramework.MetroColorStyle.Purple
         Me.MetroTextBox1.TabIndex = 12
         Me.MetroTextBox1.UseSelectable = True
         Me.MetroTextBox1.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
@@ -604,6 +620,7 @@ Partial Class FormBulkUser
         Me.LogonScriptTb.SelectionStart = 0
         Me.LogonScriptTb.ShortcutsEnabled = True
         Me.LogonScriptTb.Size = New System.Drawing.Size(95, 23)
+        Me.LogonScriptTb.Style = MetroFramework.MetroColorStyle.Purple
         Me.LogonScriptTb.TabIndex = 10
         Me.LogonScriptTb.UseSelectable = True
         Me.LogonScriptTb.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
@@ -628,6 +645,7 @@ Partial Class FormBulkUser
         Me.HomeDriveCombo.Location = New System.Drawing.Point(530, 107)
         Me.HomeDriveCombo.Name = "HomeDriveCombo"
         Me.HomeDriveCombo.Size = New System.Drawing.Size(54, 25)
+        Me.HomeDriveCombo.Style = MetroFramework.MetroColorStyle.Purple
         Me.HomeDriveCombo.TabIndex = 8
         Me.HomeDriveCombo.UseSelectable = True
         '
@@ -635,7 +653,7 @@ Partial Class FormBulkUser
         '
         Me.ProfilePathLb.Anchor = System.Windows.Forms.AnchorStyles.Right
         Me.ProfilePathLb.AutoSize = True
-        Me.ProfilePathLb.Location = New System.Drawing.Point(17, 53)
+        Me.ProfilePathLb.Location = New System.Drawing.Point(17, 51)
         Me.ProfilePathLb.Name = "ProfilePathLb"
         Me.ProfilePathLb.Size = New System.Drawing.Size(77, 19)
         Me.ProfilePathLb.TabIndex = 7
@@ -645,7 +663,7 @@ Partial Class FormBulkUser
         '
         Me.HomeFolderLb.Anchor = System.Windows.Forms.AnchorStyles.Right
         Me.HomeFolderLb.AutoSize = True
-        Me.HomeFolderLb.Location = New System.Drawing.Point(17, 23)
+        Me.HomeFolderLb.Location = New System.Drawing.Point(17, 21)
         Me.HomeFolderLb.Name = "HomeFolderLb"
         Me.HomeFolderLb.Size = New System.Drawing.Size(87, 19)
         Me.HomeFolderLb.TabIndex = 6
@@ -656,6 +674,7 @@ Partial Class FormBulkUser
         Me.ProfilePathBn.Location = New System.Drawing.Point(550, 57)
         Me.ProfilePathBn.Name = "ProfilePathBn"
         Me.ProfilePathBn.Size = New System.Drawing.Size(34, 23)
+        Me.ProfilePathBn.Style = MetroFramework.MetroColorStyle.Purple
         Me.ProfilePathBn.TabIndex = 5
         Me.ProfilePathBn.Text = "..."
         Me.ProfilePathBn.UseSelectable = True
@@ -665,6 +684,7 @@ Partial Class FormBulkUser
         Me.HomeFolderBn.Location = New System.Drawing.Point(550, 27)
         Me.HomeFolderBn.Name = "HomeFolderBn"
         Me.HomeFolderBn.Size = New System.Drawing.Size(34, 23)
+        Me.HomeFolderBn.Style = MetroFramework.MetroColorStyle.Purple
         Me.HomeFolderBn.TabIndex = 4
         Me.HomeFolderBn.Text = "..."
         Me.HomeFolderBn.UseSelectable = True
@@ -688,12 +708,14 @@ Partial Class FormBulkUser
         Me.ProfilePathTb.MaxLength = 32767
         Me.ProfilePathTb.Name = "ProfilePathTb"
         Me.ProfilePathTb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
+        Me.ProfilePathTb.PromptText = "\\fs1\home$\Profiles\%Username%"
         Me.ProfilePathTb.ScrollBars = System.Windows.Forms.ScrollBars.None
         Me.ProfilePathTb.SelectedText = ""
         Me.ProfilePathTb.SelectionLength = 0
         Me.ProfilePathTb.SelectionStart = 0
         Me.ProfilePathTb.ShortcutsEnabled = True
         Me.ProfilePathTb.Size = New System.Drawing.Size(434, 23)
+        Me.ProfilePathTb.Style = MetroFramework.MetroColorStyle.Purple
         Me.ProfilePathTb.TabIndex = 3
         Me.ProfilePathTb.UseSelectable = True
         Me.ProfilePathTb.WaterMark = "\\fs1\home$\Profiles\%Username%"
@@ -719,12 +741,14 @@ Partial Class FormBulkUser
         Me.HomeFolderTb.MaxLength = 32767
         Me.HomeFolderTb.Name = "HomeFolderTb"
         Me.HomeFolderTb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
+        Me.HomeFolderTb.PromptText = "\\fs1\home$\%Username%"
         Me.HomeFolderTb.ScrollBars = System.Windows.Forms.ScrollBars.None
         Me.HomeFolderTb.SelectedText = ""
         Me.HomeFolderTb.SelectionLength = 0
         Me.HomeFolderTb.SelectionStart = 0
         Me.HomeFolderTb.ShortcutsEnabled = True
         Me.HomeFolderTb.Size = New System.Drawing.Size(434, 23)
+        Me.HomeFolderTb.Style = MetroFramework.MetroColorStyle.Purple
         Me.HomeFolderTb.TabIndex = 2
         Me.HomeFolderTb.UseSelectable = True
         Me.HomeFolderTb.WaterMark = "\\fs1\home$\%Username%"
@@ -737,7 +761,7 @@ Partial Class FormBulkUser
         Me.ToolTip.StyleManager = Nothing
         Me.ToolTip.Theme = MetroFramework.MetroThemeStyle.Light
         '
-        'BulkUserForm
+        'FormBulkUser
         '
         Me.AcceptButton = Me.AcceptBn
         Me.CancelButton = Me.CancelBn
@@ -748,10 +772,11 @@ Partial Class FormBulkUser
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "BulkUserForm"
+        Me.Name = "FormBulkUser"
         Me.Resizable = False
         Me.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
+        Me.Style = MetroFramework.MetroColorStyle.Purple
         Me.Text = "Bulk User Wizard"
         Me.MainTabControl.ResumeLayout(False)
         Me.InputTab.ResumeLayout(False)

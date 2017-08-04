@@ -22,25 +22,11 @@ Partial Class ControlDomianTree
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.OUTreeView = New System.Windows.Forms.TreeView()
         Me.Panel = New MetroFramework.Controls.MetroPanel()
+        Me.OUTreeView = New Simple_AD.NativeTreeView()
         Me.Splitter = New System.Windows.Forms.Splitter()
         Me.Panel.SuspendLayout()
         Me.SuspendLayout()
-        '
-        'OUTreeView
-        '
-        Me.OUTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.OUTreeView.HideSelection = False
-        Me.OUTreeView.HotTracking = True
-        Me.OUTreeView.Indent = 20
-        Me.OUTreeView.ItemHeight = 18
-        Me.OUTreeView.LineColor = System.Drawing.Color.FromArgb(CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer))
-        Me.OUTreeView.Location = New System.Drawing.Point(0, 0)
-        Me.OUTreeView.Name = "OUTreeView"
-        Me.OUTreeView.Scrollable = False
-        Me.OUTreeView.Size = New System.Drawing.Size(197, 400)
-        Me.OUTreeView.TabIndex = 0
         '
         'Panel
         '
@@ -64,6 +50,14 @@ Partial Class ControlDomianTree
         Me.Panel.VerticalScrollbarHighlightOnWheel = False
         Me.Panel.VerticalScrollbarSize = 18
         '
+        'OUTreeView
+        '
+        Me.OUTreeView.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.OUTreeView.Location = New System.Drawing.Point(0, 0)
+        Me.OUTreeView.Name = "OUTreeView"
+        Me.OUTreeView.Size = New System.Drawing.Size(200, 400)
+        Me.OUTreeView.TabIndex = 2
+        '
         'Splitter
         '
         Me.Splitter.BackColor = System.Drawing.SystemColors.ControlDark
@@ -74,20 +68,19 @@ Partial Class ControlDomianTree
         Me.Splitter.TabIndex = 1
         Me.Splitter.TabStop = False
         '
-        'DomianTree
+        'ControlDomianTree
         '
         Me.BackColor = System.Drawing.SystemColors.Window
         Me.Controls.Add(Me.Splitter)
         Me.Controls.Add(Me.Panel)
-        Me.Name = "DomianTree"
+        Me.Name = "ControlDomianTree"
         Me.Size = New System.Drawing.Size(200, 400)
         Me.Panel.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-
-    Friend WithEvents OUTreeView As TreeView
     Friend WithEvents Panel As MetroFramework.Controls.MetroPanel
     Friend WithEvents Splitter As Splitter
+    Friend WithEvents OUTreeView As NativeTreeView
 End Class

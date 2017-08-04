@@ -48,7 +48,7 @@ Partial Class ContainerUserReport
         Me.MainDataGrid.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(85, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(85, Byte), Integer))
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI Semilight", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
         DataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(153, Byte), Integer), CType(CType(153, Byte), Integer), CType(CType(153, Byte), Integer))
         DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer))
@@ -96,7 +96,7 @@ Partial Class ContainerUserReport
         Me.MainDataGrid.RowTemplate.Height = 20
         Me.MainDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.MainDataGrid.ShowEditingIcon = False
-        Me.MainDataGrid.Size = New System.Drawing.Size(749, 289)
+        Me.MainDataGrid.Size = New System.Drawing.Size(749, 307)
         Me.MainDataGrid.Style = MetroFramework.MetroColorStyle.Silver
         Me.MainDataGrid.TabIndex = 0
         Me.MainDataGrid.UseCustomBackColor = True
@@ -106,10 +106,11 @@ Partial Class ContainerUserReport
         Me.SpacerPanel.BackColor = System.Drawing.SystemColors.Control
         Me.SpacerPanel.Controls.Add(Me.SearchBoxTb)
         Me.SpacerPanel.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.SpacerPanel.Location = New System.Drawing.Point(0, 289)
+        Me.SpacerPanel.Location = New System.Drawing.Point(0, 307)
+        Me.SpacerPanel.MaximumSize = New System.Drawing.Size(1000, 36)
         Me.SpacerPanel.Name = "SpacerPanel"
         Me.SpacerPanel.Padding = New System.Windows.Forms.Padding(12, 12, 48, 6)
-        Me.SpacerPanel.Size = New System.Drawing.Size(749, 54)
+        Me.SpacerPanel.Size = New System.Drawing.Size(749, 36)
         Me.SpacerPanel.TabIndex = 2
         '
         'SearchBoxTb
@@ -119,18 +120,18 @@ Partial Class ContainerUserReport
         '
         '
         Me.SearchBoxTb.CustomButton.Image = Nothing
-        Me.SearchBoxTb.CustomButton.Location = New System.Drawing.Point(243, 2)
+        Me.SearchBoxTb.CustomButton.Location = New System.Drawing.Point(247, 2)
         Me.SearchBoxTb.CustomButton.Name = ""
-        Me.SearchBoxTb.CustomButton.Size = New System.Drawing.Size(23, 23)
+        Me.SearchBoxTb.CustomButton.Size = New System.Drawing.Size(19, 19)
         Me.SearchBoxTb.CustomButton.Style = MetroFramework.MetroColorStyle.Blue
         Me.SearchBoxTb.CustomButton.TabIndex = 1
         Me.SearchBoxTb.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light
         Me.SearchBoxTb.CustomButton.UseSelectable = True
         Me.SearchBoxTb.CustomButton.Visible = False
         Me.SearchBoxTb.DisplayIcon = True
-        Me.SearchBoxTb.FontSize = MetroFramework.MetroTextBoxSize.Medium
+        Me.SearchBoxTb.FontWeight = MetroFramework.MetroTextBoxWeight.Light
         Me.SearchBoxTb.Lines = New String(-1) {}
-        Me.SearchBoxTb.Location = New System.Drawing.Point(12, 12)
+        Me.SearchBoxTb.Location = New System.Drawing.Point(6, 6)
         Me.SearchBoxTb.MaxLength = 32767
         Me.SearchBoxTb.Name = "SearchBoxTb"
         Me.SearchBoxTb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
@@ -141,7 +142,7 @@ Partial Class ContainerUserReport
         Me.SearchBoxTb.SelectionStart = 0
         Me.SearchBoxTb.ShortcutsEnabled = True
         Me.SearchBoxTb.ShowClearButton = True
-        Me.SearchBoxTb.Size = New System.Drawing.Size(269, 28)
+        Me.SearchBoxTb.Size = New System.Drawing.Size(269, 24)
         Me.SearchBoxTb.Style = MetroFramework.MetroColorStyle.Purple
         Me.SearchBoxTb.TabIndex = 3
         Me.SearchBoxTb.UseCustomBackColor = True
