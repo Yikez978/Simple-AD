@@ -94,7 +94,7 @@ Public Class FormO365Login
             End If
 
         Catch Ex As Exception
-
+            Debug.WriteLine("[Error] " & Ex.Message)
         End Try
     End Sub
 

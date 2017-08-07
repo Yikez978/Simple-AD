@@ -18,7 +18,7 @@ Public Class ControlDomianTree
             AdImages.Images.Add("ContainerImage", GlobalVariables.IconContainer)
             OUTreeView.ImageList = AdImages
         Catch ex As Exception
-            MessageBox.Show("The following error was encountered whilst attempting to load domain/container/OU icons: " & ex.Message, "Error Loading Icons", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Debug.WriteLine("[Error] The following error was encountered whilst attempting to load domain/container/OU icons: " & ex.Message)
         End Try
 
         AddHandler OUTreeView.BeforeExpand, AddressOf TreeView_BeforeExpand
@@ -48,7 +48,7 @@ Public Class ControlDomianTree
                 bgThread.Start(ExpandedNode)
             End If
         Catch ex As Exception
-            MessageBox.Show("Internal Error - Failed to get required information from expanded container node: " & ex.Message, "Container Expand Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Debug.WriteLine("[Error] Failed to get required information from expanded container node: " & ex.Message)
             EnableForm()
         End Try
     End Sub

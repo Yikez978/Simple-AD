@@ -119,6 +119,7 @@
             End If
 
         Catch Ex As Exception
+            Debug.WriteLine("[Error] " & Ex.Message)
         End Try
     End Sub
 
@@ -129,7 +130,7 @@
                 Dim ShowUserProps = New FormUserAttributes(Sam, e.RowIndex)
             End If
         Catch Ex As Exception
-            Debug.WriteLine(Ex.Message)
+            Debug.WriteLine("[Error] " & Ex.Message)
         End Try
     End Sub
 End Class

@@ -39,10 +39,10 @@ Module ActiveDirectoryHelper
 
             End If
         Catch AuthEx As System.Security.Authentication.AuthenticationException
-            Debug.WriteLine(AuthEx.InnerException.ToString)
+            Debug.WriteLine("[Authentication Error] " & AuthEx.InnerException.ToString)
             Return DomainName
         Catch NoneExistantDirEx As System.DirectoryServices.ActiveDirectory.ActiveDirectoryObjectNotFoundException
-            Debug.WriteLine(NoneExistantDirEx.InnerException.ToString)
+            Debug.WriteLine("[NoneExistantDir Error] " & NoneExistantDirEx.InnerException.ToString)
             Return DomainName
         End Try
 
@@ -76,11 +76,20 @@ Module ActiveDirectoryHelper
         Dim DisplayName As String = "User"
         Try
 
-            Dim Entry As DirectoryEntry = GetDirEntryFromSAM(GlobalVariables.LoginUsername)
-            DisplayName = Entry.Properties("displayName").Value
+            Dim Entry As DirectoryEntry = New DirectoryEntry(GetDirEntry, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword)
+            Dim DirSearcher As DirectorySearcher = New DirectorySearcher(GetDirEntry)
+
+            With DirSearcher
+                .SearchRoot = Entry
+                .Filter = "(&(objectClass=user)(sAMAccountName=" & GlobalVariables.LoginUsername & "))"
+            End With
+
+            Dim Result As SearchResult = DirSearcher.FindOne
+
+            DisplayName = Result.GetDirectoryEntry().Properties("displayName").Value
 
         Catch ex As Exception
-            MsgBox(ex.Message)
+            Return DisplayName
         End Try
         Return DisplayName
     End Function
@@ -115,7 +124,7 @@ Module ActiveDirectoryHelper
         Try
             If Not pValue Is Nothing Then
 
-                Debug.WriteLine("SetADProperty Started")
+                Debug.WriteLine("[Info] SetADProperty Started: " & de.Name.ToString)
 
                 With de
                     .Username = GlobalVariables.LoginUsername
@@ -123,15 +132,13 @@ Module ActiveDirectoryHelper
                     .AuthenticationType = AuthenticationTypes.Secure
                 End With
 
-                'Debug.WriteLine(pName)
-
                 If de.Properties.Contains(pName) Then
-                    Debug.WriteLine("SetADProperty Item Amend Ran" & pName.ToString)
+                    Debug.WriteLine("[Info] SetADProperty Item Modify - " & pName.ToString)
                     de.Properties.Item(pName)(0) = pValue
                     de.CommitChanges()
                     Return True
                 Else
-                    Debug.WriteLine("SetADProperty ELSE Ran - " & pName & ": " & de.Properties(pName).Value)
+                    Debug.WriteLine("[Info] SetADProperty Item Add - " & pName & ": " & de.Properties(pName).Value)
                     de.Properties(pName).Add(pValue)
                     de.CommitChanges()
                     Return True
@@ -145,7 +152,7 @@ Module ActiveDirectoryHelper
                 End With
 
                 If de.Properties.Contains(pName) Then
-                    Debug.WriteLine("SetADProperty Item Amend Ran" & pName.ToString)
+                    Debug.WriteLine("[Info] SetADProperty Item Remove - " & pName.ToString)
                     de.Properties.Item(pName).RemoveAt(0)
                     de.CommitChanges()
                     Return True
@@ -154,7 +161,7 @@ Module ActiveDirectoryHelper
                 End If
             End If
         Catch Ex As Exception
-            Debug.WriteLine(Ex.Message)
+            Debug.WriteLine("[Error] " & Ex.Message)
             Return False
         End Try
     End Function
@@ -225,20 +232,42 @@ Module ActiveDirectoryHelper
 
             Return result.GetDirectoryEntry
         Catch Ex As Exception
-            Debug.WriteLine(Ex.Message)
+            Debug.WriteLine("[Error] " & Ex.Message)
         End Try
         Return Nothing
     End Function
 
-    Public Function UpdateLDAPProperty(ByVal SAM As String, LDAPProperty As String) As Boolean
-
+    Public Function GetUPNSuffix() As String()
         Try
+            Dim Entry As New DirectoryEntry("LDAP://" & GlobalVariables.LoginUsernamePrefix & "/RootDSE", GlobalVariables.LoginUsername, GlobalVariables.LoginPassword)
+            Entry.RefreshCache()
 
+            Dim strNamingContext As String = Entry.Properties("defaultNamingContext").Value.ToString()
+            Dim strConfigContext As String = Entry.Properties("configurationNamingContext").Value.ToString()
+
+            MsgBox("strNamingContext: " & strNamingContext & Environment.NewLine & "strConfigContext: " & strConfigContext)
+
+            Dim oDomain As New DirectoryEntry(Convert.ToString("LDAP://" & GlobalVariables.LoginUsernamePrefix & "/") & strNamingContext)
+            Dim strDomainName As String = oDomain.Properties("name").Value.ToString()
+
+            Dim oPartition As New DirectoryEntry(Convert.ToString("LDAP://" & GlobalVariables.LoginUsernamePrefix & "CN=Partitions,") & strConfigContext)
+
+            oDomain.Invoke("GetInfoEx", New Object() {"canonicalName"}, 0)
+            Dim strCanonical As String = oDomain.InvokeGet("canonicalName").ToString()
+            strCanonical = strCanonical.Replace("/", "")
+
+            oPartition.Invoke("GetEx", New Object() {"uPNSuffixes"})
+            Dim suffixes As String() = DirectCast(oPartition.InvokeGet("uPNSuffixes"), String())
+
+            Entry = Nothing
+            oDomain = Nothing
+            oPartition = Nothing
+
+            Return suffixes
         Catch ex As Exception
-
+            Console.WriteLine(String.Format("[Error] {0}" & vbLf & " Inner Exception: " & vbLf & " {1}", ex.Message, ex.InnerException))
+            Return Nothing
         End Try
-
-        Return False
     End Function
 
 End Module

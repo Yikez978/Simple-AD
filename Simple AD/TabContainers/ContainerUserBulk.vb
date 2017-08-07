@@ -124,7 +124,7 @@
         Try
             Worker.CancelWork()
         Catch Ex As Exception
-            Debug.WriteLine(Ex.Message.ToString)
+            Debug.WriteLine("[Error] " & Ex.Message.ToString)
         End Try
     End Sub
 
@@ -171,7 +171,7 @@
                 My.Computer.Clipboard.SetText(MainDataGrid.SelectedRows(0).Cells(0).Value, System.Windows.Forms.TextDataFormat.Rtf)
             End If
         Catch ex As Exception
-            Debug.WriteLine("Error: " & ex.Message)
+            Debug.WriteLine("[Error] " & ex.Message)
         End Try
 
     End Sub

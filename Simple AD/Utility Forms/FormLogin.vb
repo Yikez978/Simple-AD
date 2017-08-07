@@ -47,7 +47,7 @@ Public Class FormLogin
     Sub UnhandledExceptionEventRaised(ByVal sender As Object, ByVal e As UnhandledExceptionEventArgs)
         If e.IsTerminating Then
             Dim o As Object = e.ExceptionObject
-            Debug.WriteLine(o.ToString)
+            Debug.WriteLine("[Error] " & o.ToString)
             MessageBox.Show(o.ToString, "Simple AD has encountered an unexpected Error", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error) ' use EventLog instead
         End If
     End Sub
@@ -87,7 +87,7 @@ Public Class FormLogin
                 End If
 
             Catch Ex As Exception
-                Debug.WriteLine(Ex.Message)
+                Debug.WriteLine("[Error] " & Ex.Message)
             End Try
         Else
             Me.Show()
@@ -111,7 +111,7 @@ Public Class FormLogin
             End If
 
         Catch Ex As Exception
-
+            Debug.WriteLine("[Error] " & Ex.Message)
         End Try
     End Sub
 

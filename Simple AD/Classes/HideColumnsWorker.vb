@@ -29,7 +29,7 @@ Public Class HideColumnsWorker
 
         Else
 
-            Debug.WriteLine("CBW Work Started")
+            Debug.WriteLine("[Info] HideColumnsWorker Work Started")
 
             Dim autoMainDataGrid As DataGridView = GetMainDataGrid(sourceGrid)
 
@@ -40,19 +40,14 @@ Public Class HideColumnsWorker
                 If Not GlobalVariables.PersistantColumns.Contains(Column.Name) Then
                     Dim variable As String = ""
                     sb.Remove(0, sb.Length)
-                    Debug.WriteLine("Currently Scanning the column " & Column.Name)
 
                     For Each row As DataGridViewRow In autoMainDataGrid.Rows
 
                         variable = sb.Append(row.Cells(Column.Name).Value).ToString
 
-                        Debug.WriteLine(Column.Name & " variable = " & variable)
-
                         If variable = "" Then
                             IsCurrentColumnEmpty = True
-                            Debug.WriteLine("Column " & Column.Name & " is empty")
                         Else
-                            Debug.WriteLine("Column " & Column.Name & " is not empty")
                             Exit For
                         End If
 
@@ -71,12 +66,12 @@ Public Class HideColumnsWorker
 
     Private Shared Sub Cbw_ProgressChanged(ByVal sender As Object, ByVal e As ProgressChangedEventArgs)
         FormMain.GetMainDataGrid.Columns(e.UserState.ToString).Visible = False
-        Debug.WriteLine("The following Column in MainDataGrid Has been Hidden - " & e.UserState.ToString)
+        Debug.WriteLine("[Info] The following Column in MainDataGrid Has been Hidden - " & e.UserState.ToString)
         GlobalVariables.HiddenColums.Add(e.UserState.ToString)
     End Sub
 
     Private Shared Sub Cbw_RunWorkerCompleted(ByVal sender As Object, ByVal e As RunWorkerCompletedEventArgs)
-        Debug.WriteLine("CBW Work Complete")
+        Debug.WriteLine("[Info] HideColumnsWorker Work Complete")
     End Sub
 
     Public Shared Function GetCBWBusy()

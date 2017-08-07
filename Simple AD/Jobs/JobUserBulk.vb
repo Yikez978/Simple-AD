@@ -190,7 +190,7 @@
                 sr.Close()
             End Using
         Catch Ex As Exception
-            Debug.WriteLine(Ex.Message)
+            Debug.WriteLine("[Error] " & Ex.Message)
             ImportFailed(Ex.Message)
         End Try
 
@@ -222,6 +222,7 @@
         Next
 
         ApplyDataSource(p.DataGrid, ftdt)
+
     End Sub
 
     Private Sub ImportFailed(ByVal ErrorMessage As String)
@@ -231,6 +232,7 @@
             Spinner.DisplayText = "Error Loading CSV File"
             Spinner.Tooltiptext = ErrorMessage
         End If
+
     End Sub
 
 End Class

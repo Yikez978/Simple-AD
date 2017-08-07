@@ -182,7 +182,7 @@ Public Class FormBulkUser
         Try
             HomeFolderTb.Text = FolderBrowserDialog.FileName
         Catch Ex As Exception
-            Debug.WriteLine(Ex.Message)
+            Debug.WriteLine("[Error] " & Ex.Message)
         End Try
     End Sub
 
@@ -191,7 +191,7 @@ Public Class FormBulkUser
         Try
             ProfilePathTb.Text = FolderBrowserDialog.FileName
         Catch Ex As Exception
-            Debug.WriteLine(Ex.Message)
+            Debug.WriteLine("[Error] " & Ex.Message)
         End Try
     End Sub
 

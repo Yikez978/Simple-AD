@@ -14,7 +14,6 @@ Public Class BulkADWorker
     Private Name
     Private Password
     Private TsProfilePath
-    Private MailDomain
     Private Description
     Private Pager
     Private HomeDirectory
@@ -24,6 +23,7 @@ Public Class BulkADWorker
     Private ScriptPath
     Private FirstName
     Private Surname
+    Private _UPNS
 
     Public Sub New(SourceGrid As DataGridView, bulkUserContainer As ContainerUserBulk)
         _SourceGrid = SourceGrid
@@ -31,6 +31,9 @@ Public Class BulkADWorker
 
         _BulkUserContainer.GetProgressBar.Maximum = _SourceGrid.Rows.Count
         _BulkUserContainer.GetProgressBar.Step = 1
+
+        _UPNS = GetUPNSuffix(0)
+
     End Sub
 
     Public Sub RunBulkUserSetup()
@@ -57,7 +60,7 @@ Public Class BulkADWorker
     Private Sub Bw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
         Dim worker As BackgroundWorker = CType(sender, BackgroundWorker)
 
-        Debug.WriteLine("BulkADWorkers Class Main Worker Initiated")
+        Debug.WriteLine("[Info] BulkADWorkers Class Main Worker Initiated")
 
         Dim autoMainDataGrid As DataGridView = GetMainDataGrid(_SourceGrid)
 
@@ -76,7 +79,7 @@ Public Class BulkADWorker
             strPath = "LDAP://" & GlobalVariables.LoginUsernamePrefix & ":389/" & GlobalVariables.SelectedOU
         End If
 
-        Debug.WriteLine("Bind to: " & strPath)
+        Debug.WriteLine("[LDAP] Bind to: " & strPath)
 
         ' Get AD LDS object.
 
@@ -135,10 +138,6 @@ Public Class BulkADWorker
                     Description = row.Cells("Description").Value.ToString
                 End If
 
-                If row.Cells("MailDomain").Value IsNot Nothing Then
-                    MailDomain = row.Cells("MailDomain").Value.ToString
-                End If
-
                 If row.Cells("TsProfilePath").Value IsNot Nothing Then
                     TsProfilePath = row.Cells("TsProfilePath").Value.ToString
                 End If
@@ -150,8 +149,8 @@ Public Class BulkADWorker
 
                 ' Specify User.
                 strUser = "CN=" & Name
-                strUserPrincipalName = Username & "@" & MailDomain
-                Debug.WriteLine("Create: " & strUser)
+                strUserPrincipalName = Username & "@" & _UPNS
+                Debug.WriteLine("[Info] Create: " & strUser)
 
                 ' Create User.
                 Try
@@ -205,8 +204,8 @@ Public Class BulkADWorker
 
                                     IO.Directory.CreateDirectory(HomeDirectory)
                                 Catch Ex As Exception
-                                    Debug.WriteLine("Error While Creating Home folder for user: " & Username)
-                                    Debug.WriteLine(Ex)
+                                    Debug.WriteLine("[Error] Error While Creating Home folder for user: " & Username)
+                                    Debug.WriteLine("[Error] " & Ex.Message)
                                 End Try
 
                                 If IO.Directory.Exists(HomeDirectory) Then
@@ -217,19 +216,19 @@ Public Class BulkADWorker
                                         FolderAcl.AddAccessRule(New FileSystemAccessRule(CStr(GetLocalDomainName() & "\" & Username), FileSystemRights.Modify, InheritanceFlags.ContainerInherit Or InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Allow))
                                         FolderInfo.SetAccessControl(FolderAcl)
                                     Catch Ex As Exception
-                                        Debug.WriteLine("Error While Setting permisions on Home folder for user " & Username)
-                                        Debug.WriteLine(Ex)
+                                        Debug.WriteLine("[Error] Error While Setting permisions on Home folder for user " & Username)
+                                        Debug.WriteLine("[Error] " & Ex.Message)
                                     End Try
                                 End If
 
                             Else
-                                Debug.WriteLine("Folder Already Exists in location: " & HomeDirectory)
-                                Debug.WriteLine("Home Folder Creation for user " & Username & " Has been skipped!")
+                                Debug.WriteLine("[Info] Folder Already Exists in location: " & HomeDirectory)
+                                Debug.WriteLine("[Info] Home Folder Creation for user " & Username & " Has been skipped!")
                             End If
                         End If
 
-                        Debug.WriteLine("Success: Create succeeded.")
-                        Debug.WriteLine("Name: ", objUser.Name)
+                        Debug.WriteLine("[Info] Success: Create succeeded.")
+                        Debug.WriteLine("[Info] Name: ", objUser.Name)
 
                         Dim argArray As Array = {row.Index}
                         sender.ReportProgress(0, argArray)
@@ -244,8 +243,8 @@ Public Class BulkADWorker
 
                     Dim argArray As Array = {row.Index, ErrorMsgCon, exc.Message}
 
-                    Debug.WriteLine("Unable to Create User: " & Username)
-                    Debug.WriteLine(exc.Message)
+                    Debug.WriteLine("[Error] Unable to Create User: " & Username)
+                    Debug.WriteLine("[Error] " & exc.Message)
 
                     sender.ReportProgress(1, argArray)
 
@@ -257,8 +256,8 @@ Public Class BulkADWorker
             objADAM.Close()
 
         Catch bindError As Exception
-            Debug.WriteLine("Error:   Bind failed.")
-            Debug.WriteLine(bindError.Message)
+            Debug.WriteLine("[Error] Bind failed.")
+            Debug.WriteLine("[LDAP] " & bindError.Message)
         End Try
 
     End Sub
@@ -378,5 +377,7 @@ Public Class BulkADWorker
             Console.WriteLine(ex.ToString())
         End Try
     End Sub
+
+
 
 End Class

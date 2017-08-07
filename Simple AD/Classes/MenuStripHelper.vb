@@ -33,7 +33,6 @@
 
                     DomainItem.Checked = False
                     DomainItem.Enabled = False
-                    Debug.WriteLine(ex.Message)
                 End Try
             End If
         End If

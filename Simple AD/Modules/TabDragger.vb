@@ -144,7 +144,6 @@ Friend Class TabForm
         Me.MaximizeBox = True
         Me.BackColor = SystemColors.Control
         Me.tabPage = tabPage
-        Me.Style = MetroColorStyle.Purple
         tabPage.Tag = Me
         Me.tabControl = DirectCast(tabPage.Parent, TabControl)
         Me.tabID = tabControl.TabPages.IndexOf(tabPage)

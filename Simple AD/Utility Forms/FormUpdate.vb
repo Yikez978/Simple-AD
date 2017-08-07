@@ -23,7 +23,7 @@ Public Class FormUpdate
         Spinner.Spinning = True
 
         BodyLb.Text = "Checking for Updates..."
-
+        OldVerLb.Text = My.Application.Info.Version.ToString
     End Sub
 
     Public Shared Sub CheckForUpdates()

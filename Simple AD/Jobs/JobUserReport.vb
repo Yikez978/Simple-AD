@@ -168,8 +168,8 @@ Public Class JobUserReport
             ApplyDataSource(DataGridPara, dt)
 
         Catch Ex As Exception
-            Debug.WriteLine(Ex.Message)
-        ReportError(Ex)
+            Debug.WriteLine("[Error] " & Ex.Message)
+            ReportError(Ex)
         End Try
     End Sub
 

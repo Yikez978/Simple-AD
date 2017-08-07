@@ -164,12 +164,12 @@ Public Class FormMain
                         Dim NewImportFile = New JobUserBulk(OpenFileDialogImport.FileName)
 
                     Else
+                        Debug.WriteLine("[Error] Unable to open file as it is being used by another process")
                         MsgBox("Unable to open file as it is being used by another process")
                     End If
                 End If
             Catch Ex As Exception
-                MessageBox.Show("Error: " & Ex.Message, "Error", MessageBoxButtons.AbortRetryIgnore)
-                Debug.WriteLine("Error: " & Ex.Message)
+                Debug.WriteLine("[Error] " & Ex.Message)
             End Try
         End If
 
@@ -187,7 +187,7 @@ Public Class FormMain
         Try
             Return Me.MainTabCtrl
         Catch Ex As Exception
-            Debug.WriteLine(Ex.Message.ToString)
+            Debug.WriteLine("[Error] " & Ex.Message)
             Return Nothing
         End Try
     End Function
@@ -198,7 +198,7 @@ Public Class FormMain
             Dim MainContainer As Object = CurrentTab.Controls.Item(0)
             Return MainContainer.GetMainSplitContainer0()
         Catch Ex As Exception
-            Debug.WriteLine(Ex.Message.ToString)
+            Debug.WriteLine("[Error] " & Ex.Message)
             Return Nothing
         End Try
     End Function
@@ -209,7 +209,7 @@ Public Class FormMain
             Dim MainContainer As Object = CurrentTab.Controls.Item(0)
             Return MainContainer.GetMainSplitContainer1()
         Catch Ex As Exception
-            Debug.WriteLine(Ex.Message.ToString)
+            Debug.WriteLine("[Error] " & Ex.Message)
             Return Nothing
         End Try
     End Function
@@ -220,7 +220,7 @@ Public Class FormMain
             Dim MainContainer As Object = CurrentTab.Controls.Item(0)
             Return MainContainer.GetMainDataGrid()
         Catch Ex As Exception
-            Debug.WriteLine(Ex.Message.ToString)
+            Debug.WriteLine("[Error] " & Ex.Message)
             Return Nothing
         End Try
     End Function
@@ -235,7 +235,7 @@ Public Class FormMain
             Dim CurrentTab As ContainerUserBulk = FormMain.GetMainTabCtrl.SelectedTab.Controls.Item(0)
             Return CurrentTab.GetPropertisPanel()
         Catch Ex As Exception
-            Debug.WriteLine(Ex.Message.ToString)
+            Debug.WriteLine("[Error] " & Ex.Message)
             Return Nothing
         End Try
     End Function
@@ -297,7 +297,7 @@ Public Class FormMain
             procInfo.Verb = "runas"
             Process.Start(procInfo)
         Catch ex As Exception
-            MessageBox.Show(ex.Message.ToString())
+            Debug.WriteLine("[Error] " & ex.Message)
         End Try
     End Sub
 

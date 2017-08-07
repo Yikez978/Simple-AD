@@ -3,8 +3,6 @@ Imports System.Management.Automation.Runspaces
 
 Module Office365Helper
 
-    Private URI As String
-
     Public Function ValidateOffice365Login(ByVal Email As String, ByVal Password As String) As Boolean
 
         Dim secureString As System.Security.SecureString = New System.Security.SecureString()
@@ -14,8 +12,12 @@ Module Office365Helper
         Next
 
         Dim credential As PSCredential = New PSCredential(Email, secureString)
-
-        Dim connectionInfo = New WSManConnectionInfo(New Uri(My.Settings.OfficeURI), My.Settings.OfficeShellURI, credential)
+        Dim connectionInfo As WSManConnectionInfo
+        Try
+            connectionInfo = New WSManConnectionInfo(New Uri(My.Settings.OfficeURI), My.Settings.OfficeShellURI, credential)
+        Catch Ex As Exception
+            Debug.WriteLine("[Error] " & Ex.Message)
+        End Try
 
         With connectionInfo
             .AuthenticationMechanism = AuthenticationMechanism.Basic
@@ -30,6 +32,7 @@ Module Office365Helper
             runspace.Open()
             Return True
         Catch Ex As Exception
+            Debug.WriteLine("[Error] " & Ex.Message)
             Return False
         End Try
 

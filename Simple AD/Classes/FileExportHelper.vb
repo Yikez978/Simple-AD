@@ -5,7 +5,7 @@ Public Class FileExportHelper
 
     Public Shared Sub ExportFile(Source As DataGridView, Dialog As SaveFileDialog)
 
-        Debug.WriteLine("Started File Export...")
+        Debug.WriteLine("[Info] Started File Export...")
         Dim workerArgs As Array = {Dialog, Source}
 
         Dim ExportFileBW As BackgroundWorker = New BackgroundWorker
@@ -28,7 +28,7 @@ Public Class FileExportHelper
         Dim args As Array = e.Argument
         Dim autoMainDataGrid As DataGridView = GetMainDataGrid(args(1))
 
-        Debug.WriteLine("Export File Background worker Initiated")
+        Debug.WriteLine("[Info] Export File Background worker Initiated")
 
         Try
             For i As Integer = 0 To GlobalVariables.HiddenColums.Count - 1
@@ -38,8 +38,8 @@ Public Class FileExportHelper
             Next
 
         Catch Ex As Exception
-            Debug.WriteLine("DataGridView Columns IconColumn and or Status do not Exist...")
-            Debug.WriteLine(Ex.ToString)
+            Debug.WriteLine("[Error] DataGridView Columns IconColumn and or Status do not Exist...")
+            Debug.WriteLine("[Error] " & Ex.ToString)
         End Try
 
         autoMainDataGrid.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
@@ -62,7 +62,7 @@ Public Class FileExportHelper
         ElseIf e.Error IsNot Nothing Then
 
         Else
-            Debug.WriteLine("File Export Completed")
+            Debug.WriteLine("[Info] File Export Completed")
         End If
 
     End Sub
