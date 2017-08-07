@@ -16,6 +16,7 @@ Public Class FormMain
     End Sub
 
     Private Sub DataReviewForm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
         VersionLb.Text = My.Application.Info.Version.ToString
 
         BuildLdapAttributeMatrix()
@@ -24,6 +25,8 @@ Public Class FormMain
 
         Importer.PopulateRecentFileList()
         UserToolStripMenuItem.Text = GetDisplayName()
+
+
 
         Dim DragTabs As New TabDragger(MainTabCtrl, TabDragBehavior.TabDragOut)
 
@@ -317,19 +320,15 @@ Public Class FormMain
         End If
     End Sub
 
-    Private Sub MainTabCtrl_SelectedIndexChanged(sender As Object, e As EventArgs)
-
-    End Sub
-
-    Private Sub MainTabCtrl_MouseClick(sender As Object, e As EventArgs) Handles MainTabCtrl.Click
-
-    End Sub
-
     Private Sub CheckForUpdatesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CheckForUpdatesToolStripMenuItem.Click
         FormUpdate.Show()
     End Sub
 
     Private Sub EntireDirectoryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EntireDirectoryToolStripMenuItem.Click
         Dim NewReport As JobUserReport = New JobUserReport(ReportType.AllObjects)
+    End Sub
+
+    Private Sub ConsoleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConsoleToolStripMenuItem.Click
+        FormConsole.Show()
     End Sub
 End Class

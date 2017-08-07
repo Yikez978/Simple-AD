@@ -8,12 +8,15 @@ Public Class FormUserAttributes
 
     Private DataTableSource As New DataTable
 
-    Private AtrCol As New DataColumn("Attribute")
+    Private AtrCol As New DataColumn("AttributeFull")
     Private ValCol As New DataColumn("Value")
+    Private DisplCol As New DataColumn("Attribute")
 
     Public Sub New(ByVal sAMAccountName As String, rowindex As Integer)
 
         InitializeComponent()
+
+        Me.Text = sAMAccountName
 
         DropDownFilter.SelectedIndex = 0
 
@@ -21,6 +24,7 @@ Public Class FormUserAttributes
         _sAMAccountName = sAMAccountName
 
         DataTableSource.Columns.Add(AtrCol)
+        DataTableSource.Columns.Add(DisplCol)
         DataTableSource.Columns.Add(ValCol)
 
         Me.Show()
@@ -30,10 +34,12 @@ Public Class FormUserAttributes
     Private Sub LoadAttributes(ByVal ObjectDirEntry As DirectoryEntry)
 
         For Each Prop In ObjectDirEntry.Properties.PropertyNames
-            If Not ObjectDirEntry.Properties(Prop).Value Is Nothing Then
-                DataTableSource.Rows.Add(Prop, ObjectDirEntry.Properties(Prop).Value.ToString)
+            If Not ObjectDirEntry.Properties(Prop) Is Nothing Then
+                If Not ObjectDirEntry.Properties(Prop).Value Is Nothing Then
+                    DataTableSource.Rows.Add(Prop, GetFriendlyLDAPName(Prop), ObjectDirEntry.Properties(Prop).Value.ToString)
+                End If
             Else
-                DataTableSource.Rows.Add(Prop, "")
+                DataTableSource.Rows.Add(Prop, GetFriendlyLDAPName(Prop), "")
             End If
         Next
 
@@ -56,11 +62,12 @@ Public Class FormUserAttributes
             Me.Invoke(New Action(AddressOf LoadFinished))
         Else
             MainDataGrid.DataSource = DataTableSource
+            MainDataGrid.Columns("AttributeFull").Visible = False
         End If
     End Sub
 
     Private Sub FilterDataGrid(ByVal Query As String)
-        Dim FilteredDataView = New DataView(DataTableSource, "Attribute LIKE '*" & Query & "*' OR Value LIKE '*" & Query & "*'", "Attribute Desc", DataViewRowState.CurrentRows)
+        Dim FilteredDataView = New DataView(DataTableSource, "Attribute LIKE '*" & Query & "*' OR Value LIKE '*" & Query & "*' OR AttributeFull LIKE '*" & Query & "*'", "Attribute Desc", DataViewRowState.CurrentRows)
         MainDataGrid.DataSource = FilteredDataView
     End Sub
 
@@ -84,7 +91,7 @@ Public Class FormUserAttributes
     Private Sub MainDataGrid_CellLeave(sender As Object, e As DataGridViewCellEventArgs) Handles MainDataGrid.CellEndEdit
 
         Dim Entry As DirectoryEntry = GetDirEntryFromSAM(_sAMAccountName)
-        Dim Attr As String = MainDataGrid.Rows(e.RowIndex).Cells("Attribute").Value
+        Dim Attr As String = MainDataGrid.Rows(e.RowIndex).Cells("AttributeFull").Value
         Dim Value As String
 
         If Not IsDBNull(MainDataGrid.Rows(e.RowIndex).Cells("Value").Value) Then
@@ -98,11 +105,17 @@ Public Class FormUserAttributes
                 FormMain.GetMainDataGrid.Rows.Item(_rowindex).Cells(Attr).Value = MainDataGrid.Rows(e.RowIndex).Cells("Value").Value
             End If
         Else
-                MainDataGrid.Rows(e.RowIndex).Cells("Value").Value = _defualtCellValue
+            MainDataGrid.Rows(e.RowIndex).Cells("Value").Value = _defualtCellValue
         End If
     End Sub
 
     Private Sub MainDataGrid_CellBeginEdit(sender As Object, e As DataGridViewCellCancelEventArgs) Handles MainDataGrid.CellBeginEdit
         _defualtCellValue = MainDataGrid.Rows(e.RowIndex).Cells("Value").Value
+    End Sub
+
+    Private Sub MainDataGrid_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles MainDataGrid.CellFormatting
+        If MainDataGrid.Columns(e.ColumnIndex).Name = "Attribute" Then
+            e.CellStyle.BackColor = SystemColors.Control
+        End If
     End Sub
 End Class

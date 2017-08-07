@@ -56,7 +56,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
         Public Property Username() As String
             Get
                 Return CType(Me("Username"),String)
@@ -68,7 +68,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
         Public Property Password() As String
             Get
                 Return CType(Me("Password"),String)
@@ -92,7 +92,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("https://ps.outlook.com/PowerShell-LiveID?PSVersion=2.0")>  _
         Public Property OfficeURI() As String
             Get
                 Return CType(Me("OfficeURI"),String)
@@ -104,7 +104,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("http://schemas.microsoft.com/powershell/Microsoft.Exchange")>  _
         Public Property OfficeShellURI() As String
             Get
                 Return CType(Me("OfficeShellURI"),String)
@@ -135,6 +135,30 @@ Namespace My
             End Get
             Set
                 Me("UseProxy") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property AutoLogin() As Boolean
+            Get
+                Return CType(Me("AutoLogin"),Boolean)
+            End Get
+            Set
+                Me("AutoLogin") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property Temp() As String
+            Get
+                Return CType(Me("Temp"),String)
+            End Get
+            Set
+                Me("Temp") = value
             End Set
         End Property
     End Class

@@ -86,6 +86,7 @@ Partial Class FormMain
         Me.ConnectionToolStripStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.UpdateToolStripStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.VersionLb = New MetroFramework.Controls.MetroLabel()
+        Me.ConsoleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         SADMenuStrip = New System.Windows.Forms.MenuStrip()
         SADMenuStrip.SuspendLayout()
         Me.NodeContextMenu.SuspendLayout()
@@ -254,7 +255,7 @@ Partial Class FormMain
         '
         'ViewToolStripMenuItem
         '
-        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PropertiesSideBarToolStripMenuItem, Me.DomainPanelToolStripMenuItem, Me.ToolStripSeparator2, Me.HideEmptyColumnsToolStripMenuItem, Me.SelectColumnsToolStripMenuItem})
+        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PropertiesSideBarToolStripMenuItem, Me.DomainPanelToolStripMenuItem, Me.ToolStripSeparator2, Me.HideEmptyColumnsToolStripMenuItem, Me.SelectColumnsToolStripMenuItem, Me.ConsoleToolStripMenuItem})
         Me.ViewToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI Semilight", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ViewToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText
         Me.ViewToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -320,7 +321,7 @@ Partial Class FormMain
         '
         Me.ToolStripMenuItemLogin.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.ToolStripMenuItemLogin.Name = "ToolStripMenuItemLogin"
-        Me.ToolStripMenuItemLogin.Size = New System.Drawing.Size(152, 22)
+        Me.ToolStripMenuItemLogin.Size = New System.Drawing.Size(141, 22)
         Me.ToolStripMenuItemLogin.Text = "Switch User..."
         '
         'NodeContextMenu
@@ -443,13 +444,19 @@ Partial Class FormMain
         Me.VersionLb.FontSize = MetroFramework.MetroLabelSize.Small
         Me.VersionLb.FontWeight = MetroFramework.MetroLabelWeight.Regular
         Me.VersionLb.ForeColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.VersionLb.Location = New System.Drawing.Point(451, 34)
+        Me.VersionLb.Location = New System.Drawing.Point(451, 35)
         Me.VersionLb.Margin = New System.Windows.Forms.Padding(10, 0, 10, 0)
         Me.VersionLb.Name = "VersionLb"
-        Me.VersionLb.Size = New System.Drawing.Size(45, 15)
+        Me.VersionLb.Size = New System.Drawing.Size(46, 15)
         Me.VersionLb.TabIndex = 19
         Me.VersionLb.Text = "Version"
         Me.VersionLb.UseCustomForeColor = True
+        '
+        'ConsoleToolStripMenuItem
+        '
+        Me.ConsoleToolStripMenuItem.Name = "ConsoleToolStripMenuItem"
+        Me.ConsoleToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
+        Me.ConsoleToolStripMenuItem.Text = "Console..."
         '
         'FormMain
         '
@@ -527,4 +534,5 @@ Partial Class FormMain
     Friend WithEvents CheckForUpdatesToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents UpdateToolStripStatusLabel As ToolStripStatusLabel
     Friend WithEvents EntireDirectoryToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ConsoleToolStripMenuItem As ToolStripMenuItem
 End Class

@@ -34,6 +34,8 @@ Partial Class FormOptions
         Me.ChCb = New MetroFramework.Controls.MetroCheckBox()
         Me.Preferences = New MetroFramework.Controls.MetroTabPage()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.MetroLabel4 = New MetroFramework.Controls.MetroLabel()
+        Me.AutoLoginToggle = New MetroFramework.Controls.MetroToggle()
         Me.MetroLabel3 = New MetroFramework.Controls.MetroLabel()
         Me.ProxyToggle = New MetroFramework.Controls.MetroToggle()
         Me.DbGb = New System.Windows.Forms.GroupBox()
@@ -193,6 +195,8 @@ Partial Class FormOptions
         'GroupBox2
         '
         Me.GroupBox2.BackColor = System.Drawing.SystemColors.Window
+        Me.GroupBox2.Controls.Add(Me.MetroLabel4)
+        Me.GroupBox2.Controls.Add(Me.AutoLoginToggle)
         Me.GroupBox2.Controls.Add(Me.MetroLabel3)
         Me.GroupBox2.Controls.Add(Me.ProxyToggle)
         Me.GroupBox2.Location = New System.Drawing.Point(7, 11)
@@ -201,6 +205,27 @@ Partial Class FormOptions
         Me.GroupBox2.TabIndex = 4
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "General"
+        '
+        'MetroLabel4
+        '
+        Me.MetroLabel4.AutoSize = True
+        Me.MetroLabel4.FontSize = MetroFramework.MetroLabelSize.Small
+        Me.MetroLabel4.Location = New System.Drawing.Point(99, 58)
+        Me.MetroLabel4.Name = "MetroLabel4"
+        Me.MetroLabel4.Size = New System.Drawing.Size(255, 15)
+        Me.MetroLabel4.TabIndex = 3
+        Me.MetroLabel4.Text = "Automatically Login when remember me is checkd"
+        '
+        'AutoLoginToggle
+        '
+        Me.AutoLoginToggle.AutoSize = True
+        Me.AutoLoginToggle.Location = New System.Drawing.Point(13, 56)
+        Me.AutoLoginToggle.Name = "AutoLoginToggle"
+        Me.AutoLoginToggle.Size = New System.Drawing.Size(80, 17)
+        Me.AutoLoginToggle.Style = MetroFramework.MetroColorStyle.Purple
+        Me.AutoLoginToggle.TabIndex = 2
+        Me.AutoLoginToggle.Text = "Off"
+        Me.AutoLoginToggle.UseSelectable = True
         '
         'MetroLabel3
         '
@@ -530,4 +555,6 @@ Partial Class FormOptions
     Friend WithEvents GroupBox2 As GroupBox
     Friend WithEvents MetroLabel3 As Controls.MetroLabel
     Friend WithEvents ProxyToggle As Controls.MetroToggle
+    Friend WithEvents MetroLabel4 As Controls.MetroLabel
+    Friend WithEvents AutoLoginToggle As Controls.MetroToggle
 End Class

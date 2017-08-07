@@ -18,6 +18,7 @@
         URITb.Text = My.Settings.OfficeURI
         ShellURITb.Text = My.Settings.OfficeShellURI
         ProxyToggle.Checked = My.Settings.UseProxy
+        AutoLoginToggle.Checked = My.Settings.AutoLogin
 
         TabControl1.SelectedTab = TabControl1.TabPages.Item(0)
 
@@ -59,5 +60,9 @@
 
     Private Sub ProxyToggle_CheckedChanged(sender As Object, e As EventArgs) Handles ProxyToggle.CheckedChanged
         My.Settings.UseProxy = ProxyToggle.Checked
+    End Sub
+
+    Private Sub AutoLoginToggle_CheckedChanged(sender As Object, e As EventArgs) Handles AutoLoginToggle.CheckedChanged
+        My.Settings.AutoLogin = AutoLoginToggle.Checked
     End Sub
 End Class

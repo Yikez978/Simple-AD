@@ -82,7 +82,7 @@
 
                 Select Case MainDataGrid.Rows(e.RowIndex).Cells("sAMAccountType").Value.ToString
                     Case "805306368"
-                        If MainDataGrid.Rows(e.RowIndex).Cells("UserAccountControl").Value = "546" Or MainDataGrid.Rows(e.RowIndex).Cells("UserAccountControl").Value = "514" Or MainDataGrid.Rows(e.RowIndex).Cells("UserAccountControl").Value = "66082" Then
+                        If MainDataGrid.Rows(e.RowIndex).Cells("UserAccountControl").Value = "546" Or MainDataGrid.Rows(e.RowIndex).Cells("UserAccountControl").Value = "514" Or MainDataGrid.Rows(e.RowIndex).Cells("UserAccountControl").Value = "66082" Or MainDataGrid.Rows(e.RowIndex).Cells("UserAccountControl").Value = "66050" Then
                             With DirectCast(MainDataGrid.Rows.Item(e.RowIndex).Cells("name"), TextAndImageCell)
                                 .Image = GlobalVariables.IconDisabledUSer
                             End With
@@ -99,13 +99,17 @@
                         With DirectCast(MainDataGrid.Rows.Item(e.RowIndex).Cells("name"), TextAndImageCell)
                             .Image = GlobalVariables.IconGroup
                         End With
+                    Case "268435457"
+                        With DirectCast(MainDataGrid.Rows.Item(e.RowIndex).Cells("name"), TextAndImageCell)
+                            .Image = GlobalVariables.IconGroup
+                        End With
                     Case "536870912"
                         With DirectCast(MainDataGrid.Rows.Item(e.RowIndex).Cells("name"), TextAndImageCell)
                             .Image = GlobalVariables.IconGroup
                         End With
                     Case Else
                         With DirectCast(MainDataGrid.Rows.Item(e.RowIndex).Cells("name"), TextAndImageCell)
-                            .Image = ConvertToGrayScale(GlobalVariables.IconContainer)
+                            .Image = GlobalVariables.IconContainer
                         End With
                 End Select
             Else

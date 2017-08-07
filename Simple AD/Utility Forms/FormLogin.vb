@@ -14,25 +14,33 @@ Public Class FormLogin
         AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf UnhandledExceptionEventRaised
         GlobalVariables.Load()
 
-        GetImage(ActiveDirectoryIconType.Group).Save("C:\Users\joelc\Group.Png", System.Drawing.Imaging.ImageFormat.Png)
-        GetImage(ActiveDirectoryIconType.User).Save("C:\Users\joelc\User.Png", System.Drawing.Imaging.ImageFormat.Png)
-        GetImage(ActiveDirectoryIconType.Computer).Save("C:\Users\joelc\Computer.Png", System.Drawing.Imaging.ImageFormat.Png)
-        GetImage(ActiveDirectoryIconType.DisabledUser).Save("C:\Users\joelc\DisabledUser.Png", System.Drawing.Imaging.ImageFormat.Png)
-        GetImage(ActiveDirectoryIconType.OU).Save("C:\Users\joelc\OU.Png", System.Drawing.Imaging.ImageFormat.Png)
-        GetImage(ActiveDirectoryIconType.Domain).Save("C:\Users\joelc\Domain.Png", System.Drawing.Imaging.ImageFormat.Png)
-        GetImage(ActiveDirectoryIconType.Container).Save("C:\Users\joelc\Container.Png", System.Drawing.Imaging.ImageFormat.Png)
+        'GetImage(ActiveDirectoryIconType.Group).Save("C:\Users\joelc\Group.Png", System.Drawing.Imaging.ImageFormat.Png)
+        'GetImage(ActiveDirectoryIconType.User).Save("C:\Users\joelc\User.Png", System.Drawing.Imaging.ImageFormat.Png)
+        'GetImage(ActiveDirectoryIconType.Computer).Save("C:\Users\joelc\Computer.Png", System.Drawing.Imaging.ImageFormat.Png)
+        'GetImage(ActiveDirectoryIconType.DisabledUser).Save("C:\Users\joelc\DisabledUser.Png", System.Drawing.Imaging.ImageFormat.Png)
+        'GetImage(ActiveDirectoryIconType.OU).Save("C:\Users\joelc\OU.Png", System.Drawing.Imaging.ImageFormat.Png)
+        'GetImage(ActiveDirectoryIconType.Domain).Save("C:\Users\joelc\Domain.Png", System.Drawing.Imaging.ImageFormat.Png)
+        'GetImage(ActiveDirectoryIconType.Container).Save("C:\Users\joelc\Container.Png", System.Drawing.Imaging.ImageFormat.Png)
 
     End Sub
 
     Protected Overrides Sub SetVisibleCore(ByVal value As Boolean)
-        If Not Me.IsHandleCreated Then
-            Me.CreateHandle()
-            value = False
+
+        If My.Settings.AutoLogin = False Then
+            value = True
+        Else
+            If Not Me.IsHandleCreated Then
+                Me.CreateHandle()
+                value = False
+            End If
         End If
+
         MyBase.SetVisibleCore(value)
 
         If Not Application.OpenForms().OfType(Of FormMain).Any Then
-            AutoLogin()
+            If My.Settings.AutoLogin = True Then
+                AutoLogin()
+            End If
         End If
     End Sub
 
@@ -55,9 +63,12 @@ Public Class FormLogin
 
     Private Sub AutoLogin()
         If Not String.IsNullOrEmpty(My.Settings.Username) Then
+
             Try
                 UnTb.Text = DataProtection.Unprotect(My.Settings.Username)
                 PwdTb.Text = DataProtection.Unprotect(My.Settings.Password)
+
+                OKBn.Enabled = True
 
                 LoginThread = New Thread(AddressOf Login)
 
@@ -69,8 +80,10 @@ Public Class FormLogin
                 creds.Username = UnTb.Text
                 creds.Password = PwdTb.Text
 
-                If Not LoginThread.IsAlive Then
-                    LoginThread.Start(creds)
+                If My.Settings.AutoLogin = True Then
+                    If Not LoginThread.IsAlive Then
+                        LoginThread.Start(creds)
+                    End If
                 End If
 
             Catch Ex As Exception
@@ -218,4 +231,5 @@ Public Class FormLogin
             OKBn.Enabled = False
         End If
     End Sub
+
 End Class

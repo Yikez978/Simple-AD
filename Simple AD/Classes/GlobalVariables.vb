@@ -19,6 +19,9 @@ Public Class GlobalVariables
     Public Shared Property Office365Username As String
     Public Shared Property Office365Password As String
 
+    Public Shared OfficeURI As String = "https://ps.outlook.com/PowerShell-LiveID?PSVersion=2.0"
+    Public Shared OfficeShellURI As String = "http://schemas.microsoft.com/powershell/Microsoft.Exchange"
+
     Public Shared UpdateURI As String = "http://storage.googleapis.com/simple-ad.appspot.com/SimpleAD/versioninfo.xml"
 
     Public Shared Property IconGroup As Image = GetImage(ActiveDirectoryIconType.Group)

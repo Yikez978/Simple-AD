@@ -191,6 +191,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Modules\TabDragger.vb" />
+    <Compile Include="Utility Forms\FormConsole.Designer.vb">
+      <DependentUpon>FormConsole.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Utility Forms\FormConsole.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Utility Forms\FormUpdate.Designer.vb">
       <DependentUpon>FormUpdate.vb</DependentUpon>
     </Compile>
@@ -356,6 +362,9 @@
     <EmbeddedResource Include="Utility Forms\FormBulkUser.resx">
       <DependentUpon>FormBulkUser.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Utility Forms\FormConsole.resx">
+      <DependentUpon>FormConsole.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Utility Forms\FormImportValidation.resx">
       <DependentUpon>FormImportValidation.vb</DependentUpon>
     </EmbeddedResource>
@@ -459,14 +468,6 @@
     <Content Include="Config\MetroFramework.txt" />
     <None Include="Resources\SimpleADIcon.ico" />
     <None Include="Resources\NewUser.png" />
-    <None Include="Resources\Group.jpg" />
-    <None Include="Resources\NewUser.jpg" />
-    <None Include="Resources\OU.jpg" />
-    <None Include="Resources\Computer.jpg" />
-    <None Include="Resources\Contact.jpg" />
-    <None Include="Resources\Container.jpg" />
-    <None Include="Resources\DisabledUser.jpg" />
-    <None Include="Resources\Domain.jpg" />
     <None Include="Resources\ErrorAlt.png" />
     <None Include="Resources\DisabledUser.bmp" />
     <None Include="Resources\Domain.bmp" />

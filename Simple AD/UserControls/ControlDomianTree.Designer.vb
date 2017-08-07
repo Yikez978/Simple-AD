@@ -52,6 +52,7 @@ Partial Class ControlDomianTree
         '
         'OUTreeView
         '
+        Me.OUTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.OUTreeView.Dock = System.Windows.Forms.DockStyle.Fill
         Me.OUTreeView.Location = New System.Drawing.Point(0, 0)
         Me.OUTreeView.Name = "OUTreeView"

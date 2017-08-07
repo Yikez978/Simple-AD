@@ -76,20 +76,11 @@ Module ActiveDirectoryHelper
         Dim DisplayName As String = "User"
         Try
 
-            Dim Entry As DirectoryEntry = New DirectoryEntry(GetDirEntry, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword)
-            Dim DirSearcher As DirectorySearcher = New DirectorySearcher(GetDirEntry)
-
-            With DirSearcher
-                .SearchRoot = Entry
-                .Filter = "(&(objectClass=user)(sAMAccountName=" & GlobalVariables.LoginUsername & "))"
-            End With
-
-            Dim Result As SearchResult = DirSearcher.FindOne
-
-            DisplayName = Result.GetDirectoryEntry().Properties("displayName").Value
+            Dim Entry As DirectoryEntry = GetDirEntryFromSAM(GlobalVariables.LoginUsername)
+            DisplayName = Entry.Properties("displayName").Value
 
         Catch ex As Exception
-            Return DisplayName
+            MsgBox(ex.Message)
         End Try
         Return DisplayName
     End Function
@@ -131,6 +122,8 @@ Module ActiveDirectoryHelper
                     .Password = GlobalVariables.LoginPassword
                     .AuthenticationType = AuthenticationTypes.Secure
                 End With
+
+                'Debug.WriteLine(pName)
 
                 If de.Properties.Contains(pName) Then
                     Debug.WriteLine("SetADProperty Item Amend Ran" & pName.ToString)
