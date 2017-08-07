@@ -241,7 +241,6 @@
             "telephoneNumber",
             "mail",
             "wWWHomePage",
-            "password",
             "streetAddress",
             "postOfficeBox",
             "postalCode",
@@ -271,11 +270,12 @@
             "sAMAccountType",
             "proxyAddresses",
             "distinguishedName",
-            "131463067405347672",
             "logonCount",
             "lastLogon",
             "whenCreated",
-            "whenChanged"
+            "whenChanged",
+            "msDS-UserAccountDisabled",
+            "objectcategory"
     }
 
 End Module

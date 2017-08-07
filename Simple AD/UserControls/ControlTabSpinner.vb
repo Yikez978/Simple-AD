@@ -16,6 +16,15 @@
 
     End Sub
 
+    Public Property ErrorBoxText As String
+        Set(value As String)
+            ErrorTb.Text = value
+        End Set
+        Get
+            Return ErrorTb.Text
+        End Get
+    End Property
+
     Public Property SpinnerVisible As Boolean
         Set(ByVal value As Boolean)
             Me.Visible = value

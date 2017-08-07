@@ -81,7 +81,7 @@
                 Name.DataPropertyName = "Name"
                 Name.HeaderText = "Name"
 
-                Name.Image = ConvertToGrayScale(ActiveDirectoryIcon.GetIcon(ActiveDirectoryIcon.ActiveDirectoryIconType.User).ToBitmap)
+                Name.Image = ConvertToGrayScale(GlobalVariables.IconUser)
                 Name.Visible = True
 
                 datagrid.Columns.Insert(0, Name)

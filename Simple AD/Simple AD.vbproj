@@ -141,6 +141,7 @@
     <Reference Include="System.DirectoryServices.AccountManagement">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.DirectoryServices.Protocols" />
     <Reference Include="System.Drawing">
       <Private>False</Private>
     </Reference>
@@ -167,22 +168,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\DataHandler.vb" />
+    <Compile Include="Classes\WindowsAPI.vb" />
     <Compile Include="Interfaces\IJobContainer.vb" />
+    <Compile Include="LDAP\LDAPKey.vb" />
     <Compile Include="Modules\Enums.vb" />
-    <Compile Include="Classes\StaticPropertiesShort.vb" />
+    <Compile Include="LDAP\StaticPropertiesShort.vb" />
     <Compile Include="Modules\ImageHelper.vb" />
     <Compile Include="Modules\Office365Helper.vb" />
     <Compile Include="Classes\ProtectedData.vb" />
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="UI\CustomTabControlWithClose.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\CustomTabControl.vb">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="My Project\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="UI\NativeTreeView.vb">
       <SubType>Component</SubType>
@@ -223,7 +226,7 @@
     <Compile Include="Classes\ControlHelper.vb" />
     <Compile Include="Classes\ExtendedMethods.vb" />
     <Compile Include="Classes\FileExportHelper.vb" />
-    <Compile Include="Classes\StaticProperties.vb" />
+    <Compile Include="LDAP\StaticProperties.vb" />
     <Compile Include="Jobs\JobOffice365.vb" />
     <Compile Include="Jobs\JobUserReport.vb" />
     <Compile Include="Jobs\JobUserBulk.vb" />
@@ -239,10 +242,10 @@
     <Compile Include="Utility Forms\FormImportValidation.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UserControls\TabContainers\ContainerUserBulk.Designer.vb">
+    <Compile Include="TabContainers\ContainerUserBulk.Designer.vb">
       <DependentUpon>ContainerUserBulk.vb</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\TabContainers\ContainerUserBulk.vb">
+    <Compile Include="TabContainers\ContainerUserBulk.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UserControls\ControlDomianTree.Designer.vb">
@@ -259,7 +262,6 @@
     <Compile Include="Utility Forms\FormSelectColumns.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Classes\WindowsApi.vb" />
     <Compile Include="Classes\DataGridTools.vb" />
     <Compile Include="Classes\GlobalSuppressions.vb" />
     <Compile Include="Utility Forms\FormLogin.Designer.vb">
@@ -298,16 +300,16 @@
     <Compile Include="UserControls\ControlRecentFilesButton.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\TabContainers\ContainerUserReport.Designer.vb">
+    <Compile Include="TabContainers\ContainerUserReport.Designer.vb">
       <DependentUpon>ContainerUserReport.vb</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\TabContainers\ContainerUserReport.vb">
+    <Compile Include="TabContainers\ContainerUserReport.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\TabContainers\ContainerOffice365.Designer.vb">
+    <Compile Include="TabContainers\ContainerOffice365.Designer.vb">
       <DependentUpon>ContainerOffice365.vb</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\TabContainers\ContainerOffice365.vb">
+    <Compile Include="TabContainers\ContainerOffice365.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UserControls\ControlTabSpinner.Designer.vb">
@@ -327,6 +329,18 @@
     </Compile>
     <Compile Include="UserControls\ControlUserProperties.vb">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Utility Forms\FormUserAttributes.Designer.vb">
+      <DependentUpon>FormUserAttributes.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Utility Forms\FormUserAttributes.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Utility Forms\FormLDAPMatrix.Designer.vb">
+      <DependentUpon>FormLDAPMatrix.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Utility Forms\FormLDAPMatrix.vb">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Utility Forms\Office 365\FormO365Login.Designer.vb">
       <DependentUpon>FormO365Login.vb</DependentUpon>
@@ -363,6 +377,12 @@
     <EmbeddedResource Include="Utility Forms\FormUpdate.resx">
       <DependentUpon>FormUpdate.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Utility Forms\FormUserAttributes.resx">
+      <DependentUpon>FormUserAttributes.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Utility Forms\FormLDAPMatrix.resx">
+      <DependentUpon>FormLDAPMatrix.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Utility Forms\Office 365\FormO365Login.resx">
       <DependentUpon>FormO365Login.vb</DependentUpon>
     </EmbeddedResource>
@@ -372,7 +392,7 @@
     <EmbeddedResource Include="Utility Forms\FormSelectColumns.resx">
       <DependentUpon>FormSelectColumns.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\TabContainers\ContainerUserBulk.resx">
+    <EmbeddedResource Include="TabContainers\ContainerUserBulk.resx">
       <DependentUpon>ContainerUserBulk.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\ControlDomianTree.resx">
@@ -381,10 +401,10 @@
     <EmbeddedResource Include="UserControls\ControlRecentFilesButton.resx">
       <DependentUpon>ControlRecentFilesButton.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\TabContainers\ContainerUserReport.resx">
+    <EmbeddedResource Include="TabContainers\ContainerUserReport.resx">
       <DependentUpon>ContainerUserReport.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\TabContainers\ContainerOffice365.resx">
+    <EmbeddedResource Include="TabContainers\ContainerOffice365.resx">
       <DependentUpon>ContainerOffice365.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\ControlTabSpinner.resx">
@@ -421,7 +441,6 @@
   <ItemGroup>
     <None Include="Config\packages.config" />
     <None Include="packages.config" />
-    <None Include="Resources\User.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
@@ -436,12 +455,33 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ErrorAlt.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Config\LogoIcon.ico" />
     <Content Include="Config\MetroFramework.txt" />
     <None Include="Resources\SimpleADIcon.ico" />
+    <None Include="Resources\NewUser.png" />
+    <None Include="Resources\Group.jpg" />
+    <None Include="Resources\NewUser.jpg" />
+    <None Include="Resources\OU.jpg" />
+    <None Include="Resources\Computer.jpg" />
+    <None Include="Resources\Contact.jpg" />
+    <None Include="Resources\Container.jpg" />
+    <None Include="Resources\DisabledUser.jpg" />
+    <None Include="Resources\Domain.jpg" />
+    <None Include="Resources\ErrorAlt.png" />
+    <None Include="Resources\DisabledUser.bmp" />
+    <None Include="Resources\Domain.bmp" />
+    <None Include="Resources\Group.bmp" />
+    <None Include="Resources\OU.bmp" />
+    <None Include="Resources\Computer.bmp" />
+    <None Include="Resources\Container.bmp" />
+    <None Include="Resources\Container.Png" />
+    <None Include="Resources\DisabledUser.Png" />
+    <None Include="Resources\Domain.Png" />
+    <None Include="Resources\Group.Png" />
+    <None Include="Resources\OU.Png" />
+    <None Include="Resources\User.Png" />
+    <None Include="Resources\Computer.Png" />
+    <None Include="Resources\Contact.Png" />
     <Content Include="SimpleADIcon.ico" />
     <None Include="Resources\appbar.check.png" />
     <None Include="Resources\appbar.network.server.disconnect.png" />

@@ -1,20 +1,6 @@
 ﻿Imports System.Drawing
 
 Friend Class ActiveDirectoryIcon
-
-    Public Enum ActiveDirectoryIconType
-        Computer = 1
-        Contact = 3
-        Container = 4
-        Domain = 5
-        Group = 7
-        User = 12
-        OU = 13
-        DisabledUser = 27
-    End Enum
-
-
-
     ''' <summary>
     ''' Gets the icon that is at the specified index in the exe, dll or ico file
     ''' </summary>

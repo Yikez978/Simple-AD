@@ -41,6 +41,9 @@ Module ActiveDirectoryHelper
         Catch AuthEx As System.Security.Authentication.AuthenticationException
             Debug.WriteLine(AuthEx.InnerException.ToString)
             Return DomainName
+        Catch NoneExistantDirEx As System.DirectoryServices.ActiveDirectory.ActiveDirectoryObjectNotFoundException
+            Debug.WriteLine(NoneExistantDirEx.InnerException.ToString)
+            Return DomainName
         End Try
 
         Return DomainName
@@ -117,19 +120,53 @@ Module ActiveDirectoryHelper
         Return Success
     End Function
 
-    Public Sub SetADProperty(ByVal de As DirectoryEntry, ByVal pName As String, ByVal pValue As String)
+    Public Function SetADProperty(ByVal de As DirectoryEntry, ByVal pName As String, ByVal pValue As String) As Boolean
+        Try
+            If Not pValue Is Nothing Then
 
-        If Not pValue Is Nothing Then
+                Debug.WriteLine("SetADProperty Started")
 
-            If de.Properties.Contains(pName) Then
-                de.Properties(pName)(0) = pValue
+                With de
+                    .Username = GlobalVariables.LoginUsername
+                    .Password = GlobalVariables.LoginPassword
+                    .AuthenticationType = AuthenticationTypes.Secure
+                End With
+
+                If de.Properties.Contains(pName) Then
+                    Debug.WriteLine("SetADProperty Item Amend Ran" & pName.ToString)
+                    de.Properties.Item(pName)(0) = pValue
+                    de.CommitChanges()
+                    Return True
+                Else
+                    Debug.WriteLine("SetADProperty ELSE Ran - " & pName & ": " & de.Properties(pName).Value)
+                    de.Properties(pName).Add(pValue)
+                    de.CommitChanges()
+                    Return True
+                End If
             Else
-                de.Properties(pName).Add(pValue)
-            End If
-        End If
-    End Sub
 
-    Public Sub CreateUSer(Username As String, FirstName As String, LastName As String, Password As String)
+                With de
+                    .Username = GlobalVariables.LoginUsername
+                    .Password = GlobalVariables.LoginPassword
+                    .AuthenticationType = AuthenticationTypes.Secure
+                End With
+
+                If de.Properties.Contains(pName) Then
+                    Debug.WriteLine("SetADProperty Item Amend Ran" & pName.ToString)
+                    de.Properties.Item(pName).RemoveAt(0)
+                    de.CommitChanges()
+                    Return True
+                Else
+                    Return False
+                End If
+            End If
+        Catch Ex As Exception
+            Debug.WriteLine(Ex.Message)
+            Return False
+        End Try
+    End Function
+
+    Public Sub CreateUser(Username As String, FirstName As String, LastName As String, Password As String)
 
         Dim context As PrincipalContext = New PrincipalContext(ContextType.Domain, GetLocalDomainName, GlobalVariables.SelectedOU, ContextOptions.SimpleBind, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword)
 
@@ -178,5 +215,37 @@ Module ActiveDirectoryHelper
         Return host.HostName
     End Function
 
+    Public Function GetDirEntryFromSAM(ByVal sAMAccountName As String) As DirectoryEntry
+        Try
+            Dim Entry As DirectoryEntry = New DirectoryEntry(GetDirEntry, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword)
+
+            Dim DirSearcher As DirectorySearcher = New DirectorySearcher(GetDirEntry)
+
+            With DirSearcher
+                .SearchRoot = Entry
+                .Filter = "(sAMAccountName=" & sAMAccountName & ")"
+            End With
+
+            DirSearcher.PropertiesToLoad.AddRange(GetLDAPProps())
+
+            Dim result As SearchResult = DirSearcher.FindOne()
+
+            Return result.GetDirectoryEntry
+        Catch Ex As Exception
+            Debug.WriteLine(Ex.Message)
+        End Try
+        Return Nothing
+    End Function
+
+    Public Function UpdateLDAPProperty(ByVal SAM As String, LDAPProperty As String) As Boolean
+
+        Try
+
+        Catch ex As Exception
+
+        End Try
+
+        Return False
+    End Function
 
 End Module

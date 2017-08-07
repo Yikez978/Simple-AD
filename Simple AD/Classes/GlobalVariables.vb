@@ -21,7 +21,13 @@ Public Class GlobalVariables
 
     Public Shared UpdateURI As String = "http://storage.googleapis.com/simple-ad.appspot.com/SimpleAD/versioninfo.xml"
 
-    Public Shared Property GroupImage As Image = ActiveDirectoryIcon.GetIcon(ActiveDirectoryIcon.ActiveDirectoryIconType.Group).ToBitmap
+    Public Shared Property IconGroup As Image = GetImage(ActiveDirectoryIconType.Group)
+    Public Shared Property IconUser As Image = GetImage(ActiveDirectoryIconType.User)
+    Public Shared Property IconComputer As Image = GetImage(ActiveDirectoryIconType.Computer)
+    Public Shared Property IconDisabledUSer As Image = GetImage(ActiveDirectoryIconType.DisabledUser)
+    Public Shared Property IconOU As Image = GetImage(ActiveDirectoryIconType.OU)
+    Public Shared Property IconDomian As Image = GetImage(ActiveDirectoryIconType.Domain)
+    Public Shared Property IconContainer As Image = GetImage(ActiveDirectoryIconType.Container)
 
     Public Shared HiddenColums As New List(Of String)
     Public Shared TempHiddenColumns As New List(Of String)

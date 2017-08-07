@@ -23,13 +23,14 @@ Public Class JobOffice365
 
         Dim NewId = GenerateJobID()
         NewOffice365Container = New ContainerOffice365(NewId, "Office 365 - " & Domain(1).ToString)
+        NewOffice365Container.Visible = False
 
         TabPage = New TabPage
         With TabPage
             .Name = NewOffice365Container.JobName
             .Text = NewOffice365Container.JobName
             .Visible = True
-            .BackColor = Color.FromArgb(243, 119, 53)
+            .BackColor = Color.FromArgb(124, 65, 153)
             .ForeColor = SystemColors.ControlText
             .Controls.Add(NewOffice365Container)
         End With
@@ -39,6 +40,7 @@ Public Class JobOffice365
 
         FormMain.GetMainTabCtrl.SelectTab(FormMain.GetMainTabCtrl.TabCount - 1)
 
+        FormMain.GetMainTabCtrl.SelectedTab.BackColor = SystemColors.Window
         FormMain.GetMainTabCtrl.SelectedTab.Controls.Add(NewOffice365Container)
         FormMain.GetMainTabCtrl.Visible = True
 

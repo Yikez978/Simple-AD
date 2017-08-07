@@ -17,12 +17,13 @@
             "displayName",
             "name",
             "description",
-            "sAMAccountType"
+            "sAMAccountType",
+            "UserAccountControl"
     }
 
     Public DefaultLDAPColumns() = {
             "name",
-            "userPrincipalName",
+            "displayName",
             "sAMAccountName",
             "description",
             "sAMAccountType"

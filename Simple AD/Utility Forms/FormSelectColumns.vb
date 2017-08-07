@@ -9,9 +9,9 @@
         For Each column As DataGridViewColumn In DataGridView.Columns
             If Not GlobalVariables.PersistantColumns.Contains(column.Name) Then
                 If column.Visible = True Then
-                    CurrentColumnsLb.Items.Add(CStr(column.Name))
+                    CurrentColumnsLb.Items.Add(CStr(column.HeaderText))
                 Else
-                    AvailableColumnsLb.Items.Add(CStr(column.Name))
+                    AvailableColumnsLb.Items.Add(CStr(column.HeaderText))
                 End If
             End If
         Next
@@ -34,7 +34,7 @@
 
         For Each item As Object In CurrentColumnsLb.Items
             For Each column As DataGridViewColumn In FormMain.GetMainDataGrid.Columns
-                If column.Name = CStr(item) Then
+                If column.HeaderText = CStr(item) Then
                     column.Visible = True
                     GlobalVariables.CustomColumns.Add(CStr(item))
                 End If

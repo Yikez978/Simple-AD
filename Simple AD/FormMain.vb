@@ -1,5 +1,4 @@
-﻿Imports AutoUpdaterDotNET
-Imports Simple_AD.FileSystemHelper
+﻿Imports Simple_AD.FileSystemHelper
 
 Public Class FormMain
 
@@ -18,6 +17,8 @@ Public Class FormMain
 
     Private Sub DataReviewForm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         VersionLb.Text = My.Application.Info.Version.ToString
+
+        BuildLdapAttributeMatrix()
 
         GlobalVariables.ColumnsVisibleChangedByUser = False
 
@@ -326,5 +327,9 @@ Public Class FormMain
 
     Private Sub CheckForUpdatesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CheckForUpdatesToolStripMenuItem.Click
         FormUpdate.Show()
+    End Sub
+
+    Private Sub EntireDirectoryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EntireDirectoryToolStripMenuItem.Click
+        Dim NewReport As JobUserReport = New JobUserReport(ReportType.AllObjects)
     End Sub
 End Class

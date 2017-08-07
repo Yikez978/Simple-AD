@@ -17,7 +17,6 @@ Module Office365Helper
             connectionInfo = New WSManConnectionInfo(New Uri(My.Settings.OfficeURI), My.Settings.OfficeShellURI, credential)
         Catch Ex As Exception
             Debug.WriteLine(Ex.Message)
-            Exit Function
         End Try
 
         With connectionInfo

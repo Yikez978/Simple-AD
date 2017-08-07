@@ -21,4 +21,36 @@
         Return bmp
     End Function
 
+    Public Function GetImage(ByVal type As ActiveDirectoryIconType) As Image
+        If IO.File.Exists(IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "dsuiext.dll")) Then
+            Return ActiveDirectoryIcon.GetIcon(type).ToBitmap
+        Else
+            Return GetLocalImage(type)
+        End If
+    End Function
+
+    Public Function GetLocalImage(ByVal Type As ActiveDirectoryIconType)
+        Select Case Type
+            Case ActiveDirectoryIconType.OU
+                Return My.Resources.OU
+            Case ActiveDirectoryIconType.Computer
+                Return My.Resources.Computer
+            Case ActiveDirectoryIconType.User
+                Return My.Resources.User
+            Case ActiveDirectoryIconType.DisabledUser
+                Return My.Resources.DisabledUser
+            Case ActiveDirectoryIconType.Contact
+                Return My.Resources.Contact
+            Case ActiveDirectoryIconType.Container
+                Return My.Resources.Container
+            Case ActiveDirectoryIconType.Domain
+                Return My.Resources.Domain
+            Case ActiveDirectoryIconType.Group
+                Return My.Resources.Group
+            Case Else
+                Return Nothing
+        End Select
+        Return Nothing
+    End Function
+
 End Module

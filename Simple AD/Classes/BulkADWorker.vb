@@ -1,7 +1,9 @@
 ﻿Imports System.DirectoryServices
 Imports System.ComponentModel
 Imports System.Security.AccessControl
+Imports System.DirectoryServices.Protocols
 Imports TSUSEREXLib
+Imports System.Net
 
 Public Class BulkADWorker
 
@@ -60,7 +62,7 @@ Public Class BulkADWorker
         Dim autoMainDataGrid As DataGridView = GetMainDataGrid(_SourceGrid)
 
         Dim objADAM As DirectoryEntry       ' Binding object.
-        Dim objUser As DirectoryEntry       ' User object.
+        'Dim objUser As DirectoryEntry       ' User object.
         Dim strPath As String               ' Binding path.
         Dim strUser As String               ' User to create.
         Dim strUserPrincipalName As String  ' Principal name of user.
@@ -69,22 +71,16 @@ Public Class BulkADWorker
 
         ' Construct the binding string.       
         If String.IsNullOrEmpty(GlobalVariables.LoginUsernamePrefix) Then
-                strPath = "LDAP://" & GlobalVariables.SelectedOU
-            Else
-                strPath = "LDAP://" & GlobalVariables.LoginUsernamePrefix & "/" & GlobalVariables.SelectedOU
-            End If
+            strPath = "LDAP://" & GlobalVariables.SelectedOU
+        Else
+            strPath = "LDAP://" & GlobalVariables.LoginUsernamePrefix & ":389/" & GlobalVariables.SelectedOU
+        End If
 
-            Debug.WriteLine("Bind to: {0}" & strPath)
+        Debug.WriteLine("Bind to: " & strPath)
 
-            ' Get AD LDS object.
+        ' Get AD LDS object.
 
-            objADAM = New DirectoryEntry(strPath)
-
-        With objADAM
-            .Username = GlobalVariables.LoginUsername
-            .Password = GlobalVariables.LoginPassword
-            .AuthenticationType = AuthenticationTypes.Secure
-        End With
+        objADAM = New DirectoryEntry(strPath, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword, AuthenticationTypes.Secure)
 
         Try
             objADAM.RefreshCache()
@@ -155,11 +151,12 @@ Public Class BulkADWorker
                 ' Specify User.
                 strUser = "CN=" & Name
                 strUserPrincipalName = Username & "@" & MailDomain
-                Debug.WriteLine("Create:  {0}" & strUser)
+                Debug.WriteLine("Create: " & strUser)
 
                 ' Create User.
                 Try
-                    objUser = objADAM.Children.Add(strUser, "user")
+
+                    Dim objUser As DirectoryEntry = objADAM.Children.Add(strUser, "user")
 
                     If Not objUser Is Nothing Then
 
@@ -208,7 +205,7 @@ Public Class BulkADWorker
 
                                     IO.Directory.CreateDirectory(HomeDirectory)
                                 Catch Ex As Exception
-                                    Debug.WriteLine("Error While Creating Home folder for user " & Username)
+                                    Debug.WriteLine("Error While Creating Home folder for user: " & Username)
                                     Debug.WriteLine(Ex)
                                 End Try
 
@@ -232,12 +229,15 @@ Public Class BulkADWorker
                         End If
 
                         Debug.WriteLine("Success: Create succeeded.")
-                        Debug.WriteLine("Name:    {0}", objUser.Name)
+                        Debug.WriteLine("Name: ", objUser.Name)
 
                         Dim argArray As Array = {row.Index}
                         sender.ReportProgress(0, argArray)
 
                     End If
+
+                    objUser.Close()
+
                 Catch exc As Exception
 
                     Dim ErrorMsgCon = "Unable to Create User: " & Username & " - " & exc.Message
@@ -245,19 +245,20 @@ Public Class BulkADWorker
                     Dim argArray As Array = {row.Index, ErrorMsgCon, exc.Message}
 
                     Debug.WriteLine("Unable to Create User: " & Username)
-                    Debug.WriteLine("         {0}", exc.Message)
+                    Debug.WriteLine(exc.Message)
 
                     sender.ReportProgress(1, argArray)
 
                 End Try
+
             Next
 
-            objUser.Close()
+
             objADAM.Close()
 
         Catch bindError As Exception
             Debug.WriteLine("Error:   Bind failed.")
-            Debug.WriteLine("         {0}" & bindError.Message)
+            Debug.WriteLine(bindError.Message)
         End Try
 
     End Sub
@@ -274,7 +275,7 @@ Public Class BulkADWorker
             End With
 
             With DirectCast(_SourceGrid.Rows.Item(e.UserState(0)).Cells("Name"), TextAndImageCell)
-                .Image = (ActiveDirectoryIcon.GetIcon(ActiveDirectoryIcon.ActiveDirectoryIconType.User)).ToBitmap
+                .Image = GlobalVariables.IconUser
             End With
 
             _SourceGrid.Rows.Item(e.UserState(0)).DefaultCellStyle.ForeColor = SystemColors.ControlText
@@ -322,6 +323,60 @@ Public Class BulkADWorker
         If bw.WorkerSupportsCancellation = True Then
             bw.CancelAsync()
         End If
+    End Sub
+
+    Private Sub SetPassword(connection As DirectoryConnection, userDN As String, password As String)
+
+        Dim pwdMod As DirectoryAttributeModification = New DirectoryAttributeModification()
+        With pwdMod
+            pwdMod.Name = "unicodePwd"
+            pwdMod.Add(GetPasswordData(password))
+            pwdMod.Operation = DirectoryAttributeOperation.Replace
+        End With
+
+        Dim request As ModifyRequest = New ModifyRequest(userDN, pwdMod)
+
+        Dim response As DirectoryResponse = connection.SendRequest(request)
+    End Sub
+
+    Private Function GetPasswordData(password As String) As Byte()
+        Dim formattedPassword As String
+        formattedPassword = String.Format("\{0}\", password)
+        Return (Encoding.Unicode.GetBytes(formattedPassword))
+    End Function
+
+    Private Function GetConnection(server As String, credential As NetworkCredential, useSsl As Boolean) As DirectoryConnection
+
+        Dim connection As LdapConnection = New LdapConnection(server)
+
+        If (useSsl) Then
+            connection.SessionOptions.SecureSocketLayer = True
+        Else
+            connection.SessionOptions.Sealing = True
+        End If
+
+        connection.Bind(credential)
+        Return connection
+    End Function
+
+    Public Sub Main()
+
+        Dim credential As NetworkCredential = New NetworkCredential("someuser", "Password1", "domain")
+        Dim Connection As DirectoryConnection
+
+        Try
+            ''change these options to use Kerberos encryption
+            Connection = GetConnection("domain.com:636", credential, True)
+            Console.WriteLine("Password modified!")
+            Dim disposable As IDisposable = Connection
+
+            If (Not disposable Is Nothing) Then
+                disposable.Dispose()
+            End If
+
+        Catch ex As Exception
+            Console.WriteLine(ex.ToString())
+        End Try
     End Sub
 
 End Class

@@ -13,6 +13,15 @@ Public Class FormLogin
         InitializeComponent()
         AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf UnhandledExceptionEventRaised
         GlobalVariables.Load()
+
+        GetImage(ActiveDirectoryIconType.Group).Save("C:\Users\joelc\Group.Png", System.Drawing.Imaging.ImageFormat.Png)
+        GetImage(ActiveDirectoryIconType.User).Save("C:\Users\joelc\User.Png", System.Drawing.Imaging.ImageFormat.Png)
+        GetImage(ActiveDirectoryIconType.Computer).Save("C:\Users\joelc\Computer.Png", System.Drawing.Imaging.ImageFormat.Png)
+        GetImage(ActiveDirectoryIconType.DisabledUser).Save("C:\Users\joelc\DisabledUser.Png", System.Drawing.Imaging.ImageFormat.Png)
+        GetImage(ActiveDirectoryIconType.OU).Save("C:\Users\joelc\OU.Png", System.Drawing.Imaging.ImageFormat.Png)
+        GetImage(ActiveDirectoryIconType.Domain).Save("C:\Users\joelc\Domain.Png", System.Drawing.Imaging.ImageFormat.Png)
+        GetImage(ActiveDirectoryIconType.Container).Save("C:\Users\joelc\Container.Png", System.Drawing.Imaging.ImageFormat.Png)
+
     End Sub
 
     Protected Overrides Sub SetVisibleCore(ByVal value As Boolean)
@@ -178,6 +187,9 @@ Public Class FormLogin
         If Me.InvokeRequired Then
             Me.Invoke(New Action(AddressOf LoginFailed))
         Else
+
+            Me.Show()
+
             Spinner.Visible = False
             Spinner.Spinning = False
 

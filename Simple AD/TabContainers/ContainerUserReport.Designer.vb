@@ -41,7 +41,6 @@ Partial Class ContainerUserReport
         Me.MainDataGrid.AllowUserToResizeRows = False
         DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ButtonHighlight
         Me.MainDataGrid.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
-        Me.MainDataGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.MainDataGrid.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.MainDataGrid.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.MainDataGrid.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None

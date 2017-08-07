@@ -13,9 +13,9 @@ Public Class ControlDomianTree
         Try
             Dim AdImages As New ImageList()
 
-            AdImages.Images.Add("OUFolder", ActiveDirectoryIcon.GetIcon(ActiveDirectoryIcon.ActiveDirectoryIconType.OU).ToBitmap)
-            AdImages.Images.Add("DomainImage", ActiveDirectoryIcon.GetIcon(ActiveDirectoryIcon.ActiveDirectoryIconType.Domain).ToBitmap)
-            AdImages.Images.Add("ContainerImage", ActiveDirectoryIcon.GetIcon(ActiveDirectoryIcon.ActiveDirectoryIconType.Container).ToBitmap)
+            AdImages.Images.Add("OUFolder", GlobalVariables.IconOU)
+            AdImages.Images.Add("DomainImage", GlobalVariables.IconDomian)
+            AdImages.Images.Add("ContainerImage", GlobalVariables.IconContainer)
             OUTreeView.ImageList = AdImages
         Catch ex As Exception
             MessageBox.Show("The following error was encountered whilst attempting to load domain/container/OU icons: " & ex.Message, "Error Loading Icons", MessageBoxButtons.OK, MessageBoxIcon.Error)

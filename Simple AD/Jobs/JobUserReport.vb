@@ -12,7 +12,7 @@ Public Class JobUserReport
     Public Sub New(ByVal Type As ReportType, Optional LDAPQuery As String = Nothing)
 
         Dim NewId = GenerateJobID()
-        UserReportContainer = New ContainerUserReport(NewId, "Report - " & "Disabled Users")
+        UserReportContainer = New ContainerUserReport(NewId, "Report - " & Type.ToString)
         UserReportContainer.Visible = False
 
         TabPage = New TabPage
@@ -81,16 +81,19 @@ Public Class JobUserReport
                     .HeaderText = "Name"
                     .Visible = True
                     .FillWeight = 80
-                    .Image = ActiveDirectoryIcon.GetIcon(ActiveDirectoryIcon.ActiveDirectoryIconType.DisabledUser).ToBitmap
                 End With
 
                 datagrid.Columns.Insert(0, Name)
 
                 For Each column As DataGridViewColumn In datagrid.Columns
+
+                    column.HeaderText = GetFriendlyLDAPName(column.Name)
+
                     If Not DefaultLDAPColumns.Contains(column.Name) Then
                         column.Visible = False
                     Else
-                        column.FillWeight = 20
+                        column.Width = 260
+                        column.FillWeight = 50
                     End If
                 Next
 
@@ -109,7 +112,7 @@ Public Class JobUserReport
         Dim dt As New DataTable
 
         For Each Prop In GetLDAPProps()
-            If Not dt.Columns.Contains(Prop) Then
+            If Not dt.Columns.Contains(GetFriendlyLDAPName(Prop)) Then
                 dt.Columns.Add(New DataColumn(Prop, GetType(String)))
             End If
         Next
@@ -127,9 +130,13 @@ Public Class JobUserReport
                 DirSearcher.Filter = "(&(objectCategory=person)(objectClass=user)(userAccountControl:1.2.840.113556.1.4.803:=2))"
             Case ReportType.CustomLDAP
                 DirSearcher.Filter = _LDAPQuery
+            Case ReportType.AllObjects
+                DirSearcher.Filter = "(objectClass=*)"
         End Select
 
-        DirSearcher.PropertiesToLoad.AddRange(GetLDAPProps())
+        If Not My.Settings.LoadAdvLDAP Then
+            DirSearcher.PropertiesToLoad.AddRange(GetLDAPProps())
+        End If
 
         Try
             Dim results As SearchResultCollection = DirSearcher.FindAll()
@@ -137,11 +144,22 @@ Public Class JobUserReport
             For Each result As SearchResult In results
                 Dim NewRow As DataRow = dt.NewRow
 
-                For Each LDAPProp In GetLDAPProps()
-                    If Not result.GetDirectoryEntry().Properties(LDAPProp).Value Is Nothing Then
-                        NewRow.Item(LDAPProp) = result.GetDirectoryEntry().Properties(LDAPProp).Value
+                Dim myResultPropColl As ResultPropertyCollection
+                myResultPropColl = result.Properties
+                Dim myKey As String
+                For Each myKey In myResultPropColl.PropertyNames
+                    If Not dt.Columns.Contains(myKey) Then
+                        dt.Columns.Add(New DataColumn(myKey, GetType(String)))
+                    End If
+                Next myKey
+
+                For Each column As DataColumn In dt.Columns()
+                    If Not result.Properties(column.ColumnName) Is Nothing Then
+                        If result.Properties(column.ColumnName).Count > 0 Then
+                            NewRow.Item(column.ColumnName) = result.Properties(column.ColumnName).Item(0).ToString
+                        End If
                     Else
-                        NewRow.Item(LDAPProp) = ""
+                        NewRow.Item(column.ColumnName) = ""
                     End If
                 Next
                 dt.Rows.Add(NewRow)
@@ -151,7 +169,18 @@ Public Class JobUserReport
 
         Catch Ex As Exception
             Debug.WriteLine(Ex.Message)
+        ReportError(Ex)
         End Try
+    End Sub
+
+    Private Sub ReportError(ByVal ErrorMessage As Exception)
+        If UserReportContainer.InvokeRequired Then
+            UserReportContainer.Invoke(New Action(Of Exception)(AddressOf ReportError), ErrorMessage)
+        Else
+            Spinner.DisplayText = ErrorMessage.Message
+            Spinner.ErrorBoxText = ErrorMessage.StackTrace.ToString
+            Spinner.MainSpinner.Spinning = False
+        End If
     End Sub
 
 End Class
