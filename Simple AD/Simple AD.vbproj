@@ -248,12 +248,12 @@
     <Compile Include="Jobs\JobOffice365.vb" />
     <Compile Include="Jobs\JobUserReport.vb" />
     <Compile Include="Jobs\JobUserBulk.vb" />
-    <Compile Include="Classes\FileSystemHelper.vb" />
+    <Compile Include="Modules\FileSystemHelper.vb" />
     <Compile Include="Classes\GlobalVariables.vb" />
     <Compile Include="Classes\HideColumnsWorker.vb" />
     <Compile Include="Classes\LocalData.vb" />
     <Compile Include="Classes\MenuStripHelper.vb" />
-    <Compile Include="Classes\StringHelper.vb" />
+    <Compile Include="Modules\StringHelper.vb" />
     <Compile Include="Utility Forms\FormImportValidation.Designer.vb">
       <DependentUpon>FormImportValidation.vb</DependentUpon>
     </Compile>

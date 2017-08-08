@@ -43,6 +43,9 @@
         Me.Dock = DockStyle.Fill
 
         InitializeComponent()
+
+        MainDataGrid.DoubleBuffered(True)
+
         Me.MainSplitContainer.Panel1.Controls.Add(New DomainTreeContainer(Me))
         Me.MainSplitContainer.Panel1Collapsed = True
     End Sub
@@ -53,6 +56,10 @@
 
     Public Function GetMainSplitContainer0() As SplitContainer
         Return Me.MainSplitContainer
+    End Function
+
+    Public Function GetDomainPanel() As DomainTreeContainer
+        Return Me.MainSplitContainer.Panel1.Controls.Item(0)
     End Function
 
     Private Sub FilterDataGrid(ByVal Query As String)
@@ -138,9 +145,5 @@
         Catch Ex As Exception
             Debug.WriteLine("[Error] " & Ex.Message)
         End Try
-    End Sub
-
-    Private Sub MainSplitContainer_Panel1_Validated(sender As Object, e As EventArgs) Handles MainSplitContainer.Panel1.Validated
-
     End Sub
 End Class

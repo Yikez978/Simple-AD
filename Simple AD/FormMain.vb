@@ -239,6 +239,17 @@ Public Class FormMain
             Return Nothing
         End Try
     End Function
+
+    Public Shared Function GetDomainPanel() As DomainTreeContainer
+        Try
+            Dim CurrentTab As ContainerUserReport = FormMain.GetMainTabCtrl.SelectedTab.Controls.Item(0)
+            Return CurrentTab.GetDomainPanel()
+        Catch Ex As Exception
+            Debug.WriteLine("[Error] " & Ex.Message)
+            Return Nothing
+        End Try
+    End Function
+
     Private Sub ViewSideBarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PropertiesSideBarToolStripMenuItem.Click
         GetMainSplitContainer1.Panel2Collapsed = Not GetMainSplitContainer1.Panel2Collapsed
     End Sub

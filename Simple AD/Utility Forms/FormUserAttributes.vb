@@ -16,8 +16,9 @@ Public Class FormUserAttributes
 
         InitializeComponent()
 
-        Me.Text = Name
+        Text = Name
         ObjectName.Text = Name
+        ObjectType.Text = GetProperName(GetDirEntryFromSAM(sAMAccountName).SchemaClassName)
 
         DropDownFilter.SelectedIndex = 0
 
@@ -28,11 +29,15 @@ Public Class FormUserAttributes
         DataTableSource.Columns.Add(DisplCol)
         DataTableSource.Columns.Add(ValCol)
 
-        Me.Show()
-        LoadAttributes(GetDirEntryFromSAM(sAMAccountName))
+        Show()
+
+        Dim LoadAtrThread As New Threading.Thread(AddressOf LoadAttributes)
+        LoadAtrThread.Start(sAMAccountName)
     End Sub
 
-    Private Sub LoadAttributes(ByVal ObjectDirEntry As DirectoryEntry)
+    Private Sub LoadAttributes(ByVal sAMAccountName As String)
+
+        Dim ObjectDirEntry As DirectoryEntry = GetDirEntryFromSAM(sAMAccountName)
 
         For Each Prop In ObjectDirEntry.Properties.PropertyNames
             If Not ObjectDirEntry.Properties(Prop) Is Nothing Then

@@ -166,9 +166,11 @@ Public Class JobUserReport
             Next
 
             ApplyDataSource(DataGridPara, dt)
-
+        Catch ArgEx As system.ArgumentException
+            ReportError(ArgEx)
+            Debug.WriteLine("[Error] " & ArgEx.GetBaseException.ToString & ArgEx.Message)
         Catch Ex As Exception
-            Debug.WriteLine("[Error] " & Ex.Message)
+            Debug.WriteLine("[Error] " & Ex.GetBaseException.ToString & Ex.Message)
             ReportError(Ex)
         End Try
     End Sub

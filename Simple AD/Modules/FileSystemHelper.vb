@@ -1,8 +1,8 @@
 ﻿Imports System.IO
 
-Public Class FileSystemHelper
+Public Module FileSystemHelper
 
-    Public Shared Function FileInUse(ByVal sFile As String) As Boolean
+    Public Function FileInUse(ByVal sFile As String) As Boolean
         Dim thisFileInUse As Boolean = False
         If System.IO.File.Exists(sFile) Then
             Try
@@ -16,4 +16,4 @@ Public Class FileSystemHelper
         Return thisFileInUse
     End Function
 
-End Class
+End Module

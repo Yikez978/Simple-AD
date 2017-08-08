@@ -87,9 +87,12 @@
     End Function
 
     Private Sub MainDataGrid_RowStateChanged(sender As Object, e As DataGridViewRowStateChangedEventArgs) Handles MainDataGrid.RowStateChanged
-        PopulateSidePanel()
-
-        FormMain.ToolStripStatusLabelContext.Text = GetMainDataGrid().SelectedRows.Count & " Object(s) Selected of " & GetMainDataGrid().Rows.Count
+        If GetMainSplitContainer1.Panel2Collapsed = False Then
+            PopulateSidePanel()
+        End If
+        If MainDataGrid.SelectedRows.Count > 0 Then
+            FormMain.ToolStripStatusLabelContext.Text = GetMainDataGrid().SelectedRows.Count & " Object(s) Selected of " & GetMainDataGrid().Rows.Count
+        End If
     End Sub
 
     Private Sub MainDataGrid_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles MainDataGrid.CellMouseClick

@@ -99,7 +99,7 @@ Partial Class ContainerUserReport
         Me.MainDataGrid.RowTemplate.Height = 20
         Me.MainDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.MainDataGrid.ShowEditingIcon = False
-        Me.MainDataGrid.Size = New System.Drawing.Size(548, 307)
+        Me.MainDataGrid.Size = New System.Drawing.Size(547, 307)
         Me.MainDataGrid.Style = MetroFramework.MetroColorStyle.Silver
         Me.MainDataGrid.TabIndex = 0
         Me.MainDataGrid.UseCustomBackColor = True
@@ -113,7 +113,7 @@ Partial Class ContainerUserReport
         Me.SpacerPanel.MaximumSize = New System.Drawing.Size(1000, 36)
         Me.SpacerPanel.Name = "SpacerPanel"
         Me.SpacerPanel.Padding = New System.Windows.Forms.Padding(12, 12, 48, 6)
-        Me.SpacerPanel.Size = New System.Drawing.Size(548, 36)
+        Me.SpacerPanel.Size = New System.Drawing.Size(547, 36)
         Me.SpacerPanel.TabIndex = 2
         '
         'SearchBoxTb
@@ -156,12 +156,14 @@ Partial Class ContainerUserReport
         '
         'MainSplitContainer
         '
+        Me.MainSplitContainer.BackColor = System.Drawing.Color.FromArgb(CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer))
         Me.MainSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill
         Me.MainSplitContainer.Location = New System.Drawing.Point(0, 0)
         Me.MainSplitContainer.Name = "MainSplitContainer"
         '
         'MainSplitContainer.Panel1
         '
+        Me.MainSplitContainer.Panel1.BackColor = System.Drawing.SystemColors.Window
         '
         'MainSplitContainer.Panel2
         '
@@ -169,7 +171,7 @@ Partial Class ContainerUserReport
         Me.MainSplitContainer.Panel2.Controls.Add(Me.SpacerPanel)
         Me.MainSplitContainer.Size = New System.Drawing.Size(749, 343)
         Me.MainSplitContainer.SplitterDistance = 200
-        Me.MainSplitContainer.SplitterWidth = 1
+        Me.MainSplitContainer.SplitterWidth = 2
         Me.MainSplitContainer.TabIndex = 3
         '
         'ContainerUserReport

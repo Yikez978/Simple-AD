@@ -154,7 +154,6 @@ Partial Class ContainerUserBulk
         Me.MainDataGrid.Size = New System.Drawing.Size(878, 439)
         Me.MainDataGrid.Style = MetroFramework.MetroColorStyle.Silver
         Me.MainDataGrid.TabIndex = 0
-        Me.MainDataGrid.VirtualMode = True
         '
         'AcceptBt
         '

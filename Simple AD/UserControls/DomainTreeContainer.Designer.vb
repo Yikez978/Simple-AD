@@ -28,10 +28,13 @@ Partial Class DomainTreeContainer
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.AutoScroll = True
-        Me.BackColor = System.Drawing.SystemColors.Window
+        Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(219, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(219, Byte), Integer))
+        Me.Margin = New System.Windows.Forms.Padding(0)
         Me.Name = "DomainTreeContainer"
+        Me.Padding = New System.Windows.Forms.Padding(0, 6, 0, 0)
         Me.Size = New System.Drawing.Size(308, 417)
         Me.Style = MetroFramework.MetroColorStyle.Purple
+        Me.UseCustomBackColor = True
         Me.ResumeLayout(False)
 
     End Sub
