@@ -30,8 +30,12 @@ Partial Class ContainerUserReport
         Me.MainDataGrid = New MetroFramework.Controls.MetroGrid()
         Me.SpacerPanel = New System.Windows.Forms.Panel()
         Me.SearchBoxTb = New MetroFramework.Controls.MetroTextBox()
+        Me.MainSplitContainer = New System.Windows.Forms.SplitContainer()
         CType(Me.MainDataGrid, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SpacerPanel.SuspendLayout()
+        CType(Me.MainSplitContainer, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.MainSplitContainer.Panel2.SuspendLayout()
+        Me.MainSplitContainer.SuspendLayout()
         Me.SuspendLayout()
         '
         'MainDataGrid
@@ -95,7 +99,7 @@ Partial Class ContainerUserReport
         Me.MainDataGrid.RowTemplate.Height = 20
         Me.MainDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.MainDataGrid.ShowEditingIcon = False
-        Me.MainDataGrid.Size = New System.Drawing.Size(749, 307)
+        Me.MainDataGrid.Size = New System.Drawing.Size(548, 307)
         Me.MainDataGrid.Style = MetroFramework.MetroColorStyle.Silver
         Me.MainDataGrid.TabIndex = 0
         Me.MainDataGrid.UseCustomBackColor = True
@@ -109,7 +113,7 @@ Partial Class ContainerUserReport
         Me.SpacerPanel.MaximumSize = New System.Drawing.Size(1000, 36)
         Me.SpacerPanel.Name = "SpacerPanel"
         Me.SpacerPanel.Padding = New System.Windows.Forms.Padding(12, 12, 48, 6)
-        Me.SpacerPanel.Size = New System.Drawing.Size(749, 36)
+        Me.SpacerPanel.Size = New System.Drawing.Size(548, 36)
         Me.SpacerPanel.TabIndex = 2
         '
         'SearchBoxTb
@@ -150,15 +154,35 @@ Partial Class ContainerUserReport
         Me.SearchBoxTb.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
         Me.SearchBoxTb.WaterMarkFont = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         '
+        'MainSplitContainer
+        '
+        Me.MainSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.MainSplitContainer.Location = New System.Drawing.Point(0, 0)
+        Me.MainSplitContainer.Name = "MainSplitContainer"
+        '
+        'MainSplitContainer.Panel1
+        '
+        '
+        'MainSplitContainer.Panel2
+        '
+        Me.MainSplitContainer.Panel2.Controls.Add(Me.MainDataGrid)
+        Me.MainSplitContainer.Panel2.Controls.Add(Me.SpacerPanel)
+        Me.MainSplitContainer.Size = New System.Drawing.Size(749, 343)
+        Me.MainSplitContainer.SplitterDistance = 200
+        Me.MainSplitContainer.SplitterWidth = 1
+        Me.MainSplitContainer.TabIndex = 3
+        '
         'ContainerUserReport
         '
         Me.BackColor = System.Drawing.SystemColors.Control
-        Me.Controls.Add(Me.MainDataGrid)
-        Me.Controls.Add(Me.SpacerPanel)
+        Me.Controls.Add(Me.MainSplitContainer)
         Me.Name = "ContainerUserReport"
         Me.Size = New System.Drawing.Size(749, 343)
         CType(Me.MainDataGrid, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SpacerPanel.ResumeLayout(False)
+        Me.MainSplitContainer.Panel2.ResumeLayout(False)
+        CType(Me.MainSplitContainer, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.MainSplitContainer.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -166,4 +190,5 @@ Partial Class ContainerUserReport
     Friend WithEvents MainDataGrid As MetroFramework.Controls.MetroGrid
     Friend WithEvents SpacerPanel As Panel
     Friend WithEvents SearchBoxTb As MetroFramework.Controls.MetroTextBox
+    Friend WithEvents MainSplitContainer As SplitContainer
 End Class

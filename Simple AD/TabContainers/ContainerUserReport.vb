@@ -43,11 +43,16 @@
         Me.Dock = DockStyle.Fill
 
         InitializeComponent()
-
+        Me.MainSplitContainer.Panel1.Controls.Add(New DomainTreeContainer(Me))
+        Me.MainSplitContainer.Panel1Collapsed = True
     End Sub
 
     Public Function GetMainDataGrid() As DataGridView
         Return Me.MainDataGrid
+    End Function
+
+    Public Function GetMainSplitContainer0() As SplitContainer
+        Return Me.MainSplitContainer
     End Function
 
     Private Sub FilterDataGrid(ByVal Query As String)
@@ -127,10 +132,15 @@
         Try
             If Not IsDBNull(MainDataGrid.Rows(e.RowIndex).Cells("sAMAccountName").Value) Then
                 Dim Sam = MainDataGrid.Rows(e.RowIndex).Cells("sAMAccountName").Value
-                Dim ShowUserProps = New FormUserAttributes(Sam, e.RowIndex)
+                Dim Name = MainDataGrid.Rows(e.RowIndex).Cells("Name").Value
+                Dim ShowUserProps = New FormUserAttributes(Sam, Name, e.RowIndex)
             End If
         Catch Ex As Exception
             Debug.WriteLine("[Error] " & Ex.Message)
         End Try
+    End Sub
+
+    Private Sub MainSplitContainer_Panel1_Validated(sender As Object, e As EventArgs) Handles MainSplitContainer.Panel1.Validated
+
     End Sub
 End Class

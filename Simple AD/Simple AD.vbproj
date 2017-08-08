@@ -191,6 +191,18 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Modules\TabDragger.vb" />
+    <Compile Include="UserControls\DomainTreeContainer.Designer.vb">
+      <DependentUpon>DomainTreeContainer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DomainTreeContainer.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\DomainTreeContainerItem.Designer.vb">
+      <DependentUpon>DomainTreeContainerItem.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DomainTreeContainerItem.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Utility Forms\FormConsole.Designer.vb">
       <DependentUpon>FormConsole.vb</DependentUpon>
     </Compile>
@@ -356,6 +368,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="UserControls\DomainTreeContainer.resx">
+      <DependentUpon>DomainTreeContainer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\DomainTreeContainerItem.resx">
+      <DependentUpon>DomainTreeContainerItem.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Utility Forms\ActiveDirectory\FormGroupSelection.resx">
       <DependentUpon>FormGroupSelection.vb</DependentUpon>
     </EmbeddedResource>
@@ -483,6 +501,8 @@
     <None Include="Resources\User.Png" />
     <None Include="Resources\Computer.Png" />
     <None Include="Resources\Contact.Png" />
+    <None Include="Resources\Down.png" />
+    <None Include="Resources\Right.png" />
     <Content Include="SimpleADIcon.ico" />
     <None Include="Resources\appbar.check.png" />
     <None Include="Resources\appbar.network.server.disconnect.png" />
@@ -504,6 +524,9 @@
     <Import Include="System.Threading.Tasks" />
     <Import Include="System.Windows.Forms" />
     <Import Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UI\CustomTree\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

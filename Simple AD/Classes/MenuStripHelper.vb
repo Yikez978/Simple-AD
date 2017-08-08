@@ -23,17 +23,20 @@
 
                 Try
                     PropertiesItem.Checked = Not FormMain.GetMainSplitContainer1().Panel2Collapsed
-                    DomainItem.Checked = Not FormMain.GetMainSplitContainer0().Panel1Collapsed
-
                     PropertiesItem.Enabled = True
-                    DomainItem.Enabled = True
                 Catch ex As Exception
                     PropertiesItem.Checked = False
                     PropertiesItem.Enabled = False
+                End Try
 
+                Try
+                    DomainItem.Checked = Not FormMain.GetMainSplitContainer0().Panel1Collapsed
+                    DomainItem.Enabled = True
+                Catch ex As Exception
                     DomainItem.Checked = False
                     DomainItem.Enabled = False
                 End Try
+
             End If
         End If
 

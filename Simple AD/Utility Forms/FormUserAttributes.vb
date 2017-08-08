@@ -12,11 +12,12 @@ Public Class FormUserAttributes
     Private ValCol As New DataColumn("Value")
     Private DisplCol As New DataColumn("Attribute")
 
-    Public Sub New(ByVal sAMAccountName As String, rowindex As Integer)
+    Public Sub New(ByVal sAMAccountName As String, ByVal Name As String, rowindex As Integer)
 
         InitializeComponent()
 
-        Me.Text = sAMAccountName
+        Me.Text = Name
+        ObjectName.Text = Name
 
         DropDownFilter.SelectedIndex = 0
 

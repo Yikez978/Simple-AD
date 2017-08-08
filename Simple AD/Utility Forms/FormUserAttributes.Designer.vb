@@ -33,10 +33,13 @@ Partial Class FormUserAttributes
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.DropDownFilter = New MetroFramework.Controls.MetroComboBox()
         Me.MainDataGrid = New MetroFramework.Controls.MetroGrid()
+        Me.StatusStrip = New System.Windows.Forms.StatusStrip()
+        Me.ObjectName = New System.Windows.Forms.ToolStripStatusLabel()
         Me.Attribute = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Value = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Panel1.SuspendLayout()
         CType(Me.MainDataGrid, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.StatusStrip.SuspendLayout()
         Me.SuspendLayout()
         '
         'SearchBoxTb
@@ -163,12 +166,31 @@ Partial Class FormUserAttributes
         Me.MainDataGrid.TabIndex = 1
         Me.MainDataGrid.VirtualMode = True
         '
+        'StatusStrip
+        '
+        Me.StatusStrip.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(122, Byte), Integer), CType(CType(204, Byte), Integer))
+        Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ObjectName})
+        Me.StatusStrip.Location = New System.Drawing.Point(0, 443)
+        Me.StatusStrip.Name = "StatusStrip"
+        Me.StatusStrip.Size = New System.Drawing.Size(549, 22)
+        Me.StatusStrip.SizingGrip = False
+        Me.StatusStrip.TabIndex = 2
+        Me.StatusStrip.Text = "Object Name"
+        '
+        'ObjectName
+        '
+        Me.ObjectName.BackColor = System.Drawing.Color.Transparent
+        Me.ObjectName.ForeColor = System.Drawing.SystemColors.Window
+        Me.ObjectName.Name = "ObjectName"
+        Me.ObjectName.Size = New System.Drawing.Size(74, 17)
+        Me.ObjectName.Text = "ObjectName"
+        '
         'Attribute
         '
         Me.Attribute.DataPropertyName = "Attribute"
         DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.ControlDark
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ControlDarkDark
         Me.Attribute.DefaultCellStyle = DataGridViewCellStyle3
         Me.Attribute.HeaderText = "Attribute"
@@ -188,6 +210,7 @@ Partial Class FormUserAttributes
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(549, 465)
+        Me.Controls.Add(Me.StatusStrip)
         Me.Controls.Add(Me.MainDataGrid)
         Me.Controls.Add(Me.Panel1)
         Me.DisplayHeader = False
@@ -199,14 +222,19 @@ Partial Class FormUserAttributes
         Me.Text = "FormUserAttributes"
         Me.Panel1.ResumeLayout(False)
         CType(Me.MainDataGrid, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.StatusStrip.ResumeLayout(False)
+        Me.StatusStrip.PerformLayout()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
     Friend WithEvents SearchBoxTb As Controls.MetroTextBox
     Friend WithEvents Panel1 As Panel
     Friend WithEvents MainDataGrid As Controls.MetroGrid
+    Friend WithEvents DropDownFilter As Controls.MetroComboBox
+    Friend WithEvents StatusStrip As StatusStrip
+    Friend WithEvents ObjectName As ToolStripStatusLabel
     Friend WithEvents Attribute As DataGridViewTextBoxColumn
     Friend WithEvents Value As DataGridViewTextBoxColumn
-    Friend WithEvents DropDownFilter As Controls.MetroComboBox
 End Class
