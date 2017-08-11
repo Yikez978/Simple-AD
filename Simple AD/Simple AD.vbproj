@@ -97,11 +97,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\AutoUpdater.NET.dll</HintPath>
     </Reference>
-    <Reference Include="Interop.ActiveDs, Version=1.0.0.0, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>bin\Debug\Interop.ActiveDs.dll</HintPath>
-    </Reference>
     <Reference Include="Interop.TSUSEREXLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -164,6 +159,10 @@
     </Reference>
     <Reference Include="System.Data.DataSetExtensions">
       <Private>False</Private>
+    </Reference>
+    <Reference Include="UNOLibs.Net, Version=2.0.0.5, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\UNOLibs.Net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -254,8 +253,8 @@
     <Compile Include="Jobs\JobUserReport.vb" />
     <Compile Include="Jobs\JobUserBulk.vb" />
     <Compile Include="Modules\FileSystemHelper.vb" />
-    <Compile Include="Classes\GlobalVariables.vb" />
-    <Compile Include="Classes\HideColumnsWorker.vb" />
+    <Compile Include="Modules\GlobalVariables.vb" />
+    <Compile Include="Modules\HideColumnsWorker.vb" />
     <Compile Include="Modules\LocalData.vb" />
     <Compile Include="Classes\MenuStripHelper.vb" />
     <Compile Include="Modules\StringHelper.vb" />

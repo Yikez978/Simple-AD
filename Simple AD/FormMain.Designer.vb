@@ -101,9 +101,9 @@ Partial Class FormMain
         SADMenuStrip.ImageScalingSize = New System.Drawing.Size(32, 32)
         SADMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.Office365ToolStripMenuItem, Me.ReportsToolStripMenuItem, Me.PreferencesToolStripMenuItem, Me.ToolsToolStripMenuItem, Me.ViewToolStripMenuItem, Me.UserToolStripMenuItem})
         SADMenuStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow
-        SADMenuStrip.Location = New System.Drawing.Point(0, 60)
+        SADMenuStrip.Location = New System.Drawing.Point(1, 60)
         SADMenuStrip.Name = "SADMenuStrip"
-        SADMenuStrip.Size = New System.Drawing.Size(1223, 24)
+        SADMenuStrip.Size = New System.Drawing.Size(1221, 24)
         SADMenuStrip.TabIndex = 14
         SADMenuStrip.Text = "MenuStrip"
         '
@@ -384,12 +384,12 @@ Partial Class FormMain
         Me.MainTabCtrl.HotTrack = True
         Me.MainTabCtrl.InactiveTabBackColor = System.Drawing.SystemColors.Window
         Me.MainTabCtrl.ItemSize = New System.Drawing.Size(100, 40)
-        Me.MainTabCtrl.Location = New System.Drawing.Point(0, 84)
+        Me.MainTabCtrl.Location = New System.Drawing.Point(1, 84)
         Me.MainTabCtrl.Margin = New System.Windows.Forms.Padding(0)
         Me.MainTabCtrl.Name = "MainTabCtrl"
         Me.MainTabCtrl.Padding = New System.Drawing.Point(0, 0)
         Me.MainTabCtrl.SelectedIndex = 0
-        Me.MainTabCtrl.Size = New System.Drawing.Size(1223, 589)
+        Me.MainTabCtrl.Size = New System.Drawing.Size(1221, 592)
         Me.MainTabCtrl.TabIndex = 17
         '
         'StatusStrip
@@ -399,10 +399,10 @@ Partial Class FormMain
         Me.StatusStrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
         Me.StatusStrip.ImageScalingSize = New System.Drawing.Size(17, 17)
         Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabelContext, Me.ToolStripStatusLabelStatus, Me.SpacerToolStripStatusLabel, Me.ConnectionToolStripStatusLabel, Me.UpdateToolStripStatusLabel})
-        Me.StatusStrip.Location = New System.Drawing.Point(0, 673)
+        Me.StatusStrip.Location = New System.Drawing.Point(1, 676)
         Me.StatusStrip.Name = "StatusStrip"
         Me.StatusStrip.ShowItemToolTips = True
-        Me.StatusStrip.Size = New System.Drawing.Size(1223, 28)
+        Me.StatusStrip.Size = New System.Drawing.Size(1221, 24)
         Me.StatusStrip.SizingGrip = False
         Me.StatusStrip.Stretch = False
         Me.StatusStrip.TabIndex = 18
@@ -413,20 +413,20 @@ Partial Class FormMain
         Me.ToolStripStatusLabelContext.ForeColor = System.Drawing.SystemColors.ControlLightLight
         Me.ToolStripStatusLabelContext.Name = "ToolStripStatusLabelContext"
         Me.ToolStripStatusLabelContext.Padding = New System.Windows.Forms.Padding(10, 0, 10, 0)
-        Me.ToolStripStatusLabelContext.Size = New System.Drawing.Size(20, 23)
+        Me.ToolStripStatusLabelContext.Size = New System.Drawing.Size(20, 19)
         '
         'ToolStripStatusLabelStatus
         '
         Me.ToolStripStatusLabelStatus.ForeColor = System.Drawing.SystemColors.ControlLightLight
         Me.ToolStripStatusLabelStatus.Name = "ToolStripStatusLabelStatus"
         Me.ToolStripStatusLabelStatus.Padding = New System.Windows.Forms.Padding(10, 0, 10, 0)
-        Me.ToolStripStatusLabelStatus.Size = New System.Drawing.Size(20, 23)
+        Me.ToolStripStatusLabelStatus.Size = New System.Drawing.Size(20, 19)
         '
         'SpacerToolStripStatusLabel
         '
         Me.SpacerToolStripStatusLabel.BackColor = System.Drawing.Color.Transparent
         Me.SpacerToolStripStatusLabel.Name = "SpacerToolStripStatusLabel"
-        Me.SpacerToolStripStatusLabel.Size = New System.Drawing.Size(1148, 23)
+        Me.SpacerToolStripStatusLabel.Size = New System.Drawing.Size(1115, 19)
         Me.SpacerToolStripStatusLabel.Spring = True
         Me.SpacerToolStripStatusLabel.Text = " "
         '
@@ -436,13 +436,13 @@ Partial Class FormMain
         Me.ConnectionToolStripStatusLabel.ImageAlign = System.Drawing.ContentAlignment.TopCenter
         Me.ConnectionToolStripStatusLabel.Name = "ConnectionToolStripStatusLabel"
         Me.ConnectionToolStripStatusLabel.Padding = New System.Windows.Forms.Padding(20, 0, 0, 0)
-        Me.ConnectionToolStripStatusLabel.Size = New System.Drawing.Size(20, 23)
+        Me.ConnectionToolStripStatusLabel.Size = New System.Drawing.Size(20, 19)
         '
         'UpdateToolStripStatusLabel
         '
         Me.UpdateToolStripStatusLabel.ForeColor = System.Drawing.SystemColors.Window
         Me.UpdateToolStripStatusLabel.Name = "UpdateToolStripStatusLabel"
-        Me.UpdateToolStripStatusLabel.Size = New System.Drawing.Size(0, 23)
+        Me.UpdateToolStripStatusLabel.Size = New System.Drawing.Size(0, 19)
         '
         'VersionLb
         '
@@ -450,7 +450,7 @@ Partial Class FormMain
         Me.VersionLb.FontSize = MetroFramework.MetroLabelSize.Small
         Me.VersionLb.FontWeight = MetroFramework.MetroLabelWeight.Regular
         Me.VersionLb.ForeColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.VersionLb.Location = New System.Drawing.Point(451, 35)
+        Me.VersionLb.Location = New System.Drawing.Point(452, 35)
         Me.VersionLb.Margin = New System.Windows.Forms.Padding(10, 0, 10, 0)
         Me.VersionLb.Name = "VersionLb"
         Me.VersionLb.Size = New System.Drawing.Size(46, 15)
@@ -473,7 +473,7 @@ Partial Class FormMain
         Me.MainMenuStrip = SADMenuStrip
         Me.MinimumSize = New System.Drawing.Size(640, 480)
         Me.Name = "FormMain"
-        Me.Padding = New System.Windows.Forms.Padding(0, 60, 0, 0)
+        Me.Padding = New System.Windows.Forms.Padding(1, 60, 1, 1)
         Me.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow
         Me.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultLocation
         Me.Style = MetroFramework.MetroColorStyle.Purple

@@ -40,12 +40,12 @@
         MainDataGrid.DoubleBuffered(True)
 
         With DomainTree
-            .BringToFront()
             .Dock = DockStyle.Fill
             .Visible = True
         End With
 
         GetMainSplitContainer0.Panel1.Controls.Add(DomainTree)
+        DomainTree.BringToFront()
 
     End Sub
 
@@ -85,7 +85,7 @@
 
     Private Sub AcceptBn_Click(sender As Object, e As EventArgs) Handles AcceptBt.Click
         FormMain.GetMainDataGrid.ReadOnly = True
-        FormMain.StatusStrip.BackColor = Color.Orange
+        FormMain.StatusStrip.BackColor = Color.FromArgb(202, 81, 0)
         FormMain.ToolStripStatusLabelStatus.Text = "Processing Users..."
         FormMain.ToolStripStatusLabelContext.Text = ""
         Me.ProgressBar.Show()

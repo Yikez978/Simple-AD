@@ -11,10 +11,10 @@ Module ActiveDirectoryHelper
     Public Function GetDomainContext(ByVal DomainName As String, ByVal ConnectionUsername As String, ByVal ConnectionPassword As String) As DirectoryContext
         If String.IsNullOrEmpty(ConnectionUsername) Then
             Return New DirectoryContext(DirectoryContextType.Domain, DomainName)
-        ElseIf String.IsNullOrEmpty(GlobalVariables.LoginUsernamePrefix) Then
+        ElseIf String.IsNullOrEmpty(LoginUsernamePrefix) Then
             Return (New DirectoryContext(DirectoryContextType.Domain, DomainName, ConnectionUsername, ConnectionPassword))
         Else
-            Return (New DirectoryContext(DirectoryContextType.DirectoryServer, GlobalVariables.LoginUsernamePrefix, ConnectionUsername, ConnectionPassword))
+            Return (New DirectoryContext(DirectoryContextType.DirectoryServer, LoginUsernamePrefix, ConnectionUsername, ConnectionPassword))
         End If
     End Function
 
@@ -23,14 +23,14 @@ Module ActiveDirectoryHelper
         Dim DomainName As String = Nothing
 
         Try
-            If Not String.IsNullOrEmpty(GlobalVariables.LoginUsernamePrefix) Then
+            If Not String.IsNullOrEmpty(LoginUsernamePrefix) Then
 
                 Dim DomainContext As DirectoryContext = New DirectoryContext(DirectoryContextType.DirectoryServer, GlobalVariables.LoginUsernamePrefix, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword)
-                DomainName = DirectoryServices.ActiveDirectory.Domain.GetDomain(DomainContext).Name
+                DomainName = Domain.GetDomain(DomainContext).Name
 
             Else
                 Try
-                    DomainName = DirectoryServices.ActiveDirectory.Domain.GetCurrentDomain.Name
+                    DomainName = Domain.GetCurrentDomain.Name
                 Catch ex As Exception
                     DomainName = ""
                 End Try
@@ -41,7 +41,7 @@ Module ActiveDirectoryHelper
         Catch AuthEx As System.Security.Authentication.AuthenticationException
             Debug.WriteLine("[Authentication Error] " & AuthEx.InnerException.ToString)
             Return DomainName
-        Catch NoneExistantDirEx As System.DirectoryServices.ActiveDirectory.ActiveDirectoryObjectNotFoundException
+        Catch NoneExistantDirEx As ActiveDirectoryObjectNotFoundException
             Debug.WriteLine("[NoneExistantDir Error] " & NoneExistantDirEx.InnerException.ToString)
             Return DomainName
         End Try
@@ -349,6 +349,9 @@ Module ActiveDirectoryHelper
     End Function
 
     Public Function DeleteADObject(Username As String) As Boolean
+
+        Debug.WriteLine("[Info] Delete requested on user: " & Username)
+
         Dim DireEntry As DirectoryEntry = GetDirEntry()
         Dim UserEntry As DirectoryEntry = GetDirEntryFromSAM(Username)
         Try
@@ -359,7 +362,9 @@ Module ActiveDirectoryHelper
                 Return True
             End If
             Return False
-        Catch
+        Catch Ex As Exception
+            Debug.WriteLine("[Error] Unabel to Delete User " & Username & ": " & Ex.Message _
+                            & Environment.NewLine & Ex.StackTrace.ToString)
             Return False
         End Try
     End Function

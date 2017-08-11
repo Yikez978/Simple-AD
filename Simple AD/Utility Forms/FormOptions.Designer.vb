@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class FormOptions
-    Inherits MetroFramework.Forms.MetroForm
+    Inherits Simple_AD.FormSimpleAD
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -95,7 +95,7 @@ Partial Class FormOptions
         Me.LDAPTabPage.Name = "LDAPTabPage"
         Me.LDAPTabPage.Size = New System.Drawing.Size(494, 256)
         Me.LDAPTabPage.TabIndex = 1
-        Me.LDAPTabPage.Text = "LDAP"
+        Me.LDAPTabPage.Text = "Active Directory"
         Me.LDAPTabPage.VerticalScrollbarBarColor = True
         Me.LDAPTabPage.VerticalScrollbarHighlightOnWheel = False
         Me.LDAPTabPage.VerticalScrollbarSize = 10
@@ -497,12 +497,13 @@ Partial Class FormOptions
         Me.Controls.Add(Me.CnBt)
         Me.Controls.Add(Me.OKBt)
         Me.Controls.Add(Me.TabControl1)
+        Me.CustomBackcolor = System.Drawing.SystemColors.Window
         Me.DisplayHeader = False
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "FormOptions"
-        Me.Padding = New System.Windows.Forms.Padding(20, 30, 20, 20)
+        Me.Padding = New System.Windows.Forms.Padding(1, 30, 1, 0)
         Me.Resizable = False
         Me.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide

@@ -13,7 +13,7 @@
 
     Public Sub New(ByVal ImportFile As String)
 
-        NewImportJobContainer = New ContainerUserBulk(1, "User Import - " & StringHelper.GetFileNameShort(ImportFile))
+        NewImportJobContainer = New ContainerUserBulk(1, "User Import - " & GetFileNameShort(ImportFile))
 
         TabPage = New TabPage
         With TabPage
@@ -62,75 +62,38 @@
                 End If
 
                 datagrid.DataSource = datasource
-                datagrid.Columns.Remove("Name")
-                datagrid.Columns.Remove("Status")
-                datagrid.Columns.Remove("Filler")
-
-                Dim Status As New TextAndImageColumn
-
-                Status.Name = "Status"
-                Status.DataPropertyName = "Status"
-                Status.HeaderText = "Status"
-                Status.Visible = True
-
-                datagrid.Columns.Insert(0, Status)
-
-                Dim Name As New TextAndImageColumn
-
-                Name.Name = "Name"
-                Name.DataPropertyName = "Name"
-                Name.HeaderText = "Name"
-
-                Name.Image = ConvertToGrayScale(GlobalVariables.IconUser)
-                Name.Visible = True
-
-                datagrid.Columns.Insert(0, Name)
-
 
                 If DisplayNamebool Then
                     For i As Integer = 0 To datagrid.Rows.Count - 1
-                        With DirectCast(datagrid.Rows.Item(i).Cells("Name"), TextAndImageCell)
-                            .Value = datasource.Rows(i).Item("DisplayName")
+                        With DirectCast(datagrid.Rows.Item(i).Cells("nameCol"), TextAndImageCell)
+                            .Value = datasource.Rows(i).Item("displayName")
                         End With
                     Next
                 Else
                     For i As Integer = 0 To datagrid.Rows.Count - 1
-                        With DirectCast(datagrid.Rows.Item(i).Cells("Name"), TextAndImageCell)
-                            .Value = datasource.Rows(i).Item("Username")
+                        With DirectCast(datagrid.Rows.Item(i).Cells("name"), TextAndImageCell)
+                            .Value = datasource.Rows(i).Item("sAMAccountName")
                         End With
                     Next
                 End If
 
-
-                Dim Filler As New TextAndImageColumn
-
-                Filler.Name = "Filler"
-                Filler.DataPropertyName = "Filler"
-                Filler.HeaderText = ""
-                Filler.SortMode = DataGridViewColumnSortMode.NotSortable
-                Filler.ReadOnly = True
-                Filler.Visible = True
-
-                datagrid.Columns.Add(Filler)
-
                 datagrid.DataSource = datasource
-
-                datagrid.Columns("Name").Width = 170
-                datagrid.Columns("Description").Width = 200
-                datagrid.Columns("Status").Width = 300
 
                 FormMain.ToolStripStatusLabelStatus.Text = "Select an Organizational Unit"
 
-                Dim Index As Integer = 0
-
-                FormMain.GetMainDataGrid.Columns("Filler").DisplayIndex = FormMain.GetMainDataGrid.Columns.Count - 1
-                FormMain.GetMainDataGrid.Columns("Filler").AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-
                 For Each column As DataGridViewColumn In datagrid.Columns
-                    If Not GlobalVariables.DefaultColumns.Contains(column.Name) Then
+
+                    column.HeaderText = GetFriendlyLDAPName(column.HeaderText)
+                    column.Width = 170
+
+                    If Not DefaultColumns.Contains(column.Name) Then
                         column.Visible = False
                     End If
                 Next
+
+                datagrid.Columns("nameCol").Width = 170
+                datagrid.Columns("description").Width = 200
+                datagrid.Columns("status").Width = 300
 
                 Spinner.SpinnerVisible = False
 
@@ -144,8 +107,8 @@
 
         Dim p As ImportParameters = CType(Param, ImportParameters)
 
-        Dim dt As New System.Data.DataTable
-        Dim ftdt As New System.Data.DataTable
+        Dim dt As New DataTable
+        Dim ftdt As New DataTable
         Dim ftdtfl As New List(Of String)
         Dim firstLine As Boolean = True
         Dim firstRow As String() = {}
@@ -168,13 +131,16 @@
                         Dim cols = sr.ReadLine.Split(",")
                         firstRow = cols
 
-                        If Not firstRow.Contains("Username") Then
+                        If Not firstRow.Contains("sAMAccountName") Then
                             ErForm.Add("Missing Property Exception", "The Imported File contains no 'Username' Column")
                         End If
-                        If Not firstRow.Contains("Password") Then
+                        If Not firstRow.Contains("password") Then
                             ErForm.Add("Missing Property Exception", "The Imported File contains no 'Password' Column")
                         End If
-                        If firstRow.Contains("DisplayName") Then
+                        If Not firstRow.Contains("name") Then
+                            ErForm.Add("Missing Property Exception", "The Imported File contains no 'Name' Column")
+                        End If
+                        If firstRow.Contains("displayName") Then
                             DisplayNamebool = True
                         End If
 
@@ -196,16 +162,12 @@
 
         For i As Integer = 0 To firstRow.Length - 1
 
-            For j As Integer = 0 To GlobalVariables.Headers.Length - 1
-                If firstRow(i) = GlobalVariables.Headers(j) Then
-                    ftdtfl.Add(GlobalVariables.Headers(j))
+            For j As Integer = 0 To Headers.Length - 1
+                If firstRow(i) = Headers(j) Then
+                    ftdtfl.Add(Headers(j))
                 End If
             Next
         Next
-
-        ftdt.Columns.Add(New DataColumn("Filler", GetType(String)))
-        ftdt.Columns.Add(New DataColumn("Status", GetType(String)))
-        ftdt.Columns.Add(New DataColumn("Name", GetType(String)))
 
         For i As Integer = 0 To ftdtfl.Count - 1
             ftdt.Columns.Add(ftdtfl(i))
@@ -215,7 +177,7 @@
             ftdt.ImportRow(row)
         Next
 
-        For Each Globalcolumn In GlobalVariables.Headers
+        For Each Globalcolumn In Headers
             If Not ftdt.Columns.Contains(Globalcolumn) Then
                 ftdt.Columns.Add(New DataColumn(Globalcolumn, GetType(String)))
             End If

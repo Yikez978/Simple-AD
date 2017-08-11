@@ -7,6 +7,11 @@
         Debug.Listeners.Add(myWriter)
     End Sub
 
+    Private Sub RichTextBox_TextChanged(sender As Object, e As EventArgs) Handles RichTextBox.TextChanged
+        RichTextBox.SelectionStart = RichTextBox.Text.Length
+        RichTextBox.ScrollToCaret()
+    End Sub
+
 End Class
 
 Friend Class TextBoxTraceListener
@@ -36,8 +41,13 @@ Friend Class TextBoxTraceListener
 
     Private Delegate Sub StringSendDelegate(message As String)
 
-    Private Sub SendString(message As String)
-        _target.Text += message
+    Private Sub SendString(Message As String)
+
+        If Message.Contains("[Error]") Then
+            _target.SelectionColor = Color.Red
+        End If
+        _target.AppendText(Message)
+        _target.SelectionColor = Color.Silver
     End Sub
 
 End Class

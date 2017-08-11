@@ -1,11 +1,14 @@
 ﻿Imports System.ComponentModel
 
 
-Public Class HideColumnsWorker
+Public Module HideColumnsWorker
 
-    Public Shared cbw As BackgroundWorker = New BackgroundWorker
+    Public cbw As BackgroundWorker = New BackgroundWorker
+    Private _DataGrid
 
-    Public Shared Sub HideColumns(SorceGrid As DataGridView)
+    Public Sub HideColumns(SourceGrid As DataGridView)
+
+        _DataGrid = SourceGrid
 
         cbw.WorkerReportsProgress = True
         cbw.WorkerSupportsCancellation = True
@@ -14,15 +17,17 @@ Public Class HideColumnsWorker
         AddHandler cbw.ProgressChanged, AddressOf Cbw_ProgressChanged
         AddHandler cbw.RunWorkerCompleted, AddressOf Cbw_RunWorkerCompleted
 
+        _DataGrid.SuspendLayout()
+
         If Not (cbw.IsBusy) Then
-            cbw.RunWorkerAsync(SorceGrid)
+            cbw.RunWorkerAsync(_DataGrid)
         End If
         cbw.Dispose()
 
     End Sub
 
-    Private Shared Sub Cbw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
-        Dim sourceGrid As DataGridView = e.Argument
+    Private Sub Cbw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
+        Dim _DataGrid As DataGridView = e.Argument
 
         If cbw.CancellationPending = True Then
             e.Cancel = True
@@ -31,7 +36,7 @@ Public Class HideColumnsWorker
 
             Debug.WriteLine("[Info] HideColumnsWorker Work Started")
 
-            Dim autoMainDataGrid As DataGridView = GetMainDataGrid(sourceGrid)
+            Dim autoMainDataGrid As DataGridView = GetMainDataGrid(_DataGrid)
 
             Dim sb As New System.Text.StringBuilder
             Dim IsCurrentColumnEmpty As Boolean = False
@@ -64,18 +69,19 @@ Public Class HideColumnsWorker
 
     End Sub
 
-    Private Shared Sub Cbw_ProgressChanged(ByVal sender As Object, ByVal e As ProgressChangedEventArgs)
+    Private Sub Cbw_ProgressChanged(ByVal sender As Object, ByVal e As ProgressChangedEventArgs)
         FormMain.GetMainDataGrid.Columns(e.UserState.ToString).Visible = False
         Debug.WriteLine("[Info] The following Column in MainDataGrid Has been Hidden - " & e.UserState.ToString)
         GlobalVariables.HiddenColums.Add(e.UserState.ToString)
     End Sub
 
-    Private Shared Sub Cbw_RunWorkerCompleted(ByVal sender As Object, ByVal e As RunWorkerCompletedEventArgs)
+    Private Sub Cbw_RunWorkerCompleted(ByVal sender As Object, ByVal e As RunWorkerCompletedEventArgs)
         Debug.WriteLine("[Info] HideColumnsWorker Work Complete")
+        _DataGrid.resumeLayout
     End Sub
 
-    Public Shared Function GetCBWBusy()
+    Public Function GetCBWBusy()
         Return cbw.IsBusy
     End Function
 
-End Class
+End Module

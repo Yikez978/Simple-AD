@@ -217,4 +217,47 @@
         End If
     End Sub
 
+    Private Function GetSelectedUsers() As List(Of String)
+        Try
+
+            Dim UserArray As New List(Of String)
+
+            For Each Row As DataGridViewRow In MainDataGrid.SelectedRows
+                If Not String.IsNullOrEmpty(Row.Cells("sAMAccountName").Value) Then
+                    UserArray.Add(Row.Cells("sAMAccountName").Value & "," & Row.Index.ToString)
+                End If
+            Next
+            Return UserArray
+        Catch Ex As Exception
+            Debug.WriteLine("[Error] Unable to change the active state of the seleceted users: " & Ex.Message)
+            Return Nothing
+        End Try
+    End Function
+
+    Private Sub EnableDisableBulkToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EnableDisableBulkToolStripMenuItem.Click
+        Try
+            For Each User As String In GetSelectedUsers()
+
+                Dim UserArray As String() = User.Split(New Char() {","})
+                Dim Username As String = UserArray(0)
+                Dim Row As Integer = UserArray(1)
+
+                If IsAccountEnabled(Username) Then
+                    Dim IsEnableAccountSuccessfull As Integer = EnableADUserUsingUserAccountControl(Username)
+                    If Not IsEnableAccountSuccessfull = Nothing Then
+                        MainDataGrid.Rows.Item(Row).Cells("userAccountControl").Value = IsEnableAccountSuccessfull
+                        MainDataGrid.InvalidateRow(Row)
+                    End If
+                Else
+                    Dim IsDisnableAccountSuccessfull As Integer = DisableADUserUsingUserAccountControl(Username)
+                    If Not IsDisnableAccountSuccessfull = Nothing Then
+                        MainDataGrid.Rows.Item(Row).Cells("userAccountControl").Value = IsDisnableAccountSuccessfull
+                        MainDataGrid.InvalidateRow(Row)
+                    End If
+                End If
+            Next
+        Catch Ex As Exception
+            Debug.WriteLine("[Error] " & Ex.Message)
+        End Try
+    End Sub
 End Class

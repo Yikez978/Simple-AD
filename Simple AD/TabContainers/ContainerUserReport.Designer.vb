@@ -34,7 +34,7 @@ Partial Class ContainerUserReport
         Me.MainSplitContainer = New System.Windows.Forms.SplitContainer()
         Me.BulkContextMenu = New MetroFramework.Controls.MetroContextMenu(Me.components)
         Me.BulkModifyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.EnableDisableToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.EnableDisableBulkToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MoveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SingleContextMenu = New MetroFramework.Controls.MetroContextMenu(Me.components)
@@ -189,9 +189,9 @@ Partial Class ContainerUserReport
         '
         'BulkContextMenu
         '
-        Me.BulkContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BulkModifyToolStripMenuItem, Me.EnableDisableToolStripMenuItem, Me.MoveToolStripMenuItem, Me.DeleteToolStripMenuItem})
+        Me.BulkContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BulkModifyToolStripMenuItem, Me.EnableDisableBulkToolStripMenuItem, Me.MoveToolStripMenuItem, Me.DeleteToolStripMenuItem})
         Me.BulkContextMenu.Name = "BulkContextMenu"
-        Me.BulkContextMenu.Size = New System.Drawing.Size(153, 92)
+        Me.BulkContextMenu.Size = New System.Drawing.Size(153, 114)
         Me.BulkContextMenu.Style = MetroFramework.MetroColorStyle.Purple
         '
         'BulkModifyToolStripMenuItem
@@ -200,11 +200,11 @@ Partial Class ContainerUserReport
         Me.BulkModifyToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.BulkModifyToolStripMenuItem.Text = "Bulk Modify..."
         '
-        'EnableDisableToolStripMenuItem
+        'EnableDisableBulkToolStripMenuItem
         '
-        Me.EnableDisableToolStripMenuItem.Name = "EnableDisableToolStripMenuItem"
-        Me.EnableDisableToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
-        Me.EnableDisableToolStripMenuItem.Text = "Enable/Disable"
+        Me.EnableDisableBulkToolStripMenuItem.Name = "EnableDisableBulkToolStripMenuItem"
+        Me.EnableDisableBulkToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.EnableDisableBulkToolStripMenuItem.Text = "Enable/Disable"
         '
         'MoveToolStripMenuItem
         '
@@ -222,7 +222,7 @@ Partial Class ContainerUserReport
         '
         Me.SingleContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EnableDisableSingleToolStripMenuItem, Me.ToolStripMenuItem3, Me.ToolStripMenuItem4, Me.PropertiesToolStripMenuItem})
         Me.SingleContextMenu.Name = "BulkContextMenu"
-        Me.SingleContextMenu.Size = New System.Drawing.Size(153, 114)
+        Me.SingleContextMenu.Size = New System.Drawing.Size(153, 92)
         Me.SingleContextMenu.Style = MetroFramework.MetroColorStyle.Purple
         '
         'EnableDisableSingleToolStripMenuItem
@@ -273,7 +273,7 @@ Partial Class ContainerUserReport
     Friend WithEvents MainSplitContainer As SplitContainer
     Friend WithEvents BulkContextMenu As Controls.MetroContextMenu
     Friend WithEvents BulkModifyToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents EnableDisableToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents EnableDisableBulkToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents MoveToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DeleteToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SingleContextMenu As Controls.MetroContextMenu

@@ -21,33 +21,34 @@ Module LDAPDataHelper
 
         Dim User As New UserObject
 
-        Debug.WriteLine("[Info] New User request Started - PropertyCount: " & User.GetType().GetProperties().Count)
+        Debug.WriteLine("[Info] New User request Started")
 
         Try
-            For Each Cell As DataGridViewCell In Row.Cells
-                For Each Item As PropertyInfo In User.GetType().GetProperties()
+            For Each column As DataGridViewColumn In Grid.Columns
+                Try
 
-                    Debug.WriteLine("[Info] Row Cell Count: " & Row.Cells.Count)
+                    Dim Value As String = Row.Cells(column.Name).Value
 
-                    Dim ColumnName As String = GetFullLDAPName(Grid.Columns(Cell.ColumnIndex).Name)
-                    Dim ItemName As String = GetFullLDAPName(Item.Name)
-
-                    Debug.WriteLine(Grid.Rows.Item(Row.Index).Cells(ColumnName).Value)
-
-                    If ItemName = ColumnName Then
-                        Item.SetValue(User, Grid.Rows.Item(Row.Index).Cells(ColumnName).Value)
+                    If String.IsNullOrEmpty(Value) Then
+                        Value = ""
                     End If
-                Next
-            Next
 
-            MsgBox("User.name" & User.name)
-            Return User
+                    Select Case column.Name
+                        Case "nameCol"
+                            CallByName(User, "name", CallType.Set, Value)
+                        Case Else
+                            CallByName(User, column.Name, CallType.Set, Value)
+                    End Select
+                Catch Ex As Exception
+                    Debug.WriteLine("[Error] Unable to set " & column.Name & " Property on user: " & Ex.Message)
+                End Try
+            Next
 
         Catch Ex As Exception
             Debug.WriteLine("[Error] Unable to setup User Object: " & Ex.Message)
             Return Nothing
         End Try
-
+        Return User
     End Function
 
 End Module

@@ -82,15 +82,18 @@ Public Class BulkADWorker
                 Dim User As UserObject = GetUserFromDataGridViewRow(autoMainDataGrid, row)
 
                 Try
+
+                    If Not User Is Nothing Then
+
                         ' Specify User.
                         strUser = "CN=" & User.name
                         Debug.WriteLine("[Info] Create: " & strUser)
 
-                    ' Create User.
+                        ' Create User.
 
-                    Dim objUser As DirectoryEntry = objADAM.Children.Add(strUser, "user")
+                        Dim objUser As DirectoryEntry = objADAM.Children.Add(strUser, "user")
 
-                    If Not objUser Is Nothing Then
+                        If Not objUser Is Nothing Then
 
                             objUser.Properties.Item("SamAccountName").Add(User.sAMAccountName)
                             objUser.Properties("userPrincipalName").Add(User.sAMAccountName)
@@ -169,12 +172,12 @@ Public Class BulkADWorker
                         End If
 
                         objUser.Close()
+                    End If
+                Catch exc As Exception
 
-                    Catch exc As Exception
+                    Dim ErrorMsgCon = "Unable to Create User: " & User.sAMAccountName & " - " & exc.Message
 
-                        Dim ErrorMsgCon = "Unable to Create User: " & User.sAMAccountName & " - " & exc.Message
-
-                        Dim argArray As Array = {row.Index, ErrorMsgCon, exc.Message}
+                    Dim argArray As Array = {row.Index, ErrorMsgCon, exc.Message}
 
                         Debug.WriteLine("[Error] Unable to Create User: " & User.sAMAccountName)
                         Debug.WriteLine("[Error] " & exc.Message)
@@ -239,7 +242,7 @@ Public Class BulkADWorker
         _BulkUserContainer.GetSpinner().Visible = False
         _BulkUserContainer.GetSpinner().Spinning = False
 
-        FormMain.StatusStrip.BackColor = SystemColors.Highlight
+        FormMain.StatusStrip.BackColor = Color.FromArgb(124, 65, 153)
 
         If e.Cancelled = True Then
             FormMain.ToolStripStatusLabelStatus.Text = "Operation Canceled"

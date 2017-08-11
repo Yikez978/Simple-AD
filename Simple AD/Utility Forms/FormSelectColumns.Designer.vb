@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class FormSelectColumns
-    Inherits MetroFramework.Forms.MetroForm
+    Inherits Simple_AD.FormSimpleAD
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -39,7 +39,7 @@ Partial Class FormSelectColumns
         '
         Me.CnBt.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CnBt.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.CnBt.Location = New System.Drawing.Point(563, 387)
+        Me.CnBt.Location = New System.Drawing.Point(397, 335)
         Me.CnBt.Name = "CnBt"
         Me.CnBt.Size = New System.Drawing.Size(75, 23)
         Me.CnBt.TabIndex = 1
@@ -49,7 +49,7 @@ Partial Class FormSelectColumns
         'AcBt
         '
         Me.AcBt.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.AcBt.Location = New System.Drawing.Point(482, 387)
+        Me.AcBt.Location = New System.Drawing.Point(316, 335)
         Me.AcBt.Name = "AcBt"
         Me.AcBt.Size = New System.Drawing.Size(75, 23)
         Me.AcBt.TabIndex = 2
@@ -58,32 +58,34 @@ Partial Class FormSelectColumns
         '
         'AvailableColumnsLb
         '
-        Me.AvailableColumnsLb.BackColor = System.Drawing.SystemColors.Window
-        Me.AvailableColumnsLb.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.AvailableColumnsLb.Font = New System.Drawing.Font("Segoe UI Semilight", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.AvailableColumnsLb.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.AvailableColumnsLb.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.AvailableColumnsLb.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.AvailableColumnsLb.ItemHeight = 15
         Me.AvailableColumnsLb.Location = New System.Drawing.Point(23, 117)
         Me.AvailableColumnsLb.Name = "AvailableColumnsLb"
         Me.AvailableColumnsLb.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
-        Me.AvailableColumnsLb.Size = New System.Drawing.Size(262, 240)
+        Me.AvailableColumnsLb.Size = New System.Drawing.Size(176, 212)
         Me.AvailableColumnsLb.Sorted = True
         Me.AvailableColumnsLb.TabIndex = 3
         '
         'CurrentColumnsLb
         '
-        Me.CurrentColumnsLb.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.CurrentColumnsLb.Font = New System.Drawing.Font("Segoe UI Semilight", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CurrentColumnsLb.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.CurrentColumnsLb.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.CurrentColumnsLb.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CurrentColumnsLb.ItemHeight = 15
-        Me.CurrentColumnsLb.Location = New System.Drawing.Point(372, 117)
+        Me.CurrentColumnsLb.Location = New System.Drawing.Point(296, 117)
         Me.CurrentColumnsLb.Name = "CurrentColumnsLb"
         Me.CurrentColumnsLb.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
-        Me.CurrentColumnsLb.Size = New System.Drawing.Size(266, 240)
+        Me.CurrentColumnsLb.Size = New System.Drawing.Size(176, 212)
         Me.CurrentColumnsLb.Sorted = True
         Me.CurrentColumnsLb.TabIndex = 4
         '
         'AddBn
         '
-        Me.AddBn.Location = New System.Drawing.Point(291, 105)
+        Me.AddBn.Location = New System.Drawing.Point(210, 161)
+        Me.AddBn.Margin = New System.Windows.Forms.Padding(8)
         Me.AddBn.Name = "AddBn"
         Me.AddBn.Size = New System.Drawing.Size(75, 23)
         Me.AddBn.TabIndex = 5
@@ -92,7 +94,8 @@ Partial Class FormSelectColumns
         '
         'AddAllBn
         '
-        Me.AddAllBn.Location = New System.Drawing.Point(291, 134)
+        Me.AddAllBn.Location = New System.Drawing.Point(210, 190)
+        Me.AddAllBn.Margin = New System.Windows.Forms.Padding(8)
         Me.AddAllBn.Name = "AddAllBn"
         Me.AddAllBn.Size = New System.Drawing.Size(75, 23)
         Me.AddAllBn.TabIndex = 6
@@ -101,7 +104,8 @@ Partial Class FormSelectColumns
         '
         'RmvBn
         '
-        Me.RmvBn.Location = New System.Drawing.Point(291, 177)
+        Me.RmvBn.Location = New System.Drawing.Point(210, 233)
+        Me.RmvBn.Margin = New System.Windows.Forms.Padding(8)
         Me.RmvBn.Name = "RmvBn"
         Me.RmvBn.Size = New System.Drawing.Size(75, 23)
         Me.RmvBn.TabIndex = 7
@@ -110,7 +114,8 @@ Partial Class FormSelectColumns
         '
         'RmvAllBn
         '
-        Me.RmvAllBn.Location = New System.Drawing.Point(291, 206)
+        Me.RmvAllBn.Location = New System.Drawing.Point(210, 262)
+        Me.RmvAllBn.Margin = New System.Windows.Forms.Padding(8)
         Me.RmvAllBn.Name = "RmvAllBn"
         Me.RmvAllBn.Size = New System.Drawing.Size(75, 23)
         Me.RmvAllBn.TabIndex = 8
@@ -120,18 +125,20 @@ Partial Class FormSelectColumns
         'AvailableColumnsLabel
         '
         Me.AvailableColumnsLabel.AutoSize = True
-        Me.AvailableColumnsLabel.Location = New System.Drawing.Point(23, 80)
+        Me.AvailableColumnsLabel.FontSize = MetroFramework.MetroLabelSize.Small
+        Me.AvailableColumnsLabel.Location = New System.Drawing.Point(23, 83)
         Me.AvailableColumnsLabel.Name = "AvailableColumnsLabel"
-        Me.AvailableColumnsLabel.Size = New System.Drawing.Size(117, 19)
+        Me.AvailableColumnsLabel.Size = New System.Drawing.Size(97, 15)
         Me.AvailableColumnsLabel.TabIndex = 9
         Me.AvailableColumnsLabel.Text = "Available Columns"
         '
         'LoadedColumnsLabel
         '
         Me.LoadedColumnsLabel.AutoSize = True
-        Me.LoadedColumnsLabel.Location = New System.Drawing.Point(372, 80)
+        Me.LoadedColumnsLabel.FontSize = MetroFramework.MetroLabelSize.Small
+        Me.LoadedColumnsLabel.Location = New System.Drawing.Point(300, 83)
         Me.LoadedColumnsLabel.Name = "LoadedColumnsLabel"
-        Me.LoadedColumnsLabel.Size = New System.Drawing.Size(108, 19)
+        Me.LoadedColumnsLabel.Size = New System.Drawing.Size(91, 15)
         Me.LoadedColumnsLabel.TabIndex = 10
         Me.LoadedColumnsLabel.Text = "Loaded Columns"
         '
@@ -139,7 +146,7 @@ Partial Class FormSelectColumns
         '
         Me.AcceptButton = Me.AcBt
         Me.CancelButton = Me.CnBt
-        Me.ClientSize = New System.Drawing.Size(661, 433)
+        Me.ClientSize = New System.Drawing.Size(496, 382)
         Me.Controls.Add(Me.LoadedColumnsLabel)
         Me.Controls.Add(Me.AvailableColumnsLabel)
         Me.Controls.Add(Me.RmvAllBn)
@@ -150,10 +157,13 @@ Partial Class FormSelectColumns
         Me.Controls.Add(Me.AvailableColumnsLb)
         Me.Controls.Add(Me.AcBt)
         Me.Controls.Add(Me.CnBt)
+        Me.CustomBackcolor = System.Drawing.SystemColors.Window
+        Me.CustomForecolor = System.Drawing.SystemColors.MenuText
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "FormSelectColumns"
+        Me.Padding = New System.Windows.Forms.Padding(1, 60, 1, 1)
         Me.Resizable = False
         Me.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow
         Me.Style = MetroFramework.MetroColorStyle.Purple

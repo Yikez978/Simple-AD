@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FormUserAttributesBulk
-    Inherits MetroFramework.Forms.MetroForm
+    Inherits Simple_AD.FormSimpleAD
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()>
@@ -39,9 +39,9 @@ Partial Class FormUserAttributesBulk
         Me.DropDownFilter = New MetroFramework.Controls.MetroComboBox()
         Me.SearchBoxTb = New MetroFramework.Controls.MetroTextBox()
         Me.MetroPanel1 = New MetroFramework.Controls.MetroPanel()
-        Me.CancelBn = New MetroFramework.Controls.MetroButton()
-        Me.MetroProgressBar1 = New MetroFramework.Controls.MetroProgressBar()
         Me.AcceptBn = New MetroFramework.Controls.MetroButton()
+        Me.MetroProgressBar1 = New MetroFramework.Controls.MetroProgressBar()
+        Me.CancelBn = New MetroFramework.Controls.MetroButton()
         Me.StatusStrip.SuspendLayout()
         CType(Me.MainDataGrid, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
@@ -50,11 +50,11 @@ Partial Class FormUserAttributesBulk
         '
         'StatusStrip
         '
-        Me.StatusStrip.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(122, Byte), Integer), CType(CType(204, Byte), Integer))
+        Me.StatusStrip.BackColor = System.Drawing.Color.FromArgb(CType(CType(124, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(153, Byte), Integer))
         Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.StatusLb})
-        Me.StatusStrip.Location = New System.Drawing.Point(0, 416)
+        Me.StatusStrip.Location = New System.Drawing.Point(1, 415)
         Me.StatusStrip.Name = "StatusStrip"
-        Me.StatusStrip.Size = New System.Drawing.Size(652, 22)
+        Me.StatusStrip.Size = New System.Drawing.Size(650, 22)
         Me.StatusStrip.SizingGrip = False
         Me.StatusStrip.TabIndex = 3
         Me.StatusStrip.Text = "Object Name"
@@ -104,7 +104,7 @@ Partial Class FormUserAttributesBulk
         Me.MainDataGrid.EnableHeadersVisualStyles = False
         Me.MainDataGrid.Font = New System.Drawing.Font("Segoe UI", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel)
         Me.MainDataGrid.GridColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.MainDataGrid.Location = New System.Drawing.Point(0, 102)
+        Me.MainDataGrid.Location = New System.Drawing.Point(1, 102)
         Me.MainDataGrid.Name = "MainDataGrid"
         Me.MainDataGrid.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
         DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
@@ -129,7 +129,7 @@ Partial Class FormUserAttributesBulk
         Me.MainDataGrid.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.MainDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.MainDataGrid.ShowEditingIcon = False
-        Me.MainDataGrid.Size = New System.Drawing.Size(652, 277)
+        Me.MainDataGrid.Size = New System.Drawing.Size(650, 276)
         Me.MainDataGrid.Style = MetroFramework.MetroColorStyle.Silver
         Me.MainDataGrid.TabIndex = 4
         Me.MainDataGrid.VirtualMode = True
@@ -170,9 +170,9 @@ Partial Class FormUserAttributesBulk
         Me.Panel1.Controls.Add(Me.DropDownFilter)
         Me.Panel1.Controls.Add(Me.SearchBoxTb)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Panel1.Location = New System.Drawing.Point(0, 60)
+        Me.Panel1.Location = New System.Drawing.Point(1, 60)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(652, 42)
+        Me.Panel1.Size = New System.Drawing.Size(650, 42)
         Me.Panel1.TabIndex = 5
         '
         'DropDownFilter
@@ -232,14 +232,32 @@ Partial Class FormUserAttributesBulk
         Me.MetroPanel1.HorizontalScrollbarBarColor = True
         Me.MetroPanel1.HorizontalScrollbarHighlightOnWheel = False
         Me.MetroPanel1.HorizontalScrollbarSize = 10
-        Me.MetroPanel1.Location = New System.Drawing.Point(0, 379)
+        Me.MetroPanel1.Location = New System.Drawing.Point(1, 378)
         Me.MetroPanel1.Name = "MetroPanel1"
-        Me.MetroPanel1.Size = New System.Drawing.Size(652, 37)
+        Me.MetroPanel1.Size = New System.Drawing.Size(650, 37)
         Me.MetroPanel1.TabIndex = 6
         Me.MetroPanel1.UseCustomBackColor = True
         Me.MetroPanel1.VerticalScrollbarBarColor = True
         Me.MetroPanel1.VerticalScrollbarHighlightOnWheel = False
         Me.MetroPanel1.VerticalScrollbarSize = 10
+        '
+        'AcceptBn
+        '
+        Me.AcceptBn.Location = New System.Drawing.Point(467, 6)
+        Me.AcceptBn.Name = "AcceptBn"
+        Me.AcceptBn.Size = New System.Drawing.Size(86, 23)
+        Me.AcceptBn.TabIndex = 4
+        Me.AcceptBn.Text = "Apply"
+        Me.AcceptBn.UseSelectable = True
+        '
+        'MetroProgressBar1
+        '
+        Me.MetroProgressBar1.Location = New System.Drawing.Point(15, 6)
+        Me.MetroProgressBar1.Name = "MetroProgressBar1"
+        Me.MetroProgressBar1.Size = New System.Drawing.Size(315, 23)
+        Me.MetroProgressBar1.Style = MetroFramework.MetroColorStyle.Purple
+        Me.MetroProgressBar1.TabIndex = 3
+        Me.MetroProgressBar1.Visible = False
         '
         'CancelBn
         '
@@ -251,24 +269,6 @@ Partial Class FormUserAttributesBulk
         Me.CancelBn.Text = "Cancel"
         Me.CancelBn.UseSelectable = True
         '
-        'MetroProgressBar1
-        '
-        Me.MetroProgressBar1.Location = New System.Drawing.Point(15, 6)
-        Me.MetroProgressBar1.Name = "MetroProgressBar1"
-        Me.MetroProgressBar1.Size = New System.Drawing.Size(315, 23)
-        Me.MetroProgressBar1.Style = MetroFramework.MetroColorStyle.Purple
-        Me.MetroProgressBar1.TabIndex = 3
-        Me.MetroProgressBar1.Visible = False
-        '
-        'AcceptBn
-        '
-        Me.AcceptBn.Location = New System.Drawing.Point(467, 6)
-        Me.AcceptBn.Name = "AcceptBn"
-        Me.AcceptBn.Size = New System.Drawing.Size(86, 23)
-        Me.AcceptBn.TabIndex = 4
-        Me.AcceptBn.Text = "Apply"
-        Me.AcceptBn.UseSelectable = True
-        '
         'FormUserAttributesBulk
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -279,9 +279,11 @@ Partial Class FormUserAttributesBulk
         Me.Controls.Add(Me.MetroPanel1)
         Me.Controls.Add(Me.StatusStrip)
         Me.Controls.Add(Me.Panel1)
+        Me.CustomBackcolor = System.Drawing.SystemColors.Window
+        Me.CustomForecolor = System.Drawing.SystemColors.MenuText
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "FormUserAttributesBulk"
-        Me.Padding = New System.Windows.Forms.Padding(0, 60, 0, 0)
+        Me.Padding = New System.Windows.Forms.Padding(1, 60, 1, 1)
         Me.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow
         Me.Style = MetroFramework.MetroColorStyle.Purple
         Me.Text = "Bulk Modify"

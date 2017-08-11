@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class FormUserAttributes
-    Inherits MetroFramework.Forms.MetroForm
+    Inherits Simple_AD.FormSimpleAD
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -81,9 +81,9 @@ Partial Class FormUserAttributes
         Me.Panel1.Controls.Add(Me.DropDownFilter)
         Me.Panel1.Controls.Add(Me.SearchBoxTb)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Panel1.Location = New System.Drawing.Point(0, 30)
+        Me.Panel1.Location = New System.Drawing.Point(1, 30)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(549, 42)
+        Me.Panel1.Size = New System.Drawing.Size(547, 42)
         Me.Panel1.TabIndex = 1
         '
         'DropDownFilter
@@ -137,7 +137,7 @@ Partial Class FormUserAttributes
         Me.MainDataGrid.EnableHeadersVisualStyles = False
         Me.MainDataGrid.Font = New System.Drawing.Font("Segoe UI", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel)
         Me.MainDataGrid.GridColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.MainDataGrid.Location = New System.Drawing.Point(0, 72)
+        Me.MainDataGrid.Location = New System.Drawing.Point(1, 72)
         Me.MainDataGrid.Name = "MainDataGrid"
         Me.MainDataGrid.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
         DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
@@ -162,7 +162,7 @@ Partial Class FormUserAttributes
         Me.MainDataGrid.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.MainDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.MainDataGrid.ShowEditingIcon = False
-        Me.MainDataGrid.Size = New System.Drawing.Size(549, 393)
+        Me.MainDataGrid.Size = New System.Drawing.Size(547, 392)
         Me.MainDataGrid.Style = MetroFramework.MetroColorStyle.Silver
         Me.MainDataGrid.TabIndex = 1
         Me.MainDataGrid.VirtualMode = True
@@ -189,11 +189,11 @@ Partial Class FormUserAttributes
         '
         'StatusStrip
         '
-        Me.StatusStrip.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(122, Byte), Integer), CType(CType(204, Byte), Integer))
+        Me.StatusStrip.BackColor = System.Drawing.Color.FromArgb(CType(CType(124, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(153, Byte), Integer))
         Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ObjectName, Me.ObjectType})
-        Me.StatusStrip.Location = New System.Drawing.Point(0, 443)
+        Me.StatusStrip.Location = New System.Drawing.Point(1, 442)
         Me.StatusStrip.Name = "StatusStrip"
-        Me.StatusStrip.Size = New System.Drawing.Size(549, 22)
+        Me.StatusStrip.Size = New System.Drawing.Size(547, 22)
         Me.StatusStrip.SizingGrip = False
         Me.StatusStrip.TabIndex = 2
         Me.StatusStrip.Text = "Object Name"
@@ -210,7 +210,7 @@ Partial Class FormUserAttributes
         '
         Me.ObjectType.ForeColor = System.Drawing.SystemColors.Window
         Me.ObjectType.Name = "ObjectType"
-        Me.ObjectType.Size = New System.Drawing.Size(67, 17)
+        Me.ObjectType.Size = New System.Drawing.Size(68, 17)
         Me.ObjectType.Text = "ObjectType"
         '
         'FormUserAttributes
@@ -221,11 +221,11 @@ Partial Class FormUserAttributes
         Me.Controls.Add(Me.StatusStrip)
         Me.Controls.Add(Me.MainDataGrid)
         Me.Controls.Add(Me.Panel1)
+        Me.CustomBackcolor = System.Drawing.SystemColors.Window
         Me.DisplayHeader = False
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "FormUserAttributes"
-        Me.Padding = New System.Windows.Forms.Padding(0, 30, 0, 0)
-        Me.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow
+        Me.Padding = New System.Windows.Forms.Padding(1, 30, 1, 1)
         Me.Style = MetroFramework.MetroColorStyle.Purple
         Me.Text = "FormUserAttributes"
         Me.Panel1.ResumeLayout(False)

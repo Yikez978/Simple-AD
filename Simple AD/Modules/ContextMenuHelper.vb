@@ -4,7 +4,6 @@
 
         If e.Button = MouseButtons.Right Then
             Try
-
                 If DataGrid.SelectedRows.Count = 1 Then
                     If e.RowIndex > -1 Then
                         DataGrid.ClearSelection()
@@ -23,13 +22,18 @@
 
                         ContextMenuStrip.Show((CInt(Cursor.Position.X)), (CInt(Cursor.Position.Y)))
 
-                    ElseIf DataGrid.SelectedRows.Count > 1 Then
 
-                        ContextMenuStrip.Show((CInt(Cursor.Position.X)), (CInt(Cursor.Position.Y)))
                     End If
+
+                ElseIf DataGrid.SelectedRows.Count > 1 Then
+
+                    ContextMenuStrip.Show((CInt(Cursor.Position.X)), (CInt(Cursor.Position.Y)))
+
                 End If
 
             Catch Ex As System.ArgumentOutOfRangeException
+                Debug.WriteLine("[Error] " & Ex.Message)
+                Debug.WriteLine("[Error] " & Ex.StackTrace)
                 Return
             End Try
         End If
