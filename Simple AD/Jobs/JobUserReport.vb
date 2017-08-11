@@ -117,9 +117,9 @@ Public Class JobUserReport
             End If
         Next
 
-        Dim Entry As DirectoryEntry = New DirectoryEntry(GetDirEntry, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword)
+        Dim Entry As DirectoryEntry = GetDirEntry()
 
-        Dim DirSearcher As DirectorySearcher = New DirectorySearcher(GetDirEntry)
+        Dim DirSearcher As DirectorySearcher = New DirectorySearcher(GetDirEntryPath)
 
         With DirSearcher
             .SearchRoot = Entry

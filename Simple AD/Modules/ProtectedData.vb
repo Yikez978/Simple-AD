@@ -1,11 +1,11 @@
 ﻿Imports System.Security.Cryptography
 
-Public Class DataProtection
+Public Module DataProtection
 
     ' Create byte array for additional entropy when using Protect method.
-    Private Shared s_aditionalEntropy As Byte() = {9, 8, 7, 6, 5}
+    Private s_aditionalEntropy As Byte() = {9, 8, 7, 6, 5}
 
-    Public Shared Function Protect(ByVal data As String) As String
+    Public Function Protect(ByVal data As String) As String
         Try
             ' Encrypt the data using DataProtectionScope.CurrentUser. The result can be decrypted
             '  only by the same current user.
@@ -22,7 +22,7 @@ Public Class DataProtection
     End Function
 
 
-    Public Shared Function Unprotect(ByVal data As String) As String
+    Public Function Unprotect(ByVal data As String) As String
         Try
             'Decrypt the data using DataProtectionScope.CurrentUser.
             Dim EncryptedBytes As Byte() = Convert.FromBase64String(data)
@@ -37,4 +37,4 @@ Public Class DataProtection
 
     End Function
 
-End Class
+End Module

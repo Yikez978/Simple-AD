@@ -1,4 +1,19 @@
-﻿Module DataGridTools
+﻿Module DataGridHelper
+
+    Public Function GetCheckedRows(ByVal DataGrid As DataGridView) As List(Of DataGridViewRow)
+        Dim CheckedRows = New List(Of DataGridViewRow)
+        Try
+            For Each Row As DataGridViewRow In DataGrid.Rows
+                If Row.Cells("Ready").Value = True Then
+                    CheckedRows.Add(Row)
+                End If
+            Next
+            Return CheckedRows
+        Catch ex As Exception
+            Debug.Write("[Error] " & ex.Message)
+            Return CheckedRows
+        End Try
+    End Function
 
     Public Function GetMainDataGrid(SourceGrid As DataGridView)
 

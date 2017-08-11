@@ -10,9 +10,9 @@ Module ActiveDirectoryHelper
 
     Public Function GetDomainContext(ByVal DomainName As String, ByVal ConnectionUsername As String, ByVal ConnectionPassword As String) As DirectoryContext
         If String.IsNullOrEmpty(ConnectionUsername) Then
-            Return New DirectoryContext(DirectoryServices.ActiveDirectory.DirectoryContextType.Domain, DomainName)
+            Return New DirectoryContext(DirectoryContextType.Domain, DomainName)
         ElseIf String.IsNullOrEmpty(GlobalVariables.LoginUsernamePrefix) Then
-            Return (New DirectoryContext(DirectoryServices.ActiveDirectory.DirectoryContextType.Domain, DomainName, ConnectionUsername, ConnectionPassword))
+            Return (New DirectoryContext(DirectoryContextType.Domain, DomainName, ConnectionUsername, ConnectionPassword))
         Else
             Return (New DirectoryContext(DirectoryContextType.DirectoryServer, GlobalVariables.LoginUsernamePrefix, ConnectionUsername, ConnectionPassword))
         End If
@@ -57,7 +57,7 @@ Module ActiveDirectoryHelper
         Return "DC=" & fqdn
     End Function
 
-    Public Function GetDirEntry() As String
+    Public Function GetDirEntryPath() As String
 
         Dim entry As String
 
@@ -72,12 +72,17 @@ Module ActiveDirectoryHelper
         Return entry
     End Function
 
+    Public Function GetDirEntry()
+        Return New DirectoryEntry(GetDirEntryPath, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword)
+    End Function
+
+
     Public Function GetDisplayName() As String
         Dim DisplayName As String = "User"
         Try
 
-            Dim Entry As DirectoryEntry = New DirectoryEntry(GetDirEntry, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword)
-            Dim DirSearcher As DirectorySearcher = New DirectorySearcher(GetDirEntry)
+            Dim Entry As DirectoryEntry = New DirectoryEntry(GetDirEntryPath, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword)
+            Dim DirSearcher As DirectorySearcher = New DirectorySearcher(GetDirEntryPath)
 
             With DirSearcher
                 .SearchRoot = Entry
@@ -217,20 +222,21 @@ Module ActiveDirectoryHelper
 
     Public Function GetDirEntryFromSAM(ByVal sAMAccountName As String) As DirectoryEntry
         Try
-            Dim Entry As DirectoryEntry = New DirectoryEntry(GetDirEntry, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword)
+            Using Entry As DirectoryEntry = New DirectoryEntry(GetDirEntryPath, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword)
 
-            Dim DirSearcher As DirectorySearcher = New DirectorySearcher(GetDirEntry)
+                Dim DirSearcher As DirectorySearcher = New DirectorySearcher(GetDirEntryPath)
 
-            With DirSearcher
-                .SearchRoot = Entry
-                .Filter = "(sAMAccountName=" & sAMAccountName & ")"
-            End With
+                With DirSearcher
+                    .SearchRoot = Entry
+                    .Filter = "(sAMAccountName=" & sAMAccountName & ")"
+                End With
 
-            DirSearcher.PropertiesToLoad.AddRange(GetLDAPProps())
+                DirSearcher.PropertiesToLoad.AddRange(GetLDAPProps())
 
-            Dim result As SearchResult = DirSearcher.FindOne()
+                Dim result As SearchResult = DirSearcher.FindOne()
 
-            Return result.GetDirectoryEntry
+                Return result.GetDirectoryEntry
+            End Using
         Catch Ex As Exception
             Debug.WriteLine("[Error] " & Ex.Message)
         End Try
@@ -267,6 +273,94 @@ Module ActiveDirectoryHelper
         Catch ex As Exception
             Console.WriteLine(String.Format("[Error] {0}" & vbLf & " Inner Exception: " & vbLf & " {1}", ex.Message, ex.InnerException))
             Return Nothing
+        End Try
+    End Function
+
+    Public Function EnableADUserUsingUserAccountControl(Username As String) As Integer
+
+        Try
+
+            Using userEntry As DirectoryEntry = GetDirEntryFromSAM(Username)
+
+                Dim old_UAC As Integer = CInt(userEntry.Properties("userAccountControl")(0))
+
+                Dim ADS_UF_ACCOUNTDISABLE As Integer = 2
+
+                userEntry.Properties("userAccountControl")(0) = (old_UAC And Not ADS_UF_ACCOUNTDISABLE)
+                userEntry.CommitChanges()
+
+                Debug.WriteLine("[Info] Active Directory User Account Enabled successfully through userAccountControl property")
+                Return userEntry.Properties("userAccountControl")(0)
+            End Using
+
+            Return Nothing
+        Catch Ex As Exception
+            Debug.WriteLine("[Error] Unable to Enable User account though userAccountControl property: " & Ex.Message)
+            Return Nothing
+        End Try
+    End Function
+
+    Public Function DisableADUserUsingUserAccountControl(Username As String) As Integer
+
+        Try
+
+            Using userEntry As DirectoryEntry = GetDirEntryFromSAM(Username)
+
+                Dim old_UAC As Integer = CInt(userEntry.Properties("userAccountControl")(0))
+
+                Dim ADS_UF_ACCOUNTDISABLE As Integer = 2
+
+                userEntry.Properties("userAccountControl")(0) = (old_UAC Or ADS_UF_ACCOUNTDISABLE)
+                userEntry.CommitChanges()
+
+                Debug.WriteLine("[Info] Active Directory User Account Disabled successfully through userAccountControl property")
+                Return userEntry.Properties("userAccountControl")(0)
+            End Using
+
+            Return Nothing
+        Catch Ex As Exception
+            Debug.WriteLine("[Error] Unable to Disable User account though userAccountControl property: " & Ex.Message)
+            Return Nothing
+        End Try
+    End Function
+
+    Public Function IsAccountEnabled(ByVal Username As String) As Boolean
+
+        Try
+
+            Using userEntry As DirectoryEntry = GetDirEntryFromSAM(Username)
+
+                Const ADS_UF_ACCOUNTDISABLE As Integer = &H2
+
+                Dim Flags As Integer = CInt(userEntry.Properties("userAccountControl").Value)
+                If CBool(Flags And ADS_UF_ACCOUNTDISABLE) Then
+                    Return True
+                Else
+                    Return False
+                End If
+
+            End Using
+
+        Catch Ex As Exception
+            Debug.WriteLine("[Error] Unable to retrive the status of the supplied account: " & Ex.Message)
+        End Try
+
+        Return Nothing
+    End Function
+
+    Public Function DeleteADObject(Username As String) As Boolean
+        Dim DireEntry As DirectoryEntry = GetDirEntry()
+        Dim UserEntry As DirectoryEntry = GetDirEntryFromSAM(Username)
+        Try
+            If Not UserEntry Is Nothing Then
+                DireEntry.Children.Remove(UserEntry)
+                DireEntry.CommitChanges()
+                DireEntry.Close()
+                Return True
+            End If
+            Return False
+        Catch
+            Return False
         End Try
     End Function
 

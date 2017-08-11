@@ -6,6 +6,7 @@
         myWriter = New TextBoxTraceListener(RichTextBox)
         Debug.Listeners.Add(myWriter)
     End Sub
+
 End Class
 
 Friend Class TextBoxTraceListener
@@ -20,11 +21,17 @@ Friend Class TextBoxTraceListener
     End Sub
 
     Public Overrides Sub Write(message As String)
-        _target.Invoke(_invokeWrite, New Object() {message})
+        Try
+            _target.Invoke(_invokeWrite, New Object() {message})
+        Catch Ex As InvalidOperationException
+        End Try
     End Sub
 
     Public Overrides Sub WriteLine(message As String)
-        _target.Invoke(_invokeWrite, New Object() {message + Environment.NewLine})
+        Try
+            _target.Invoke(_invokeWrite, New Object() {message + Environment.NewLine})
+        Catch Ex As InvalidOperationException
+        End Try
     End Sub
 
     Private Delegate Sub StringSendDelegate(message As String)

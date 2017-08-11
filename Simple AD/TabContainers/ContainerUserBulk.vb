@@ -1,8 +1,7 @@
 ﻿Public Class ContainerUserBulk
     Inherits UserControl
 
-    Public Properties As ControlUserProperties
-    Public DomainTree As ControlDomianTree
+    Public DomainTree As ControlDomainTreeContainer
 
     Private Worker As BulkADWorker
 
@@ -36,16 +35,9 @@
 
         InitializeComponent()
 
-        Properties = New ControlUserProperties
-        DomainTree = New ControlDomianTree(Me)
+        DomainTree = New ControlDomainTreeContainer(Me)
 
         MainDataGrid.DoubleBuffered(True)
-
-        With Properties
-            .BringToFront()
-            .Dock = DockStyle.Fill
-            .Visible = True
-        End With
 
         With DomainTree
             .BringToFront()
@@ -53,7 +45,6 @@
             .Visible = True
         End With
 
-        GetMainSplitContainer1.Panel2.Controls.Add(Properties)
         GetMainSplitContainer0.Panel1.Controls.Add(DomainTree)
 
     End Sub
@@ -74,10 +65,6 @@
         Return Me.MainSplitContainer1
     End Function
 
-    Public Function GetPropertisPanel() As ControlUserProperties
-        Return Me.Properties
-    End Function
-
     Public Function GetProgressBar() As ProgressBar
         Return Me.ProgressBar
     End Function
@@ -87,9 +74,6 @@
     End Function
 
     Private Sub MainDataGrid_RowStateChanged(sender As Object, e As DataGridViewRowStateChangedEventArgs) Handles MainDataGrid.RowStateChanged
-        If GetMainSplitContainer1.Panel2Collapsed = False Then
-            PopulateSidePanel()
-        End If
         If MainDataGrid.SelectedRows.Count > 0 Then
             FormMain.ToolStripStatusLabelContext.Text = GetMainDataGrid().SelectedRows.Count & " Object(s) Selected of " & GetMainDataGrid().Rows.Count
         End If
@@ -109,18 +93,6 @@
 
         Worker = New BulkADWorker(Me.MainDataGrid, Me)
         Worker.RunBulkUserSetup()
-    End Sub
-
-    Private Sub PopulateSidePanel()
-        Try
-            If MainDataGrid.SelectedRows.Count = 1 Then
-                Properties.UpdateProperties(GetMainDataGrid())
-            Else
-                Properties.DisableControls()
-            End If
-        Catch
-            Exit Sub
-        End Try
     End Sub
 
     Private Sub CancelBn_Click(sender As Object, e As EventArgs) Handles CancelBn.Click

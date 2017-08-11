@@ -1,11 +1,12 @@
 ﻿Imports System.DirectoryServices
 Imports System.DirectoryServices.ActiveDirectory
 
-Public Class DomainTreeContainer
+Public Class ControlDomainTreeContainer
 
     Private _Container As Object
     Private _DomainName As String
     Private _DomainController As String
+    Private _isWorking As Boolean
 
     Property DomainName As String
         Set(value As String)
@@ -25,11 +26,23 @@ Public Class DomainTreeContainer
         End Get
     End Property
 
+    Property IsWorkinig As Boolean
+        Set(value As Boolean)
+            _isWorking = value
+        End Set
+        Get
+            Return _isWorking
+        End Get
+    End Property
+
+    Public Event Working(ByVal State As Boolean)
+
     Public Sub New(ByVal container As Object)
         InitializeComponent()
 
         _Container = container
         Me.Dock = DockStyle.Fill
+
         InitialLoad()
     End Sub
 
@@ -43,7 +56,7 @@ Public Class DomainTreeContainer
                 _DomainController = GetSingleDomainController(GetLocalDomainName, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword)
             End If
 
-            Dim RootNode = New DomainTreeContainerItem
+            Dim RootNode = New ControlDomainTreeContainerItem
             Dim DomainObject As Domain = Domain.GetDomain(GetDomainContext(Environment.UserDomainName, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword))
 
             Using RootDirectoryEntry As DirectoryEntry = DomainObject.GetDirectoryEntry
@@ -52,7 +65,7 @@ Public Class DomainTreeContainer
             RootNode.Indent = 0
             RootNode.DisplayName = DomainName
             RootNode.DomainContainer = Me
-            RootNode.ItemType = DomainTreeContainerItem.NodeType.Domain
+            RootNode.ItemType = ControlDomainTreeContainerItem.NodeType.Domain
 
             InitialLoadFinished(RootNode, Nothing)
 
@@ -61,15 +74,15 @@ Public Class DomainTreeContainer
         End Try
     End Sub
 
-    Private Sub InitialLoadFinished(ByVal RootNode As DomainTreeContainerItem, ByVal ErrorMessage As String)
+    Private Sub InitialLoadFinished(ByVal RootNode As ControlDomainTreeContainerItem, ByVal ErrorMessage As String)
         If Me.InvokeRequired Then
-            Me.Invoke(New Action(Of DomainTreeContainerItem, String)(AddressOf InitialLoadFinished), RootNode, ErrorMessage)
+            Me.Invoke(New Action(Of ControlDomainTreeContainerItem, String)(AddressOf InitialLoadFinished), RootNode, ErrorMessage)
         Else
             If Not Me.IsDisposed Then
                 Try
                     If String.IsNullOrEmpty(ErrorMessage) Then
 
-                        RootNode.Nodes.Add(New DomainTreeContainerItem With {.DomainContainer = Me, .DisplayName = "Loading..."})
+                        RootNode.Nodes.Add(New ControlDomainTreeContainerItem With {.DomainContainer = Me, .DisplayName = "Loading..."})
                         Me.Controls.Add(RootNode)
                         RootNode.Dock = DockStyle.Top
                         RootNode.Expand()
@@ -80,4 +93,11 @@ Public Class DomainTreeContainer
         End If
     End Sub
 
+    Private Sub ControlDomainTreeContainer_Working(ByVal State As Boolean) Handles Me.Working
+        Me.IsWorkinig = State
+    End Sub
+
+    Public Sub RaiseWorkinigState(ByVal State As Boolean)
+        RaiseEvent Working(State)
+    End Sub
 End Class

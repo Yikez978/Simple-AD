@@ -1,19 +1,8 @@
 ﻿Imports System.IO
 
-Public Class LocalData
+Public Module LocalData
 
-    Public Shared Sub Main()
-        ' Get the path to the Application Data folder
-
-        ' Display the path
-        Debug.WriteLine("App Data Folder Path: " & GlobalVariables.appData)
-    End Sub
-
-    Public Sub New()
-
-    End Sub
-
-    Public Shared Sub SaveRecentFile(Path As String)
+    Public Sub SaveRecentFile(Path As String)
 
         GetRecentFileList()
 
@@ -41,7 +30,7 @@ Public Class LocalData
         End If
     End Sub
 
-    Public Shared Sub GetRecentFileList()
+    Public Sub GetRecentFileList()
 
         If Not IO.Directory.Exists(GlobalVariables.appData) Then
             IO.Directory.CreateDirectory(GlobalVariables.appData)
@@ -87,4 +76,4 @@ Public Class LocalData
         Dim RecentImportFile = New JobUserBulk(ImportFile)
     End Sub
 
-End Class
+End Module

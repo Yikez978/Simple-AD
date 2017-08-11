@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class DomainTreeContainer
+Partial Class ControlDomainTreeContainer
     Inherits MetroFramework.Controls.MetroUserControl
 
     'UserControl overrides dispose to clean up the component list.
@@ -24,17 +24,20 @@ Partial Class DomainTreeContainer
     Private Sub InitializeComponent()
         Me.SuspendLayout()
         '
-        'DomainTreeContainer
+        'ControlDomainTreeContainer
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.AutoScroll = True
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(219, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(219, Byte), Integer))
+        Me.CausesValidation = False
+        Me.DoubleBuffered = True
         Me.Margin = New System.Windows.Forms.Padding(0)
-        Me.Name = "DomainTreeContainer"
+        Me.Name = "ControlDomainTreeContainer"
         Me.Padding = New System.Windows.Forms.Padding(0, 6, 0, 0)
         Me.Size = New System.Drawing.Size(308, 417)
         Me.Style = MetroFramework.MetroColorStyle.Purple
         Me.UseCustomBackColor = True
+        Me.UseStyleColors = True
         Me.ResumeLayout(False)
 
     End Sub

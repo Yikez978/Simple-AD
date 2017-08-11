@@ -11,7 +11,7 @@
     <AssemblyName>SimpleAD</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile>
@@ -84,7 +84,7 @@
     <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
@@ -167,15 +167,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\DataHandler.vb" />
     <Compile Include="Classes\WindowsAPI.vb" />
     <Compile Include="Interfaces\IJobContainer.vb" />
     <Compile Include="LDAP\LDAPKey.vb" />
+    <Compile Include="Modules\DataGridHelper.vb" />
     <Compile Include="Modules\Enums.vb" />
     <Compile Include="LDAP\StaticPropertiesShort.vb" />
     <Compile Include="Modules\ImageHelper.vb" />
+    <Compile Include="Modules\LDAPDataHelper.vb" />
     <Compile Include="Modules\Office365Helper.vb" />
-    <Compile Include="Classes\ProtectedData.vb" />
+    <Compile Include="Modules\ProtectedData.vb" />
+    <Compile Include="Modules\ErrorHandling.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -187,20 +189,23 @@
     <Compile Include="UI\CustomTabControl.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\FormSimpleAD.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\NativeTreeView.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Modules\TabDragger.vb" />
-    <Compile Include="UserControls\DomainTreeContainer.Designer.vb">
-      <DependentUpon>DomainTreeContainer.vb</DependentUpon>
+    <Compile Include="UserControls\ControlDomainTreeContainer.Designer.vb">
+      <DependentUpon>ControlDomainTreeContainer.vb</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\DomainTreeContainer.vb">
+    <Compile Include="UserControls\ControlDomainTreeContainer.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\DomainTreeContainerItem.Designer.vb">
-      <DependentUpon>DomainTreeContainerItem.vb</DependentUpon>
+    <Compile Include="UserControls\ControlDomainTreeContainerItem.Designer.vb">
+      <DependentUpon>ControlDomainTreeContainerItem.vb</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\DomainTreeContainerItem.vb">
+    <Compile Include="UserControls\ControlDomainTreeContainerItem.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Utility Forms\FormConsole.Designer.vb">
@@ -240,9 +245,9 @@
     <Compile Include="Classes\ApplicationEvents.vb" />
     <Compile Include="Classes\ArrayModdule.vb" />
     <Compile Include="Classes\BulkADWorker.vb" />
-    <Compile Include="Classes\ContextMenuHelper.vb" />
+    <Compile Include="Modules\ContextMenuHelper.vb" />
     <Compile Include="Classes\ControlHelper.vb" />
-    <Compile Include="Classes\ExtendedMethods.vb" />
+    <Compile Include="Modules\ExtendedMethods.vb" />
     <Compile Include="Classes\FileExportHelper.vb" />
     <Compile Include="LDAP\StaticProperties.vb" />
     <Compile Include="Jobs\JobOffice365.vb" />
@@ -251,7 +256,7 @@
     <Compile Include="Modules\FileSystemHelper.vb" />
     <Compile Include="Classes\GlobalVariables.vb" />
     <Compile Include="Classes\HideColumnsWorker.vb" />
-    <Compile Include="Classes\LocalData.vb" />
+    <Compile Include="Modules\LocalData.vb" />
     <Compile Include="Classes\MenuStripHelper.vb" />
     <Compile Include="Modules\StringHelper.vb" />
     <Compile Include="Utility Forms\FormImportValidation.Designer.vb">
@@ -266,13 +271,6 @@
     <Compile Include="TabContainers\ContainerUserBulk.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\ControlDomianTree.Designer.vb">
-      <DependentUpon>ControlDomianTree.vb</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\ControlDomianTree.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Classes\SelectAdContainerDialog.vb" />
     <Compile Include="Classes\TextAndImageColumn.vb" />
     <Compile Include="Utility Forms\FormSelectColumns.Designer.vb">
       <DependentUpon>FormSelectColumns.vb</DependentUpon>
@@ -280,7 +278,6 @@
     <Compile Include="Utility Forms\FormSelectColumns.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Classes\DataGridTools.vb" />
     <Compile Include="Classes\GlobalSuppressions.vb" />
     <Compile Include="Utility Forms\FormLogin.Designer.vb">
       <DependentUpon>FormLogin.vb</DependentUpon>
@@ -311,7 +308,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Classes\References.vb" />
-    <Compile Include="Classes\UserObject.vb" />
+    <Compile Include="Objects\ObjectUser.vb" />
     <Compile Include="UserControls\ControlRecentFilesButton.Designer.vb">
       <DependentUpon>ControlRecentFilesButton.vb</DependentUpon>
     </Compile>
@@ -342,12 +339,6 @@
     <Compile Include="UserControls\ControlUsernameContructorChunk.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\ControlUserProperties.Designer.vb">
-      <DependentUpon>ControlUserProperties.vb</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\ControlUserProperties.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Utility Forms\FormUserAttributes.Designer.vb">
       <DependentUpon>FormUserAttributes.vb</DependentUpon>
     </Compile>
@@ -360,6 +351,12 @@
     <Compile Include="Utility Forms\FormLDAPMatrix.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Utility Forms\FormUserAttributesBulk.Designer.vb">
+      <DependentUpon>FormUserAttributesBulk.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Utility Forms\FormUserAttributesBulk.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Utility Forms\Office 365\FormO365Login.Designer.vb">
       <DependentUpon>FormO365Login.vb</DependentUpon>
     </Compile>
@@ -368,11 +365,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="UserControls\DomainTreeContainer.resx">
-      <DependentUpon>DomainTreeContainer.vb</DependentUpon>
+    <EmbeddedResource Include="UserControls\ControlDomainTreeContainer.resx">
+      <DependentUpon>ControlDomainTreeContainer.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\DomainTreeContainerItem.resx">
-      <DependentUpon>DomainTreeContainerItem.vb</DependentUpon>
+    <EmbeddedResource Include="UserControls\ControlDomainTreeContainerItem.resx">
+      <DependentUpon>ControlDomainTreeContainerItem.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Utility Forms\ActiveDirectory\FormGroupSelection.resx">
       <DependentUpon>FormGroupSelection.vb</DependentUpon>
@@ -410,6 +407,9 @@
     <EmbeddedResource Include="Utility Forms\FormLDAPMatrix.resx">
       <DependentUpon>FormLDAPMatrix.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Utility Forms\FormUserAttributesBulk.resx">
+      <DependentUpon>FormUserAttributesBulk.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Utility Forms\Office 365\FormO365Login.resx">
       <DependentUpon>FormO365Login.vb</DependentUpon>
     </EmbeddedResource>
@@ -421,9 +421,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TabContainers\ContainerUserBulk.resx">
       <DependentUpon>ContainerUserBulk.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\ControlDomianTree.resx">
-      <DependentUpon>ControlDomianTree.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\ControlRecentFilesButton.resx">
       <DependentUpon>ControlRecentFilesButton.vb</DependentUpon>
@@ -439,9 +436,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\ControlUsernameContructorChunk.resx">
       <DependentUpon>ControlUsernameContructorChunk.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\ControlUserProperties.resx">
-      <DependentUpon>ControlUserProperties.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

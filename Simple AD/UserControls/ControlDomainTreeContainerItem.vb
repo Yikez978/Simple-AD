@@ -1,6 +1,6 @@
 ﻿Imports System.DirectoryServices
 
-Public Class DomainTreeContainerItem
+Public Class ControlDomainTreeContainerItem
 
     Enum NodeType
         Domain
@@ -12,9 +12,9 @@ Public Class DomainTreeContainerItem
     Private _DistinguishedName As String
     Private _Type As NodeType
     Private _DisplayName As String
-    Private _Container As TableLayoutPanel
-    Private _DomainContainer As DomainTreeContainer
+    Private _DomainContainer As ControlDomainTreeContainer
     Private _Indent As Integer
+    Private _Working As Boolean
 
     Public Property Indent As Integer
         Set(value As Integer)
@@ -45,21 +45,21 @@ Public Class DomainTreeContainerItem
         End Get
     End Property
 
-    Public Property BaseContainer As TableLayoutPanel
-        Set(value As TableLayoutPanel)
-            _Container = value
-        End Set
-        Get
-            Return _Container
-        End Get
-    End Property
-
-    Public Property DomainContainer As DomainTreeContainer
-        Set(value As DomainTreeContainer)
+    Public Property DomainContainer As ControlDomainTreeContainer
+        Set(value As ControlDomainTreeContainer)
             _DomainContainer = value
         End Set
         Get
             Return _DomainContainer
+        End Get
+    End Property
+
+    Public Property Working As Boolean
+        Set(value As Boolean)
+            _Working = value
+        End Set
+        Get
+            Return _Working
         End Get
     End Property
 
@@ -84,7 +84,7 @@ Public Class DomainTreeContainerItem
         End Get
     End Property
 
-    Public Property Nodes As New List(Of DomainTreeContainerItem)
+    Public Property Nodes As New List(Of ControlDomainTreeContainerItem)
     Public Property Expanded As Boolean
 
     Public Sub New()
@@ -93,6 +93,12 @@ Public Class DomainTreeContainerItem
 
         GlobalVariables.DomainItems.Add(Me)
         Me.Expanded = False
+        Me.Working = False
+
+        Dim X As Integer = Me.Location.X
+        Dim Y As Integer = Me.Location.Y
+
+        Me.Location = New Point(X, Y - 2)
 
         AddHandler MyBase.DoubleClick, AddressOf DomainTreeContainerItem_Click
         AddHandler MainLb.DoubleClick, AddressOf DomainTreeContainerItem_Click
@@ -109,18 +115,25 @@ Public Class DomainTreeContainerItem
     End Sub
 
     Public Sub Expand()
-        Me.Expanded = True
-        Dim LoadNodes As New Threading.Thread(AddressOf LoadAdNodes)
-        LoadNodes.IsBackground = True
-        LoadNodes.Start(Me)
+        If Not Me.DomainContainer.IsWorkinig Then
+            Me.Expanded = True
+            DomainContainer.RaiseWorkinigState(True)
+            Dim LoadNodes As New Threading.Thread(AddressOf LoadAdNodes)
+            LoadNodes.IsBackground = True
+            LoadNodes.Start(Me)
+        End If
     End Sub
 
     Public Sub Collapse()
-        Me.SuspendLayout()
-        Me.MainFl.Controls.Clear()
-        Me.Expanded = False
-        Me.PictureBox.Image = My.Resources.Right
-        Me.ResumeLayout()
+        If Not Me.DomainContainer.IsWorkinig Then
+            DomainContainer.RaiseWorkinigState(True)
+            Me.SuspendLayout()
+            Me.MainFl.Controls.Clear()
+            Me.Expanded = False
+            Me.PictureBox.Image = My.Resources.Right
+            Me.ResumeLayout()
+            DomainContainer.RaiseWorkinigState(False)
+        End If
     End Sub
 
     Private Sub DomainTreeContainerItem_Click(sender As Object, e As MouseEventArgs) Handles PictureBox.Click
@@ -139,12 +152,12 @@ Public Class DomainTreeContainerItem
 
 
     Public Sub LoadAdNodes(ByVal RootNodeObject As Object)
-        Dim RootNode As DomainTreeContainerItem = DirectCast(RootNodeObject, DomainTreeContainerItem)
-        Dim Children As New List(Of DomainTreeContainerItem)
+        Dim RootNode As ControlDomainTreeContainerItem = DirectCast(RootNodeObject, ControlDomainTreeContainerItem)
+        Dim Children As New List(Of ControlDomainTreeContainerItem)
 
         Try
 
-            Dim RootDirectoryEntry As New DirectoryEntry(GetDirEntry() & ":389/" & RootNode.DistinguishedName)
+            Dim RootDirectoryEntry As New DirectoryEntry(GetDirEntryPath() & ":389/" & RootNode.DistinguishedName)
 
             Using RootDirectoryEntry
 
@@ -160,24 +173,23 @@ Public Class DomainTreeContainerItem
 
                         If ChildObjectType = "organizationalUnit" OrElse ChildObjectType = "container" Then
 
-                            Dim ChildNode As New DomainTreeContainerItem
+                            Dim ChildNode As New ControlDomainTreeContainerItem
                             ChildNode.DisplayName = CStr(ChildObject.Properties("name").Value)
                             If ChildObjectType = "organizationalUnit" Then
-                                ChildNode.ItemType = DomainTreeContainerItem.NodeType.OU
+                                ChildNode.ItemType = ControlDomainTreeContainerItem.NodeType.OU
                             ElseIf ChildObjectType = "container" Then
-                                ChildNode.ItemType = DomainTreeContainerItem.NodeType.Container
+                                ChildNode.ItemType = ControlDomainTreeContainerItem.NodeType.Container
                             Else
-                                ChildNode.ItemType = DomainTreeContainerItem.NodeType.Unknown
+                                ChildNode.ItemType = ControlDomainTreeContainerItem.NodeType.Unknown
                             End If
 
                             ChildNode.DomainContainer = Me.DomainContainer
                             ChildNode.DistinguishedName = CStr(ChildObject.Properties("distinguishedName").Value).Replace("/", "\/")
-                            ChildNode.BaseContainer = Me.BaseContainer
 
                             For Each ChildChildObject As DirectoryEntry In ChildObject.Children
                                 Try
                                     If ChildChildObject.SchemaClassName = "organizationalUnit" OrElse ChildChildObject.SchemaClassName = "container" Then
-                                        ChildNode.Nodes.Add(New DomainTreeContainerItem With {.DomainContainer = Me.DomainContainer, .BaseContainer = Me.BaseContainer, .DisplayName = "Loading..."})
+                                        ChildNode.Nodes.Add(New ControlDomainTreeContainerItem With {.DomainContainer = Me.DomainContainer, .DisplayName = "Loading..."})
                                         Exit For
                                     End If
                                 Finally
@@ -198,9 +210,9 @@ Public Class DomainTreeContainerItem
         End Try
     End Sub
 
-    Private Sub LoadFinished(ByVal Success As Boolean, ByVal Message As String, ByVal Node As DomainTreeContainerItem, ByVal NewChildren As List(Of DomainTreeContainerItem))
+    Private Sub LoadFinished(ByVal Success As Boolean, ByVal Message As String, ByVal Node As ControlDomainTreeContainerItem, ByVal NewChildren As List(Of ControlDomainTreeContainerItem))
         If Me.InvokeRequired Then
-            Me.Invoke(New Action(Of Boolean, String, DomainTreeContainerItem, List(Of DomainTreeContainerItem))(AddressOf LoadFinished), Success, Message, Node, NewChildren)
+            Me.Invoke(New Action(Of Boolean, String, ControlDomainTreeContainerItem, List(Of ControlDomainTreeContainerItem))(AddressOf LoadFinished), Success, Message, Node, NewChildren)
         Else
             If Not Me.IsDisposed Then
                 Try
@@ -221,11 +233,11 @@ Public Class DomainTreeContainerItem
                         Me.PictureBox.Image = My.Resources.Down
                         Me.SuspendLayout()
 
-                        For Each DomainTreeContainerItem As DomainTreeContainerItem In Me.Nodes
-                            Dim NewNode = New DomainTreeContainerItem With
+                        For Each DomainTreeContainerItem As ControlDomainTreeContainerItem In Me.Nodes
+                            Dim NewNode = New ControlDomainTreeContainerItem With
                             {.DisplayName = DomainTreeContainerItem.DisplayName,
-                            .BaseContainer = DomainTreeContainerItem.BaseContainer,
                             .ItemType = DomainTreeContainerItem.ItemType,
+                            .DomainContainer = DomainTreeContainerItem.DomainContainer,
                             .DistinguishedName = DomainTreeContainerItem.DistinguishedName,
                             .Indent = Me.Indent + 20
                             }
@@ -233,18 +245,18 @@ Public Class DomainTreeContainerItem
                         Next
 
                         Me.ResumeLayout()
-
                     Else
                         Me.PictureBox.Image = Nothing
                     End If
                 End Try
             End If
+            DomainContainer.RaiseWorkinigState(False)
         End If
     End Sub
 
     Private Sub MouseHoverMe(sender As Object, e As EventArgs) Handles MyBase.MouseEnter
         If Not Me.ItemType = NodeType.Domain Then
-            If Not Me.BackColor = SystemColors.Highlight Then
+            If Not Me.BackColor = Color.FromArgb(211, 191, 221) Then
                 SuspendLayout()
                 ClearOtherContactsHover()
                 Me.BackColor = Color.FromArgb(240, 240, 240) '238, 238, 238)
@@ -257,8 +269,8 @@ Public Class DomainTreeContainerItem
 
     Private Sub ClearOtherContactsHover()
         SuspendLayout()
-        For Each Node As DomainTreeContainerItem In GlobalVariables.DomainItems
-            If Not Node.BackColor = SystemColors.Highlight Then
+        For Each Node As ControlDomainTreeContainerItem In GlobalVariables.DomainItems
+            If Not Node.BackColor = Color.FromArgb(211, 191, 221) Then
                 Node.BackColor = Color.Transparent
             End If
         Next
@@ -266,7 +278,7 @@ Public Class DomainTreeContainerItem
     End Sub
 
     Private Sub ClearOtherContactsClick()
-        For Each Node As DomainTreeContainerItem In GlobalVariables.DomainItems
+        For Each Node As ControlDomainTreeContainerItem In GlobalVariables.DomainItems
             Node.BackColor = Color.Transparent
         Next
     End Sub
@@ -274,8 +286,10 @@ Public Class DomainTreeContainerItem
     Private Sub Me_Click(sender As Object, e As EventArgs) Handles MainPl.Click
         If Not Me.ItemType = NodeType.Domain Then
             ClearOtherContactsClick()
-            Me.BackColor = SystemColors.Highlight
+            Me.BackColor = Color.FromArgb(211, 191, 221)
+
             GlobalVariables.SelectedOU = Me.DistinguishedName
+            FormMain.ToolStripStatusLabelStatus.Text = GlobalVariables.SelectedOU
         End If
     End Sub
 End Class

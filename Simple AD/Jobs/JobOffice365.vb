@@ -40,7 +40,6 @@ Public Class JobOffice365
 
         FormMain.GetMainTabCtrl.SelectTab(FormMain.GetMainTabCtrl.TabCount - 1)
 
-        FormMain.GetMainTabCtrl.SelectedTab.BackColor = SystemColors.Window
         FormMain.GetMainTabCtrl.SelectedTab.Controls.Add(NewOffice365Container)
         FormMain.GetMainTabCtrl.Visible = True
 

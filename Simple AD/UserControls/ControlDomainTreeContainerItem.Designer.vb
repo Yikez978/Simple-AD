@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class DomainTreeContainerItem
+Partial Class ControlDomainTreeContainerItem
     Inherits System.Windows.Forms.UserControl
 
     'UserControl overrides dispose to clean up the component list.
@@ -84,22 +84,24 @@ Partial Class DomainTreeContainerItem
         Me.MainPl.Controls.Add(Me.MainLb)
         Me.MainPl.Controls.Add(Me.IconBox)
         Me.MainPl.Controls.Add(Me.PictureBox)
-        Me.MainPl.Location = New System.Drawing.Point(3, 0)
+        Me.MainPl.Location = New System.Drawing.Point(5, 0)
         Me.MainPl.Margin = New System.Windows.Forms.Padding(0)
         Me.MainPl.Name = "MainPl"
         Me.MainPl.Size = New System.Drawing.Size(434, 19)
         Me.MainPl.TabIndex = 4
         '
-        'DomainTreeContainerItem
+        'ControlDomainTreeContainerItem
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
         Me.BackColor = System.Drawing.Color.Transparent
+        Me.CausesValidation = False
         Me.Controls.Add(Me.MainPl)
         Me.Controls.Add(Me.MainFl)
-        Me.Margin = New System.Windows.Forms.Padding(2)
-        Me.Name = "DomainTreeContainerItem"
+        Me.DoubleBuffered = True
+        Me.Margin = New System.Windows.Forms.Padding(0)
+        Me.Name = "ControlDomainTreeContainerItem"
         Me.Size = New System.Drawing.Size(449, 21)
         CType(Me.PictureBox, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.IconBox, System.ComponentModel.ISupportInitialize).EndInit()

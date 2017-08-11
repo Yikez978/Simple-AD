@@ -70,10 +70,11 @@ Public Module LDAPDictionary
 
     Public Function GetFullLDAPName(ByVal Attr As String) As String
 
-        If Not String.IsNullOrEmpty(LDAPDictionary.Item(Attr).AttrLDAPName) Then
-            Return LDAPDictionary.Item(Attr).AttrLDAPName
+        If LDAPDictionary.ContainsKey(Attr) Then
+            If Not String.IsNullOrEmpty(LDAPDictionary.Item(Attr).AttrLDAPName) Then
+                Return LDAPDictionary.Item(Attr).AttrLDAPName
+            End If
         End If
-
         Return Attr
     End Function
 

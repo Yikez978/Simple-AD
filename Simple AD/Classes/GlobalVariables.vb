@@ -14,7 +14,7 @@ Public Class GlobalVariables
     Public Shared appData As String = GetFolderPath(SpecialFolder.ApplicationData) & "\Simple AD"
     Public Shared LoginUsernamePrefix As String
 
-    Public Shared DomainItems As New List(Of DomainTreeContainerItem)
+    Public Shared DomainItems As New List(Of ControlDomainTreeContainerItem)
 
     Public Shared Property LoginUsername As String
     Public Shared Property LoginPassword As String

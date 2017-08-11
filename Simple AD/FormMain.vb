@@ -4,8 +4,6 @@ Public Class FormMain
 
     Private ftdt As New DataTable
 
-    Private Importer As New LocalData
-
     Public Sub New()
         InitializeComponent()
         SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
@@ -23,7 +21,7 @@ Public Class FormMain
 
         GlobalVariables.ColumnsVisibleChangedByUser = False
 
-        Importer.PopulateRecentFileList()
+        PopulateRecentFileList()
         UserToolStripMenuItem.Text = GetDisplayName()
 
 
@@ -41,56 +39,6 @@ Public Class FormMain
             Return SystemColors.Control
         End Get
     End Property
-
-    Private _BackColor = SystemColors.Window
-    Private _ForeColor = SystemColors.ControlText
-
-    Public Property CustomBackcolor As Color
-        Set(value As Color)
-            _BackColor = value
-        End Set
-        Get
-            Return _BackColor
-        End Get
-    End Property
-
-    Public Property CustomForecolor As Color
-        Set(value As Color)
-            _ForeColor = value
-        End Set
-        Get
-            Return _ForeColor
-        End Get
-    End Property
-
-    Private Const borderWidth As Integer = 5
-
-    Protected Overrides Sub OnPaint(e As PaintEventArgs)
-
-        Dim backColor As Color = CustomBackcolor
-        Dim foreColor As Color = CustomForecolor
-
-        e.Graphics.Clear(backColor)
-
-        Using b As New SolidBrush(CustomBackcolor)
-            Dim topRect As New Rectangle(0, 0, Width, borderWidth)
-            e.Graphics.FillRectangle(b, topRect)
-        End Using
-
-        If DisplayHeader Then
-            Dim bounds As New Rectangle(20, 20, ClientRectangle.Width - 2 * 20, 40)
-            Dim flags As TextFormatFlags = TextFormatFlags.EndEllipsis 'Or GetTextFormatFlags()
-            TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Title, bounds, foreColor, flags)
-        End If
-
-        If Resizable AndAlso (SizeGripStyle = SizeGripStyle.Auto OrElse SizeGripStyle = SizeGripStyle.Show) Then
-            Using b As New SolidBrush(SystemColors.Control)
-                Dim resizeHandleSize As New Size(2, 2)
-                e.Graphics.FillRectangles(b, New Rectangle() {New Rectangle(New Point(ClientRectangle.Width - 6, ClientRectangle.Height - 6), resizeHandleSize), New Rectangle(New Point(ClientRectangle.Width - 10, ClientRectangle.Height - 10), resizeHandleSize), New Rectangle(New Point(ClientRectangle.Width - 10, ClientRectangle.Height - 6), resizeHandleSize), New Rectangle(New Point(ClientRectangle.Width - 6, ClientRectangle.Height - 10), resizeHandleSize), New Rectangle(New Point(ClientRectangle.Width - 14, ClientRectangle.Height - 6), resizeHandleSize), New Rectangle(New Point(ClientRectangle.Width - 6, ClientRectangle.Height - 14), resizeHandleSize)})
-            End Using
-        End If
-
-    End Sub
 
     Private Sub HideEmptyColumnsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles HideEmptyColumnsToolStripMenuItem.Click
         If HideEmptyColumnsToolStripMenuItem.Checked = False Then
@@ -158,7 +106,7 @@ Public Class FormMain
                     If Not FileInUse(OpenFileDialogImport.FileName) Then
 
 #Disable Warning BC42025 ' Access of shared member, constant member, enum member or nested type through an instance
-                        Importer.SaveRecentFile(OpenFileDialogImport.FileName)
+                        SaveRecentFile(OpenFileDialogImport.FileName)
 #Enable Warning BC42025 ' Access of shared member, constant member, enum member or nested type through an instance
 
                         Dim NewImportFile = New JobUserBulk(OpenFileDialogImport.FileName)
@@ -230,17 +178,7 @@ Public Class FormMain
         Return CurrentTab
     End Function
 
-    Public Shared Function GetPropertisPanel() As ControlUserProperties
-        Try
-            Dim CurrentTab As ContainerUserBulk = FormMain.GetMainTabCtrl.SelectedTab.Controls.Item(0)
-            Return CurrentTab.GetPropertisPanel()
-        Catch Ex As Exception
-            Debug.WriteLine("[Error] " & Ex.Message)
-            Return Nothing
-        End Try
-    End Function
-
-    Public Shared Function GetDomainPanel() As DomainTreeContainer
+    Public Shared Function GetDomainPanel() As ControlDomainTreeContainer
         Try
             Dim CurrentTab As ContainerUserReport = FormMain.GetMainTabCtrl.SelectedTab.Controls.Item(0)
             Return CurrentTab.GetDomainPanel()
@@ -255,7 +193,7 @@ Public Class FormMain
     End Sub
 
     Public Sub FileToolStripMenuItem_DropDownOpening(sender As Object, e As EventArgs) Handles FileToolStripMenuItem.DropDownOpening
-        Importer.PopulateRecentFileList()
+        PopulateRecentFileList()
     End Sub
 
     Private Sub ToolStripMenuItemLogin_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItemLogin.Click

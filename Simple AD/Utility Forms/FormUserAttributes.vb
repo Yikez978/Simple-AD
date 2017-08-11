@@ -49,17 +49,6 @@ Public Class FormUserAttributes
             End If
         Next
 
-
-        'For Each LDAPProp In LDAPProps
-        '    If Not DataTableSource.Rows.Contains(LDAPProp) Then
-        '        If Not ObjectDirEntry.Properties(LDAPProp).Value Is Nothing Then
-        '            DataTableSource.Rows.Add(LDAPProp, ObjectDirEntry.Properties(LDAPProp).Value.ToString)
-        '        Else
-        '            DataTableSource.Rows.Add(LDAPProp, "")
-        '        End If
-        '    End If
-        'Next
-
         LoadFinished()
     End Sub
 

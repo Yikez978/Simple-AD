@@ -29,4 +29,10 @@
             "sAMAccountType"
     }
 
+    Public LDAPBulkSupportedProps() = {
+            "displayName",
+            "sAMAccountName",
+            "description",
+            "proxyAddresses"
+    }
 End Module

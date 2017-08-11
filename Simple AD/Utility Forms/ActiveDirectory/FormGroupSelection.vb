@@ -59,7 +59,7 @@ Public Class FormGroupSelection
 
         Dim Entry As DirectoryEntry = New DirectoryEntry(GetDirEntry, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword)
 
-        Dim DirSearcher As DirectorySearcher = New DirectorySearcher(GetDirEntry)
+        Dim DirSearcher As DirectorySearcher = New DirectorySearcher(GetDirEntryPath)
 
         With DirSearcher
             .SearchRoot = Entry

@@ -46,7 +46,7 @@
 
         MainDataGrid.DoubleBuffered(True)
 
-        Me.MainSplitContainer.Panel1.Controls.Add(New DomainTreeContainer(Me))
+        Me.MainSplitContainer.Panel1.Controls.Add(New ControlDomainTreeContainer(Me))
         Me.MainSplitContainer.Panel1Collapsed = True
     End Sub
 
@@ -58,7 +58,7 @@
         Return Me.MainSplitContainer
     End Function
 
-    Public Function GetDomainPanel() As DomainTreeContainer
+    Public Function GetDomainPanel() As ControlDomainTreeContainer
         Return Me.MainSplitContainer.Panel1.Controls.Item(0)
     End Function
 
@@ -124,14 +124,22 @@
                             .Image = GlobalVariables.IconContainer
                         End With
                 End Select
-            Else
-                With DirectCast(MainDataGrid.Rows.Item(e.RowIndex).Cells("name"), TextAndImageCell)
-                    .Image = GlobalVariables.IconContainer
-                End With
             End If
 
         Catch Ex As Exception
             Debug.WriteLine("[Error] " & Ex.Message)
+        End Try
+    End Sub
+
+    Private Sub MainDataGrid_CellMouseDoubleClick(sender As Object, e As EventArgs) Handles PropertiesToolStripMenuItem.Click, MainDataGrid.CellMouseDoubleClick
+        Try
+            If Not IsDBNull(MainDataGrid.SelectedRows(0).Cells("sAMAccountName").Value) Then
+                Dim Sam = MainDataGrid.SelectedRows(0).Cells("sAMAccountName").Value
+                Dim Name = MainDataGrid.SelectedRows(0).Cells("Name").Value
+                Dim ShowUserProps = New FormUserAttributes(Sam, Name, MainDataGrid.SelectedRows(0).Index)
+            End If
+        Catch Ex As Exception
+            Debug.WriteLine("[Error] Unable to load object properties Form: " & Ex.Message)
         End Try
     End Sub
 
@@ -143,7 +151,70 @@
                 Dim ShowUserProps = New FormUserAttributes(Sam, Name, e.RowIndex)
             End If
         Catch Ex As Exception
+            Debug.WriteLine("[Error] Unable to load object properties Form: " & Ex.Message)
+        End Try
+    End Sub
+
+    Private Sub BulkModifyToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BulkModifyToolStripMenuItem.Click
+        Dim SelectedRows As New List(Of String)
+
+        For Each DatagridviewRow As DataGridViewRow In MainDataGrid.SelectedRows
+            SelectedRows.Add(MainDataGrid.Rows.Item(DatagridviewRow.Index).Cells("name").Value)
+        Next
+
+        Dim NewBulkModifyForm = New FormUserAttributesBulk(SelectedRows)
+    End Sub
+
+    Private Sub MainDataGrid_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles MainDataGrid.CellMouseClick
+        If MainDataGrid.SelectedRows.Count > 0 Then
+            If MainDataGrid.SelectedRows.Count = 1 Then
+                ContextMenuHelper.GetDataGridViewConextMenu(MainDataGrid, e, SingleContextMenu)
+            Else
+                ContextMenuHelper.GetDataGridViewConextMenu(MainDataGrid, e, BulkContextMenu)
+            End If
+        End If
+
+    End Sub
+
+    Private Sub EnableDisableSingleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EnableDisableSingleToolStripMenuItem.Click
+        Try
+            Dim Username As String = GetSelectedUser()
+
+            If IsAccountEnabled(Username) Then
+                Dim IsEnableAccountSuccessfull As Integer = EnableADUserUsingUserAccountControl(Username)
+                If Not IsEnableAccountSuccessfull = Nothing Then
+                    MainDataGrid.SelectedRows(0).Cells("userAccountControl").Value = IsEnableAccountSuccessfull
+                    MainDataGrid.InvalidateRow(MainDataGrid.SelectedRows(0).Index)
+                End If
+            Else
+                Dim IsDisnableAccountSuccessfull As Integer = DisableADUserUsingUserAccountControl(Username)
+                If Not IsDisnableAccountSuccessfull = Nothing Then
+                    MainDataGrid.SelectedRows(0).Cells("userAccountControl").Value = IsDisnableAccountSuccessfull
+                    MainDataGrid.InvalidateRow(MainDataGrid.SelectedRows(0).Index)
+                End If
+            End If
+        Catch Ex As Exception
             Debug.WriteLine("[Error] " & Ex.Message)
         End Try
     End Sub
+
+    Private Function GetSelectedUser() As String
+        Try
+            If Not String.IsNullOrEmpty(MainDataGrid.SelectedRows(0).Cells("sAMAccountName").Value) Then
+                Return MainDataGrid.SelectedRows(0).Cells("sAMAccountName").Value
+            Else
+                Return Nothing
+            End If
+        Catch Ex As Exception
+            Debug.WriteLine("[Error] Unable to change the active state of the seleceted user account: " & Ex.Message)
+            Return Nothing
+        End Try
+    End Function
+
+    Private Sub ToolStripMenuItem4_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem4.Click
+        If DeleteADObject(GetSelectedUser()) Then
+            MainDataGrid.Rows.RemoveAt(MainDataGrid.SelectedRows(0).Index)
+        End If
+    End Sub
+
 End Class
