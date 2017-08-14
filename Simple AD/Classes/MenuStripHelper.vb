@@ -3,7 +3,6 @@
     Public Shared Sub SubMenuClickHandler(ByVal sender As Object, ByVal e As EventArgs)
         Dim btn As ToolStripMenuItem = DirectCast(sender, ToolStripMenuItem)
 
-        Dim PropertiesItem As ToolStripMenuItem
         Dim DomainItem As ToolStripMenuItem
 
         If btn.Name = "ViewToolStripMenuItem" Then
@@ -11,23 +10,12 @@
                 btn.DropDownItems.Item("HideEmptyColumnsToolStripMenuItem").Enabled = False
                 btn.DropDownItems.Item("SelectColumnsToolStripMenuItem").Enabled = False
                 btn.DropDownItems.Item("DomainPanelToolStripMenuItem").Enabled = False
-                btn.DropDownItems.Item("PropertiesSideBarToolStripMenuItem").Enabled = False
             Else
                 btn.DropDownItems.Item("HideEmptyColumnsToolStripMenuItem").Enabled = True
                 btn.DropDownItems.Item("SelectColumnsToolStripMenuItem").Enabled = True
                 btn.DropDownItems.Item("DomainPanelToolStripMenuItem").Enabled = True
-                btn.DropDownItems.Item("PropertiesSideBarToolStripMenuItem").Enabled = True
 
-                PropertiesItem = DirectCast(btn.DropDownItems.Item("PropertiesSideBarToolStripMenuItem"), ToolStripMenuItem)
                 DomainItem = DirectCast(btn.DropDownItems.Item("DomainPanelToolStripMenuItem"), ToolStripMenuItem)
-
-                Try
-                    PropertiesItem.Checked = Not FormMain.GetMainSplitContainer1().Panel2Collapsed
-                    PropertiesItem.Enabled = True
-                Catch ex As Exception
-                    PropertiesItem.Checked = False
-                    PropertiesItem.Enabled = False
-                End Try
 
                 Try
                     DomainItem.Checked = Not FormMain.GetMainSplitContainer0().Panel1Collapsed

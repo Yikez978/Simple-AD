@@ -32,7 +32,6 @@ Partial Class ContainerUserBulk
         Me.MainSplitContainer0 = New System.Windows.Forms.SplitContainer()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.MainSplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.MainDataGrid = New MetroFramework.Controls.MetroGrid()
         Me.nameCol = New Simple_AD.TextAndImageColumn()
         Me.status = New Simple_AD.TextAndImageColumn()
@@ -51,9 +50,6 @@ Partial Class ContainerUserBulk
         Me.MainSplitContainer0.Panel2.SuspendLayout()
         Me.MainSplitContainer0.SuspendLayout()
         Me.Panel2.SuspendLayout()
-        CType(Me.MainSplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.MainSplitContainer1.Panel1.SuspendLayout()
-        Me.MainSplitContainer1.SuspendLayout()
         CType(Me.MainDataGrid, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
         Me.CMStripRowRClick.SuspendLayout()
@@ -73,9 +69,9 @@ Partial Class ContainerUserBulk
         '
         'MainSplitContainer0.Panel2
         '
-        Me.MainSplitContainer0.Panel2.Controls.Add(Me.MainSplitContainer1)
+        Me.MainSplitContainer0.Panel2.Controls.Add(Me.MainDataGrid)
         Me.MainSplitContainer0.Size = New System.Drawing.Size(878, 439)
-        Me.MainSplitContainer0.SplitterDistance = 173
+        Me.MainSplitContainer0.SplitterDistance = 170
         Me.MainSplitContainer0.SplitterWidth = 2
         Me.MainSplitContainer0.TabIndex = 6
         Me.MainSplitContainer0.Visible = False
@@ -89,7 +85,7 @@ Partial Class ContainerUserBulk
         Me.Panel2.MaximumSize = New System.Drawing.Size(0, 28)
         Me.Panel2.MinimumSize = New System.Drawing.Size(0, 28)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(173, 28)
+        Me.Panel2.Size = New System.Drawing.Size(170, 28)
         Me.Panel2.TabIndex = 0
         '
         'Label1
@@ -102,23 +98,6 @@ Partial Class ContainerUserBulk
         Me.Label1.Size = New System.Drawing.Size(55, 15)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Directory"
-        '
-        'MainSplitContainer1
-        '
-        Me.MainSplitContainer1.BackColor = System.Drawing.SystemColors.Window
-        Me.MainSplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.MainSplitContainer1.Location = New System.Drawing.Point(0, 0)
-        Me.MainSplitContainer1.Margin = New System.Windows.Forms.Padding(0)
-        Me.MainSplitContainer1.Name = "MainSplitContainer1"
-        '
-        'MainSplitContainer1.Panel1
-        '
-        Me.MainSplitContainer1.Panel1.Controls.Add(Me.MainDataGrid)
-        Me.MainSplitContainer1.Panel2Collapsed = True
-        Me.MainSplitContainer1.Size = New System.Drawing.Size(703, 439)
-        Me.MainSplitContainer1.SplitterDistance = 565
-        Me.MainSplitContainer1.SplitterWidth = 1
-        Me.MainSplitContainer1.TabIndex = 0
         '
         'MainDataGrid
         '
@@ -182,9 +161,9 @@ Partial Class ContainerUserBulk
         Me.MainDataGrid.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.MainDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.MainDataGrid.ShowEditingIcon = False
-        Me.MainDataGrid.Size = New System.Drawing.Size(703, 439)
+        Me.MainDataGrid.Size = New System.Drawing.Size(706, 439)
         Me.MainDataGrid.Style = MetroFramework.MetroColorStyle.Silver
-        Me.MainDataGrid.TabIndex = 0
+        Me.MainDataGrid.TabIndex = 1
         '
         'nameCol
         '
@@ -317,9 +296,6 @@ Partial Class ContainerUserBulk
         Me.MainSplitContainer0.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
-        Me.MainSplitContainer1.Panel1.ResumeLayout(False)
-        CType(Me.MainSplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.MainSplitContainer1.ResumeLayout(False)
         CType(Me.MainDataGrid, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel1.ResumeLayout(False)
         Me.CMStripRowRClick.ResumeLayout(False)
@@ -328,9 +304,6 @@ Partial Class ContainerUserBulk
     End Sub
 
     Friend WithEvents MainSplitContainer0 As SplitContainer
-    Friend WithEvents MainSplitContainer1 As SplitContainer
-    Friend WithEvents Panel1 As Panel
-    Friend WithEvents MainDataGrid As MetroFramework.Controls.MetroGrid
     Friend WithEvents CancelBn As MetroFramework.Controls.MetroButton
     Friend WithEvents ProgressBar As MetroFramework.Controls.MetroProgressBar
     Friend WithEvents AcceptBt As MetroFramework.Controls.MetroButton
@@ -340,8 +313,10 @@ Partial Class ContainerUserBulk
     Friend WithEvents InsertNewRow As ToolStripMenuItem
     Friend WithEvents DeleteRow As ToolStripMenuItem
     Friend WithEvents PropertiesToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents Label1 As Label
+    Friend WithEvents Panel2 As Panel
+    Friend WithEvents MainDataGrid As Controls.MetroGrid
     Friend WithEvents nameCol As TextAndImageColumn
     Friend WithEvents status As TextAndImageColumn
-    Friend WithEvents Panel2 As Panel
-    Friend WithEvents Label1 As Label
+    Friend WithEvents Panel1 As Panel
 End Class

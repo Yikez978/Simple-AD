@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class FormLDAPQuery
-    Inherits MetroFramework.Forms.MetroForm
+    Inherits Simple_AD.FormSimpleAD
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -80,6 +80,8 @@ Partial Class FormLDAPQuery
         Me.ClientSize = New System.Drawing.Size(523, 75)
         Me.Controls.Add(Me.RunBn)
         Me.Controls.Add(Me.QueryTb)
+        Me.CustomBackcolor = System.Drawing.SystemColors.Window
+        Me.CustomForecolor = System.Drawing.SystemColors.ControlText
         Me.DisplayHeader = False
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False

@@ -53,11 +53,11 @@ Public Class ControlDomainTreeContainer
                 DomainName = GetLocalDomainName()
             End If
             If String.IsNullOrEmpty(_DomainController) Then
-                _DomainController = GetSingleDomainController(GetLocalDomainName, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword)
+                _DomainController = GetSingleDomainController(GlobalVariables.LoginUsername, GlobalVariables.LoginPassword)
             End If
 
             Dim RootNode = New ControlDomainTreeContainerItem
-            Dim DomainObject As Domain = Domain.GetDomain(GetDomainContext(Environment.UserDomainName, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword))
+            Dim DomainObject As Domain = Domain.GetDomain(GetDomainContext(GlobalVariables.LoginUsername, GlobalVariables.LoginPassword))
 
             Using RootDirectoryEntry As DirectoryEntry = DomainObject.GetDirectoryEntry
                 RootNode.DistinguishedName = CStr(RootDirectoryEntry.Properties("distinguishedName").Value).Replace("/", "\/")

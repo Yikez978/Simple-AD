@@ -41,9 +41,12 @@ Public Class FormGroupSelection
 
     Private Sub FilterDataGrid(ByVal Query As String)
         Dim FilteredDataView As DataView
-
-        FilteredDataView = New DataView(DataTableSource, "Name LIKE '*" & Query & "*' ", "Name Desc", DataViewRowState.CurrentRows)
-        MainGrid.DataSource = FilteredDataView
+        Try
+            FilteredDataView = New DataView(DataTableSource, "Name LIKE '*" & Query & "*' ", "Name Desc", DataViewRowState.CurrentRows)
+            MainGrid.DataSource = FilteredDataView
+        Catch Ex As Exception
+            Debug.WriteLine("[Error] Invalid Search String: " & Ex.Message)
+        End Try
     End Sub
 
 
@@ -57,7 +60,7 @@ Public Class FormGroupSelection
 
     Private Sub GetGroups()
 
-        Dim Entry As DirectoryEntry = New DirectoryEntry(GetDirEntry, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword)
+        Dim Entry As DirectoryEntry = New DirectoryEntry(GetDirEntryPath, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword)
 
         Dim DirSearcher As DirectorySearcher = New DirectorySearcher(GetDirEntryPath)
 

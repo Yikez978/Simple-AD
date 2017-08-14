@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FormBulkUser
-    Inherits MetroFramework.Forms.MetroForm
+    Inherits Simple_AD.FormSimpleAD
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()>
@@ -130,7 +130,7 @@ Partial Class FormBulkUser
         'ValidateBn
         '
         Me.ValidateBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.ValidateBn.Location = New System.Drawing.Point(18, 221)
+        Me.ValidateBn.Location = New System.Drawing.Point(18, 218)
         Me.ValidateBn.Name = "ValidateBn"
         Me.ValidateBn.Size = New System.Drawing.Size(75, 23)
         Me.ValidateBn.TabIndex = 7
@@ -248,10 +248,10 @@ Partial Class FormBulkUser
         Me.UsernameConTab.HorizontalScrollbarBarColor = True
         Me.UsernameConTab.HorizontalScrollbarHighlightOnWheel = False
         Me.UsernameConTab.HorizontalScrollbarSize = 10
-        Me.UsernameConTab.Location = New System.Drawing.Point(4, 38)
+        Me.UsernameConTab.Location = New System.Drawing.Point(4, 35)
         Me.UsernameConTab.Name = "UsernameConTab"
         Me.UsernameConTab.Padding = New System.Windows.Forms.Padding(3)
-        Me.UsernameConTab.Size = New System.Drawing.Size(607, 247)
+        Me.UsernameConTab.Size = New System.Drawing.Size(607, 250)
         Me.UsernameConTab.TabIndex = 1
         Me.UsernameConTab.Text = "Username Constructor"
         Me.UsernameConTab.VerticalScrollbarBarColor = True
@@ -427,9 +427,9 @@ Partial Class FormBulkUser
         Me.PropertiesTab.HorizontalScrollbarBarColor = True
         Me.PropertiesTab.HorizontalScrollbarHighlightOnWheel = False
         Me.PropertiesTab.HorizontalScrollbarSize = 10
-        Me.PropertiesTab.Location = New System.Drawing.Point(4, 38)
+        Me.PropertiesTab.Location = New System.Drawing.Point(4, 35)
         Me.PropertiesTab.Name = "PropertiesTab"
-        Me.PropertiesTab.Size = New System.Drawing.Size(607, 247)
+        Me.PropertiesTab.Size = New System.Drawing.Size(607, 250)
         Me.PropertiesTab.TabIndex = 2
         Me.PropertiesTab.Text = "Properties"
         Me.PropertiesTab.VerticalScrollbarBarColor = True
@@ -769,6 +769,8 @@ Partial Class FormBulkUser
         Me.Controls.Add(Me.MainTabControl)
         Me.Controls.Add(Me.AcceptBn)
         Me.Controls.Add(Me.CancelBn)
+        Me.CustomBackcolor = System.Drawing.SystemColors.Window
+        Me.CustomForecolor = System.Drawing.SystemColors.MenuText
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False

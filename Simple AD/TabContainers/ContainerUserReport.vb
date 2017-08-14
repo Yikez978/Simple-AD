@@ -64,10 +64,12 @@
 
     Private Sub FilterDataGrid(ByVal Query As String)
         Dim FilteredDataView As DataView
-
-        FilteredDataView = New DataView(DataTableSource, "DisplayName LIKE '*" & Query & "*' OR NAME LIKE '*" & Query & "*'", "DisplayName Desc", DataViewRowState.CurrentRows)
-
-        MainDataGrid.DataSource = FilteredDataView
+        Try
+            FilteredDataView = New DataView(DataTableSource, "DisplayName LIKE '*" & Query & "*' OR NAME LIKE '*" & Query & "*'", "DisplayName Desc", DataViewRowState.CurrentRows)
+            MainDataGrid.DataSource = FilteredDataView
+        Catch Ex As Exception
+            Debug.WriteLine("[Error] Invalid Search String: " & Ex.Message)
+        End Try
     End Sub
 
     Private Sub SearchBoxTb_TextChanged(sender As Object, e As EventArgs) Handles SearchBoxTb.TextChanged
@@ -137,18 +139,6 @@
                 Dim Sam = MainDataGrid.SelectedRows(0).Cells("sAMAccountName").Value
                 Dim Name = MainDataGrid.SelectedRows(0).Cells("Name").Value
                 Dim ShowUserProps = New FormUserAttributes(Sam, Name, MainDataGrid.SelectedRows(0).Index)
-            End If
-        Catch Ex As Exception
-            Debug.WriteLine("[Error] Unable to load object properties Form: " & Ex.Message)
-        End Try
-    End Sub
-
-    Private Sub MainDataGrid_CellMouseDoubleClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles MainDataGrid.CellMouseDoubleClick
-        Try
-            If Not IsDBNull(MainDataGrid.Rows(e.RowIndex).Cells("sAMAccountName").Value) Then
-                Dim Sam = MainDataGrid.Rows(e.RowIndex).Cells("sAMAccountName").Value
-                Dim Name = MainDataGrid.Rows(e.RowIndex).Cells("Name").Value
-                Dim ShowUserProps = New FormUserAttributes(Sam, Name, e.RowIndex)
             End If
         Catch Ex As Exception
             Debug.WriteLine("[Error] Unable to load object properties Form: " & Ex.Message)

@@ -4,17 +4,29 @@ Imports System.Security.AccessControl
 Imports System.DirectoryServices.Protocols
 Imports TSUSEREXLib
 Imports System.Net
+Imports System.DirectoryServices.AccountManagement
 
 Public Class BulkADWorker
 
     Private _BulkUserContainer As ContainerUserBulk
     Private _SourceGrid As DataGridView
     Private bw As BackgroundWorker = New BackgroundWorker
+    Private _JobClass As JobUserBulk
 
-    Public Sub New(SourceGrid As DataGridView, bulkUserContainer As ContainerUserBulk)
+    Public Property BulkUserContainerObject As ContainerUserBulk
+        Set(value As ContainerUserBulk)
+            _BulkUserContainer = value
+        End Set
+        Get
+            Return _BulkUserContainer
+        End Get
+    End Property
+
+
+    Public Sub New(SourceGrid As DataGridView, bulkUserContainer As ContainerUserBulk, JobClass As JobUserBulk)
         _SourceGrid = SourceGrid
-        _BulkUserContainer = bulkUserContainer
-
+        BulkUserContainerObject = bulkUserContainer
+        _JobClass = JobClass
         _BulkUserContainer.GetProgressBar.Maximum = _SourceGrid.Rows.Count
         _BulkUserContainer.GetProgressBar.Step = 1
 
@@ -57,13 +69,18 @@ Public Class BulkADWorker
         If String.IsNullOrEmpty(GlobalVariables.LoginUsernamePrefix) Then
             strPath = "LDAP://" & GlobalVariables.SelectedOU
         Else
-            strPath = "LDAP://" & GlobalVariables.LoginUsernamePrefix & ":389/" & GlobalVariables.SelectedOU
+            strPath = "LDAP://" & GlobalVariables.LoginUsernamePrefix & "/" & GlobalVariables.SelectedOU
         End If
 
         Debug.WriteLine("[LDAP] Bind to: " & strPath)
 
+
+
         ' Get AD LDS object.
         Try
+
+            Dim domainContext As PrincipalContext = GetPrincipalContext(LoginUsername, LoginPassword)
+
             Using objADAM As New DirectoryEntry(strPath, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword, AuthenticationTypes.Secure)
 
 
@@ -126,7 +143,7 @@ Public Class BulkADWorker
                                     objUser.Properties("homeDrive").Add(User.homeDrive)
                                 End If
 
-                                If ForcePwdReset = True Then
+                                If _JobClass.ForcePasswordReset = True Then
                                     objUser.Properties("pwdLastSet").Value = 0
                                 End If
                                 objUser.CommitChanges()
@@ -136,14 +153,9 @@ Public Class BulkADWorker
                                 oUser.AllowLogon = 1
                                 oUser.TerminalServicesProfilePath = User.tsProfilePath
 
-                                'Enable account
-                                Dim val As Integer = objUser.Properties("userAccountControl").Value
-                                objUser.Properties("userAccountControl").Value = val And Not &H2
-                                objUser.CommitChanges()
-
                                 'Setting up folder
 
-                                If (CreateHomeFolders) Then
+                                If _JobClass.CreateHomeFodlers = True Then
                                     If Not String.IsNullOrEmpty(User.homeDirectory) Then
                                         Try
                                             IO.Directory.CreateDirectory(User.homeDirectory)
@@ -171,12 +183,21 @@ Public Class BulkADWorker
                                     End If
                                 End If
 
+                                ' Setting Password and enabling account
                                 Try
-                                    'Set Password
-                                    objUser.Invoke("SetPassword", New Object() {User.password})
-                                    objUser.CommitChanges()
-                                Catch Ex As Reflection.TargetInvocationException
-                                    Debug.WriteLine("[Error] " & Ex.Message)
+                                    If Not User.password Is Nothing Then
+                                        Dim UserPr As UserPrincipal = UserPrincipal.FindByIdentity(domainContext, IdentityType.SamAccountName, User.sAMAccountName)
+                                        UserPr.SetPassword(User.password)
+                                        If _JobClass.EnableAccounts = True Then
+                                            UserPr.Enabled = True
+                                        Else
+                                            UserPr.Enabled = False
+                                        End If
+                                        UserPr.Save()
+                                        UserPr.Dispose()
+                                    End If
+                                Catch Ex As Exception
+                                    Debug.WriteLine("[Error] Unable to set password on user (" & User.sAMAccountName & "):" & Ex.Message)
                                 End Try
 
                                 Debug.WriteLine("[Info] Success: Create succeeded.")
@@ -207,8 +228,9 @@ Public Class BulkADWorker
                     End Try
 
                 Next
-
+                domainContext.Dispose()
                 objADAM.Close()
+                objADAM.Dispose()
             End Using
 
         Catch bindError As Exception

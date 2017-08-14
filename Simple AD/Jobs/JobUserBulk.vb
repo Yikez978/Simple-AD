@@ -9,11 +9,15 @@
     Private TabPage As TabPage
     Private Spinner As ControlTabSpinner
 
+    Public ForcePasswordReset As Boolean
+    Public CreateHomeFodlers As Boolean
+    Public EnableAccounts As Boolean
+
     Private ImportThread As New Threading.Thread(AddressOf ImportCSV)
 
     Public Sub New(ByVal ImportFile As String)
 
-        NewImportJobContainer = New ContainerUserBulk(1, "User Import - " & GetFileNameShort(ImportFile))
+        NewImportJobContainer = New ContainerUserBulk(1, "User Import - " & GetFileNameShort(ImportFile), Me)
 
         TabPage = New TabPage
         With TabPage

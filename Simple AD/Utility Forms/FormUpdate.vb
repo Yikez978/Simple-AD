@@ -53,6 +53,7 @@ Public Class FormUpdate
                 GetHeaderText(UpdateType.NoUpdates)
                 BodyLb.Text = "There is no update available please try again later"
                 FormMain.UpdateToolStripStatusLabel.Text = "No Updates Available"
+                NewVerLb.Text = args.CurrentVersion.ToString
             End If
         Else
             Spinner.Visible = False

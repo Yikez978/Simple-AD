@@ -4,6 +4,7 @@
         CustomLDAP = 0
         DisabledUsers = 1
         AllObjects = 2
+        Explorer = 3
     End Enum
 
     Public Enum ActiveDirectoryIconType

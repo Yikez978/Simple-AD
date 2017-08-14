@@ -178,14 +178,14 @@ Public Class CustomTabControl
                 If index = SelectedIndex Then
                     PaintBrush.Color = tp.BackColor
                 Else
-                    PaintBrush.Color = SystemColors.Window
+                    PaintBrush.Color = InactiveTabBackColor
                 End If
 
                 e.Graphics.FillRectangle(PaintBrush, r)
                 ControlPaint.DrawBorder(e.Graphics, r, PaintBrush.Color, bs)
 
                 If index = SelectedIndex Then
-                    PaintBrush.Color = SystemColors.Window
+                    PaintBrush.Color = InactiveTabBackColor
                 Else
                     PaintBrush.Color = tp.ForeColor
                 End If

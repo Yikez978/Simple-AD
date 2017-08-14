@@ -3,10 +3,9 @@
 
     Public DomainTree As ControlDomainTreeContainer
 
-    Private Worker As BulkADWorker
-
     Private _ID
     Private _JobName
+    Private _JobClass
 
     Public Property ID
         Set(value)
@@ -26,12 +25,21 @@
         End Get
     End Property
 
-    Public Sub New(ByVal ID As Integer, ByVal JobName As String)
+    Public Property JobClass
+        Set(value)
+            _JobClass = value
+        End Set
+        Get
+            Return _JobClass
+        End Get
+    End Property
+
+    Public Sub New(ByVal ID As Integer, ByVal JobName As String, JobClass As JobUserBulk)
 
         Me.ID = ID
         Me.JobName = JobName
-
         Me.Dock = DockStyle.Fill
+        Me.JobClass = JobClass
 
         InitializeComponent()
 
@@ -61,10 +69,6 @@
         Return Me.MainSplitContainer0
     End Function
 
-    Public Function GetMainSplitContainer1() As SplitContainer
-        Return Me.MainSplitContainer1
-    End Function
-
     Public Function GetProgressBar() As ProgressBar
         Return Me.ProgressBar
     End Function
@@ -73,7 +77,7 @@
         Return Me.MetroProgressSpinner
     End Function
 
-    Private Sub MainDataGrid_RowStateChanged(sender As Object, e As DataGridViewRowStateChangedEventArgs) Handles MainDataGrid.RowStateChanged
+    Private Sub MainDataGrid_RowStateChanged(sender As Object, e As DataGridViewRowStateChangedEventArgs)
         If MainDataGrid.SelectedRows.Count > 0 Then
             FormMain.ToolStripStatusLabelContext.Text = GetMainDataGrid().SelectedRows.Count & " Object(s) Selected of " & GetMainDataGrid().Rows.Count
         End If
@@ -85,29 +89,24 @@
 
     Private Sub AcceptBn_Click(sender As Object, e As EventArgs) Handles AcceptBt.Click
         If Not String.IsNullOrEmpty(SelectedOU) Then
-            Me.MainDataGrid.ReadOnly = True
-            Me.AcceptBt.Enabled = False
-            FormMain.StatusStrip.BackColor = Color.FromArgb(202, 81, 0)
-            FormMain.ToolStripStatusLabelStatus.Text = "Processing Users..."
-            FormMain.ToolStripStatusLabelContext.Text = ""
-
-            Me.ProgressBar.Show()
-            Me.ProgressBar.BringToFront()
-
-            Worker = New BulkADWorker(Me.MainDataGrid, Me)
-            Worker.RunBulkUserSetup()
+            Dim ShowOptions As New FormBulkUserOptions(_JobClass, Me)
+            ShowOptions.ShowDialog()
         End If
     End Sub
 
     Private Sub CancelBn_Click(sender As Object, e As EventArgs) Handles CancelBn.Click
         Try
-            Worker.CancelWork()
+            For Each Worker As BulkADWorker In OngoingBulkJobs
+                If Worker.BulkUserContainerObject Is Me Then
+                    Worker.CancelWork()
+                End If
+            Next
         Catch Ex As Exception
             Debug.WriteLine("[Error] " & Ex.Message.ToString)
         End Try
     End Sub
 
-    Private Sub MainDataGrid_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles MainDataGrid.CellFormatting
+    Private Sub MainDataGrid_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs)
         If MainDataGrid.Columns.Contains("Status") Then
             If e.ColumnIndex = MainDataGrid.Columns("Status").Index Then
                 e.CellStyle.BackColor = Color.WhiteSmoke
@@ -142,12 +141,6 @@
         MainDataGrid.Refresh()
     End Sub
 
-    Private Sub PropertiesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PropertiesToolStripMenuItem.Click
-        If GetMainSplitContainer1.Panel2Collapsed Then
-            GetMainSplitContainer1.Panel2Collapsed = False
-        End If
-    End Sub
-
     Private Sub CopyValueToClipboardToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CopyValueToClipboardToolStripMenuItem.Click
         Try
             If Not String.IsNullOrEmpty(CStr(MainDataGrid.SelectedRows(0).Cells("Status").Value)) Then
@@ -156,7 +149,6 @@
         Catch ex As Exception
             Debug.WriteLine("[Error] " & ex.Message)
         End Try
-
     End Sub
 
 End Class

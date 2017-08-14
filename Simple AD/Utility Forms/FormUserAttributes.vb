@@ -63,7 +63,11 @@ Public Class FormUserAttributes
 
     Private Sub FilterDataGrid(ByVal Query As String)
         Dim FilteredDataView = New DataView(DataTableSource, "Attribute LIKE '*" & Query & "*' OR Value LIKE '*" & Query & "*' OR AttributeFull LIKE '*" & Query & "*'", "Attribute Desc", DataViewRowState.CurrentRows)
-        MainDataGrid.DataSource = FilteredDataView
+        Try
+            MainDataGrid.DataSource = FilteredDataView
+        Catch Ex As Exception
+            Debug.WriteLine("[Error] Invalid Search String: " & Ex.Message)
+        End Try
     End Sub
 
     Private Sub SearchBoxTb_TextChanged(sender As Object, e As EventArgs) Handles SearchBoxTb.TextChanged

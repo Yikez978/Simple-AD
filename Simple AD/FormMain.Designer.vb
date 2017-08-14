@@ -54,19 +54,17 @@ Partial Class FormMain
         Me.DisabledUsersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CustomQueryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EntireDirectoryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.HomeFolderSpaceToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AccountActivityToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PreferencesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExportAsCSVToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OpenActiveDirectoryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.PropertiesSideBarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DomainPanelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.HideEmptyColumnsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SelectColumnsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.ConsoleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.UserToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItemLogin = New System.Windows.Forms.ToolStripMenuItem()
@@ -87,6 +85,7 @@ Partial Class FormMain
         Me.ConnectionToolStripStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.UpdateToolStripStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.VersionLb = New MetroFramework.Controls.MetroLabel()
+        Me.BrowseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         SADMenuStrip = New System.Windows.Forms.MenuStrip()
         SADMenuStrip.SuspendLayout()
         Me.NodeContextMenu.SuspendLayout()
@@ -109,9 +108,9 @@ Partial Class FormMain
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ImportCSVToolStripMenuItem, Me.BulkUserWizardToolStripMenuItem, Me.RecentFilesToolStripMenuItem, Me.CheckForUpdatesToolStripMenuItem, Me.ToolStripSeparator1, Me.ExitToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BrowseToolStripMenuItem, Me.ImportCSVToolStripMenuItem, Me.BulkUserWizardToolStripMenuItem, Me.RecentFilesToolStripMenuItem, Me.CheckForUpdatesToolStripMenuItem, Me.ToolStripSeparator1, Me.ExitToolStripMenuItem})
         Me.FileToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI Semilight", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FileToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.FileToolStripMenuItem.ForeColor = System.Drawing.SystemColors.MenuText
         Me.FileToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(73, 20)
@@ -158,7 +157,7 @@ Partial Class FormMain
         '
         Me.Office365ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConnectToolStripMenuItem})
         Me.Office365ToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI Semilight", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Office365ToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Office365ToolStripMenuItem.ForeColor = System.Drawing.SystemColors.MenuText
         Me.Office365ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.Office365ToolStripMenuItem.Name = "Office365ToolStripMenuItem"
         Me.Office365ToolStripMenuItem.Size = New System.Drawing.Size(71, 20)
@@ -172,9 +171,9 @@ Partial Class FormMain
         '
         'ReportsToolStripMenuItem
         '
-        Me.ReportsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DisabledUsersToolStripMenuItem, Me.CustomQueryToolStripMenuItem, Me.EntireDirectoryToolStripMenuItem, Me.HomeFolderSpaceToolStripMenuItem, Me.AccountActivityToolStripMenuItem})
+        Me.ReportsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DisabledUsersToolStripMenuItem, Me.CustomQueryToolStripMenuItem, Me.EntireDirectoryToolStripMenuItem})
         Me.ReportsToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI Semilight", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ReportsToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.ReportsToolStripMenuItem.ForeColor = System.Drawing.SystemColors.MenuText
         Me.ReportsToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.ReportsToolStripMenuItem.Name = "ReportsToolStripMenuItem"
         Me.ReportsToolStripMenuItem.Size = New System.Drawing.Size(59, 20)
@@ -183,40 +182,26 @@ Partial Class FormMain
         'DisabledUsersToolStripMenuItem
         '
         Me.DisabledUsersToolStripMenuItem.Name = "DisabledUsersToolStripMenuItem"
-        Me.DisabledUsersToolStripMenuItem.Size = New System.Drawing.Size(221, 22)
+        Me.DisabledUsersToolStripMenuItem.Size = New System.Drawing.Size(189, 22)
         Me.DisabledUsersToolStripMenuItem.Text = "Disabled Users..."
         '
         'CustomQueryToolStripMenuItem
         '
         Me.CustomQueryToolStripMenuItem.Name = "CustomQueryToolStripMenuItem"
-        Me.CustomQueryToolStripMenuItem.Size = New System.Drawing.Size(221, 22)
+        Me.CustomQueryToolStripMenuItem.Size = New System.Drawing.Size(189, 22)
         Me.CustomQueryToolStripMenuItem.Text = "Custom LDAP Query..."
         '
         'EntireDirectoryToolStripMenuItem
         '
         Me.EntireDirectoryToolStripMenuItem.Name = "EntireDirectoryToolStripMenuItem"
-        Me.EntireDirectoryToolStripMenuItem.Size = New System.Drawing.Size(221, 22)
+        Me.EntireDirectoryToolStripMenuItem.Size = New System.Drawing.Size(189, 22)
         Me.EntireDirectoryToolStripMenuItem.Text = "Entire Directory..."
-        '
-        'HomeFolderSpaceToolStripMenuItem
-        '
-        Me.HomeFolderSpaceToolStripMenuItem.Enabled = False
-        Me.HomeFolderSpaceToolStripMenuItem.Name = "HomeFolderSpaceToolStripMenuItem"
-        Me.HomeFolderSpaceToolStripMenuItem.Size = New System.Drawing.Size(221, 22)
-        Me.HomeFolderSpaceToolStripMenuItem.Text = "Home Folder Space Report..."
-        '
-        'AccountActivityToolStripMenuItem
-        '
-        Me.AccountActivityToolStripMenuItem.Enabled = False
-        Me.AccountActivityToolStripMenuItem.Name = "AccountActivityToolStripMenuItem"
-        Me.AccountActivityToolStripMenuItem.Size = New System.Drawing.Size(221, 22)
-        Me.AccountActivityToolStripMenuItem.Text = "Account Activity..."
         '
         'PreferencesToolStripMenuItem
         '
         Me.PreferencesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OptionsToolStripMenuItem})
         Me.PreferencesToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI Semilight", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.PreferencesToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.PreferencesToolStripMenuItem.ForeColor = System.Drawing.SystemColors.MenuText
         Me.PreferencesToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.PreferencesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.PreferencesToolStripMenuItem.Name = "PreferencesToolStripMenuItem"
@@ -233,7 +218,7 @@ Partial Class FormMain
         '
         Me.ToolsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExportAsCSVToolStripMenuItem, Me.OpenActiveDirectoryToolStripMenuItem})
         Me.ToolsToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI Semilight", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ToolsToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.ToolsToolStripMenuItem.ForeColor = System.Drawing.SystemColors.MenuText
         Me.ToolsToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.ToolsToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.ToolsToolStripMenuItem.Name = "ToolsToolStripMenuItem"
@@ -255,25 +240,14 @@ Partial Class FormMain
         '
         'ViewToolStripMenuItem
         '
-        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PropertiesSideBarToolStripMenuItem, Me.DomainPanelToolStripMenuItem, Me.ToolStripSeparator2, Me.HideEmptyColumnsToolStripMenuItem, Me.SelectColumnsToolStripMenuItem, Me.ConsoleToolStripMenuItem})
+        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DomainPanelToolStripMenuItem, Me.ToolStripSeparator2, Me.HideEmptyColumnsToolStripMenuItem, Me.SelectColumnsToolStripMenuItem, Me.ToolStripSeparator3, Me.ConsoleToolStripMenuItem})
         Me.ViewToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI Semilight", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ViewToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.ViewToolStripMenuItem.ForeColor = System.Drawing.SystemColors.MenuText
         Me.ViewToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.ViewToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
         Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(43, 20)
         Me.ViewToolStripMenuItem.Text = "&View"
-        '
-        'PropertiesSideBarToolStripMenuItem
-        '
-        Me.PropertiesSideBarToolStripMenuItem.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.PropertiesSideBarToolStripMenuItem.Checked = True
-        Me.PropertiesSideBarToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.PropertiesSideBarToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.PropertiesSideBarToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.PropertiesSideBarToolStripMenuItem.Name = "PropertiesSideBarToolStripMenuItem"
-        Me.PropertiesSideBarToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
-        Me.PropertiesSideBarToolStripMenuItem.Text = "&Properties Panel..."
         '
         'DomainPanelToolStripMenuItem
         '
@@ -306,6 +280,11 @@ Partial Class FormMain
         Me.SelectColumnsToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
         Me.SelectColumnsToolStripMenuItem.Text = "&Select Columns..."
         '
+        'ToolStripSeparator3
+        '
+        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
+        Me.ToolStripSeparator3.Size = New System.Drawing.Size(180, 6)
+        '
         'ConsoleToolStripMenuItem
         '
         Me.ConsoleToolStripMenuItem.Name = "ConsoleToolStripMenuItem"
@@ -317,7 +296,7 @@ Partial Class FormMain
         Me.UserToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
         Me.UserToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItemLogin})
         Me.UserToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI Semilight", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.UserToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.UserToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Window
         Me.UserToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.UserToolStripMenuItem.Name = "UserToolStripMenuItem"
         Me.UserToolStripMenuItem.Size = New System.Drawing.Size(42, 20)
@@ -426,7 +405,7 @@ Partial Class FormMain
         '
         Me.SpacerToolStripStatusLabel.BackColor = System.Drawing.Color.Transparent
         Me.SpacerToolStripStatusLabel.Name = "SpacerToolStripStatusLabel"
-        Me.SpacerToolStripStatusLabel.Size = New System.Drawing.Size(1115, 19)
+        Me.SpacerToolStripStatusLabel.Size = New System.Drawing.Size(1146, 19)
         Me.SpacerToolStripStatusLabel.Spring = True
         Me.SpacerToolStripStatusLabel.Text = " "
         '
@@ -447,6 +426,7 @@ Partial Class FormMain
         'VersionLb
         '
         Me.VersionLb.AutoSize = True
+        Me.VersionLb.BackColor = System.Drawing.SystemColors.Window
         Me.VersionLb.FontSize = MetroFramework.MetroLabelSize.Small
         Me.VersionLb.FontWeight = MetroFramework.MetroLabelWeight.Regular
         Me.VersionLb.ForeColor = System.Drawing.SystemColors.ControlDarkDark
@@ -456,7 +436,14 @@ Partial Class FormMain
         Me.VersionLb.Size = New System.Drawing.Size(46, 15)
         Me.VersionLb.TabIndex = 19
         Me.VersionLb.Text = "Version"
+        Me.VersionLb.UseCustomBackColor = True
         Me.VersionLb.UseCustomForeColor = True
+        '
+        'BrowseToolStripMenuItem
+        '
+        Me.BrowseToolStripMenuItem.Name = "BrowseToolStripMenuItem"
+        Me.BrowseToolStripMenuItem.Size = New System.Drawing.Size(178, 22)
+        Me.BrowseToolStripMenuItem.Text = "Browse"
         '
         'FormMain
         '
@@ -507,7 +494,6 @@ Partial Class FormMain
     Friend WithEvents OpenFileDialogImport As OpenFileDialog
     Friend WithEvents ExitToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
-    Friend WithEvents PropertiesSideBarToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents UserToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItemLogin As ToolStripMenuItem
     Friend WithEvents RecentFilesToolStripMenuItem As ToolStripMenuItem
@@ -516,9 +502,7 @@ Partial Class FormMain
     Friend WithEvents DomainPanelToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents BulkUserWizardToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ReportsToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents HomeFolderSpaceToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DisabledUsersToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents AccountActivityToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents TabContextMenu As ContextMenuStrip
     Friend WithEvents CloseToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents OpenActiveDirectoryToolStripMenuItem As ToolStripMenuItem
@@ -537,4 +521,6 @@ Partial Class FormMain
     Friend WithEvents UpdateToolStripStatusLabel As ToolStripStatusLabel
     Friend WithEvents EntireDirectoryToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ConsoleToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
+    Friend WithEvents BrowseToolStripMenuItem As ToolStripMenuItem
 End Class

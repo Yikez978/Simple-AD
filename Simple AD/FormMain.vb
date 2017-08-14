@@ -188,7 +188,7 @@ Public Class FormMain
         End Try
     End Function
 
-    Private Sub ViewSideBarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PropertiesSideBarToolStripMenuItem.Click
+    Private Sub ViewSideBarToolStripMenuItem_Click(sender As Object, e As EventArgs)
         GetMainSplitContainer1.Panel2Collapsed = Not GetMainSplitContainer1.Panel2Collapsed
     End Sub
 
@@ -279,5 +279,9 @@ Public Class FormMain
 
     Private Sub ConsoleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConsoleToolStripMenuItem.Click
         FormConsole.Show()
+    End Sub
+
+    Private Sub BrowseToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BrowseToolStripMenuItem.Click
+        Dim NewReport As JobUserReport = New JobUserReport(ReportType.Explorer)
     End Sub
 End Class

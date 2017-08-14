@@ -4,17 +4,27 @@ Imports System.DirectoryServices.ActiveDirectory
 
 Module ActiveDirectoryHelper
 
-    Public Function GetSingleDomainController(ByVal DomainName As String, ByVal ConnectionUsername As String, ByVal ConnectionPassword As String) As String
-        Return Domain.GetDomain(GetDomainContext(DomainName, ConnectionUsername, ConnectionPassword)).PdcRoleOwner.Name
+    Public Function GetSingleDomainController(ByVal ConnectionUsername As String, ByVal ConnectionPassword As String) As String
+        Return Domain.GetDomain(GetDomainContext(ConnectionUsername, ConnectionPassword)).PdcRoleOwner.Name
     End Function
 
-    Public Function GetDomainContext(ByVal DomainName As String, ByVal ConnectionUsername As String, ByVal ConnectionPassword As String) As DirectoryContext
+    Public Function GetDomainContext(ByVal ConnectionUsername As String, ByVal ConnectionPassword As String) As DirectoryContext
         If String.IsNullOrEmpty(ConnectionUsername) Then
-            Return New DirectoryContext(DirectoryContextType.Domain, DomainName)
+            Return New DirectoryContext(DirectoryContextType.Domain, GetLocalDomainName)
         ElseIf String.IsNullOrEmpty(LoginUsernamePrefix) Then
-            Return (New DirectoryContext(DirectoryContextType.Domain, DomainName, ConnectionUsername, ConnectionPassword))
+            Return (New DirectoryContext(DirectoryContextType.Domain, GetLocalDomainName, ConnectionUsername, ConnectionPassword))
         Else
             Return (New DirectoryContext(DirectoryContextType.DirectoryServer, LoginUsernamePrefix, ConnectionUsername, ConnectionPassword))
+        End If
+    End Function
+
+    Public Function GetPrincipalContext(ByVal ConnectionUsername As String, ByVal ConnectionPassword As String) As PrincipalContext
+        If String.IsNullOrEmpty(ConnectionUsername) Then
+            Return (New PrincipalContext(ContextType.Domain, Environment.UserDomainName))
+        ElseIf String.IsNullOrEmpty(LoginUsernamePrefix) Then
+            Return (New PrincipalContext(ContextType.Domain, Environment.UserDomainName, ConnectionUsername, ConnectionPassword))
+        Else
+            Return (New PrincipalContext(ContextType.Machine, LoginUsernamePrefix, ConnectionUsername, ConnectionPassword))
         End If
     End Function
 
@@ -63,7 +73,7 @@ Module ActiveDirectoryHelper
 
         If String.IsNullOrEmpty(GlobalVariables.LoginUsernamePrefix) Then
 
-            entry = "LDAP://" & GetSingleDomainController(GetLocalDomainName, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword)
+            entry = "LDAP://" & GetSingleDomainController(GlobalVariables.LoginUsername, GlobalVariables.LoginPassword)
 
         Else
             entry = "LDAP://" & GlobalVariables.LoginUsernamePrefix
@@ -121,6 +131,7 @@ Module ActiveDirectoryHelper
 
         Catch ex As Exception
             Success = False
+            Debug.WriteLine("[Error] Unable to validate login request: " & ex.Message)
         End Try
         Return Success
     End Function

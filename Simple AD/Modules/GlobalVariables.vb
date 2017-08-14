@@ -30,6 +30,8 @@ Public Module GlobalVariables
 
     Public HiddenColums As New List(Of String)
     Public TempHiddenColumns As New List(Of String)
+    Public CustomColumns As New List(Of String)
+    Public OngoingBulkJobs As New List(Of BulkADWorker)
     Public ColumnsVisibleChangedByUser As Boolean
 
     Public Headers() = {"name", "status", "sAMAccountName", "givenName", "sn", "displayName", "scriptPath", "homeDrive", "homeDirectory", "pager", "mail", "description", "tsProfilePath", "password"}
@@ -38,7 +40,6 @@ Public Module GlobalVariables
 
     Public PersistantColumns() = {"Status", "Filler", "nameCol"}
 
-    Public CustomColumns As New List(Of String)
     Public MainViewMode As String
     Public ProcessedUsers As Integer = 0
     Public SelectedOU = ""
