@@ -32,7 +32,7 @@ Public Module GlobalVariables
     Public TempHiddenColumns As New List(Of String)
     Public ColumnsVisibleChangedByUser As Boolean
 
-    Public Headers() = {"name", "sAMAccountName", "givenName", "sn", "displayName", "scriptPath", "homeDrive", "homeDirectory", "pager", "mail", "description", "tsProfilePath", "password"}
+    Public Headers() = {"name", "status", "sAMAccountName", "givenName", "sn", "displayName", "scriptPath", "homeDrive", "homeDirectory", "pager", "mail", "description", "tsProfilePath", "password"}
     Public DefaultColumns() = {"nameCol", "description", "status"}
     Public DefaultOffice365Columns() = {"Name", "DisplayName", "Alias", "WindowsEmailAddress", "Filler"}
 

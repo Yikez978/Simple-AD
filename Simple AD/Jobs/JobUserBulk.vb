@@ -71,7 +71,7 @@
                     Next
                 Else
                     For i As Integer = 0 To datagrid.Rows.Count - 1
-                        With DirectCast(datagrid.Rows.Item(i).Cells("name"), TextAndImageCell)
+                        With DirectCast(datagrid.Rows.Item(i).Cells("nameCol"), TextAndImageCell)
                             .Value = datasource.Rows(i).Item("sAMAccountName")
                         End With
                     Next

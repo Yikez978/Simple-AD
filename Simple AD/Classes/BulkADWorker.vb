@@ -48,7 +48,7 @@ Public Class BulkADWorker
 
         Debug.WriteLine("[Info] BulkADWorkers Class Main Worker Initiated")
 
-        Dim autoMainDataGrid As DataGridView = GetMainDataGrid(_SourceGrid)
+        Dim autoMainDataGrid = _SourceGrid
 
         Dim strPath As String               ' Binding path.
         Dim strUser As String               ' User to create.
@@ -63,14 +63,14 @@ Public Class BulkADWorker
         Debug.WriteLine("[LDAP] Bind to: " & strPath)
 
         ' Get AD LDS object.
-        'Try
-        Using objADAM As New DirectoryEntry(strPath, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword, AuthenticationTypes.Secure)
+        Try
+            Using objADAM As New DirectoryEntry(strPath, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword, AuthenticationTypes.Secure)
 
 
                 objADAM.RefreshCache()
 
                 'Main User Creation Loop
-                For i As Integer = 0 To autoMainDataGrid.RowCount - 2
+                For i As Integer = 0 To autoMainDataGrid.RowCount - 1
 
                     If sender.CancellationPending = True Then
                         e.Cancel = True
@@ -79,105 +79,125 @@ Public Class BulkADWorker
 
 
                     Dim row As DataGridViewRow = autoMainDataGrid.Rows(i)
-                Dim User As UserObject = GetUserFromDataGridViewRow(autoMainDataGrid, row)
+                    Dim User As UserObject = GetUserFromDataGridViewRow(autoMainDataGrid, row)
 
-                Try
+                    Try
 
-                    If Not User Is Nothing Then
+                        If Not User Is Nothing Then
 
-                        ' Specify User.
-                        strUser = "CN=" & User.name
-                        Debug.WriteLine("[Info] Create: " & strUser)
+                            ' Specify User.
+                            strUser = "CN=" & User.name
+                            Debug.WriteLine("[Info] Create: " & strUser)
 
-                        ' Create User.
+                            ' Create User.
 
-                        Dim objUser As DirectoryEntry = objADAM.Children.Add(strUser, "user")
+                            Dim objUser As DirectoryEntry = objADAM.Children.Add(strUser, "user")
 
-                        If Not objUser Is Nothing Then
+                            If Not objUser Is Nothing Then
 
-                            objUser.Properties.Item("SamAccountName").Add(User.sAMAccountName)
-                            objUser.Properties("userPrincipalName").Add(User.sAMAccountName)
-                            objUser.Properties("displayName").Add(User.displayName)
-                            objUser.Properties.Item("givenName").Add(User.givenName)
-                            objUser.Properties.Item("sn").Add(User.sn)
+                                objUser.Properties.Item("SamAccountName").Add(User.sAMAccountName)
+                                objUser.Properties("userPrincipalName").Add(User.sAMAccountName)
 
-                            objUser.CommitChanges()
+                                If Not String.IsNullOrEmpty(User.displayName) Then
+                                    objUser.Properties("displayName").Add(User.displayName)
+                                End If
 
-                            If GlobalVariables.ForcePwdReset = True Then
-                                objUser.Properties("pwdLastSet").Value = 0
-                            End If
-                            objUser.CommitChanges()
+                                If Not String.IsNullOrEmpty(User.givenName) Then
+                                    objUser.Properties("givenName").Add(User.givenName)
+                                End If
 
-                            objUser.Properties("scriptPath").Value = User.scriptPath
-                            objUser.Properties.Item("description").Value = User.description
-                            objUser.CommitChanges()
+                                If Not String.IsNullOrEmpty(User.sn) Then
+                                    objUser.Properties("sn").Add(User.sn)
+                                End If
 
-                            'Setting TSProfilePath
-                            Dim oUser As ADsTSUserEx = CType(objUser.NativeObject, ADsTSUserEx)
-                            oUser.AllowLogon = 1
-                            oUser.TerminalServicesProfilePath = User.tsProfilePath
+                                If Not String.IsNullOrEmpty(User.scriptPath) Then
+                                    objUser.Properties("scriptPath").Add(User.scriptPath)
+                                End If
 
-                            'Set Password
-                            objUser.Invoke("SetPassword", New Object() {User.password})
-                            objUser.CommitChanges()
+                                If Not String.IsNullOrEmpty(User.description) Then
+                                    objUser.Properties("description").Add(User.description)
+                                End If
 
-                            'Enable account
-                            If GlobalVariables.EnableNewAccounts = True Then
+                                If Not String.IsNullOrEmpty(User.homeDirectory) Then
+                                    objUser.Properties("homeDirectory").Add(User.homeDirectory)
+                                End If
+
+                                If Not String.IsNullOrEmpty(User.homeDrive) Then
+                                    objUser.Properties("homeDrive").Add(User.homeDrive)
+                                End If
+
+                                If ForcePwdReset = True Then
+                                    objUser.Properties("pwdLastSet").Value = 0
+                                End If
+                                objUser.CommitChanges()
+
+                                'Setting TSProfilePath
+                                Dim oUser As ADsTSUserEx = CType(objUser.NativeObject, ADsTSUserEx)
+                                oUser.AllowLogon = 1
+                                oUser.TerminalServicesProfilePath = User.tsProfilePath
+
+                                'Enable account
                                 Dim val As Integer = objUser.Properties("userAccountControl").Value
                                 objUser.Properties("userAccountControl").Value = val And Not &H2
-                            End If
-                            objUser.CommitChanges()
+                                objUser.CommitChanges()
 
-                            'Setting up folder
+                                'Setting up folder
 
-                            If (GlobalVariables.CreateHomeFolders) Then
-                                If Not String.IsNullOrEmpty(User.homeDirectory) Then
-
-                                    Try
-                                        objUser.Properties("homeDirectory").Value = User.homeDirectory
-                                        objUser.Properties("homeDrive").Value = User.homeDrive
-                                        objUser.CommitChanges()
-
-                                        IO.Directory.CreateDirectory(User.homeDirectory)
-                                    Catch Ex As Exception
-                                        Debug.WriteLine("[Error] Error While Creating Home folder for user: " & User.sAMAccountName)
-                                        Debug.WriteLine("[Error] " & Ex.Message)
-                                    End Try
-
-                                    If IO.Directory.Exists(User.homeDirectory) Then
+                                If (CreateHomeFolders) Then
+                                    If Not String.IsNullOrEmpty(User.homeDirectory) Then
                                         Try
-                                            Dim FolderInfo As IO.DirectoryInfo = New IO.DirectoryInfo(User.homeDirectory)
-                                            Dim FolderAcl As New DirectorySecurity
-
-                                            FolderAcl.AddAccessRule(New FileSystemAccessRule(CStr(GetLocalDomainName() & "\" & User.sAMAccountName), FileSystemRights.Modify, InheritanceFlags.ContainerInherit Or InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Allow))
-                                            FolderInfo.SetAccessControl(FolderAcl)
+                                            IO.Directory.CreateDirectory(User.homeDirectory)
                                         Catch Ex As Exception
-                                            Debug.WriteLine("[Error] Error While Setting permisions on Home folder for user " & User.sAMAccountName)
+                                            Debug.WriteLine("[Error] Error While Creating Home folder for user: " & User.sAMAccountName)
                                             Debug.WriteLine("[Error] " & Ex.Message)
                                         End Try
-                                    End If
 
-                                Else
-                                    Debug.WriteLine("[Info] Folder Already Exists in location: " & User.homeDirectory)
-                                    Debug.WriteLine("[Info] Home Folder Creation for user " & User.sAMAccountName & " Has been skipped!")
+                                        If IO.Directory.Exists(User.homeDirectory) Then
+                                            Try
+                                                Dim FolderInfo As IO.DirectoryInfo = New IO.DirectoryInfo(User.homeDirectory)
+                                                Dim FolderAcl As New DirectorySecurity
+
+                                                FolderAcl.AddAccessRule(New FileSystemAccessRule(CStr(GetLocalDomainName() & "\" & User.sAMAccountName), FileSystemRights.Modify, InheritanceFlags.ContainerInherit Or InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Allow))
+                                                FolderInfo.SetAccessControl(FolderAcl)
+                                            Catch Ex As Exception
+                                                Debug.WriteLine("[Error] Error While Setting permisions on Home folder for user " & User.sAMAccountName)
+                                                Debug.WriteLine("[Error] " & Ex.Message)
+                                            End Try
+                                        End If
+
+                                    Else
+                                        Debug.WriteLine("[Info] Folder Already Exists in location: " & User.homeDirectory)
+                                        Debug.WriteLine("[Info] Home Folder Creation for user " & User.sAMAccountName & " Has been skipped!")
+                                    End If
                                 End If
+
+                                Try
+                                    'Set Password
+                                    objUser.Invoke("SetPassword", New Object() {User.password})
+                                    objUser.CommitChanges()
+                                Catch Ex As Reflection.TargetInvocationException
+                                    Debug.WriteLine("[Error] " & Ex.Message)
+                                End Try
+
+                                Debug.WriteLine("[Info] Success: Create succeeded.")
+                                Debug.WriteLine("[Info] Name: ", objUser.Name)
+
+                                Dim argArray As Array = {row.Index}
+                                sender.ReportProgress(0, argArray)
+
+                                objUser.Close()
+                                objUser.Dispose()
+
                             End If
 
-                            Debug.WriteLine("[Info] Success: Create succeeded.")
-                            Debug.WriteLine("[Info] Name: ", objUser.Name)
-
-                            Dim argArray As Array = {row.Index}
-                            sender.ReportProgress(0, argArray)
 
                         End If
 
-                        objUser.Close()
-                    End If
-                Catch exc As Exception
+                    Catch exc As Exception
 
-                    Dim ErrorMsgCon = "Unable to Create User: " & User.sAMAccountName & " - " & exc.Message
+                        Dim ErrorMsgCon = "Unable to Create User: " & User.sAMAccountName & " - " & exc.Message
 
-                    Dim argArray As Array = {row.Index, ErrorMsgCon, exc.Message}
+                        Dim argArray As Array = {row.Index, ErrorMsgCon, exc.Message}
 
                         Debug.WriteLine("[Error] Unable to Create User: " & User.sAMAccountName)
                         Debug.WriteLine("[Error] " & exc.Message)
@@ -191,10 +211,10 @@ Public Class BulkADWorker
                 objADAM.Close()
             End Using
 
-        'Catch bindError As Exception
-        'Debug.WriteLine("[Error] Bind failed.")
-        'Debug.WriteLine("[LDAP] " & bindError.Message)
-        'End Try
+        Catch bindError As Exception
+            Debug.WriteLine("[Error] Bind failed.")
+            Debug.WriteLine("[LDAP] " & bindError.Message)
+        End Try
 
     End Sub
 
@@ -204,13 +224,9 @@ Public Class BulkADWorker
         If e.ProgressPercentage = 0 Then
 
             With DirectCast(_SourceGrid.Rows.Item(e.UserState(0)).Cells("Status"), TextAndImageCell)
-                .Image = New Bitmap(ConvertToGrayScale(My.Resources.appbar_check), 16, 16)
+                .Image = New Bitmap(My.Resources.appbar_check, 16, 16)
                 .Value = "User Created Succesfully"
                 .ReadOnly = True
-            End With
-
-            With DirectCast(_SourceGrid.Rows.Item(e.UserState(0)).Cells("Name"), TextAndImageCell)
-                .Image = GlobalVariables.IconUser
             End With
 
             _SourceGrid.Rows.Item(e.UserState(0)).DefaultCellStyle.ForeColor = SystemColors.ControlText

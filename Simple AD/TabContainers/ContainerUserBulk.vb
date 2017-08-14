@@ -84,15 +84,19 @@
     End Sub
 
     Private Sub AcceptBn_Click(sender As Object, e As EventArgs) Handles AcceptBt.Click
-        FormMain.GetMainDataGrid.ReadOnly = True
-        FormMain.StatusStrip.BackColor = Color.FromArgb(202, 81, 0)
-        FormMain.ToolStripStatusLabelStatus.Text = "Processing Users..."
-        FormMain.ToolStripStatusLabelContext.Text = ""
-        Me.ProgressBar.Show()
-        Me.ProgressBar.BringToFront()
+        If Not String.IsNullOrEmpty(SelectedOU) Then
+            Me.MainDataGrid.ReadOnly = True
+            Me.AcceptBt.Enabled = False
+            FormMain.StatusStrip.BackColor = Color.FromArgb(202, 81, 0)
+            FormMain.ToolStripStatusLabelStatus.Text = "Processing Users..."
+            FormMain.ToolStripStatusLabelContext.Text = ""
 
-        Worker = New BulkADWorker(Me.MainDataGrid, Me)
-        Worker.RunBulkUserSetup()
+            Me.ProgressBar.Show()
+            Me.ProgressBar.BringToFront()
+
+            Worker = New BulkADWorker(Me.MainDataGrid, Me)
+            Worker.RunBulkUserSetup()
+        End If
     End Sub
 
     Private Sub CancelBn_Click(sender As Object, e As EventArgs) Handles CancelBn.Click
@@ -123,11 +127,15 @@
         Dim NewRow = newDT.NewRow()
         With NewRow
             For Each col As DataGridViewColumn In MainDataGrid.Columns
-                If col.Name = "Name" Then
-                    .Item(col.Name) = SourceRow.Cells.Item(col.Name).Value & " (Copy)"
-                Else
-                    .Item(col.Name) = SourceRow.Cells.Item(col.Name).Value
-                End If
+                Try
+                    If col.Name = "nameCol" Then
+                        .Item(col.Name) = SourceRow.Cells.Item(col.Name).Value & " (Copy)"
+                    Else
+                        .Item(col.Name) = SourceRow.Cells.Item(col.Name).Value
+                    End If
+                Catch ex As Exception
+                    Debug.WriteLine("[Error] " & ex.Message)
+                End Try
             Next
         End With
         newDT.Rows.InsertAt(NewRow, MainDataGrid.SelectedRows(0).Index)
