@@ -1,10 +1,9 @@
 ﻿Imports System.DirectoryServices
 Imports System.ComponentModel
 Imports System.Security.AccessControl
-Imports System.DirectoryServices.Protocols
 Imports TSUSEREXLib
-Imports System.Net
 Imports System.DirectoryServices.AccountManagement
+Imports System.Security.Principal
 
 Public Class BulkADWorker
 
@@ -63,26 +62,28 @@ Public Class BulkADWorker
         Dim autoMainDataGrid = _SourceGrid
 
         Dim strPath As String               ' Binding path.
-        Dim strUser As String               ' User to create.
+        Dim domainContext As PrincipalContext
 
         ' Construct the binding string.       
-        If String.IsNullOrEmpty(GlobalVariables.LoginUsernamePrefix) Then
-            strPath = "LDAP://" & GlobalVariables.SelectedOU
+        If String.IsNullOrEmpty(LoginUsernamePrefix) Then
+            strPath = "LDAP://" & SelectedOU
         Else
-            strPath = "LDAP://" & GlobalVariables.LoginUsernamePrefix & "/" & GlobalVariables.SelectedOU
+            strPath = "LDAP://" & LoginUsernamePrefix & "/" & SelectedOU
         End If
 
         Debug.WriteLine("[LDAP] Bind to: " & strPath)
 
-
-
         ' Get AD LDS object.
         Try
+            Debug.WriteLine("[Info] Setting up PrincipalContext")
+            domainContext = GetPrincipalContext(LoginUsername, LoginPassword)
+        Catch Ex As Exception
+            Debug.WriteLine("[Error] Unable to create Domain Context object from PrincipalContext: " & Ex.Message)
+            Exit Sub
+        End Try
 
-            Dim domainContext As PrincipalContext = GetPrincipalContext(LoginUsername, LoginPassword)
-
-            Using objADAM As New DirectoryEntry(strPath, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword, AuthenticationTypes.Secure)
-
+        Try
+            Using objADAM As New DirectoryEntry(strPath, LoginUsername, LoginPassword, AuthenticationTypes.Secure)
 
                 objADAM.RefreshCache()
 
@@ -100,19 +101,16 @@ Public Class BulkADWorker
 
                     Try
 
-                        If Not User Is Nothing Then
+                        If Not User.sAMAccountName Is Nothing Then
 
-                            ' Specify User.
-                            strUser = "CN=" & User.name
-                            Debug.WriteLine("[Info] Create: " & strUser)
+                            Debug.WriteLine(Environment.NewLine & "[Info] Creating: " & User.name)
 
                             ' Create User.
-
-                            Dim objUser As DirectoryEntry = objADAM.Children.Add(strUser, "user")
+                            Dim objUser As DirectoryEntry = objADAM.Children.Add("CN=" & User.name, "user")
 
                             If Not objUser Is Nothing Then
 
-                                objUser.Properties.Item("SamAccountName").Add(User.sAMAccountName)
+                                objUser.Properties.Item("sAMAccountName").Add(User.sAMAccountName)
                                 objUser.Properties("userPrincipalName").Add(User.sAMAccountName)
 
                                 If Not String.IsNullOrEmpty(User.displayName) Then
@@ -146,15 +144,45 @@ Public Class BulkADWorker
                                 If _JobClass.ForcePasswordReset = True Then
                                     objUser.Properties("pwdLastSet").Value = 0
                                 End If
+
                                 objUser.CommitChanges()
+                                objUser.RefreshCache()
 
                                 'Setting TSProfilePath
-                                Dim oUser As ADsTSUserEx = CType(objUser.NativeObject, ADsTSUserEx)
-                                oUser.AllowLogon = 1
-                                oUser.TerminalServicesProfilePath = User.tsProfilePath
+                                Try
+                                    If Not String.IsNullOrEmpty(User.tsProfilePath) Then
+                                        Dim oUser As ADsTSUserEx = CType(objUser.NativeObject, ADsTSUserEx)
+                                        oUser.AllowLogon = 1
+                                        oUser.TerminalServicesProfilePath = User.tsProfilePath
+                                    End If
+                                Catch Ex As Exception
+                                    Debug.WriteLine("[Error] Unable to set the Terminal Services Profile Path for User (" & User.sAMAccountName & "): " & Ex.Message)
+                                End Try
+
+                                ' Setting Password and enabling account
+                                Try
+                                    If Not User.password Is Nothing Then
+                                        Try
+                                            Dim UserPr As UserPrincipal = UserPrincipal.FindByIdentity(domainContext, IdentityType.SamAccountName, User.sAMAccountName)
+                                            UserPr.SetPassword(User.password)
+                                            If _JobClass.EnableAccounts = True Then
+                                                UserPr.Enabled = True
+                                            Else
+                                                UserPr.Enabled = False
+                                            End If
+                                            UserPr.Save()
+                                        Catch Ex As Exception
+                                            Debug.WriteLine("[Error] Unable to create UserPrincipal object with user (" & User.sAMAccountName & "): " & Ex.Message)
+                                            If Not Ex.InnerException Is Nothing Then
+                                                Debug.WriteLine("[Inner Exception] " & Ex.InnerException.Message)
+                                            End If
+                                        End Try
+                                    End If
+                                Catch Ex As Exception
+                                    Debug.WriteLine("[Error] Unable to set password and enable account on user (" & User.sAMAccountName & "):" & Ex.Message)
+                                End Try
 
                                 'Setting up folder
-
                                 If _JobClass.CreateHomeFodlers = True Then
                                     If Not String.IsNullOrEmpty(User.homeDirectory) Then
                                         Try
@@ -168,7 +196,6 @@ Public Class BulkADWorker
                                             Try
                                                 Dim FolderInfo As IO.DirectoryInfo = New IO.DirectoryInfo(User.homeDirectory)
                                                 Dim FolderAcl As New DirectorySecurity
-
                                                 FolderAcl.AddAccessRule(New FileSystemAccessRule(CStr(GetLocalDomainName() & "\" & User.sAMAccountName), FileSystemRights.Modify, InheritanceFlags.ContainerInherit Or InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Allow))
                                                 FolderInfo.SetAccessControl(FolderAcl)
                                             Catch Ex As Exception
@@ -176,29 +203,8 @@ Public Class BulkADWorker
                                                 Debug.WriteLine("[Error] " & Ex.Message)
                                             End Try
                                         End If
-
-                                    Else
-                                        Debug.WriteLine("[Info] Folder Already Exists in location: " & User.homeDirectory)
-                                        Debug.WriteLine("[Info] Home Folder Creation for user " & User.sAMAccountName & " Has been skipped!")
                                     End If
                                 End If
-
-                                ' Setting Password and enabling account
-                                Try
-                                    If Not User.password Is Nothing Then
-                                        Dim UserPr As UserPrincipal = UserPrincipal.FindByIdentity(domainContext, IdentityType.SamAccountName, User.sAMAccountName)
-                                        UserPr.SetPassword(User.password)
-                                        If _JobClass.EnableAccounts = True Then
-                                            UserPr.Enabled = True
-                                        Else
-                                            UserPr.Enabled = False
-                                        End If
-                                        UserPr.Save()
-                                        UserPr.Dispose()
-                                    End If
-                                Catch Ex As Exception
-                                    Debug.WriteLine("[Error] Unable to set password on user (" & User.sAMAccountName & "):" & Ex.Message)
-                                End Try
 
                                 Debug.WriteLine("[Info] Success: Create succeeded.")
                                 Debug.WriteLine("[Info] Name: ", objUser.Name)
@@ -210,18 +216,19 @@ Public Class BulkADWorker
                                 objUser.Dispose()
 
                             End If
-
-
                         End If
 
-                    Catch exc As Exception
+                    Catch Exc As Exception
 
-                        Dim ErrorMsgCon = "Unable to Create User: " & User.sAMAccountName & " - " & exc.Message
+                        Dim ErrorMsgCon = "Unable to Create User: " & User.sAMAccountName & " - " & Exc.Message
 
-                        Dim argArray As Array = {row.Index, ErrorMsgCon, exc.Message}
+                        Dim argArray As Array = {row.Index, ErrorMsgCon, Exc.Message}
 
                         Debug.WriteLine("[Error] Unable to Create User: " & User.sAMAccountName)
-                        Debug.WriteLine("[Error] " & exc.Message)
+                        Debug.WriteLine("[Error] " & Exc.Message)
+                        If Not Exc.InnerException Is Nothing Then
+                            Debug.WriteLine("[Inner Exception] " & Exc.InnerException.Message)
+                        End If
 
                         sender.ReportProgress(1, argArray)
 
@@ -297,61 +304,5 @@ Public Class BulkADWorker
             bw.CancelAsync()
         End If
     End Sub
-
-    Private Sub SetPassword(connection As DirectoryConnection, userDN As String, password As String)
-
-        Dim pwdMod As DirectoryAttributeModification = New DirectoryAttributeModification()
-        With pwdMod
-            pwdMod.Name = "unicodePwd"
-            pwdMod.Add(GetPasswordData(password))
-            pwdMod.Operation = DirectoryAttributeOperation.Replace
-        End With
-
-        Dim request As ModifyRequest = New ModifyRequest(userDN, pwdMod)
-
-        Dim response As DirectoryResponse = connection.SendRequest(request)
-    End Sub
-
-    Private Function GetPasswordData(password As String) As Byte()
-        Dim formattedPassword As String
-        formattedPassword = String.Format("\{0}\", password)
-        Return (Encoding.Unicode.GetBytes(formattedPassword))
-    End Function
-
-    Private Function GetConnection(server As String, credential As NetworkCredential, useSsl As Boolean) As DirectoryConnection
-
-        Dim connection As LdapConnection = New LdapConnection(server)
-
-        If (useSsl) Then
-            connection.SessionOptions.SecureSocketLayer = True
-        Else
-            connection.SessionOptions.Sealing = True
-        End If
-
-        connection.Bind(credential)
-        Return connection
-    End Function
-
-    Public Sub Main()
-
-        Dim credential As NetworkCredential = New NetworkCredential("someuser", "Password1", "domain")
-        Dim Connection As DirectoryConnection
-
-        Try
-            ''change these options to use Kerberos encryption
-            Connection = GetConnection("domain.com:636", credential, True)
-            Console.WriteLine("Password modified!")
-            Dim disposable As IDisposable = Connection
-
-            If (Not disposable Is Nothing) Then
-                disposable.Dispose()
-            End If
-
-        Catch ex As Exception
-            Console.WriteLine(ex.ToString())
-        End Try
-    End Sub
-
-
 
 End Class

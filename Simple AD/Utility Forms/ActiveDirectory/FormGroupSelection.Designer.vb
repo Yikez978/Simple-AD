@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FormGroupSelection
-    Inherits MetroFramework.Forms.MetroForm
+    Inherits SimpleAD.FormSimpleAD
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()>
@@ -30,7 +30,7 @@ Partial Class FormGroupSelection
         Me.SearchBn = New MetroFramework.Controls.MetroButton()
         Me.SelectGroupTb = New MetroFramework.Controls.MetroTextBox()
         Me.MainGrid = New MetroFramework.Controls.MetroGrid()
-        Me.NameCol = New Simple_AD.TextAndImageColumn()
+        Me.NameCol = New SimpleAD.TextAndImageColumn()
         Me.TypeColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DescriptionColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Panel1 = New System.Windows.Forms.Panel()
@@ -195,6 +195,8 @@ Partial Class FormGroupSelection
         Me.Controls.Add(Me.MainGrid)
         Me.Controls.Add(Me.Panel2)
         Me.Controls.Add(Me.Panel1)
+        Me.CustomBackcolor = System.Drawing.SystemColors.Window
+        Me.CustomForecolor = System.Drawing.SystemColors.MenuText
         Me.DisplayHeader = False
         Me.MaximizeBox = False
         Me.MinimizeBox = False

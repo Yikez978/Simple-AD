@@ -98,32 +98,32 @@
                     Case "805306368"
                         If MainDataGrid.Rows(e.RowIndex).Cells("UserAccountControl").Value = "546" Or MainDataGrid.Rows(e.RowIndex).Cells("UserAccountControl").Value = "514" Or MainDataGrid.Rows(e.RowIndex).Cells("UserAccountControl").Value = "66082" Or MainDataGrid.Rows(e.RowIndex).Cells("UserAccountControl").Value = "66050" Then
                             With DirectCast(MainDataGrid.Rows.Item(e.RowIndex).Cells("name"), TextAndImageCell)
-                                .Image = GlobalVariables.IconDisabledUSer
+                                .Image = IconDisabledUSer
                             End With
                         Else
                             With DirectCast(MainDataGrid.Rows.Item(e.RowIndex).Cells("name"), TextAndImageCell)
-                                .Image = GlobalVariables.IconUser
+                                .Image = IconUser
                             End With
                         End If
                     Case "805306369"
                         With DirectCast(MainDataGrid.Rows.Item(e.RowIndex).Cells("name"), TextAndImageCell)
-                            .Image = GlobalVariables.IconComputer
+                            .Image = IconComputer
                         End With
                     Case "268435456"
                         With DirectCast(MainDataGrid.Rows.Item(e.RowIndex).Cells("name"), TextAndImageCell)
-                            .Image = GlobalVariables.IconGroup
+                            .Image = IconGroup
                         End With
                     Case "268435457"
                         With DirectCast(MainDataGrid.Rows.Item(e.RowIndex).Cells("name"), TextAndImageCell)
-                            .Image = GlobalVariables.IconGroup
+                            .Image = IconGroup
                         End With
                     Case "536870912"
                         With DirectCast(MainDataGrid.Rows.Item(e.RowIndex).Cells("name"), TextAndImageCell)
-                            .Image = GlobalVariables.IconGroup
+                            .Image = IconGroup
                         End With
                     Case Else
                         With DirectCast(MainDataGrid.Rows.Item(e.RowIndex).Cells("name"), TextAndImageCell)
-                            .Image = GlobalVariables.IconContainer
+                            .Image = IconContainer
                         End With
                 End Select
             End If

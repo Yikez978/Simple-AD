@@ -7,7 +7,7 @@
     Public Sub FillCheckListBox(DataGridView As DataGridView)
 
         For Each column As DataGridViewColumn In DataGridView.Columns
-            If Not GlobalVariables.PersistantColumns.Contains(column.Name) Then
+            If Not PersistantColumns.Contains(column.Name) Then
                 If column.Visible = True Then
                     CurrentColumnsLb.Items.Add(CStr(column.HeaderText))
                 Else
@@ -23,11 +23,11 @@
 
     Private Sub AcBt_Click(sender As Object, e As EventArgs) Handles AcBt.Click
 
-        GlobalVariables.ColumnsVisibleChangedByUser = True
-        GlobalVariables.CustomColumns.Clear()
+        ColumnsVisibleChangedByUser = True
+        CustomColumns.Clear()
 
         For Each column As DataGridViewColumn In FormMain.GetMainDataGrid.Columns
-            If Not GlobalVariables.PersistantColumns.Contains(column.Name) Then
+            If Not PersistantColumns.Contains(column.Name) Then
                 column.Visible = False
             End If
         Next
@@ -36,7 +36,7 @@
             For Each column As DataGridViewColumn In FormMain.GetMainDataGrid.Columns
                 If column.HeaderText = CStr(item) Then
                     column.Visible = True
-                    GlobalVariables.CustomColumns.Add(CStr(item))
+                    CustomColumns.Add(CStr(item))
                 End If
             Next
         Next

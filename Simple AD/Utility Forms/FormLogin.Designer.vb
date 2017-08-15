@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FormLogin
-    Inherits MetroFramework.Forms.MetroForm
+    Inherits SimpleAD.FormSimpleAD
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()>
@@ -50,7 +50,7 @@ Partial Class FormLogin
         Me.PwdTb.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light
         Me.PwdTb.CustomButton.UseSelectable = True
         Me.PwdTb.CustomButton.Visible = False
-        Me.PwdTb.Icon = Global.Simple_AD.My.Resources.Resources.ErrorAlt
+        Me.PwdTb.Icon = Global.SimpleAD.My.Resources.Resources.ErrorAlt
         Me.PwdTb.IconRight = True
         Me.PwdTb.Lines = New String(-1) {}
         Me.PwdTb.Location = New System.Drawing.Point(23, 92)
@@ -145,7 +145,7 @@ Partial Class FormLogin
         '
         'Spinner
         '
-        Me.Spinner.Location = New System.Drawing.Point(149, 22)
+        Me.Spinner.Location = New System.Drawing.Point(363, 23)
         Me.Spinner.Maximum = 100
         Me.Spinner.Name = "Spinner"
         Me.Spinner.Size = New System.Drawing.Size(36, 34)
@@ -153,6 +153,7 @@ Partial Class FormLogin
         Me.Spinner.Style = MetroFramework.MetroColorStyle.Purple
         Me.Spinner.TabIndex = 19
         Me.Spinner.UseSelectable = True
+        Me.Spinner.Value = 30
         Me.Spinner.Visible = False
         '
         'RememberCheckBox
@@ -181,6 +182,8 @@ Partial Class FormLogin
         Me.Controls.Add(Me.ErLb)
         Me.Controls.Add(Me.CancelBn)
         Me.Controls.Add(Me.OKBn)
+        Me.CustomBackcolor = System.Drawing.SystemColors.Window
+        Me.CustomForecolor = System.Drawing.SystemColors.MenuText
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False

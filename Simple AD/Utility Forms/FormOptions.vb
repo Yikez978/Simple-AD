@@ -6,13 +6,13 @@
 
     Private Sub OptionsForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        _ForcePwdReset = GlobalVariables.ForcePwdReset
-        _CreateHomeFolders = GlobalVariables.CreateHomeFolders
-        _EnableNewAccounts = GlobalVariables.EnableNewAccounts
+        _ForcePwdReset = ForcePwdReset
+        _CreateHomeFolders = CreateHomeFolders
+        _EnableNewAccounts = EnableNewAccounts
 
-        FpCb.Checked = GlobalVariables.ForcePwdReset
-        ChCb.Checked = GlobalVariables.CreateHomeFolders
-        EaCb.Checked = GlobalVariables.EnableNewAccounts
+        FpCb.Checked = ForcePwdReset
+        ChCb.Checked = CreateHomeFolders
+        EaCb.Checked = EnableNewAccounts
 
         LaCb.Checked = My.Settings.LoadAdvLDAP
         URITb.Text = My.Settings.OfficeURI
@@ -28,9 +28,9 @@
 
         Hide()
 
-        GlobalVariables.ForcePwdReset = FpCb.Checked
-        GlobalVariables.CreateHomeFolders = ChCb.Checked
-        GlobalVariables.EnableNewAccounts = EaCb.Checked
+        ForcePwdReset = FpCb.Checked
+        CreateHomeFolders = ChCb.Checked
+        EnableNewAccounts = EaCb.Checked
 
         My.Settings.LoadAdvLDAP = LaCb.Checked
         My.Settings.OfficeURI = URITb.Text.Trim

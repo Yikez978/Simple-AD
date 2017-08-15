@@ -1,4 +1,4 @@
-﻿Imports Simple_AD.FileSystemHelper
+﻿Imports SimpleAD.FileSystemHelper
 
 Public Class FormMain
 
@@ -19,7 +19,7 @@ Public Class FormMain
 
         BuildLdapAttributeMatrix()
 
-        GlobalVariables.ColumnsVisibleChangedByUser = False
+        ColumnsVisibleChangedByUser = False
 
         PopulateRecentFileList()
         UserToolStripMenuItem.Text = GetDisplayName()
@@ -43,7 +43,7 @@ Public Class FormMain
     Private Sub HideEmptyColumnsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles HideEmptyColumnsToolStripMenuItem.Click
         If HideEmptyColumnsToolStripMenuItem.Checked = False Then
 
-            For Each Column In GlobalVariables.HiddenColums
+            For Each Column In HiddenColums
                 If Not Column = "Status" Then
                     GetMainDataGrid().Columns(Column).Visible = True
                 End If
@@ -218,7 +218,7 @@ Public Class FormMain
             For index As Integer = 0 To Me.MainTabCtrl.TabCount - 1 Step 1
                 If Me.MainTabCtrl.GetTabRect(index).Contains(e.Location) Then
                     TabContextMenu.Show(Cursor.Position)
-                    GlobalVariables.RightClickedTab = MainTabCtrl.TabPages(index)
+                    RightClickedTab = MainTabCtrl.TabPages(index)
                     Exit For
                 End If
             Next index
@@ -234,7 +234,7 @@ Public Class FormMain
     End Sub
 
     Private Sub CloseToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CloseToolStripMenuItem.Click
-        CloseTab(GlobalVariables.RightClickedTab)
+        CloseTab(RightClickedTab)
     End Sub
 
     Private Sub OpenActiveDirectoryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenActiveDirectoryToolStripMenuItem.Click

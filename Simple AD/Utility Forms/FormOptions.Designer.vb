@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FormOptions
-    Inherits Simple_AD.FormSimpleAD
+    Inherits SimpleAD.FormSimpleAD
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class FormOptions
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormOptions))
         Me.OKBt = New MetroFramework.Controls.MetroButton()
@@ -106,7 +106,7 @@ Partial Class FormOptions
         Me.ReportsGb.Controls.Add(Me.LaCb)
         Me.ReportsGb.Location = New System.Drawing.Point(7, 152)
         Me.ReportsGb.Name = "ReportsGb"
-        Me.ReportsGb.Size = New System.Drawing.Size(484, 108)
+        Me.ReportsGb.Size = New System.Drawing.Size(484, 101)
         Me.ReportsGb.TabIndex = 7
         Me.ReportsGb.TabStop = False
         Me.ReportsGb.Text = "Reports"
@@ -291,7 +291,7 @@ Partial Class FormOptions
         Me.TabControl1.Controls.Add(Me.Ofice365TabPage)
         Me.TabControl1.Location = New System.Drawing.Point(12, 22)
         Me.TabControl1.Name = "TabControl1"
-        Me.TabControl1.SelectedIndex = 0
+        Me.TabControl1.SelectedIndex = 1
         Me.TabControl1.Size = New System.Drawing.Size(502, 298)
         Me.TabControl1.Style = MetroFramework.MetroColorStyle.Purple
         Me.TabControl1.TabIndex = 0

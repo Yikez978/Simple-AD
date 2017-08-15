@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FormMain
-    Inherits Simple_AD.FormSimpleAD
+    Inherits SimpleAD.FormSimpleAD
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()>
@@ -77,7 +77,7 @@ Partial Class FormMain
         Me.ConnectionStatusToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.TabContextMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.CloseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.MainTabCtrl = New Simple_AD.CustomTabControl()
+        Me.MainTabCtrl = New SimpleAD.CustomTabControl()
         Me.StatusStrip = New System.Windows.Forms.StatusStrip()
         Me.ToolStripStatusLabelContext = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabelStatus = New System.Windows.Forms.ToolStripStatusLabel()

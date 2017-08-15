@@ -28,7 +28,7 @@ Public Class FormUpdate
 
     Public Shared Sub CheckForUpdates()
         FormMain.UpdateToolStripStatusLabel.Text = "Checking for Updates..."
-        AutoUpdater.Start(GlobalVariables.UpdateURI)
+        AutoUpdater.Start(UpdateURI)
     End Sub
 
     Private Sub AutoUpdaterOnCheckForUpdateEvent(args As UpdateInfoEventArgs)

@@ -30,8 +30,8 @@ Public Class FormO365Login
     Private Sub Login()
 
         If ValidateOffice365Login(UnTb.Text, PwdTb.Text) Then
-            GlobalVariables.Office365Username = UnTb.Text
-            GlobalVariables.Office365Password = PwdTb.Text
+            Office365Username = UnTb.Text
+            Office365Password = PwdTb.Text
             LoginSuccess()
         Else
             LoginFailed()
@@ -43,7 +43,7 @@ Public Class FormO365Login
         If Me.InvokeRequired Then
             Me.Invoke(New Action(AddressOf LoginSuccess))
         Else
-            Dim New365Job As JobOffice365 = New JobOffice365(GlobalVariables.Office365Username, GlobalVariables.Office365Password)
+            Dim New365Job As JobOffice365 = New JobOffice365(Office365Username, Office365Password)
             Me.Dispose()
         End If
     End Sub

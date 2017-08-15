@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4D3E1E43-097F-49C9-A6EA-B1E84BD8246A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>Simple_AD.My.MyApplication</StartupObject>
-    <RootNamespace>Simple_AD</RootNamespace>
+    <StartupObject>SimpleAD.My.MyApplication</StartupObject>
+    <RootNamespace>SimpleAD</RootNamespace>
     <AssemblyName>SimpleAD</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>

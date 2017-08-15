@@ -12,41 +12,35 @@ Module ActiveDirectoryHelper
         If String.IsNullOrEmpty(ConnectionUsername) Then
             Return New DirectoryContext(DirectoryContextType.Domain, GetLocalDomainName)
         ElseIf String.IsNullOrEmpty(LoginUsernamePrefix) Then
-            Return (New DirectoryContext(DirectoryContextType.Domain, GetLocalDomainName, ConnectionUsername, ConnectionPassword))
+            Return New DirectoryContext(DirectoryContextType.Domain, GetLocalDomainName, ConnectionUsername, ConnectionPassword)
         Else
-            Return (New DirectoryContext(DirectoryContextType.DirectoryServer, LoginUsernamePrefix, ConnectionUsername, ConnectionPassword))
+            Return New DirectoryContext(DirectoryContextType.DirectoryServer, LoginUsernamePrefix, ConnectionUsername, ConnectionPassword)
         End If
     End Function
 
     Public Function GetPrincipalContext(ByVal ConnectionUsername As String, ByVal ConnectionPassword As String) As PrincipalContext
         If String.IsNullOrEmpty(ConnectionUsername) Then
-            Return (New PrincipalContext(ContextType.Domain, Environment.UserDomainName))
+            Return New PrincipalContext(ContextType.Domain, GetLocalDomainName)
         ElseIf String.IsNullOrEmpty(LoginUsernamePrefix) Then
-            Return (New PrincipalContext(ContextType.Domain, Environment.UserDomainName, ConnectionUsername, ConnectionPassword))
+            Return New PrincipalContext(ContextType.Machine, GetDomainControllerIPAddress(0).ToString, ConnectionUsername, ConnectionPassword)
         Else
-            Return (New PrincipalContext(ContextType.Machine, LoginUsernamePrefix, ConnectionUsername, ConnectionPassword))
+            Return New PrincipalContext(ContextType.Machine, LoginUsernamePrefix, ConnectionUsername, ConnectionPassword)
         End If
     End Function
 
     Public Function GetLocalDomainName() As String
-
         Dim DomainName As String = Nothing
-
         Try
             If Not String.IsNullOrEmpty(LoginUsernamePrefix) Then
-
-                Dim DomainContext As DirectoryContext = New DirectoryContext(DirectoryContextType.DirectoryServer, GlobalVariables.LoginUsernamePrefix, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword)
+                Dim DomainContext As DirectoryContext = New DirectoryContext(DirectoryContextType.DirectoryServer, LoginUsernamePrefix, LoginUsername, LoginPassword)
                 DomainName = Domain.GetDomain(DomainContext).Name
-
             Else
                 Try
                     DomainName = Domain.GetCurrentDomain.Name
                 Catch ex As Exception
                     DomainName = ""
                 End Try
-
                 Return DomainName
-
             End If
         Catch AuthEx As System.Security.Authentication.AuthenticationException
             Debug.WriteLine("[Authentication Error] " & AuthEx.InnerException.ToString)
@@ -55,12 +49,15 @@ Module ActiveDirectoryHelper
             Debug.WriteLine("[NoneExistantDir Error] " & NoneExistantDirEx.InnerException.ToString)
             Return DomainName
         End Try
-
         Return DomainName
     End Function
 
-    Public Function GetFQDN() As String
+    Public Function GetDomainNetBiosName() As String
+        Dim DomainArray As String() = Strings.Split(Domain.GetCurrentDomain.Name, ".")
+        Return DomainArray(0)
+    End Function
 
+    Public Function GetFQDN() As String
         Dim fqdnArray = Strings.Split(GetLocalDomainName(), ".")
         Dim fqdn As String = String.Join(",DC=", fqdnArray)
 
@@ -68,35 +65,31 @@ Module ActiveDirectoryHelper
     End Function
 
     Public Function GetDirEntryPath() As String
-
         Dim entry As String
 
-        If String.IsNullOrEmpty(GlobalVariables.LoginUsernamePrefix) Then
-
-            entry = "LDAP://" & GetSingleDomainController(GlobalVariables.LoginUsername, GlobalVariables.LoginPassword)
-
+        If String.IsNullOrEmpty(LoginUsernamePrefix) Then
+            entry = "LDAP://" & GetSingleDomainController(LoginUsername, LoginPassword)
         Else
-            entry = "LDAP://" & GlobalVariables.LoginUsernamePrefix
+            entry = "LDAP://" & LoginUsernamePrefix
         End If
 
         Return entry
     End Function
 
     Public Function GetDirEntry()
-        Return New DirectoryEntry(GetDirEntryPath, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword)
+        Return New DirectoryEntry(GetDirEntryPath, LoginUsername, LoginPassword)
     End Function
-
 
     Public Function GetDisplayName() As String
         Dim DisplayName As String = "User"
         Try
 
-            Dim Entry As DirectoryEntry = New DirectoryEntry(GetDirEntryPath, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword)
+            Dim Entry As DirectoryEntry = New DirectoryEntry(GetDirEntryPath, LoginUsername, LoginPassword)
             Dim DirSearcher As DirectorySearcher = New DirectorySearcher(GetDirEntryPath)
 
             With DirSearcher
                 .SearchRoot = Entry
-                .Filter = "(&(objectClass=user)(sAMAccountName=" & GlobalVariables.LoginUsername & "))"
+                .Filter = "(&(objectClass=user)(sAMAccountName=" & LoginUsername & "))"
             End With
 
             Dim Result As SearchResult = DirSearcher.FindOne
@@ -143,8 +136,8 @@ Module ActiveDirectoryHelper
                 Debug.WriteLine("[Info] SetADProperty Started: " & de.Name.ToString)
 
                 With de
-                    .Username = GlobalVariables.LoginUsername
-                    .Password = GlobalVariables.LoginPassword
+                    .Username = LoginUsername
+                    .Password = LoginPassword
                     .AuthenticationType = AuthenticationTypes.Secure
                 End With
 
@@ -162,8 +155,8 @@ Module ActiveDirectoryHelper
             Else
 
                 With de
-                    .Username = GlobalVariables.LoginUsername
-                    .Password = GlobalVariables.LoginPassword
+                    .Username = LoginUsername
+                    .Password = LoginPassword
                     .AuthenticationType = AuthenticationTypes.Secure
                 End With
 
@@ -182,33 +175,10 @@ Module ActiveDirectoryHelper
         End Try
     End Function
 
-    Public Sub CreateUser(Username As String, FirstName As String, LastName As String, Password As String)
-
-        Dim context As PrincipalContext = New PrincipalContext(ContextType.Domain, GetLocalDomainName, GlobalVariables.SelectedOU, ContextOptions.SimpleBind, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword)
-
-        Using context
-
-            If (context.ValidateCredentials(GlobalVariables.LoginUsername, GlobalVariables.LoginPassword.ToString)) Then
-
-                Dim UserPrincipal As UserPrincipal = New UserPrincipal(context, Username, Password, True)
-                UserPrincipal.GivenName = FirstName
-                UserPrincipal.Surname = LastName
-                UserPrincipal.DisplayName = UserPrincipal.GivenName + " " + UserPrincipal.Surname
-                UserPrincipal.Name = UserPrincipal.GivenName + " " + UserPrincipal.Surname
-                UserPrincipal.Save()
-                UserPrincipal.Dispose()
-
-            End If
-        End Using
-    End Sub
-
     Public Function CheckUserExist(samAccountName As String) As Boolean
-
-        Dim context As PrincipalContext = New PrincipalContext(ContextType.Domain, GetLocalDomainName, GlobalVariables.SelectedOU, ContextOptions.SimpleBind, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword)
-
+        Dim context As PrincipalContext = New PrincipalContext(ContextType.Domain, GetLocalDomainName, SelectedOU, ContextOptions.SimpleBind, LoginUsername, LoginPassword)
         Using context
-
-            If (context.ValidateCredentials(GlobalVariables.LoginUsername, GlobalVariables.LoginPassword)) Then
+            If (context.ValidateCredentials(LoginUsername, LoginPassword)) Then
 
                 Dim existedUserPrincipal As UserPrincipal = New UserPrincipal(context)
                 existedUserPrincipal.SamAccountName = samAccountName
@@ -219,21 +189,22 @@ Module ActiveDirectoryHelper
                 End If
             End If
         End Using
-
         Return False
-
     End Function
 
     Public Function GetHostNameFromIP(ByRef IP As String) As String
         Dim host As Net.IPHostEntry
         host = Net.Dns.GetHostEntry(IP)
-
         Return host.HostName
+    End Function
+
+    Public Function GetDomainControllerIPAddress() As Net.IPAddress()
+        Return Net.Dns.GetHostAddresses(GetSingleDomainController(LoginUsername, LoginPassword))
     End Function
 
     Public Function GetDirEntryFromSAM(ByVal sAMAccountName As String) As DirectoryEntry
         Try
-            Using Entry As DirectoryEntry = New DirectoryEntry(GetDirEntryPath, GlobalVariables.LoginUsername, GlobalVariables.LoginPassword)
+            Using Entry As DirectoryEntry = New DirectoryEntry(GetDirEntryPath, LoginUsername, LoginPassword)
 
                 Dim DirSearcher As DirectorySearcher = New DirectorySearcher(GetDirEntryPath)
 
@@ -256,33 +227,20 @@ Module ActiveDirectoryHelper
 
     Public Function GetUPNSuffix() As String()
         Try
-            Dim Entry As New DirectoryEntry("LDAP://" & GlobalVariables.LoginUsernamePrefix & "/RootDSE", GlobalVariables.LoginUsername, GlobalVariables.LoginPassword)
+            Dim Entry As New DirectoryEntry("LDAP://" & LoginUsernamePrefix & "/RootDSE", LoginUsername, LoginPassword)
             Entry.RefreshCache()
 
             Dim strNamingContext As String = Entry.Properties("defaultNamingContext").Value.ToString()
             Dim strConfigContext As String = Entry.Properties("configurationNamingContext").Value.ToString()
 
-            MsgBox("strNamingContext: " & strNamingContext & Environment.NewLine & "strConfigContext: " & strConfigContext)
-
-            Dim oDomain As New DirectoryEntry(Convert.ToString("LDAP://" & GlobalVariables.LoginUsernamePrefix & "/") & strNamingContext)
-            Dim strDomainName As String = oDomain.Properties("name").Value.ToString()
-
-            Dim oPartition As New DirectoryEntry(Convert.ToString("LDAP://" & GlobalVariables.LoginUsernamePrefix & "CN=Partitions,") & strConfigContext)
-
-            oDomain.Invoke("GetInfoEx", New Object() {"canonicalName"}, 0)
-            Dim strCanonical As String = oDomain.InvokeGet("canonicalName").ToString()
-            strCanonical = strCanonical.Replace("/", "")
+            Dim oPartition As New DirectoryEntry("LDAP://" & LoginUsernamePrefix & "/CN=Partitions," & strConfigContext, LoginUsername, LoginPassword)
 
             oPartition.Invoke("GetEx", New Object() {"uPNSuffixes"})
             Dim suffixes As String() = DirectCast(oPartition.InvokeGet("uPNSuffixes"), String())
 
-            Entry = Nothing
-            oDomain = Nothing
-            oPartition = Nothing
-
             Return suffixes
         Catch ex As Exception
-            Console.WriteLine(String.Format("[Error] {0}" & vbLf & " Inner Exception: " & vbLf & " {1}", ex.Message, ex.InnerException))
+            Debug.WriteLine(String.Format("[Error] Getting UPN Suffixes {0}" & vbLf & " Inner Exception: " & vbLf & " {1}", ex.Message, ex.InnerException))
             Return Nothing
         End Try
     End Function
@@ -336,11 +294,8 @@ Module ActiveDirectoryHelper
     End Function
 
     Public Function IsAccountEnabled(ByVal Username As String) As Boolean
-
         Try
-
             Using userEntry As DirectoryEntry = GetDirEntryFromSAM(Username)
-
                 Const ADS_UF_ACCOUNTDISABLE As Integer = &H2
 
                 Dim Flags As Integer = CInt(userEntry.Properties("userAccountControl").Value)
@@ -351,11 +306,9 @@ Module ActiveDirectoryHelper
                 End If
 
             End Using
-
         Catch Ex As Exception
-            Debug.WriteLine("[Error] Unable to retrive the status of the supplied account: " & Ex.Message)
+            Debug.WriteLine("[Error] Unable to retrive the status of the supplied account (" & Username & "): " & Ex.Message)
         End Try
-
         Return Nothing
     End Function
 

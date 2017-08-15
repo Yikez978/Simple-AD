@@ -127,7 +127,7 @@ Friend Class TabDragger
 End Class
 
 Friend Class TabForm
-    Inherits Simple_AD.FormSimpleAD
+    Inherits SimpleAD.FormSimpleAD
 
     Public Sub New(ByVal tabPage As TabPage)
         MyBase.New()
@@ -137,6 +137,7 @@ Friend Class TabForm
         Me.StartPosition = FormStartPosition.Manual
         Me.Padding = New Padding(1, 1, 1, 20)
         Me.Style = MetroColorStyle.Purple
+        Me.Icon = My.Resources.SimpleADIcon
         Me.SizeGripStyle = SizeGripStyle.Show
         Me.MinimizeBox = True
         Me.MaximizeBox = True

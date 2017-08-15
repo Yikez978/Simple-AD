@@ -38,7 +38,7 @@
     End Sub
 
     Private Sub RecentFilesButton_MouseEnter(sender As Object, e As EventArgs)
-        Me.BackColor = GlobalVariables.ButtonHoverColor
+        Me.BackColor = ButtonHoverColor
         Me.FileNameLb.ForeColor = SystemColors.ControlLightLight
         Me.FileTitleLb.ForeColor = SystemColors.ControlLightLight
     End Sub

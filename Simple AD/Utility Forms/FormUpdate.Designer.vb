@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class FormUpdate
-    Inherits MetroFramework.Forms.MetroForm
+    Inherits SimpleAD.FormSimpleAD
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -217,6 +217,8 @@ Partial Class FormUpdate
         Me.Controls.Add(Me.MetroLabel2)
         Me.Controls.Add(Me.UpdateToggle)
         Me.Controls.Add(Me.BodyLb)
+        Me.CustomBackcolor = System.Drawing.SystemColors.Window
+        Me.CustomForecolor = System.Drawing.SystemColors.MenuText
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False

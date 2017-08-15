@@ -76,7 +76,7 @@ Public Class JobOffice365
                 NewOffice365Container.Datasource = datasource
 
                 For Each column As DataGridViewColumn In datagrid.Columns
-                    If Not GlobalVariables.DefaultOffice365Columns.Contains(column.Name) Then
+                    If Not DefaultOffice365Columns.Contains(column.Name) Then
                         column.Visible = False
                     End If
                 Next

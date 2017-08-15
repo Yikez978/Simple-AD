@@ -149,11 +149,11 @@ Public Class FormLogin
 
         If ValidateActiveDirectoryLogin(GetFQDN, TempUsername, TempPassword, TempLoginPrefix) Then
 
-            GlobalVariables.LoginUsername = TempUsername
-            GlobalVariables.LoginPassword = TempPassword
+            LoginUsername = TempUsername
+            LoginPassword = TempPassword
 
             If Not String.IsNullOrEmpty(TempLoginPrefix) Then
-                GlobalVariables.LoginUsernamePrefix = TempLoginPrefix
+                LoginUsernamePrefix = TempLoginPrefix
             End If
 
             If RememberCheckBox.Checked Then

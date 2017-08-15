@@ -31,9 +31,9 @@ Public Class FileExportHelper
         Debug.WriteLine("[Info] Export File Background worker Initiated")
 
         Try
-            For i As Integer = 0 To GlobalVariables.HiddenColums.Count - 1
-                If Not GlobalVariables.HiddenColums(i) = "Status" Then
-                    autoMainDataGrid.Columns.Remove(CStr(GlobalVariables.HiddenColums(i)))
+            For i As Integer = 0 To HiddenColums.Count - 1
+                If Not HiddenColums(i) = "Status" Then
+                    autoMainDataGrid.Columns.Remove(CStr(HiddenColums(i)))
                 End If
             Next
 

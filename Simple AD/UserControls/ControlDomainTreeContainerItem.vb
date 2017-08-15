@@ -69,13 +69,13 @@ Public Class ControlDomainTreeContainerItem
 
             Select Case _Type
                 Case NodeType.Container
-                    Me.IconBox.Image = GlobalVariables.IconContainer
+                    Me.IconBox.Image = IconContainer
                 Case NodeType.OU
-                    Me.IconBox.Image = GlobalVariables.IconOU
+                    Me.IconBox.Image = IconOU
                 Case NodeType.Domain
-                    Me.IconBox.Image = GlobalVariables.IconDomian
+                    Me.IconBox.Image = IconDomian
                 Case NodeType.Unknown
-                    Me.IconBox.Image = GlobalVariables.IconContainer
+                    Me.IconBox.Image = IconContainer
             End Select
 
         End Set
@@ -91,7 +91,7 @@ Public Class ControlDomainTreeContainerItem
 
         InitializeComponent()
 
-        GlobalVariables.DomainItems.Add(Me)
+        DomainItems.Add(Me)
         Me.Expanded = False
         Me.Working = False
 
@@ -163,8 +163,8 @@ Public Class ControlDomainTreeContainerItem
 
                 RootDirectoryEntry.AuthenticationType = AuthenticationTypes.Secure
 
-                RootDirectoryEntry.Username = GlobalVariables.LoginUsername
-                RootDirectoryEntry.Password = GlobalVariables.LoginPassword
+                RootDirectoryEntry.Username = LoginUsername
+                RootDirectoryEntry.Password = LoginPassword
 
                 For Each ChildObject As DirectoryEntry In RootDirectoryEntry.Children
                     Try
@@ -269,7 +269,7 @@ Public Class ControlDomainTreeContainerItem
 
     Private Sub ClearOtherContactsHover()
         SuspendLayout()
-        For Each Node As ControlDomainTreeContainerItem In GlobalVariables.DomainItems
+        For Each Node As ControlDomainTreeContainerItem In DomainItems
             If Not Node.BackColor = Color.FromArgb(211, 191, 221) Then
                 Node.BackColor = Color.Transparent
             End If
@@ -278,7 +278,7 @@ Public Class ControlDomainTreeContainerItem
     End Sub
 
     Private Sub ClearOtherContactsClick()
-        For Each Node As ControlDomainTreeContainerItem In GlobalVariables.DomainItems
+        For Each Node As ControlDomainTreeContainerItem In DomainItems
             Node.BackColor = Color.Transparent
         Next
     End Sub
@@ -288,8 +288,8 @@ Public Class ControlDomainTreeContainerItem
             ClearOtherContactsClick()
             Me.BackColor = Color.FromArgb(211, 191, 221)
 
-            GlobalVariables.SelectedOU = Me.DistinguishedName
-            FormMain.ToolStripStatusLabelStatus.Text = GlobalVariables.SelectedOU
+            SelectedOU = Me.DistinguishedName
+            FormMain.ToolStripStatusLabelStatus.Text = SelectedOU
         End If
     End Sub
 End Class

@@ -6,7 +6,7 @@ Public Module LocalData
 
         GetRecentFileList()
 
-        Dim RecntFileStreamReader As New StreamReader(GlobalVariables.appData & "\Simple_AD.txt")
+        Dim RecntFileStreamReader As New StreamReader(appData & "\SimpleAD.txt")
         Dim recentFilesList As New List(Of String)
 
         If File.Exists(Path) Then
@@ -21,7 +21,7 @@ Public Module LocalData
             RecntFileStreamReader.Close()
 
             If Not recentFilesList.Contains(Path) Then
-                Using RecntFileStreamWriter As StreamWriter = File.AppendText(GlobalVariables.appData & "\Simple_AD.txt")
+                Using RecntFileStreamWriter As StreamWriter = File.AppendText(appData & "\SimpleAD.txt")
                     RecntFileStreamWriter.WriteLine(Path)
                     RecntFileStreamWriter.Close()
                 End Using
@@ -32,20 +32,20 @@ Public Module LocalData
 
     Public Sub GetRecentFileList()
 
-        If Not IO.Directory.Exists(GlobalVariables.appData) Then
-            IO.Directory.CreateDirectory(GlobalVariables.appData)
+        If Not IO.Directory.Exists(appData) Then
+            IO.Directory.CreateDirectory(appData)
         End If
 
-        If Not IO.File.Exists(GlobalVariables.appData & "\Simple_AD.txt") Then
-            File.Create(GlobalVariables.appData & "\Simple_AD.txt").Close()
+        If Not IO.File.Exists(appData & "\SimpleAD.txt") Then
+            File.Create(appData & "\SimpleAD.txt").Close()
         End If
 
     End Sub
 
     Public Sub PopulateRecentFileList()
-        If IO.File.Exists(GlobalVariables.appData & "\Simple_AD.txt") Then
+        If IO.File.Exists(appData & "\SimpleAD.txt") Then
 
-            Dim RecntFileStreamReader As New StreamReader(GlobalVariables.appData & "\Simple_AD.txt")
+            Dim RecntFileStreamReader As New StreamReader(appData & "\SimpleAD.txt")
             Dim recentFilesList As New List(Of String)
 
             For Each item As ToolStripDropDownItem In FormMain.RecentFilesToolStripMenuItem.DropDownItems

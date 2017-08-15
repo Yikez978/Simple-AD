@@ -27,7 +27,7 @@ Module LDAPDataHelper
             For Each column As DataGridViewColumn In Grid.Columns
                 Try
 
-                    Dim Value As String = Row.Cells(column.Name).Value
+                    Dim Value As String = Row.Cells(column.Name).Value.ToString.Trim
 
                     If String.IsNullOrEmpty(Value) Then
                         Value = ""
@@ -35,12 +35,12 @@ Module LDAPDataHelper
 
                     Select Case column.Name
                         Case "nameCol"
-                            CallByName(User, "name", CallType.Set, Value)
+                            CallByName(User, "name", CallType.Set, Value.Trim)
                         Case Else
-                            CallByName(User, column.Name, CallType.Set, Value)
+                            CallByName(User, column.Name, CallType.Set, Value.Trim)
                     End Select
                 Catch Ex As Exception
-                    Debug.WriteLine("[Error] Unable to set " & column.Name & " Property on user: " & Ex.Message)
+                    Debug.WriteLine("[Warning] Unable to set " & column.Name & " Property on user: " & Ex.Message)
                 End Try
             Next
 

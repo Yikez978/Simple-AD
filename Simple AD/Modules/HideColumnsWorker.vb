@@ -42,7 +42,7 @@ Public Module HideColumnsWorker
             Dim IsCurrentColumnEmpty As Boolean = False
 
             For Each Column As DataGridViewColumn In autoMainDataGrid.Columns
-                If Not GlobalVariables.PersistantColumns.Contains(Column.Name) Then
+                If Not PersistantColumns.Contains(Column.Name) Then
                     Dim variable As String = ""
                     sb.Remove(0, sb.Length)
 
@@ -72,7 +72,7 @@ Public Module HideColumnsWorker
     Private Sub Cbw_ProgressChanged(ByVal sender As Object, ByVal e As ProgressChangedEventArgs)
         FormMain.GetMainDataGrid.Columns(e.UserState.ToString).Visible = False
         Debug.WriteLine("[Info] The following Column in MainDataGrid Has been Hidden - " & e.UserState.ToString)
-        GlobalVariables.HiddenColums.Add(e.UserState.ToString)
+        HiddenColums.Add(e.UserState.ToString)
     End Sub
 
     Private Sub Cbw_RunWorkerCompleted(ByVal sender As Object, ByVal e As RunWorkerCompletedEventArgs)

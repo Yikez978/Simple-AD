@@ -33,8 +33,8 @@ Partial Class ContainerUserBulk
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.MainDataGrid = New MetroFramework.Controls.MetroGrid()
-        Me.nameCol = New Simple_AD.TextAndImageColumn()
-        Me.status = New Simple_AD.TextAndImageColumn()
+        Me.nameCol = New SimpleAD.TextAndImageColumn()
+        Me.status = New SimpleAD.TextAndImageColumn()
         Me.AcceptBt = New MetroFramework.Controls.MetroButton()
         Me.CancelBn = New MetroFramework.Controls.MetroButton()
         Me.ProgressBar = New MetroFramework.Controls.MetroProgressBar()
@@ -174,7 +174,7 @@ Partial Class ContainerUserBulk
         Me.nameCol.DefaultCellStyle = DataGridViewCellStyle3
         Me.nameCol.Frozen = True
         Me.nameCol.HeaderText = "Name"
-        Me.nameCol.Image = Global.Simple_AD.My.Resources.Resources.User
+        Me.nameCol.Image = Global.SimpleAD.My.Resources.Resources.User
         Me.nameCol.MinimumWidth = 100
         Me.nameCol.Name = "nameCol"
         Me.nameCol.Width = 260

@@ -1,7 +1,7 @@
 ﻿Imports System.Runtime.InteropServices
 
 Public Class FormSimpleAD
-    Inherits MetroFramework.Forms.MetroForm
+    Inherits Forms.MetroForm
 
     Private _BackColor = SystemColors.ControlDarkDark
     Private _ForeColor = SystemColors.Window

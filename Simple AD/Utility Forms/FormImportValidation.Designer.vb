@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class FormImportValidation
-    Inherits MetroFramework.Forms.MetroForm
+    Inherits SimpleAD.FormSimpleAD
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -151,6 +151,8 @@ Partial Class FormImportValidation
         Me.Controls.Add(Me.HeaderLb)
         Me.Controls.Add(Me.SplitterBottom)
         Me.Controls.Add(Me.SplitterTop)
+        Me.CustomBackcolor = System.Drawing.SystemColors.Window
+        Me.CustomForecolor = System.Drawing.SystemColors.MenuText
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "FormImportValidation"
         Me.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow

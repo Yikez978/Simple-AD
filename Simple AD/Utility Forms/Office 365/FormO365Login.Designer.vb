@@ -49,7 +49,7 @@ Partial Class FormO365Login
         Me.PwdTb.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light
         Me.PwdTb.CustomButton.UseSelectable = True
         Me.PwdTb.CustomButton.Visible = False
-        Me.PwdTb.Icon = Global.Simple_AD.My.Resources.Resources.ErrorAlt
+        Me.PwdTb.Icon = Global.SimpleAD.My.Resources.Resources.ErrorAlt
         Me.PwdTb.IconRight = True
         Me.PwdTb.Lines = New String(-1) {}
         Me.PwdTb.Location = New System.Drawing.Point(23, 92)

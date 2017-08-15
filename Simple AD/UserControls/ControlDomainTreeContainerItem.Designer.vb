@@ -59,7 +59,7 @@ Partial Class ControlDomainTreeContainerItem
         '
         'PictureBox
         '
-        Me.PictureBox.Image = Global.Simple_AD.My.Resources.Resources.Right
+        Me.PictureBox.Image = Global.SimpleAD.My.Resources.Resources.Right
         Me.PictureBox.Location = New System.Drawing.Point(0, 4)
         Me.PictureBox.Margin = New System.Windows.Forms.Padding(0)
         Me.PictureBox.Name = "PictureBox"
@@ -69,7 +69,7 @@ Partial Class ControlDomainTreeContainerItem
         '
         'IconBox
         '
-        Me.IconBox.Image = Global.Simple_AD.My.Resources.Resources.Container
+        Me.IconBox.Image = Global.SimpleAD.My.Resources.Resources.Container
         Me.IconBox.Location = New System.Drawing.Point(22, 4)
         Me.IconBox.Margin = New System.Windows.Forms.Padding(0)
         Me.IconBox.Name = "IconBox"

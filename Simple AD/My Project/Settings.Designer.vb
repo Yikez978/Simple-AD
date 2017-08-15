@@ -116,7 +116,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
         Public Property CheckForUpdatesOnStart() As Boolean
             Get
                 Return CType(Me("CheckForUpdatesOnStart"),Boolean)
@@ -149,18 +149,6 @@ Namespace My
                 Me("AutoLogin") = value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property Temp() As String
-            Get
-                Return CType(Me("Temp"),String)
-            End Get
-            Set
-                Me("Temp") = value
-            End Set
-        End Property
     End Class
 End Namespace
 
@@ -172,9 +160,9 @@ Namespace My
     Friend Module MySettingsProperty
         
         <Global.System.ComponentModel.Design.HelpKeywordAttribute("My.Settings")>  _
-        Friend ReadOnly Property Settings() As Global.Simple_AD.My.MySettings
+        Friend ReadOnly Property Settings() As Global.SimpleAD.My.MySettings
             Get
-                Return Global.Simple_AD.My.MySettings.Default
+                Return Global.SimpleAD.My.MySettings.Default
             End Get
         End Property
     End Module
