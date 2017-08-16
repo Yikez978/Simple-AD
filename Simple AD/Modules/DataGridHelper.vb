@@ -15,7 +15,7 @@
         End Try
     End Function
 
-    Public Function GetMainDataGrid(SourceGrid As DataGridView)
+    Public Function CopyMainDataGrid(SourceGrid As DataGridView)
 
         Dim targetGrid As New DataGridView
         Dim targetRows = New List(Of DataGridViewRow)

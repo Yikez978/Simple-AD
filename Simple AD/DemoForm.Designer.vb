@@ -23,39 +23,7 @@ Partial Class DemoForm
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(DemoForm))
-        Me.ImportCSV = New System.Windows.Forms.RibbonButton()
-        Me.Office365Tab = New System.Windows.Forms.RibbonTab()
-        Me.ActiveDirectoryTab = New System.Windows.Forms.RibbonTab()
-        Me.ReportsTab = New System.Windows.Forms.RibbonTab()
-        Me.ToolsTab = New System.Windows.Forms.RibbonTab()
-        Me.ViewTab = New System.Windows.Forms.RibbonTab()
         Me.SuspendLayout()
-        '
-        'ImportCSV
-        '
-        Me.ImportCSV.Image = CType(resources.GetObject("ImportCSV.Image"), System.Drawing.Image)
-        Me.ImportCSV.SmallImage = CType(resources.GetObject("ImportCSV.SmallImage"), System.Drawing.Image)
-        Me.ImportCSV.Text = "Import CSV"
-        '
-        'Office365Tab
-        '
-        Me.Office365Tab.Text = "Office 365"
-        '
-        'ActiveDirectoryTab
-        '
-        Me.ActiveDirectoryTab.Text = "Active Directory"
-        '
-        'ReportsTab
-        '
-        Me.ReportsTab.Text = "Reports"
-        '
-        'ToolsTab
-        '
-        Me.ToolsTab.Text = "Tools"
-        '
-        'ViewTab
-        '
-        Me.ViewTab.Text = "View"
         '
         'DemoForm
         '
@@ -71,10 +39,4 @@ Partial Class DemoForm
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents Office365Tab As RibbonTab
-    Friend WithEvents ImportCSV As RibbonButton
-    Friend WithEvents ActiveDirectoryTab As RibbonTab
-    Friend WithEvents ReportsTab As RibbonTab
-    Friend WithEvents ToolsTab As RibbonTab
-    Friend WithEvents ViewTab As RibbonTab
 End Class

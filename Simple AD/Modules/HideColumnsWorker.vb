@@ -36,7 +36,7 @@ Public Module HideColumnsWorker
 
             Debug.WriteLine("[Info] HideColumnsWorker Work Started")
 
-            Dim autoMainDataGrid As DataGridView = GetMainDataGrid(_DataGrid)
+            Dim autoMainDataGrid As DataGridView = CopyMainDataGrid(_DataGrid)
 
             Dim sb As New System.Text.StringBuilder
             Dim IsCurrentColumnEmpty As Boolean = False

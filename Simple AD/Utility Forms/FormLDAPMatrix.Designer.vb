@@ -99,14 +99,16 @@ Partial Class FormLDAPMatrix
         Me.MainDataGrid.TabIndex = 1
         Me.MainDataGrid.UseCustomBackColor = True
         '
-        'LDAPMatrix
+        'FormLDAPMatrix
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(847, 562)
         Me.Controls.Add(Me.MainDataGrid)
+        Me.CustomBackcolor = System.Drawing.SystemColors.Window
+        Me.CustomForecolor = System.Drawing.SystemColors.MenuText
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Name = "LDAPMatrix"
+        Me.Name = "FormLDAPMatrix"
         Me.Text = "LDAP Attributes Matrix"
         CType(Me.MainDataGrid, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)

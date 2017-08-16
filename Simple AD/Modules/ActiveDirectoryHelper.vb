@@ -170,7 +170,7 @@ Module ActiveDirectoryHelper
                 End If
             End If
         Catch Ex As Exception
-            Debug.WriteLine("[Error] " & Ex.Message)
+            Debug.WriteLine("[Error] Unable to Set Property value for Property: " & pName & " : " & Ex.Message)
             Return False
         End Try
     End Function

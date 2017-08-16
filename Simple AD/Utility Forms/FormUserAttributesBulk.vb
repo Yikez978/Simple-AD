@@ -1,6 +1,4 @@
-﻿Imports System.DirectoryServices
-
-Public Class FormUserAttributesBulk
+﻿Public Class FormUserAttributesBulk
 
     Private DataTableSource As New DataTable
 
@@ -9,15 +7,15 @@ Public Class FormUserAttributesBulk
     Private DisplCol As New DataColumn("Attribute")
     Private ReadyCol As New DataColumn("Ready")
 
+    Private _Users As New List(Of UserRow)
+
     Private IsWorking As Boolean
 
-    Public Sub New(ByVal Users As List(Of String))
+    Public Sub New(ByVal Users As List(Of UserRow))
 
         InitializeComponent()
 
-        'For Each user In Users
-        '    MsgBox(user)
-        'Next
+        _Users = Users
 
         DropDownFilter.SelectedIndex = 0
 
@@ -71,9 +69,10 @@ Public Class FormUserAttributesBulk
 
                 Select Case PropertytName
                     Case "proxyAddresses"
-                        BulkModifyProxyAddress(Row.Index)
+                        BulkModifyProxyAddress(Row)
                     Case Else
-                        BulkModifyAbstract(Row.Index)
+                        Dim ModifyThread As New Threading.Thread(AddressOf BulkModifyAbstract)
+                        ModifyThread.Start(Row)
                 End Select
             Next
         End If
@@ -87,11 +86,22 @@ Public Class FormUserAttributesBulk
         End If
     End Sub
 
-    Private Sub BulkModifyProxyAddress(ByVal RowIndex As Integer)
+    Private Sub BulkModifyProxyAddress(ByVal Row As DataGridViewRow)
 
     End Sub
 
-    Private Sub BulkModifyAbstract(ByVal RowIndex As Integer)
+    Private Sub BulkModifyAbstract(ByVal Row As DataGridViewRow)
+        For Each User As UserRow In _Users
+            Dim PropertyToModify As String = Row.Cells("AttributeFull").Value.ToString
+            Dim NewValue As String = Row.Cells("Value").Value.ToString
 
+            If SetADProperty(GetDirEntryFromSAM(User.Username), PropertyToModify, NewValue) = True Then
+                If User.Row.DataGridView.Columns.Contains(PropertyToModify) Then
+                    User.Row.DataGridView.Invoke(New Action(Sub() User.Row.Cells.Item(PropertyToModify).Value = NewValue))
+                End If
+            Else
+                    Dim ErrorMsg = New FormError("Falied to modify the attribute: " & Row.Cells("AttributeFull").Value.ToString & " for user: " & User.Username, My.Resources.ErrorTriangle)
+            End If
+        Next
     End Sub
 End Class

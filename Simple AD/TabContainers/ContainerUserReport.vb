@@ -146,12 +146,7 @@
     End Sub
 
     Private Sub BulkModifyToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BulkModifyToolStripMenuItem.Click
-        Dim SelectedRows As New List(Of String)
-
-        For Each DatagridviewRow As DataGridViewRow In MainDataGrid.SelectedRows
-            SelectedRows.Add(MainDataGrid.Rows.Item(DatagridviewRow.Index).Cells("name").Value)
-        Next
-
+        Dim SelectedRows As List(Of UserRow) = GetSelectedUsers()
         Dim NewBulkModifyForm = New FormUserAttributesBulk(SelectedRows)
     End Sub
 

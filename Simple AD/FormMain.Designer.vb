@@ -87,10 +87,6 @@ Partial Class FormMain
         Me.ConnectionToolStripStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.UpdateToolStripStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.VersionLb = New MetroFramework.Controls.MetroLabel()
-        Me.RibbonButton1 = New System.Windows.Forms.RibbonButton()
-        Me.RibbonButton2 = New System.Windows.Forms.RibbonButton()
-        Me.ActiveDirectory = New System.Windows.Forms.RibbonTab()
-        Me.Office365 = New System.Windows.Forms.RibbonTab()
         SADMenuStrip = New System.Windows.Forms.MenuStrip()
         SADMenuStrip.SuspendLayout()
         Me.NodeContextMenu.SuspendLayout()
@@ -456,29 +452,6 @@ Partial Class FormMain
         Me.VersionLb.UseCustomBackColor = True
         Me.VersionLb.UseCustomForeColor = True
         '
-        'RibbonButton1
-        '
-        Me.RibbonButton1.Image = CType(resources.GetObject("RibbonButton1.Image"), System.Drawing.Image)
-        Me.RibbonButton1.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Compact
-        Me.RibbonButton1.SmallImage = CType(resources.GetObject("RibbonButton1.SmallImage"), System.Drawing.Image)
-        Me.RibbonButton1.Text = "RibbonButton1"
-        '
-        'RibbonButton2
-        '
-        Me.RibbonButton2.Image = CType(resources.GetObject("RibbonButton2.Image"), System.Drawing.Image)
-        Me.RibbonButton2.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Compact
-        Me.RibbonButton2.SmallImage = CType(resources.GetObject("RibbonButton2.SmallImage"), System.Drawing.Image)
-        Me.RibbonButton2.Text = "RibbonButton2"
-        '
-        'ActiveDirectory
-        '
-        Me.ActiveDirectory.Text = "Active Directory"
-        '
-        'Office365
-        '
-        Me.Office365.Text = Nothing
-        Me.Office365.ToolTip = "Office 365"
-        '
         'FormMain
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
@@ -557,9 +530,5 @@ Partial Class FormMain
     Friend WithEvents ConsoleToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
     Friend WithEvents BrowseToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents RibbonButton1 As RibbonButton
-    Friend WithEvents RibbonButton2 As RibbonButton
-    Friend WithEvents ActiveDirectory As RibbonTab
-    Friend WithEvents Office365 As RibbonTab
     Friend WithEvents NewFormToolStripMenuItem As ToolStripMenuItem
 End Class

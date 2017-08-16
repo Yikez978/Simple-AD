@@ -26,7 +26,7 @@ Public Class FileExportHelper
     Shared Sub ExportFileBW_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
         Dim worker As BackgroundWorker = CType(sender, BackgroundWorker)
         Dim args As Array = e.Argument
-        Dim autoMainDataGrid As DataGridView = GetMainDataGrid(args(1))
+        Dim autoMainDataGrid As DataGridView = CopyMainDataGrid(args(1))
 
         Debug.WriteLine("[Info] Export File Background worker Initiated")
 
