@@ -21,7 +21,7 @@ Module LDAPDataHelper
 
         Dim User As New UserObject
 
-        Debug.WriteLine("[Info] New User request Started")
+        'Debug.WriteLine("[Info] New User request Started")
 
         Try
             For Each column As DataGridViewColumn In Grid.Columns
@@ -40,12 +40,12 @@ Module LDAPDataHelper
                             CallByName(User, column.Name, CallType.Set, Value.Trim)
                     End Select
                 Catch Ex As Exception
-                    Debug.WriteLine("[Warning] Unable to set " & column.Name & " Property on user: " & Ex.Message)
+                    'Debug.WriteLine("[Warning] Unable to set " & column.Name & " Property on user: " & Ex.Message)
                 End Try
             Next
 
         Catch Ex As Exception
-            Debug.WriteLine("[Error] Unable to setup User Object: " & Ex.Message)
+            'Debug.WriteLine("[Error] Unable to setup User Object: " & Ex.Message)
             Return Nothing
         End Try
         Return User

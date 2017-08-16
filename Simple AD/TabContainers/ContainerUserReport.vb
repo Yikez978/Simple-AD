@@ -207,14 +207,17 @@
         End If
     End Sub
 
-    Private Function GetSelectedUsers() As List(Of String)
+    Private Function GetSelectedUsers() As List(Of UserRow)
         Try
 
-            Dim UserArray As New List(Of String)
+            Dim UserArray As New List(Of UserRow)
 
             For Each Row As DataGridViewRow In MainDataGrid.SelectedRows
                 If Not String.IsNullOrEmpty(Row.Cells("sAMAccountName").Value) Then
-                    UserArray.Add(Row.Cells("sAMAccountName").Value & "," & Row.Index.ToString)
+                    Dim User = New UserRow
+                    User.Username = Row.Cells("sAMAccountName").Value
+                    User.Row = Row
+                    UserArray.Add(User)
                 End If
             Next
             Return UserArray
@@ -226,23 +229,22 @@
 
     Private Sub EnableDisableBulkToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EnableDisableBulkToolStripMenuItem.Click
         Try
-            For Each User As String In GetSelectedUsers()
+            For Each User As UserRow In GetSelectedUsers()
 
-                Dim UserArray As String() = User.Split(New Char() {","})
-                Dim Username As String = UserArray(0)
-                Dim Row As Integer = UserArray(1)
+                Dim Username As String = User.Username
+                Dim Row As DataGridViewRow = User.Row
 
                 If IsAccountEnabled(Username) Then
                     Dim IsEnableAccountSuccessfull As Integer = EnableADUserUsingUserAccountControl(Username)
                     If Not IsEnableAccountSuccessfull = Nothing Then
-                        MainDataGrid.Rows.Item(Row).Cells("userAccountControl").Value = IsEnableAccountSuccessfull
-                        MainDataGrid.InvalidateRow(Row)
+                        Row.Cells("userAccountControl").Value = IsEnableAccountSuccessfull
+                        MainDataGrid.InvalidateRow(Row.Index)
                     End If
                 Else
                     Dim IsDisnableAccountSuccessfull As Integer = DisableADUserUsingUserAccountControl(Username)
                     If Not IsDisnableAccountSuccessfull = Nothing Then
-                        MainDataGrid.Rows.Item(Row).Cells("userAccountControl").Value = IsDisnableAccountSuccessfull
-                        MainDataGrid.InvalidateRow(Row)
+                        Row.Cells("userAccountControl").Value = IsDisnableAccountSuccessfull
+                        MainDataGrid.InvalidateRow(Row.Index)
                     End If
                 End If
             Next
@@ -250,4 +252,17 @@
             Debug.WriteLine("[Error] " & Ex.Message)
         End Try
     End Sub
+
+    Private Sub DeleteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteToolStripMenuItem.Click
+        For Each User As UserRow In GetSelectedUsers()
+            If DeleteADObject(User.Username) Then
+                MainDataGrid.Rows.Remove(User.Row)
+            End If
+        Next
+    End Sub
+End Class
+
+Public Class UserRow
+    Property Username As String
+    Property Row As DataGridViewRow
 End Class

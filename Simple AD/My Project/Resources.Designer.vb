@@ -63,16 +63,6 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property appbar_check() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("appbar_check", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
         Friend ReadOnly Property appbar_network_server_connecting() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("appbar_network_server_connecting", resourceCulture)
@@ -86,6 +76,16 @@ Namespace My.Resources
         Friend ReadOnly Property appbar_network_server_disconnect() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("appbar_network_server_disconnect", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property CheckTick() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("CheckTick", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -156,6 +156,16 @@ Namespace My.Resources
         Friend ReadOnly Property ErrorAlt() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("ErrorAlt", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property ErrorTriangle() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("ErrorTriangle", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

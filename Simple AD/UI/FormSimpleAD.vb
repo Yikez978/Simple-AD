@@ -10,6 +10,7 @@ Public Class FormSimpleAD
 
     Public Sub New()
         Me.ShadowType = Forms.MetroFormShadowType.None
+        Me.SetStyle(ControlStyles.ResizeRedraw, True)
     End Sub
 
     Public Property CustomBackcolor As Color
@@ -116,8 +117,8 @@ Public Class FormSimpleAD
         Return False
     End Function
 
-    Protected Overrides Sub WndProc(ByRef m As Message)
-        Select Case m.Msg
+    Protected Overrides Sub WndProc(ByRef message As Message)
+        Select Case message.Msg
             Case WM_NCPAINT
                 ' box shadow
                 If m_aeroEnabled Then
@@ -136,13 +137,86 @@ Public Class FormSimpleAD
             Case Else
                 Exit Select
         End Select
-        MyBase.WndProc(m)
+        MyBase.WndProc(message)
 
-        If m.Msg = WM_NCHITTEST AndAlso CInt(m.Result) = HTCLIENT Then
+        If message.Msg = WM_NCHITTEST AndAlso CInt(message.Result) = HTCLIENT Then
             ' drag the form
-            m.Result = New IntPtr(HTCAPTION)
+            message.Result = New IntPtr(HTCAPTION)
         End If
 
+
+        If message.Msg = &H84 Then
+            ' WM_NCHITTEST
+            Dim cursor__1 = Me.PointToClient(Cursor.Position)
+
+            If TopLeft.Contains(cursor__1) Then
+                message.Result = New IntPtr(HTTOPLEFT)
+            ElseIf TopRight.Contains(cursor__1) Then
+                message.Result = New IntPtr(HTTOPRIGHT)
+            ElseIf BottomLeft.Contains(cursor__1) Then
+                message.Result = New IntPtr(HTBOTTOMLEFT)
+            ElseIf BottomRight.Contains(cursor__1) Then
+                message.Result = New IntPtr(HTBOTTOMRIGHT)
+
+            ElseIf Top.Contains(cursor__1) Then
+                message.Result = New IntPtr(HTTOP)
+            ElseIf Left.Contains(cursor__1) Then
+                message.Result = New IntPtr(HTLEFT)
+            ElseIf Right.Contains(cursor__1) Then
+                message.Result = New IntPtr(HTRIGHT)
+            ElseIf Bottom.Contains(cursor__1) Then
+                message.Result = New IntPtr(HTBOTTOM)
+            End If
+        End If
     End Sub
+
+
+    Private Const HTLEFT As Integer = 10, HTRIGHT As Integer = 11, HTTOP As Integer = 12, HTTOPLEFT As Integer = 13, HTTOPRIGHT As Integer = 14, HTBOTTOM As Integer = 15,
+    HTBOTTOMLEFT As Integer = 16, HTBOTTOMRIGHT As Integer = 17
+
+    Const Value As Integer = 10
+
+    Private Overloads ReadOnly Property Top() As Rectangle
+        Get
+            Return New Rectangle(0, 0, Me.ClientSize.Width, Value)
+        End Get
+    End Property
+    Private Overloads ReadOnly Property Left() As Rectangle
+        Get
+            Return New Rectangle(0, 0, Value, Me.ClientSize.Height)
+        End Get
+    End Property
+    Private Overloads ReadOnly Property Bottom() As Rectangle
+        Get
+            Return New Rectangle(0, Me.ClientSize.Height - Value, Me.ClientSize.Width, Value)
+        End Get
+    End Property
+    Private Overloads ReadOnly Property Right() As Rectangle
+        Get
+            Return New Rectangle(Me.ClientSize.Width - Value, 0, Value, Me.ClientSize.Height)
+        End Get
+    End Property
+
+    Private ReadOnly Property TopLeft() As Rectangle
+        Get
+            Return New Rectangle(0, 0, Value, Value)
+        End Get
+    End Property
+    Private ReadOnly Property TopRight() As Rectangle
+        Get
+            Return New Rectangle(Me.ClientSize.Width - Value, 0, Value, Value)
+        End Get
+    End Property
+    Private ReadOnly Property BottomLeft() As Rectangle
+        Get
+            Return New Rectangle(0, Me.ClientSize.Height - Value, Value, Value)
+        End Get
+    End Property
+    Private ReadOnly Property BottomRight() As Rectangle
+        Get
+            Return New Rectangle(Me.ClientSize.Width - Value, Me.ClientSize.Height - Value, Value, Value)
+        End Get
+    End Property
+
 End Class
 

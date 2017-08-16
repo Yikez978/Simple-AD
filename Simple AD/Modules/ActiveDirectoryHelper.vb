@@ -220,7 +220,7 @@ Module ActiveDirectoryHelper
                 Return result.GetDirectoryEntry
             End Using
         Catch Ex As Exception
-            Debug.WriteLine("[Error] " & Ex.Message)
+            Debug.WriteLine("[Error] Unabel to retrieve directory entry with the supplied username (" & sAMAccountName & "): " & Ex.Message)
         End Try
         Return Nothing
     End Function
@@ -246,9 +246,7 @@ Module ActiveDirectoryHelper
     End Function
 
     Public Function EnableADUserUsingUserAccountControl(Username As String) As Integer
-
         Try
-
             Using userEntry As DirectoryEntry = GetDirEntryFromSAM(Username)
 
                 Dim old_UAC As Integer = CInt(userEntry.Properties("userAccountControl")(0))
@@ -270,9 +268,7 @@ Module ActiveDirectoryHelper
     End Function
 
     Public Function DisableADUserUsingUserAccountControl(Username As String) As Integer
-
         Try
-
             Using userEntry As DirectoryEntry = GetDirEntryFromSAM(Username)
 
                 Dim old_UAC As Integer = CInt(userEntry.Properties("userAccountControl")(0))
@@ -316,19 +312,17 @@ Module ActiveDirectoryHelper
 
         Debug.WriteLine("[Info] Delete requested on user: " & Username)
 
-        Dim DireEntry As DirectoryEntry = GetDirEntry()
         Dim UserEntry As DirectoryEntry = GetDirEntryFromSAM(Username)
         Try
             If Not UserEntry Is Nothing Then
-                DireEntry.Children.Remove(UserEntry)
-                DireEntry.CommitChanges()
-                DireEntry.Close()
+                UserEntry.DeleteTree()
+                UserEntry.CommitChanges()
+                UserEntry.Close()
                 Return True
             End If
             Return False
         Catch Ex As Exception
-            Debug.WriteLine("[Error] Unabel to Delete User " & Username & ": " & Ex.Message _
-                            & Environment.NewLine & Ex.StackTrace.ToString)
+            Debug.WriteLine("[Error] Unable to Delete User (" & Username & "): " & Ex.Message & Environment.NewLine & Ex.StackTrace.ToString)
             Return False
         End Try
     End Function

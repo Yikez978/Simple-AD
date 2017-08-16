@@ -1,4 +1,5 @@
 ﻿Public Class JobUserBulk
+    Inherits SimpleADJob
 
     Dim ErForm As New FormImportValidation
     Dim DataGrid As DataGridView

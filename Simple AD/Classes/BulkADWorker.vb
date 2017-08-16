@@ -3,7 +3,6 @@ Imports System.ComponentModel
 Imports System.Security.AccessControl
 Imports TSUSEREXLib
 Imports System.DirectoryServices.AccountManagement
-Imports System.Security.Principal
 
 Public Class BulkADWorker
 
@@ -30,7 +29,6 @@ Public Class BulkADWorker
         _BulkUserContainer.GetProgressBar.Step = 1
 
         '_UPNS = GetUPNSuffix(0)
-
     End Sub
 
     Public Sub RunBulkUserSetup()
@@ -75,10 +73,13 @@ Public Class BulkADWorker
 
         ' Get AD LDS object.
         Try
-            Debug.WriteLine("[Info] Setting up PrincipalContext")
             domainContext = GetPrincipalContext(LoginUsername, LoginPassword)
+            Debug.WriteLine("[Info] Set up PrincipalContext on " & domainContext.ConnectedServer.ToString)
         Catch Ex As Exception
             Debug.WriteLine("[Error] Unable to create Domain Context object from PrincipalContext: " & Ex.Message)
+            Dim DomainContextError As New FormError(DomainContextErrorMessage & Environment.NewLine & Ex.Message, My.Resources.ErrorTriangle)
+            _BulkUserContainer.Invoke(New Action(Of Object, Object)(AddressOf Bw_RunWorkerCompleted), Me, Nothing)
+            DomainContextError.ShowDialog()
             Exit Sub
         End Try
 
@@ -95,7 +96,6 @@ Public Class BulkADWorker
                         Exit For
                     End If
 
-
                     Dim row As DataGridViewRow = autoMainDataGrid.Rows(i)
                     Dim User As UserObject = GetUserFromDataGridViewRow(autoMainDataGrid, row)
 
@@ -103,7 +103,7 @@ Public Class BulkADWorker
 
                         If Not User.sAMAccountName Is Nothing Then
 
-                            Debug.WriteLine(Environment.NewLine & "[Info] Creating: " & User.name)
+                            Debug.WriteLine(Environment.NewLine & "[Info] Started user setup with user: " & User.name)
 
                             ' Create User.
                             Dim objUser As DirectoryEntry = objADAM.Children.Add("CN=" & User.name, "user")
@@ -220,9 +220,14 @@ Public Class BulkADWorker
 
                     Catch Exc As Exception
 
-                        Dim ErrorMsgCon = "Unable to Create User: " & User.sAMAccountName & " - " & Exc.Message
+                        Dim ErrorMsgCon = "Unable to Create User: " & User.sAMAccountName
+                        Dim InnerException As String = Nothing
 
-                        Dim argArray As Array = {row.Index, ErrorMsgCon, Exc.Message}
+                        If Not Exc.InnerException Is Nothing Then
+                            InnerException = Exc.InnerException.Message
+                        End If
+
+                        Dim argArray As Array = {row.Index, ErrorMsgCon, Exc.Message, InnerException}
 
                         Debug.WriteLine("[Error] Unable to Create User: " & User.sAMAccountName)
                         Debug.WriteLine("[Error] " & Exc.Message)
@@ -253,13 +258,11 @@ Public Class BulkADWorker
         If e.ProgressPercentage = 0 Then
 
             With DirectCast(_SourceGrid.Rows.Item(e.UserState(0)).Cells("Status"), TextAndImageCell)
-                .Image = New Bitmap(My.Resources.appbar_check, 16, 16)
+                .Image = New Bitmap(My.Resources.CheckTick, 16, 16)
                 .Value = "User Created Succesfully"
                 .ReadOnly = True
             End With
-
             _SourceGrid.Rows.Item(e.UserState(0)).DefaultCellStyle.ForeColor = SystemColors.ControlText
-
         End If
 
         'User Creation failed
@@ -268,9 +271,13 @@ Public Class BulkADWorker
             If e.UserState(0) < _SourceGrid.Rows.Count Then
                 With DirectCast(_SourceGrid.Rows.Item(e.UserState(0)).Cells("Status"), TextAndImageCell)
                     .Image = New Bitmap(My.Resources.ErrorAlt, 16, 16)
-                    .Value = CStr(e.UserState(2))
-                    .ToolTipText = CStr(e.UserState(2))
+                    .Value = CStr(e.UserState(1))
                     .ReadOnly = True
+                    If Not String.IsNullOrEmpty(e.UserState(3)) Then
+                        .ToolTipText = CStr(e.UserState(2) & Environment.NewLine & e.UserState(3))
+                    Else
+                        .ToolTipText = CStr(e.UserState(2))
+                    End If
                 End With
 
             End If
@@ -287,16 +294,21 @@ Public Class BulkADWorker
         _BulkUserContainer.GetSpinner().Visible = False
         _BulkUserContainer.GetSpinner().Spinning = False
 
-        FormMain.StatusStrip.BackColor = Color.FromArgb(124, 65, 153)
+        OngoingBulkJobs.Remove(Me)
 
-        If e.Cancelled = True Then
-            FormMain.ToolStripStatusLabelStatus.Text = "Operation Canceled"
-        ElseIf e.Error IsNot Nothing Then
-            FormMain.ToolStripStatusLabelStatus.Text = "Error: " & e.Error.Message
-        Else
-            FormMain.ToolStripStatusLabelStatus.Text = "Operation Complete!"
+        If Not OngoingBulkJobs.Count > 0 Then
+            FormMain.StatusStrip.BackColor = Color.FromArgb(124, 65, 153)
         End If
 
+        If Not e Is Nothing Then
+            If e.Cancelled = True Then
+                FormMain.ToolStripStatusLabelStatus.Text = "Operation Canceled"
+            ElseIf e.Error IsNot Nothing Then
+                FormMain.ToolStripStatusLabelStatus.Text = "Error: " & e.Error.Message
+            Else
+                FormMain.ToolStripStatusLabelStatus.Text = "Operation Complete!"
+            End If
+        End If
     End Sub
 
     Public Sub CancelWork()

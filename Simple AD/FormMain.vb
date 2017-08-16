@@ -284,4 +284,8 @@ Public Class FormMain
     Private Sub BrowseToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BrowseToolStripMenuItem.Click
         Dim NewReport As JobUserReport = New JobUserReport(ReportType.Explorer)
     End Sub
+
+    Private Sub NewFormToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NewFormToolStripMenuItem.Click
+        DemoForm.Show()
+    End Sub
 End Class

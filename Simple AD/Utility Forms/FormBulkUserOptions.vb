@@ -18,7 +18,7 @@
             _ContainerUserBulk.MainDataGrid.ReadOnly = True
             _ContainerUserBulk.AcceptBt.Enabled = False
             FormMain.StatusStrip.BackColor = Color.FromArgb(202, 81, 0)
-            FormMain.ToolStripStatusLabelStatus.Text = "Processing Users..."
+            FormMain.ToolStripStatusLabelStatus.Text = "Starting new Bulk User Job. ID: " & _ContainerUserBulk.ID
             FormMain.ToolStripStatusLabelContext.Text = ""
 
             _ContainerUserBulk.ProgressBar.Show()
@@ -31,7 +31,6 @@
             Debug.WriteLine("[Error] " & Ex.Message)
         End Try
         Me.Close()
-
     End Sub
 
     Private Sub CancelBn_Click(sender As Object, e As EventArgs) Handles CancelBn.Click

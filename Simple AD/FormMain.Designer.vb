@@ -42,12 +42,14 @@ Partial Class FormMain
         Dim SADMenuStrip As System.Windows.Forms.MenuStrip
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormMain))
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BrowseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ImportCSVToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BulkUserWizardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RecentFilesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CheckForUpdatesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.NewFormToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Office365ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ConnectToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ReportsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -85,7 +87,10 @@ Partial Class FormMain
         Me.ConnectionToolStripStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.UpdateToolStripStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.VersionLb = New MetroFramework.Controls.MetroLabel()
-        Me.BrowseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RibbonButton1 = New System.Windows.Forms.RibbonButton()
+        Me.RibbonButton2 = New System.Windows.Forms.RibbonButton()
+        Me.ActiveDirectory = New System.Windows.Forms.RibbonTab()
+        Me.Office365 = New System.Windows.Forms.RibbonTab()
         SADMenuStrip = New System.Windows.Forms.MenuStrip()
         SADMenuStrip.SuspendLayout()
         Me.NodeContextMenu.SuspendLayout()
@@ -108,13 +113,19 @@ Partial Class FormMain
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BrowseToolStripMenuItem, Me.ImportCSVToolStripMenuItem, Me.BulkUserWizardToolStripMenuItem, Me.RecentFilesToolStripMenuItem, Me.CheckForUpdatesToolStripMenuItem, Me.ToolStripSeparator1, Me.ExitToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BrowseToolStripMenuItem, Me.ImportCSVToolStripMenuItem, Me.BulkUserWizardToolStripMenuItem, Me.NewFormToolStripMenuItem, Me.RecentFilesToolStripMenuItem, Me.CheckForUpdatesToolStripMenuItem, Me.ToolStripSeparator1, Me.ExitToolStripMenuItem})
         Me.FileToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI Semilight", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FileToolStripMenuItem.ForeColor = System.Drawing.SystemColors.MenuText
         Me.FileToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(73, 20)
         Me.FileToolStripMenuItem.Text = "Simple AD"
+        '
+        'BrowseToolStripMenuItem
+        '
+        Me.BrowseToolStripMenuItem.Name = "BrowseToolStripMenuItem"
+        Me.BrowseToolStripMenuItem.Size = New System.Drawing.Size(178, 22)
+        Me.BrowseToolStripMenuItem.Text = "Browse"
         '
         'ImportCSVToolStripMenuItem
         '
@@ -153,6 +164,12 @@ Partial Class FormMain
         Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(178, 22)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
+        'NewFormToolStripMenuItem
+        '
+        Me.NewFormToolStripMenuItem.Name = "NewFormToolStripMenuItem"
+        Me.NewFormToolStripMenuItem.Size = New System.Drawing.Size(178, 22)
+        Me.NewFormToolStripMenuItem.Text = "Demo Form"
+        '
         'Office365ToolStripMenuItem
         '
         Me.Office365ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConnectToolStripMenuItem})
@@ -166,7 +183,7 @@ Partial Class FormMain
         'ConnectToolStripMenuItem
         '
         Me.ConnectToolStripMenuItem.Name = "ConnectToolStripMenuItem"
-        Me.ConnectToolStripMenuItem.Size = New System.Drawing.Size(126, 22)
+        Me.ConnectToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.ConnectToolStripMenuItem.Text = "Connect..."
         '
         'ReportsToolStripMenuItem
@@ -211,7 +228,7 @@ Partial Class FormMain
         'OptionsToolStripMenuItem
         '
         Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
-        Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(125, 22)
+        Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.OptionsToolStripMenuItem.Text = "&Options..."
         '
         'ToolsToolStripMenuItem
@@ -439,11 +456,28 @@ Partial Class FormMain
         Me.VersionLb.UseCustomBackColor = True
         Me.VersionLb.UseCustomForeColor = True
         '
-        'BrowseToolStripMenuItem
+        'RibbonButton1
         '
-        Me.BrowseToolStripMenuItem.Name = "BrowseToolStripMenuItem"
-        Me.BrowseToolStripMenuItem.Size = New System.Drawing.Size(178, 22)
-        Me.BrowseToolStripMenuItem.Text = "Browse"
+        Me.RibbonButton1.Image = CType(resources.GetObject("RibbonButton1.Image"), System.Drawing.Image)
+        Me.RibbonButton1.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Compact
+        Me.RibbonButton1.SmallImage = CType(resources.GetObject("RibbonButton1.SmallImage"), System.Drawing.Image)
+        Me.RibbonButton1.Text = "RibbonButton1"
+        '
+        'RibbonButton2
+        '
+        Me.RibbonButton2.Image = CType(resources.GetObject("RibbonButton2.Image"), System.Drawing.Image)
+        Me.RibbonButton2.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Compact
+        Me.RibbonButton2.SmallImage = CType(resources.GetObject("RibbonButton2.SmallImage"), System.Drawing.Image)
+        Me.RibbonButton2.Text = "RibbonButton2"
+        '
+        'ActiveDirectory
+        '
+        Me.ActiveDirectory.Text = "Active Directory"
+        '
+        'Office365
+        '
+        Me.Office365.Text = Nothing
+        Me.Office365.ToolTip = "Office 365"
         '
         'FormMain
         '
@@ -523,4 +557,9 @@ Partial Class FormMain
     Friend WithEvents ConsoleToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
     Friend WithEvents BrowseToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents RibbonButton1 As RibbonButton
+    Friend WithEvents RibbonButton2 As RibbonButton
+    Friend WithEvents ActiveDirectory As RibbonTab
+    Friend WithEvents Office365 As RibbonTab
+    Friend WithEvents NewFormToolStripMenuItem As ToolStripMenuItem
 End Class

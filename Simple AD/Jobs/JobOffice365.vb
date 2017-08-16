@@ -2,6 +2,7 @@
 Imports System.Management.Automation.Runspaces
 
 Public Class JobOffice365
+    Inherits SimpleADJob
 
     Private DataGrid As DataGridView
     Private TabPage As TabPage

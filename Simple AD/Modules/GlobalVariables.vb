@@ -32,6 +32,7 @@ Public Module GlobalVariables
     Public TempHiddenColumns As New List(Of String)
     Public CustomColumns As New List(Of String)
     Public OngoingBulkJobs As New List(Of BulkADWorker)
+
     Public ColumnsVisibleChangedByUser As Boolean
 
     Public Headers() = {"name", "status", "sAMAccountName", "givenName", "sn", "displayName", "scriptPath", "homeDrive", "homeDirectory", "pager", "mail", "description", "tsProfilePath", "password"}

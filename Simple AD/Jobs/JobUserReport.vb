@@ -1,6 +1,7 @@
 ﻿Imports System.DirectoryServices
 
 Public Class JobUserReport
+    Inherits SimpleADJob
 
     Private DataGrid As DataGridView
     Private TabPage As TabPage

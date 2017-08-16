@@ -147,6 +147,9 @@
     <Reference Include="System.Windows.Forms">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Windows.Forms.Ribbon35">
+      <HintPath>..\packages\System.Windows.Forms.Ribbon35.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
@@ -167,12 +170,14 @@
   <ItemGroup>
     <Compile Include="Classes\WindowsAPI.vb" />
     <Compile Include="Interfaces\IJobContainer.vb" />
+    <Compile Include="Jobs\SimpleADJob.vb" />
     <Compile Include="LDAP\LDAPKey.vb" />
     <Compile Include="Modules\DataGridHelper.vb" />
     <Compile Include="Modules\Enums.vb" />
     <Compile Include="LDAP\StaticPropertiesShort.vb" />
+    <Compile Include="Modules\ErrorMessages.vb" />
     <Compile Include="Modules\ImageHelper.vb" />
-    <Compile Include="Modules\LDAPDataHelper.vb" />
+    <Compile Include="LDAP\LDAPDataHelper.vb" />
     <Compile Include="Modules\Office365Helper.vb" />
     <Compile Include="Modules\ProtectedData.vb" />
     <Compile Include="Modules\ErrorHandling.vb" />
@@ -180,6 +185,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="DemoForm.Designer.vb">
+      <DependentUpon>DemoForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DemoForm.vb">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\CustomTabControlWithClose.vb">
       <SubType>Component</SubType>
@@ -216,6 +227,12 @@
       <DependentUpon>FormConsole.vb</DependentUpon>
     </Compile>
     <Compile Include="Utility Forms\FormConsole.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Utility Forms\FormError.Designer.vb">
+      <DependentUpon>FormError.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Utility Forms\FormError.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Utility Forms\FormUpdate.Designer.vb">
@@ -369,6 +386,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="DemoForm.resx">
+      <DependentUpon>DemoForm.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\ControlDomainTreeContainer.resx">
       <DependentUpon>ControlDomainTreeContainer.vb</DependentUpon>
     </EmbeddedResource>
@@ -386,6 +406,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Utility Forms\FormConsole.resx">
       <DependentUpon>FormConsole.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Utility Forms\FormError.resx">
+      <DependentUpon>FormError.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Utility Forms\FormImportValidation.resx">
       <DependentUpon>FormImportValidation.vb</DependentUpon>
@@ -504,6 +527,7 @@
     <None Include="Resources\Contact.Png" />
     <None Include="Resources\Down.png" />
     <None Include="Resources\Right.png" />
+    <None Include="Resources\ErrorTriangle.png" />
     <Content Include="SimpleADIcon.ico" />
     <None Include="Resources\appbar.check.png" />
     <None Include="Resources\appbar.network.server.disconnect.png" />
