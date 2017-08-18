@@ -176,6 +176,7 @@
     <Compile Include="Modules\Enums.vb" />
     <Compile Include="LDAP\StaticPropertiesShort.vb" />
     <Compile Include="Modules\ErrorMessages.vb" />
+    <Compile Include="Modules\GetObject.vb" />
     <Compile Include="Modules\ImageHelper.vb" />
     <Compile Include="LDAP\LDAPDataHelper.vb" />
     <Compile Include="Modules\Office365Helper.vb" />
@@ -223,16 +224,28 @@
     <Compile Include="Utility Forms\FormBulkUserOptions.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Utility Forms\FormConfirmation.Designer.vb">
+      <DependentUpon>FormConfirmation.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Utility Forms\FormConfirmation.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Utility Forms\FormConsole.Designer.vb">
       <DependentUpon>FormConsole.vb</DependentUpon>
     </Compile>
     <Compile Include="Utility Forms\FormConsole.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Utility Forms\FormError.Designer.vb">
-      <DependentUpon>FormError.vb</DependentUpon>
+    <Compile Include="Utility Forms\FormAlert.Designer.vb">
+      <DependentUpon>FormAlert.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utility Forms\FormError.vb">
+    <Compile Include="Utility Forms\FormAlert.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Utility Forms\FormMoveObject.Designer.vb">
+      <DependentUpon>FormMoveObject.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Utility Forms\FormMoveObject.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Utility Forms\FormUpdate.Designer.vb">
@@ -404,11 +417,14 @@
     <EmbeddedResource Include="Utility Forms\FormBulkUserOptions.resx">
       <DependentUpon>FormBulkUserOptions.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Utility Forms\FormConfirmation.resx">
+      <DependentUpon>FormConfirmation.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Utility Forms\FormConsole.resx">
       <DependentUpon>FormConsole.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Utility Forms\FormError.resx">
-      <DependentUpon>FormError.vb</DependentUpon>
+    <EmbeddedResource Include="Utility Forms\FormAlert.resx">
+      <DependentUpon>FormAlert.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Utility Forms\FormImportValidation.resx">
       <DependentUpon>FormImportValidation.vb</DependentUpon>
@@ -427,6 +443,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Utility Forms\FormMoveObject.resx">
+      <DependentUpon>FormMoveObject.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Utility Forms\FormUpdate.resx">
       <DependentUpon>FormUpdate.vb</DependentUpon>
@@ -528,6 +547,7 @@
     <None Include="Resources\Down.png" />
     <None Include="Resources\Right.png" />
     <None Include="Resources\ErrorTriangle.png" />
+    <None Include="Resources\Delete.png" />
     <Content Include="SimpleADIcon.ico" />
     <None Include="Resources\appbar.check.png" />
     <None Include="Resources\appbar.network.server.disconnect.png" />

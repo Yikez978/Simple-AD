@@ -42,7 +42,7 @@ Partial Class FormGroupSelection
         'SearchBn
         '
         Me.SearchBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.SearchBn.Location = New System.Drawing.Point(478, 6)
+        Me.SearchBn.Location = New System.Drawing.Point(476, 6)
         Me.SearchBn.Name = "SearchBn"
         Me.SearchBn.Size = New System.Drawing.Size(76, 23)
         Me.SearchBn.TabIndex = 7
@@ -68,7 +68,6 @@ Partial Class FormGroupSelection
         Me.SelectGroupTb.MaxLength = 32767
         Me.SelectGroupTb.Name = "SelectGroupTb"
         Me.SelectGroupTb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
-        Me.SelectGroupTb.PromptText = "Filter Groups.."
         Me.SelectGroupTb.ScrollBars = System.Windows.Forms.ScrollBars.None
         Me.SelectGroupTb.SelectedText = ""
         Me.SelectGroupTb.SelectionLength = 0
@@ -115,7 +114,7 @@ Partial Class FormGroupSelection
         Me.MainGrid.EnableHeadersVisualStyles = False
         Me.MainGrid.Font = New System.Drawing.Font("Segoe UI", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel)
         Me.MainGrid.GridColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.MainGrid.Location = New System.Drawing.Point(0, 66)
+        Me.MainGrid.Location = New System.Drawing.Point(1, 66)
         Me.MainGrid.Margin = New System.Windows.Forms.Padding(0)
         Me.MainGrid.Name = "MainGrid"
         Me.MainGrid.ReadOnly = True
@@ -136,13 +135,12 @@ Partial Class FormGroupSelection
         Me.MainGrid.RowTemplate.Height = 20
         Me.MainGrid.RowTemplate.ReadOnly = True
         Me.MainGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.MainGrid.Size = New System.Drawing.Size(686, 296)
+        Me.MainGrid.Size = New System.Drawing.Size(684, 295)
         Me.MainGrid.Style = MetroFramework.MetroColorStyle.Purple
         Me.MainGrid.TabIndex = 5
         '
         'NameCol
         '
-        Me.NameCol.columnName = "NameCol"
         Me.NameCol.DataPropertyName = "Name"
         DataGridViewCellStyle2.Padding = New System.Windows.Forms.Padding(20, 0, 0, 0)
         Me.NameCol.DefaultCellStyle = DataGridViewCellStyle2
@@ -172,9 +170,9 @@ Partial Class FormGroupSelection
         '
         Me.Panel1.BackColor = System.Drawing.SystemColors.Control
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel1.Location = New System.Drawing.Point(0, 362)
+        Me.Panel1.Location = New System.Drawing.Point(1, 361)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(686, 36)
+        Me.Panel1.Size = New System.Drawing.Size(684, 36)
         Me.Panel1.TabIndex = 8
         '
         'Panel2
@@ -182,9 +180,9 @@ Partial Class FormGroupSelection
         Me.Panel2.Controls.Add(Me.SelectGroupTb)
         Me.Panel2.Controls.Add(Me.SearchBn)
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Panel2.Location = New System.Drawing.Point(0, 30)
+        Me.Panel2.Location = New System.Drawing.Point(1, 30)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(686, 36)
+        Me.Panel2.Size = New System.Drawing.Size(684, 36)
         Me.Panel2.TabIndex = 9
         '
         'FormGroupSelection
@@ -201,7 +199,7 @@ Partial Class FormGroupSelection
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "FormGroupSelection"
-        Me.Padding = New System.Windows.Forms.Padding(0, 30, 0, 0)
+        Me.Padding = New System.Windows.Forms.Padding(1, 30, 1, 1)
         Me.Resizable = False
         Me.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide

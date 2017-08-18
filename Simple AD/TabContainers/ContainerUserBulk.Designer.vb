@@ -30,6 +30,7 @@ Partial Class ContainerUserBulk
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.MainSplitContainer0 = New System.Windows.Forms.SplitContainer()
+        Me.DomainPl = New System.Windows.Forms.Panel()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.MainDataGrid = New MetroFramework.Controls.MetroGrid()
@@ -65,6 +66,7 @@ Partial Class ContainerUserBulk
         'MainSplitContainer0.Panel1
         '
         Me.MainSplitContainer0.Panel1.BackColor = System.Drawing.SystemColors.Window
+        Me.MainSplitContainer0.Panel1.Controls.Add(Me.DomainPl)
         Me.MainSplitContainer0.Panel1.Controls.Add(Me.Panel2)
         '
         'MainSplitContainer0.Panel2
@@ -75,6 +77,15 @@ Partial Class ContainerUserBulk
         Me.MainSplitContainer0.SplitterWidth = 2
         Me.MainSplitContainer0.TabIndex = 6
         Me.MainSplitContainer0.Visible = False
+        '
+        'DomainPl
+        '
+        Me.DomainPl.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DomainPl.Location = New System.Drawing.Point(0, 28)
+        Me.DomainPl.Margin = New System.Windows.Forms.Padding(0)
+        Me.DomainPl.Name = "DomainPl"
+        Me.DomainPl.Size = New System.Drawing.Size(170, 411)
+        Me.DomainPl.TabIndex = 1
         '
         'Panel2
         '
@@ -167,7 +178,6 @@ Partial Class ContainerUserBulk
         '
         'nameCol
         '
-        Me.nameCol.columnName = Nothing
         Me.nameCol.DataPropertyName = "name"
         DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle3.Padding = New System.Windows.Forms.Padding(20, 0, 0, 0)
@@ -181,7 +191,6 @@ Partial Class ContainerUserBulk
         '
         'status
         '
-        Me.status.columnName = Nothing
         Me.status.DataPropertyName = "status"
         Me.status.Frozen = True
         Me.status.HeaderText = "Status"
@@ -285,7 +294,7 @@ Partial Class ContainerUserBulk
         'ContainerUserBulk
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
-        Me.BackColor = System.Drawing.SystemColors.Control
+        Me.BackColor = System.Drawing.SystemColors.Window
         Me.Controls.Add(Me.MainSplitContainer0)
         Me.Controls.Add(Me.Panel1)
         Me.Name = "ContainerUserBulk"
@@ -316,7 +325,8 @@ Partial Class ContainerUserBulk
     Friend WithEvents Label1 As Label
     Friend WithEvents Panel2 As Panel
     Friend WithEvents MainDataGrid As Controls.MetroGrid
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents DomainPl As Panel
     Friend WithEvents nameCol As TextAndImageColumn
     Friend WithEvents status As TextAndImageColumn
-    Friend WithEvents Panel1 As Panel
 End Class

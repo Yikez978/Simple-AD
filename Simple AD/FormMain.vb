@@ -1,6 +1,4 @@
-﻿Imports SimpleAD.FileSystemHelper
-
-Public Class FormMain
+﻿Public Class FormMain
 
     Private ftdt As New DataTable
 
@@ -14,31 +12,20 @@ Public Class FormMain
     End Sub
 
     Private Sub DataReviewForm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-
         VersionLb.Text = My.Application.Info.Version.ToString
 
         BuildLdapAttributeMatrix()
 
         ColumnsVisibleChangedByUser = False
-
         PopulateRecentFileList()
         UserToolStripMenuItem.Text = GetDisplayName()
-
-
 
         Dim DragTabs As New TabDragger(MainTabCtrl, TabDragBehavior.TabDragOut)
 
         If My.Settings.CheckForUpdatesOnStart = True Then
             Dim RunUpdateCheck As New FormUpdate
         End If
-
     End Sub
-
-    Public Overrides ReadOnly Property BackColor As Color
-        Get
-            Return SystemColors.Control
-        End Get
-    End Property
 
     Private Sub HideEmptyColumnsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles HideEmptyColumnsToolStripMenuItem.Click
         If HideEmptyColumnsToolStripMenuItem.Checked = False Then
@@ -70,7 +57,7 @@ Public Class FormMain
     End Sub
 
     Private Sub ExportCSVWriteFile(sender As Object, e As EventArgs) Handles ExportCSVDialog.FileOk
-        FileExportHelper.ExportFile(GetMainDataGrid(), ExportCSVDialog)
+        FileExportHelper.ExportFile(GetMainDataGrid, ExportCSVDialog)
     End Sub
 
     Private Sub OptionsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OptionsToolStripMenuItem.Click
@@ -130,63 +117,6 @@ Public Class FormMain
     Private Sub MainApplicationForm_Closed(sender As Object, e As EventArgs) Handles Me.Closed
         Application.Exit()
     End Sub
-
-    Public Function GetMainTabCtrl() As TabControl
-        Try
-            Return Me.MainTabCtrl
-        Catch Ex As Exception
-            Debug.WriteLine("[Error] " & Ex.Message)
-            Return Nothing
-        End Try
-    End Function
-
-    Public Shared Function GetMainSplitContainer0() As SplitContainer
-        Try
-            Dim CurrentTab As TabPage = FormMain.GetMainTabCtrl.SelectedTab
-            Dim MainContainer As Object = CurrentTab.Controls.Item(0)
-            Return MainContainer.GetMainSplitContainer0()
-        Catch Ex As Exception
-            Debug.WriteLine("[Error] " & Ex.Message)
-            Return Nothing
-        End Try
-    End Function
-
-    Public Shared Function GetMainSplitContainer1() As SplitContainer
-        Try
-            Dim CurrentTab As TabPage = FormMain.GetMainTabCtrl.SelectedTab
-            Dim MainContainer As Object = CurrentTab.Controls.Item(0)
-            Return MainContainer.GetMainSplitContainer1()
-        Catch Ex As Exception
-            Debug.WriteLine("[Error] " & Ex.Message)
-            Return Nothing
-        End Try
-    End Function
-
-    Public Shared Function GetMainDataGrid() As DataGridView
-        Try
-            Dim CurrentTab As TabPage = FormMain.GetMainTabCtrl.SelectedTab
-            Dim MainContainer As Object = CurrentTab.Controls.Item(0)
-            Return MainContainer.GetMainDataGrid()
-        Catch Ex As Exception
-            Debug.WriteLine("[Error] " & Ex.Message)
-            Return Nothing
-        End Try
-    End Function
-
-    Public Shared Function GetBulkUserContainer() As ContainerUserBulk
-        Dim CurrentTab As ContainerUserBulk = FormMain.GetMainTabCtrl.SelectedTab.Controls.Item(0)
-        Return CurrentTab
-    End Function
-
-    Public Shared Function GetDomainPanel() As ControlDomainTreeContainer
-        Try
-            Dim CurrentTab As ContainerUserReport = FormMain.GetMainTabCtrl.SelectedTab.Controls.Item(0)
-            Return CurrentTab.GetDomainPanel()
-        Catch Ex As Exception
-            Debug.WriteLine("[Error] " & Ex.Message)
-            Return Nothing
-        End Try
-    End Function
 
     Private Sub ViewSideBarToolStripMenuItem_Click(sender As Object, e As EventArgs)
         GetMainSplitContainer1.Panel2Collapsed = Not GetMainSplitContainer1.Panel2Collapsed

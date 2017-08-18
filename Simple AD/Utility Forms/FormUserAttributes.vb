@@ -42,7 +42,24 @@ Public Class FormUserAttributes
         For Each Prop In ObjectDirEntry.Properties.PropertyNames
             If Not ObjectDirEntry.Properties(Prop) Is Nothing Then
                 If Not ObjectDirEntry.Properties(Prop).Value Is Nothing Then
-                    DataTableSource.Rows.Add(Prop, GetFriendlyLDAPName(Prop), ObjectDirEntry.Properties(Prop).Value.ToString)
+                    If ObjectDirEntry.Properties(Prop).Count > 1 Then
+                        Dim Builder As New StringBuilder
+                        For i As Integer = 0 To ObjectDirEntry.Properties(Prop).Count - 1
+                            Builder.AppendLine(ObjectDirEntry.Properties(Prop).Item(i).ToString & ";")
+                        Next
+                        DataTableSource.Rows.Add(Prop, GetFriendlyLDAPName(Prop), Builder.ToString)
+                    Else
+                        If ObjectDirEntry.Properties(Prop).Value.GetType() = GetType(Byte()) Then
+                            Try
+                                Dim DecodedByte As Guid = New Guid(DirectCast(ObjectDirEntry.Properties(Prop).Value, Byte()))
+                                DataTableSource.Rows.Add(Prop, GetFriendlyLDAPName(Prop), DecodedByte.ToString)
+                            Catch
+                                DataTableSource.Rows.Add(Prop, GetFriendlyLDAPName(Prop), "")
+                            End Try
+                        Else
+                            DataTableSource.Rows.Add(Prop, GetFriendlyLDAPName(Prop), ObjectDirEntry.Properties(Prop).Value.ToString)
+                        End If
+                    End If
                 End If
             Else
                 DataTableSource.Rows.Add(Prop, GetFriendlyLDAPName(Prop), "")
@@ -100,8 +117,8 @@ Public Class FormUserAttributes
         End If
 
         If SetADProperty(Entry, Attr, Value) Then
-            If FormMain.GetMainDataGrid.Columns.Contains(Attr) Then
-                FormMain.GetMainDataGrid.Rows.Item(_rowindex).Cells(Attr).Value = MainDataGrid.Rows(e.RowIndex).Cells("Value").Value
+            If GetMainDataGrid.Columns.Contains(Attr) Then
+                GetMainDataGrid.Rows.Item(_rowindex).Cells(Attr).Value = MainDataGrid.Rows(e.RowIndex).Cells("Value").Value
             End If
         Else
             MainDataGrid.Rows(e.RowIndex).Cells("Value").Value = _defualtCellValue

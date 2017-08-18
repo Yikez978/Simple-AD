@@ -26,14 +26,14 @@
         ColumnsVisibleChangedByUser = True
         CustomColumns.Clear()
 
-        For Each column As DataGridViewColumn In FormMain.GetMainDataGrid.Columns
+        For Each column As DataGridViewColumn In GetMainDataGrid.Columns
             If Not PersistantColumns.Contains(column.Name) Then
                 column.Visible = False
             End If
         Next
 
         For Each item As Object In CurrentColumnsLb.Items
-            For Each column As DataGridViewColumn In FormMain.GetMainDataGrid.Columns
+            For Each column As DataGridViewColumn In GetMainDataGrid.Columns
                 If column.HeaderText = CStr(item) Then
                     column.Visible = True
                     CustomColumns.Add(CStr(item))
@@ -41,8 +41,8 @@
             Next
         Next
 
-        If FormMain.GetMainDataGrid.Columns.Contains("Filler") Then
-            FormMain.GetMainDataGrid.Columns("Filler").DisplayIndex = FormMain.GetMainDataGrid.Columns.Count - 1
+        If GetMainDataGrid.Columns.Contains("Filler") Then
+            GetMainDataGrid.Columns("Filler").DisplayIndex = GetMainDataGrid.Columns.Count - 1
         End If
 
         Me.Close()

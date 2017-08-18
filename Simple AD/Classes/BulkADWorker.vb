@@ -77,7 +77,7 @@ Public Class BulkADWorker
             Debug.WriteLine("[Info] Set up PrincipalContext on " & domainContext.ConnectedServer.ToString)
         Catch Ex As Exception
             Debug.WriteLine("[Error] Unable to create Domain Context object from PrincipalContext: " & Ex.Message)
-            Dim DomainContextError As New FormError(DomainContextErrorMessage & Environment.NewLine & Ex.Message, My.Resources.ErrorTriangle)
+            Dim DomainContextError As New FormAlert(DomainContextErrorMessage & Environment.NewLine & Ex.Message, AlertType.ErrorAlert)
             _BulkUserContainer.Invoke(New Action(Of Object, Object)(AddressOf Bw_RunWorkerCompleted), Me, Nothing)
             DomainContextError.ShowDialog()
             Exit Sub

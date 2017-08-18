@@ -184,11 +184,9 @@ Public Class CustomTabControlWithClose
         Return closeRect
 
     End Function
-
 #End Region
 
 #Region " Interop "
-
     <DllImport("user32.dll")>
     Private Shared Function SendMessage(ByVal hWnd As IntPtr, ByVal msg As Int32, ByVal wParam As IntPtr, ByVal lParam As IntPtr) As IntPtr
     End Function

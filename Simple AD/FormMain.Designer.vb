@@ -45,11 +45,11 @@ Partial Class FormMain
         Me.BrowseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ImportCSVToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BulkUserWizardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.NewFormToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RecentFilesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CheckForUpdatesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.NewFormToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Office365ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ConnectToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ReportsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -136,6 +136,12 @@ Partial Class FormMain
         Me.BulkUserWizardToolStripMenuItem.Size = New System.Drawing.Size(178, 22)
         Me.BulkUserWizardToolStripMenuItem.Text = "&Bulk User Wizard..."
         '
+        'NewFormToolStripMenuItem
+        '
+        Me.NewFormToolStripMenuItem.Name = "NewFormToolStripMenuItem"
+        Me.NewFormToolStripMenuItem.Size = New System.Drawing.Size(178, 22)
+        Me.NewFormToolStripMenuItem.Text = "Demo Form"
+        '
         'RecentFilesToolStripMenuItem
         '
         Me.RecentFilesToolStripMenuItem.Name = "RecentFilesToolStripMenuItem"
@@ -160,12 +166,6 @@ Partial Class FormMain
         Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(178, 22)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
-        'NewFormToolStripMenuItem
-        '
-        Me.NewFormToolStripMenuItem.Name = "NewFormToolStripMenuItem"
-        Me.NewFormToolStripMenuItem.Size = New System.Drawing.Size(178, 22)
-        Me.NewFormToolStripMenuItem.Text = "Demo Form"
-        '
         'Office365ToolStripMenuItem
         '
         Me.Office365ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConnectToolStripMenuItem})
@@ -179,7 +179,7 @@ Partial Class FormMain
         'ConnectToolStripMenuItem
         '
         Me.ConnectToolStripMenuItem.Name = "ConnectToolStripMenuItem"
-        Me.ConnectToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.ConnectToolStripMenuItem.Size = New System.Drawing.Size(126, 22)
         Me.ConnectToolStripMenuItem.Text = "Connect..."
         '
         'ReportsToolStripMenuItem
@@ -224,7 +224,7 @@ Partial Class FormMain
         'OptionsToolStripMenuItem
         '
         Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
-        Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(125, 22)
         Me.OptionsToolStripMenuItem.Text = "&Options..."
         '
         'ToolsToolStripMenuItem
@@ -309,7 +309,7 @@ Partial Class FormMain
         Me.UserToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
         Me.UserToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItemLogin})
         Me.UserToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI Semilight", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.UserToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Window
+        Me.UserToolStripMenuItem.ForeColor = System.Drawing.SystemColors.MenuText
         Me.UserToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.UserToolStripMenuItem.Name = "UserToolStripMenuItem"
         Me.UserToolStripMenuItem.Size = New System.Drawing.Size(42, 20)
@@ -319,7 +319,7 @@ Partial Class FormMain
         '
         Me.ToolStripMenuItemLogin.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.ToolStripMenuItemLogin.Name = "ToolStripMenuItemLogin"
-        Me.ToolStripMenuItemLogin.Size = New System.Drawing.Size(141, 22)
+        Me.ToolStripMenuItemLogin.Size = New System.Drawing.Size(152, 22)
         Me.ToolStripMenuItemLogin.Text = "Switch User..."
         '
         'NodeContextMenu
@@ -468,7 +468,6 @@ Partial Class FormMain
         Me.MinimumSize = New System.Drawing.Size(640, 480)
         Me.Name = "FormMain"
         Me.Padding = New System.Windows.Forms.Padding(1, 60, 1, 1)
-        Me.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow
         Me.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultLocation
         Me.Style = MetroFramework.MetroColorStyle.Purple
         Me.Text = "Simple AD - Active Directory Managment"
@@ -517,7 +516,7 @@ Partial Class FormMain
     Friend WithEvents Office365ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ConnectToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents CustomQueryToolStripMenuItem As ToolStripMenuItem
-    Private WithEvents MainTabCtrl As CustomTabControl
+    Friend WithEvents MainTabCtrl As CustomTabControl
     Friend WithEvents StatusStrip As StatusStrip
     Friend WithEvents ToolStripStatusLabelContext As ToolStripStatusLabel
     Friend WithEvents ToolStripStatusLabelStatus As ToolStripStatusLabel

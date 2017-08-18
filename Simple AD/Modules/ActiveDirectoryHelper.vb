@@ -76,8 +76,12 @@ Module ActiveDirectoryHelper
         Return entry
     End Function
 
-    Public Function GetDirEntry()
-        Return New DirectoryEntry(GetDirEntryPath, LoginUsername, LoginPassword)
+    Public Function GetDirEntry(Optional Path As String = Nothing) As DirectoryEntry
+        If Path Is Nothing Then
+            Return New DirectoryEntry(GetDirEntryPath, LoginUsername, LoginPassword)
+        Else
+            Return New DirectoryEntry(GetDirEntryPath() & "/" & Path, LoginUsername, LoginPassword)
+        End If
     End Function
 
     Public Function GetDisplayName() As String
@@ -308,10 +312,8 @@ Module ActiveDirectoryHelper
         Return Nothing
     End Function
 
-    Public Function DeleteADObject(Username As String) As Boolean
-
+    Public Function DeleteADObject(ByVal Username As String) As Boolean
         Debug.WriteLine("[Info] Delete requested on user: " & Username)
-
         Dim UserEntry As DirectoryEntry = GetDirEntryFromSAM(Username)
         Try
             If Not UserEntry Is Nothing Then
@@ -323,6 +325,28 @@ Module ActiveDirectoryHelper
             Return False
         Catch Ex As Exception
             Debug.WriteLine("[Error] Unable to Delete User (" & Username & "): " & Ex.Message & Environment.NewLine & Ex.StackTrace.ToString)
+            Return False
+        End Try
+    End Function
+
+    Public Function MoveADObject(ByVal Username As String, ByVal Container As String) As Boolean
+        Debug.WriteLine("[Info] Move requested on object: " & Username & " to container at: " & Container)
+        Dim UserEntry As DirectoryEntry = GetDirEntryFromSAM(Username)
+        Try
+            If Not UserEntry Is Nothing Then
+                Dim Path As String
+                If String.IsNullOrEmpty(LoginUsernamePrefix) Then
+                    Path = "LDAP://" & Container
+                Else
+                    Path = "LDAP://" & LoginUsernamePrefix & "/" & Container
+                End If
+                UserEntry.MoveTo(New DirectoryEntry(Path, LoginUsername, LoginPassword, AuthenticationTypes.Secure))
+                Debug.WriteLine("[Info] Successfully moved object (" & Username & ") to container (" & Container & ")")
+                Return True
+            End If
+            Return False
+        Catch Ex As Exception
+            Debug.WriteLine("[Error] Unable to Move User (" & Username & ") to Container (" & Container & "): " & Ex.Message & Environment.NewLine & Ex.StackTrace.ToString)
             Return False
         End Try
     End Function

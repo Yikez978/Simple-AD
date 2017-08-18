@@ -222,7 +222,7 @@ Public Class ControlDomainTreeContainerItem
                             Node.Nodes.Add(NewChildren(i))
                         Next
                     Else
-                        Debug.WriteLine("[Error] Error Encountered During Load")
+                        Debug.WriteLine("[Error] Error Encountered During domain Tree View Load")
                     End If
                 Catch ex As Exception
                     Debug.WriteLine("[Error] Error adding completed node to tree: " & ex.Message)
@@ -289,6 +289,7 @@ Public Class ControlDomainTreeContainerItem
             Me.BackColor = Color.FromArgb(211, 191, 221)
 
             SelectedOU = Me.DistinguishedName
+            DomainContainer.SelectedOU = Me.DistinguishedName
             FormMain.ToolStripStatusLabelStatus.Text = SelectedOU
         End If
     End Sub

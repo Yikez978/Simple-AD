@@ -12,20 +12,19 @@ Module Office365Helper
         Next
 
         Dim credential As PSCredential = New PSCredential(Email, secureString)
-        Dim connectionInfo As WSManConnectionInfo
+        Dim connectionInfo As WSManConnectionInfo = Nothing
         Try
             connectionInfo = New WSManConnectionInfo(New Uri(My.Settings.OfficeURI), My.Settings.OfficeShellURI, credential)
+            With connectionInfo
+                .AuthenticationMechanism = AuthenticationMechanism.Basic
+                .SkipCACheck = True
+                .SkipCNCheck = True
+                .UseCompression = True
+                .MaximumConnectionRedirectionCount = 4
+            End With
         Catch Ex As Exception
             Debug.WriteLine("[Error] " & Ex.Message)
         End Try
-
-        With connectionInfo
-            .AuthenticationMechanism = AuthenticationMechanism.Basic
-            .SkipCACheck = True
-            .SkipCNCheck = True
-            .UseCompression = True
-            .MaximumConnectionRedirectionCount = 4
-        End With
 
         Dim runspace As Runspace = RunspaceFactory.CreateRunspace(connectionInfo)
         Try

@@ -48,7 +48,6 @@ Partial Class FormLDAPQuery
         Me.QueryTb.MaxLength = 32767
         Me.QueryTb.Name = "QueryTb"
         Me.QueryTb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
-        Me.QueryTb.PromptText = "LDAP Query"
         Me.QueryTb.ScrollBars = System.Windows.Forms.ScrollBars.None
         Me.QueryTb.SelectedText = ""
         Me.QueryTb.SelectionLength = 0

@@ -27,6 +27,7 @@ Public Module GlobalVariables
     Public Property IconOU As Image = GetImage(ActiveDirectoryIconType.OU)
     Public Property IconDomian As Image = GetImage(ActiveDirectoryIconType.Domain)
     Public Property IconContainer As Image = GetImage(ActiveDirectoryIconType.Container)
+    Public Property IconContact As Image = GetImage(ActiveDirectoryIconType.Contact)
 
     Public HiddenColums As New List(Of String)
     Public TempHiddenColumns As New List(Of String)

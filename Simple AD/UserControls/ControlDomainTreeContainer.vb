@@ -7,6 +7,10 @@ Public Class ControlDomainTreeContainer
     Private _DomainName As String
     Private _DomainController As String
     Private _isWorking As Boolean
+    Private _SelectedOU As String
+
+    Public Event Working(ByVal State As Boolean)
+    Public Event SelectedOUChanged(ByVal Ou As String)
 
     Property DomainName As String
         Set(value As String)
@@ -35,7 +39,15 @@ Public Class ControlDomainTreeContainer
         End Get
     End Property
 
-    Public Event Working(ByVal State As Boolean)
+    Public Property SelectedOU As String
+        Set(value As String)
+            _SelectedOU = value
+            RaiseEvent SelectedOUChanged(_SelectedOU)
+        End Set
+        Get
+            Return _SelectedOU
+        End Get
+    End Property
 
     Public Sub New(ByVal container As Object)
         InitializeComponent()

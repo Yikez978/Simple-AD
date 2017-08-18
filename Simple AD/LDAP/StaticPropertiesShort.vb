@@ -18,15 +18,15 @@
             "name",
             "description",
             "sAMAccountType",
-            "UserAccountControl"
+            "UserAccountControl",
+            "objectClass"
     }
 
     Public DefaultLDAPColumns() = {
             "name",
             "displayName",
             "sAMAccountName",
-            "description",
-            "sAMAccountType"
+            "description"
     }
 
     Public LDAPBulkSupportedProps() = {
@@ -35,6 +35,7 @@
             "description",
             "proxyAddresses",
             "pager",
+            "name",
             "sn",
             "givenName",
             "scriptPath",

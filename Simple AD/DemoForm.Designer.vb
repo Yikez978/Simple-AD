@@ -22,7 +22,6 @@ Partial Class DemoForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(DemoForm))
         Me.SuspendLayout()
         '
         'DemoForm

@@ -4,7 +4,6 @@
 
     Private imageValue As Image
     Private m_imageSize As Size
-    Public Property columnName As String
 
     Public Sub New()
         Me.CellTemplate = New TextAndImageCell

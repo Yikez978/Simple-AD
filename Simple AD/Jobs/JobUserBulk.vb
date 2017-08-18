@@ -30,11 +30,11 @@
             .Controls.Add(NewImportJobContainer)
         End With
 
-        FormMain.GetMainTabCtrl().TabPages.Add(TabPage)
+        GetMainTabCtrl().TabPages.Add(TabPage)
 
-        FormMain.GetMainTabCtrl.SelectTab(FormMain.GetMainTabCtrl.TabCount - 1)
+        GetMainTabCtrl().SelectTab(GetMainTabCtrl().TabCount - 1)
 
-        DataGrid = FormMain.GetMainDataGrid
+        DataGrid = GetMainDataGrid()
 
         Spinner = New ControlTabSpinner("Importing Data...", NewImportJobContainer)
         Spinner.SpinnerVisible = True

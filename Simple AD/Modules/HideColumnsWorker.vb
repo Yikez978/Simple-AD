@@ -70,7 +70,7 @@ Public Module HideColumnsWorker
     End Sub
 
     Private Sub Cbw_ProgressChanged(ByVal sender As Object, ByVal e As ProgressChangedEventArgs)
-        FormMain.GetMainDataGrid.Columns(e.UserState.ToString).Visible = False
+        GetMainDataGrid.Columns(e.UserState.ToString).Visible = False
         Debug.WriteLine("[Info] The following Column in MainDataGrid Has been Hidden - " & e.UserState.ToString)
         HiddenColums.Add(e.UserState.ToString)
     End Sub

@@ -137,35 +137,38 @@ Public Class FormSimpleAD
             Case Else
                 Exit Select
         End Select
+
+        'Code to allow rezing borderless forms
         MyBase.WndProc(message)
+        If Me.Resizable Then
+            If message.Msg = WM_NCHITTEST AndAlso CInt(message.Result) = HTCLIENT Then
+                ' drag the form
+                message.Result = New IntPtr(HTCAPTION)
+            End If
 
-        If message.Msg = WM_NCHITTEST AndAlso CInt(message.Result) = HTCLIENT Then
-            ' drag the form
-            message.Result = New IntPtr(HTCAPTION)
-        End If
 
+            If message.Msg = &H84 Then
+                ' WM_NCHITTEST
+                Dim cursor__1 = Me.PointToClient(Cursor.Position)
 
-        If message.Msg = &H84 Then
-            ' WM_NCHITTEST
-            Dim cursor__1 = Me.PointToClient(Cursor.Position)
+                If TopLeft.Contains(cursor__1) Then
+                    message.Result = New IntPtr(HTTOPLEFT)
+                ElseIf TopRight.Contains(cursor__1) Then
+                    message.Result = New IntPtr(HTTOPRIGHT)
+                ElseIf BottomLeft.Contains(cursor__1) Then
+                    message.Result = New IntPtr(HTBOTTOMLEFT)
+                ElseIf BottomRight.Contains(cursor__1) Then
+                    message.Result = New IntPtr(HTBOTTOMRIGHT)
 
-            If TopLeft.Contains(cursor__1) Then
-                message.Result = New IntPtr(HTTOPLEFT)
-            ElseIf TopRight.Contains(cursor__1) Then
-                message.Result = New IntPtr(HTTOPRIGHT)
-            ElseIf BottomLeft.Contains(cursor__1) Then
-                message.Result = New IntPtr(HTBOTTOMLEFT)
-            ElseIf BottomRight.Contains(cursor__1) Then
-                message.Result = New IntPtr(HTBOTTOMRIGHT)
-
-            ElseIf Top.Contains(cursor__1) Then
-                message.Result = New IntPtr(HTTOP)
-            ElseIf Left.Contains(cursor__1) Then
-                message.Result = New IntPtr(HTLEFT)
-            ElseIf Right.Contains(cursor__1) Then
-                message.Result = New IntPtr(HTRIGHT)
-            ElseIf Bottom.Contains(cursor__1) Then
-                message.Result = New IntPtr(HTBOTTOM)
+                ElseIf Top.Contains(cursor__1) Then
+                    message.Result = New IntPtr(HTTOP)
+                ElseIf Left.Contains(cursor__1) Then
+                    message.Result = New IntPtr(HTLEFT)
+                ElseIf Right.Contains(cursor__1) Then
+                    message.Result = New IntPtr(HTRIGHT)
+                ElseIf Bottom.Contains(cursor__1) Then
+                    message.Result = New IntPtr(HTBOTTOM)
+                End If
             End If
         End If
     End Sub
@@ -217,6 +220,5 @@ Public Class FormSimpleAD
             Return New Rectangle(Me.ClientSize.Width - Value, Me.ClientSize.Height - Value, Value, Value)
         End Get
     End Property
-
 End Class
 

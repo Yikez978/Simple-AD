@@ -303,7 +303,6 @@ Partial Class FormBulkUser
         Me.StringDragTb.MaxLength = 32767
         Me.StringDragTb.Name = "StringDragTb"
         Me.StringDragTb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
-        Me.StringDragTb.PromptText = "Enter String..."
         Me.StringDragTb.ScrollBars = System.Windows.Forms.ScrollBars.None
         Me.StringDragTb.SelectedText = ""
         Me.StringDragTb.SelectionLength = 0
@@ -708,7 +707,6 @@ Partial Class FormBulkUser
         Me.ProfilePathTb.MaxLength = 32767
         Me.ProfilePathTb.Name = "ProfilePathTb"
         Me.ProfilePathTb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
-        Me.ProfilePathTb.PromptText = "\\fs1\home$\Profiles\%Username%"
         Me.ProfilePathTb.ScrollBars = System.Windows.Forms.ScrollBars.None
         Me.ProfilePathTb.SelectedText = ""
         Me.ProfilePathTb.SelectionLength = 0
@@ -741,7 +739,6 @@ Partial Class FormBulkUser
         Me.HomeFolderTb.MaxLength = 32767
         Me.HomeFolderTb.Name = "HomeFolderTb"
         Me.HomeFolderTb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
-        Me.HomeFolderTb.PromptText = "\\fs1\home$\%Username%"
         Me.HomeFolderTb.ScrollBars = System.Windows.Forms.ScrollBars.None
         Me.HomeFolderTb.SelectedText = ""
         Me.HomeFolderTb.SelectionLength = 0

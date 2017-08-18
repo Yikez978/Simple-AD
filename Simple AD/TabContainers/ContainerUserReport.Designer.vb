@@ -23,23 +23,24 @@ Partial Class ContainerUserReport
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.MainDataGrid = New MetroFramework.Controls.MetroGrid()
         Me.MainSplitContainer = New System.Windows.Forms.SplitContainer()
+        Me.DomainPl = New System.Windows.Forms.Panel()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.BulkContextMenu = New MetroFramework.Controls.MetroContextMenu(Me.components)
         Me.BulkModifyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EnableDisableBulkToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.MoveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MoveBulkToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SingleContextMenu = New MetroFramework.Controls.MetroContextMenu(Me.components)
         Me.EnableDisableSingleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MoveSingleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem4 = New System.Windows.Forms.ToolStripMenuItem()
         Me.PropertiesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SpacerPanel = New System.Windows.Forms.Panel()
@@ -60,55 +61,56 @@ Partial Class ContainerUserReport
         Me.MainDataGrid.AllowUserToAddRows = False
         Me.MainDataGrid.AllowUserToDeleteRows = False
         Me.MainDataGrid.AllowUserToResizeRows = False
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.MainDataGrid.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.MainDataGrid.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.MainDataGrid.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.MainDataGrid.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.MainDataGrid.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None
         Me.MainDataGrid.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(CType(CType(85, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(85, Byte), Integer))
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(153, Byte), Integer), CType(CType(153, Byte), Integer), CType(CType(153, Byte), Integer))
-        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer))
-        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.MainDataGrid.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(85, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(85, Byte), Integer))
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(153, Byte), Integer), CType(CType(153, Byte), Integer), CType(CType(153, Byte), Integer))
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer))
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.MainDataGrid.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.MainDataGrid.ColumnHeadersHeight = 28
         Me.MainDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI Semilight", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(153, Byte), Integer), CType(CType(153, Byte), Integer), CType(CType(153, Byte), Integer))
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer))
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.MainDataGrid.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI Semilight", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(153, Byte), Integer), CType(CType(153, Byte), Integer), CType(CType(153, Byte), Integer))
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer))
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.MainDataGrid.DefaultCellStyle = DataGridViewCellStyle3
         Me.MainDataGrid.Dock = System.Windows.Forms.DockStyle.Fill
         Me.MainDataGrid.EnableHeadersVisualStyles = False
         Me.MainDataGrid.Font = New System.Drawing.Font("Segoe UI", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel)
         Me.MainDataGrid.GridColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.MainDataGrid.HighLightPercentage = 0.8!
         Me.MainDataGrid.Location = New System.Drawing.Point(0, 0)
+        Me.MainDataGrid.Margin = New System.Windows.Forms.Padding(0)
         Me.MainDataGrid.Name = "MainDataGrid"
         Me.MainDataGrid.ReadOnly = True
         Me.MainDataGrid.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
-        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(CType(CType(85, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(85, Byte), Integer))
-        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel)
-        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(153, Byte), Integer), CType(CType(153, Byte), Integer), CType(CType(153, Byte), Integer))
-        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer))
-        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.MainDataGrid.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(85, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(85, Byte), Integer))
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel)
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(153, Byte), Integer), CType(CType(153, Byte), Integer), CType(CType(153, Byte), Integer))
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer))
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.MainDataGrid.RowHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.MainDataGrid.RowHeadersVisible = False
         Me.MainDataGrid.RowHeadersWidth = 44
         Me.MainDataGrid.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
-        DataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.ControlLightLight
-        DataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlDarkDark
-        DataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.ControlLightLight
-        Me.MainDataGrid.RowsDefaultCellStyle = DataGridViewCellStyle10
+        DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.ControlLightLight
+        DataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.ControlLightLight
+        Me.MainDataGrid.RowsDefaultCellStyle = DataGridViewCellStyle5
         Me.MainDataGrid.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         Me.MainDataGrid.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.SystemColors.Window
         Me.MainDataGrid.RowTemplate.DefaultCellStyle.Font = New System.Drawing.Font("Segoe UI Symbol", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -131,6 +133,7 @@ Partial Class ContainerUserReport
         'MainSplitContainer.Panel1
         '
         Me.MainSplitContainer.Panel1.BackColor = System.Drawing.SystemColors.Window
+        Me.MainSplitContainer.Panel1.Controls.Add(Me.DomainPl)
         Me.MainSplitContainer.Panel1.Controls.Add(Me.Panel2)
         '
         'MainSplitContainer.Panel2
@@ -140,6 +143,15 @@ Partial Class ContainerUserReport
         Me.MainSplitContainer.SplitterDistance = 170
         Me.MainSplitContainer.SplitterWidth = 2
         Me.MainSplitContainer.TabIndex = 3
+        '
+        'DomainPl
+        '
+        Me.DomainPl.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DomainPl.Location = New System.Drawing.Point(0, 28)
+        Me.DomainPl.Margin = New System.Windows.Forms.Padding(0)
+        Me.DomainPl.Name = "DomainPl"
+        Me.DomainPl.Size = New System.Drawing.Size(170, 411)
+        Me.DomainPl.TabIndex = 2
         '
         'Panel2
         '
@@ -166,7 +178,7 @@ Partial Class ContainerUserReport
         '
         'BulkContextMenu
         '
-        Me.BulkContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BulkModifyToolStripMenuItem, Me.EnableDisableBulkToolStripMenuItem, Me.MoveToolStripMenuItem, Me.DeleteToolStripMenuItem})
+        Me.BulkContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BulkModifyToolStripMenuItem, Me.EnableDisableBulkToolStripMenuItem, Me.MoveBulkToolStripMenuItem, Me.DeleteToolStripMenuItem})
         Me.BulkContextMenu.Name = "BulkContextMenu"
         Me.BulkContextMenu.Size = New System.Drawing.Size(153, 92)
         Me.BulkContextMenu.Style = MetroFramework.MetroColorStyle.Purple
@@ -183,11 +195,11 @@ Partial Class ContainerUserReport
         Me.EnableDisableBulkToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.EnableDisableBulkToolStripMenuItem.Text = "Enable/Disable"
         '
-        'MoveToolStripMenuItem
+        'MoveBulkToolStripMenuItem
         '
-        Me.MoveToolStripMenuItem.Name = "MoveToolStripMenuItem"
-        Me.MoveToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
-        Me.MoveToolStripMenuItem.Text = "Move..."
+        Me.MoveBulkToolStripMenuItem.Name = "MoveBulkToolStripMenuItem"
+        Me.MoveBulkToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.MoveBulkToolStripMenuItem.Text = "Move..."
         '
         'DeleteToolStripMenuItem
         '
@@ -197,7 +209,7 @@ Partial Class ContainerUserReport
         '
         'SingleContextMenu
         '
-        Me.SingleContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EnableDisableSingleToolStripMenuItem, Me.ToolStripMenuItem3, Me.ToolStripMenuItem4, Me.PropertiesToolStripMenuItem})
+        Me.SingleContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EnableDisableSingleToolStripMenuItem, Me.MoveSingleToolStripMenuItem, Me.ToolStripMenuItem4, Me.PropertiesToolStripMenuItem})
         Me.SingleContextMenu.Name = "BulkContextMenu"
         Me.SingleContextMenu.Size = New System.Drawing.Size(153, 92)
         Me.SingleContextMenu.Style = MetroFramework.MetroColorStyle.Purple
@@ -208,11 +220,11 @@ Partial Class ContainerUserReport
         Me.EnableDisableSingleToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.EnableDisableSingleToolStripMenuItem.Text = "Enable/Disable"
         '
-        'ToolStripMenuItem3
+        'MoveSingleToolStripMenuItem
         '
-        Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
-        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(152, 22)
-        Me.ToolStripMenuItem3.Text = "Move..."
+        Me.MoveSingleToolStripMenuItem.Name = "MoveSingleToolStripMenuItem"
+        Me.MoveSingleToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.MoveSingleToolStripMenuItem.Text = "Move..."
         '
         'ToolStripMenuItem4
         '
@@ -279,7 +291,7 @@ Partial Class ContainerUserReport
         '
         'ContainerUserReport
         '
-        Me.BackColor = System.Drawing.SystemColors.Control
+        Me.BackColor = System.Drawing.SystemColors.Window
         Me.Controls.Add(Me.MainSplitContainer)
         Me.Controls.Add(Me.SpacerPanel)
         Me.Name = "ContainerUserReport"
@@ -303,15 +315,16 @@ Partial Class ContainerUserReport
     Friend WithEvents BulkContextMenu As Controls.MetroContextMenu
     Friend WithEvents BulkModifyToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents EnableDisableBulkToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents MoveToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents MoveBulkToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DeleteToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SingleContextMenu As Controls.MetroContextMenu
     Friend WithEvents EnableDisableSingleToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem3 As ToolStripMenuItem
+    Friend WithEvents MoveSingleToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem4 As ToolStripMenuItem
     Friend WithEvents PropertiesToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Panel2 As Panel
     Friend WithEvents Label1 As Label
     Friend WithEvents SpacerPanel As Panel
     Friend WithEvents SearchBoxTb As Controls.MetroTextBox
+    Friend WithEvents DomainPl As Panel
 End Class

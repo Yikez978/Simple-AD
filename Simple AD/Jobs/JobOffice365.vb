@@ -36,13 +36,13 @@ Public Class JobOffice365
             .Controls.Add(NewOffice365Container)
         End With
 
-        FormMain.GetMainTabCtrl().TabPages.Add(TabPage)
+        GetMainTabCtrl().TabPages.Add(TabPage)
         DataGrid = NewOffice365Container.GetMainDataGrid()
 
-        FormMain.GetMainTabCtrl.SelectTab(FormMain.GetMainTabCtrl.TabCount - 1)
+        GetMainTabCtrl.SelectTab(GetMainTabCtrl.TabCount - 1)
 
-        FormMain.GetMainTabCtrl.SelectedTab.Controls.Add(NewOffice365Container)
-        FormMain.GetMainTabCtrl.Visible = True
+        GetMainTabCtrl.SelectedTab.Controls.Add(NewOffice365Container)
+        GetMainTabCtrl.Visible = True
 
         Spinner = New ControlTabSpinner("Connecting to " & Domain(1).ToString, NewOffice365Container)
         Spinner.SpinnerVisible = True
@@ -60,14 +60,6 @@ Public Class JobOffice365
     Public Class Jobparameters
         Property DataGrid As DataGridView
     End Class
-
-    Private Function GenerateJobID() As Integer
-
-        Dim random As Random = New Random()
-        Dim randNumber As Byte = random.Next(255)
-        Return CInt(randNumber)
-
-    End Function
 
     Private Sub ApplyDataSource(ByVal datagrid As DataGridView, ByVal datasource As DataTable)
         If datagrid.InvokeRequired Then

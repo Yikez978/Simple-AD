@@ -52,7 +52,7 @@
             .Visible = True
         End With
 
-        GetMainSplitContainer0.Panel1.Controls.Add(DomainTree)
+        DomainPl.Controls.Add(DomainTree)
         DomainTree.BringToFront()
 
     End Sub

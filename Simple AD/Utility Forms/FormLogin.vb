@@ -4,7 +4,7 @@ Public Class FormLogin
 
     Private LoginThread As Thread
 
-    Public Class LoginCredentials
+    Private Class LoginCredentials
         Property Username As String
         Property Password As String
     End Class
@@ -20,10 +20,12 @@ Public Class FormLogin
             value = True
         Else
             If Not Me.IsHandleCreated Then
-                Me.CreateHandle()
-                value = False
+                If Not Me.IsDisposed Then
+                    Me.CreateHandle()
+                    value = False
+                End If
             End If
-        End If
+            End If
 
         MyBase.SetVisibleCore(value)
 
@@ -126,9 +128,7 @@ Public Class FormLogin
         creds.Username = UnTb.Text
         creds.Password = PwdTb.Text
 
-        If Not LoginThread.IsAlive Then
-            LoginThread.Start(creds)
-        End If
+        LoginThread.Start(creds)
     End Sub
 
     Private Sub Login(ByVal Credentials As LoginCredentials)

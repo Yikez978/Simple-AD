@@ -1,4 +1,5 @@
 ﻿Imports System.DirectoryServices
+Imports System.Security.Principal
 
 Public Class JobUserReport
     Inherits SimpleADJob
@@ -7,14 +8,23 @@ Public Class JobUserReport
     Private TabPage As TabPage
     Private UserReportContainer As ContainerUserReport
     Private Spinner As ControlTabSpinner
-    Private GetUsersThread As New Threading.Thread(AddressOf GetUsers)
+    Private GetUsersThread As Threading.Thread
     Private _LDAPQuery As String
+    Private _Type As ReportType
+
+    Public Class Jobparameters
+        Property DataGrid As DataGridView
+        Property Type As ReportType
+        Property Filter As String
+        Property Entry As String
+    End Class
 
     Public Sub New(ByVal Type As ReportType, Optional LDAPQuery As String = Nothing)
-
         Dim NewId = GenerateJobID()
-        UserReportContainer = New ContainerUserReport(NewId, "Report - " & Type.ToString)
-        UserReportContainer.Visible = False
+        UserReportContainer = New ContainerUserReport(NewId, "Report - " & Type.ToString, Me)
+        UserReportContainer.MainDataGrid.Visible = False
+
+        _Type = Type
 
         TabPage = New TabPage
         With TabPage
@@ -26,44 +36,55 @@ Public Class JobUserReport
             .Controls.Add(UserReportContainer)
         End With
 
-        FormMain.GetMainTabCtrl().TabPages.Add(TabPage)
+        GetMainTabCtrl().TabPages.Add(TabPage)
+        TabPage.SuspendLayout()
+        TabPage.Controls.Add(UserReportContainer)
         DataGrid = UserReportContainer.GetMainDataGrid()
-
-        FormMain.GetMainTabCtrl.SelectTab(FormMain.GetMainTabCtrl.TabCount - 1)
-
-        FormMain.GetMainTabCtrl.SelectedTab.Controls.Add(UserReportContainer)
-        FormMain.GetMainTabCtrl.Visible = True
+        GetMainTabCtrl().SelectTab(GetMainTabCtrl().TabCount - 1)
+        GetMainTabCtrl().Visible = True
 
         If LDAPQuery IsNot Nothing Then
             _LDAPQuery = LDAPQuery
         End If
 
+        Select Case Type
+            Case ReportType.Explorer
+                UserReportContainer.MainSplitContainer.Panel1Collapsed = False
+            Case Else
+                UserReportContainer.MainSplitContainer.Panel1Collapsed = True
+        End Select
+
         Spinner = New ControlTabSpinner("Generating Report...", UserReportContainer)
-        Spinner.SpinnerVisible = True
-
         TabPage.Controls.Add(Spinner)
-        Spinner.BringToFront()
 
-        Dim paras As New Jobparameters
-        paras.DataGrid = DataGrid
-        paras.Type = Type
-
-        GetUsersThread.IsBackground = True
-        GetUsersThread.Start(paras)
+        Refresh()
     End Sub
 
-    Public Class Jobparameters
-        Property DataGrid As DataGridView
-        Property Type As ReportType
-    End Class
+    Public Sub Refresh(Optional Path As String = Nothing)
 
-    Private Function GenerateJobID() As Integer
+        Spinner.SpinnerVisible = True
 
-        Dim random As Random = New Random()
-        Dim randNumber As Byte = random.Next(255)
-        Return CInt(randNumber)
+        Dim paras As New Jobparameters With {
+            .DataGrid = DataGrid,
+            .Type = _Type
+        }
 
-    End Function
+        Select Case paras.Type
+            Case ReportType.DisabledUsers
+                paras.Filter = "(&(objectCategory=person)(objectClass=user)(userAccountControl:1.2.840.113556.1.4.803:=2))"
+            Case ReportType.CustomLDAP
+                paras.Filter = _LDAPQuery
+            Case ReportType.AllObjects
+                paras.Filter = "(objectClass=*)"
+            Case ReportType.Explorer
+                If Not String.IsNullOrEmpty(Path) Then
+                    paras.Entry = Path
+                End If
+        End Select
+
+        GetUsersThread = New Threading.Thread(AddressOf GetUsers) With {.IsBackground = True}
+        GetUsersThread.Start(paras)
+    End Sub
 
     Private Sub ApplyDataSource(ByVal datagrid As DataGridView, ByVal datasource As DataTable)
         If datagrid.InvokeRequired Then
@@ -81,7 +102,9 @@ Public Class JobUserReport
                     .DataPropertyName = "name"
                     .HeaderText = "Name"
                     .Visible = True
+                    .Frozen = True
                     .FillWeight = 80
+                    .DefaultCellStyle.BackColor = Color.WhiteSmoke
                 End With
 
                 datagrid.Columns.Insert(0, Name)
@@ -99,41 +122,41 @@ Public Class JobUserReport
                 Next
 
                 Spinner.Dispose()
-                UserReportContainer.Visible = True
+                UserReportContainer.MainDataGrid.Visible = True
+                TabPage.ResumeLayout()
             End If
         End If
     End Sub
 
-    Private Sub GetUsers(ByVal Param As Object)
+    Private Sub GetUsers(ByVal Param As Jobparameters)
 
-        Dim p As Jobparameters = CType(Param, Jobparameters)
-        Dim DataGridPara = p.DataGrid
-        Dim Type = p.Type
+        Dim DataGridPara As DataGridView = Param.DataGrid
+        Dim Type As ReportType = Param.Type
+        Dim Filter As String = Param.Filter
+        Dim EntryPath As String = Param.Entry
 
         Dim dt As New DataTable
 
         For Each Prop In GetLDAPProps()
-            If Not dt.Columns.Contains(GetFriendlyLDAPName(Prop)) Then
+            If Not dt.Columns.Contains(Prop) Then
                 dt.Columns.Add(New DataColumn(Prop, GetType(String)))
             End If
         Next
 
-        Dim Entry As DirectoryEntry = GetDirEntry()
+        Dim Entry As DirectoryEntry = GetDirEntry(Param.Entry)
 
         Dim DirSearcher As DirectorySearcher = New DirectorySearcher(GetDirEntryPath)
 
         With DirSearcher
             .SearchRoot = Entry
+            .Filter = Param.Filter
+            Select Case Type
+                Case ReportType.Explorer
+                    .SearchScope = SearchScope.OneLevel
+                Case Else
+                    .SearchScope = SearchScope.Subtree
+            End Select
         End With
-
-        Select Case p.Type
-            Case ReportType.DisabledUsers
-                DirSearcher.Filter = "(&(objectCategory=person)(objectClass=user)(userAccountControl:1.2.840.113556.1.4.803:=2))"
-            Case ReportType.CustomLDAP
-                DirSearcher.Filter = _LDAPQuery
-            Case ReportType.AllObjects
-                DirSearcher.Filter = "(objectClass=*)"
-        End Select
 
         If Not My.Settings.LoadAdvLDAP Then
             DirSearcher.PropertiesToLoad.AddRange(GetLDAPProps())
@@ -157,7 +180,22 @@ Public Class JobUserReport
                 For Each column As DataColumn In dt.Columns()
                     If Not result.Properties(column.ColumnName) Is Nothing Then
                         If result.Properties(column.ColumnName).Count > 0 Then
-                            NewRow.Item(column.ColumnName) = result.Properties(column.ColumnName).Item(0).ToString
+                            If result.Properties(column.ColumnName).Count > 1 Then
+                                For i As Integer = 0 To result.Properties(column.ColumnName).Count - 1
+                                    NewRow.Item(column.ColumnName) = result.Properties(column.ColumnName).Item(i).ToString
+                                Next
+                            Else
+                                If result.Properties(column.ColumnName).Item(0).GetType() = GetType(Byte()) Then
+                                    Try
+                                        Dim DecodedByte As Guid = New Guid(DirectCast(result.Properties(column.ColumnName).Item(0), Byte()))
+                                        NewRow.Item(column.ColumnName) = DecodedByte.ToString
+                                    Catch
+                                        NewRow.Item(column.ColumnName) = ""
+                                    End Try
+                                Else
+                                    NewRow.Item(column.ColumnName) = result.Properties(column.ColumnName).Item(0).ToString
+                                End If
+                            End If
                         End If
                     Else
                         NewRow.Item(column.ColumnName) = ""
@@ -167,7 +205,7 @@ Public Class JobUserReport
             Next
 
             ApplyDataSource(DataGridPara, dt)
-        Catch ArgEx As system.ArgumentException
+        Catch ArgEx As System.ArgumentException
             ReportError(ArgEx)
             Debug.WriteLine("[Error] " & ArgEx.GetBaseException.ToString & ArgEx.Message)
         Catch Ex As Exception
@@ -185,5 +223,17 @@ Public Class JobUserReport
             Spinner.MainSpinner.Spinning = False
         End If
     End Sub
+
+    Public Shared Function IntToString(value As Integer, baseChars As Char()) As String
+        Dim result As String = String.Empty
+        Dim targetBase As Integer = baseChars.Length
+
+        Do
+            result = baseChars(value Mod targetBase) + result
+            value = value / targetBase
+        Loop While value > 0
+
+        Return result
+    End Function
 
 End Class

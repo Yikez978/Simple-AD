@@ -56,7 +56,6 @@ Partial Class FormO365Login
         Me.PwdTb.MaxLength = 32767
         Me.PwdTb.Name = "PwdTb"
         Me.PwdTb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(9679)
-        Me.PwdTb.PromptText = "Password"
         Me.PwdTb.ScrollBars = System.Windows.Forms.ScrollBars.None
         Me.PwdTb.SelectedText = ""
         Me.PwdTb.SelectionLength = 0
@@ -93,7 +92,6 @@ Partial Class FormO365Login
         Me.UnTb.MaxLength = 32767
         Me.UnTb.Name = "UnTb"
         Me.UnTb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
-        Me.UnTb.PromptText = "Email"
         Me.UnTb.ScrollBars = System.Windows.Forms.ScrollBars.None
         Me.UnTb.SelectedText = ""
         Me.UnTb.SelectionLength = 0

@@ -100,7 +100,7 @@
                     User.Row.DataGridView.Invoke(New Action(Sub() User.Row.Cells.Item(PropertyToModify).Value = NewValue))
                 End If
             Else
-                    Dim ErrorMsg = New FormError("Falied to modify the attribute: " & Row.Cells("AttributeFull").Value.ToString & " for user: " & User.Username, My.Resources.ErrorTriangle)
+                Dim ErrorMsg = New FormAlert("Falied to modify the attribute: " & Row.Cells("AttributeFull").Value.ToString & " for user: " & User.Username, AlertType.ErrorAlert)
             End If
         Next
     End Sub

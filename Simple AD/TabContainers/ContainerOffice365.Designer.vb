@@ -140,7 +140,6 @@ Partial Class ContainerOffice365
         Me.SearchBoxTb.MaxLength = 32767
         Me.SearchBoxTb.Name = "SearchBoxTb"
         Me.SearchBoxTb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
-        Me.SearchBoxTb.PromptText = "Filter..."
         Me.SearchBoxTb.ScrollBars = System.Windows.Forms.ScrollBars.None
         Me.SearchBoxTb.SelectedText = ""
         Me.SearchBoxTb.SelectionLength = 0
@@ -159,7 +158,7 @@ Partial Class ContainerOffice365
         'ContainerOffice365
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
-        Me.BackColor = System.Drawing.SystemColors.Control
+        Me.BackColor = System.Drawing.SystemColors.Window
         Me.Controls.Add(Me.MainDataGrid)
         Me.Controls.Add(Me.SpacerPanel)
         Me.Name = "ContainerOffice365"

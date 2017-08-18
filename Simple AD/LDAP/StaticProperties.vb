@@ -275,7 +275,8 @@
             "whenCreated",
             "whenChanged",
             "msDS-UserAccountDisabled",
-            "objectcategory"
+            "objectcategory",
+            "objectClass"
     }
 
 End Module

@@ -18,4 +18,31 @@
         DisabledUser = 27
     End Enum
 
+    Public Enum ConfirmationType
+        Delete
+    End Enum
+
+    Public Enum AlertType
+        Success
+        ErrorAlert
+    End Enum
+
+    Public Enum ObjectClass
+        organizationalUnit
+        container
+        computer
+        user
+        group
+        dnsNode
+        dnsZode
+        linkTrackOMTEntry
+        publicFolder
+        contact
+        msSFU30NISMapConfig
+        msSFU30DomainInfo
+        nTFRSReplicaSet
+        serviceConnectionPoint
+        groupPolicyContainer
+    End Enum
+
 End Module
