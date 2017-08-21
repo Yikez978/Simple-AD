@@ -47,7 +47,7 @@
         Return CurrentTab
     End Function
 
-    Public Function GetDomainPanel() As ControlDomainTreeContainer
+    Public Function GetDomainPanel() As ControlDomainTreeView
         Try
             Dim CurrentTab As ContainerUserReport = GetMainTabCtrl.SelectedTab.Controls.Item(0)
             Return CurrentTab.GetDomainPanel()

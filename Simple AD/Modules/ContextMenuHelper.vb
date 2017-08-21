@@ -1,6 +1,6 @@
 ﻿Public Module ContextMenuHelper
 
-    Public Sub GetDataGridViewConextMenu(DataGrid As DataGridView, e As DataGridViewCellMouseEventArgs, ContextMenuStrip As ContextMenuStrip)
+    Public Sub GetDataGridViewConextMenu(DataGrid As DataGridView, e As DataGridViewCellMouseEventArgs, ContextMenuStrip As ContextMenu, sender As Object)
 
         If e.Button = MouseButtons.Right Then
             Try
@@ -12,22 +12,23 @@
                         If ContextMenuStrip.Name = "CMStripRowRClick" Then
 
                             If DataGrid.ReadOnly Then
-                                ContextMenuStrip.Items("DeleteRow").Enabled = False
-                                ContextMenuStrip.Items("InsertNewRow").Enabled = False
+                                ContextMenuStrip.MenuItems("DeleteRow").Enabled = False
+                                ContextMenuStrip.MenuItems("InsertNewRow").Enabled = False
                             Else
-                                ContextMenuStrip.Items("DeleteRow").Enabled = True
-                                ContextMenuStrip.Items("InsertNewRow").Enabled = True
+                                ContextMenuStrip.MenuItems("DeleteRow").Enabled = True
+                                ContextMenuStrip.MenuItems("InsertNewRow").Enabled = True
                             End If
                         End If
 
-                        ContextMenuStrip.Show((CInt(Cursor.Position.X)), (CInt(Cursor.Position.Y)))
-
+                        'ContextMenuStrip.Show((CInt(Cursor.Position.X)), (CInt(Cursor.Position.Y)))
+                        ContextMenuStrip.Show(DataGrid, DataGrid.PointToClient(Cursor.Position))
 
                     End If
 
                 ElseIf DataGrid.SelectedRows.Count > 1 Then
 
-                    ContextMenuStrip.Show((CInt(Cursor.Position.X)), (CInt(Cursor.Position.Y)))
+                    'ContextMenuStrip.Show((CInt(Cursor.Position.X)), (CInt(Cursor.Position.Y)))
+                    ContextMenuStrip.Show(DataGrid, DataGrid.PointToClient(Cursor.Position))
 
                 End If
 

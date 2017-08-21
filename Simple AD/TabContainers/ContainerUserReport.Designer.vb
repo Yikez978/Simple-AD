@@ -22,7 +22,6 @@ Partial Class ContainerUserReport
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -30,29 +29,27 @@ Partial Class ContainerUserReport
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.MainDataGrid = New MetroFramework.Controls.MetroGrid()
         Me.MainSplitContainer = New System.Windows.Forms.SplitContainer()
-        Me.DomainPl = New System.Windows.Forms.Panel()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.BulkContextMenu = New MetroFramework.Controls.MetroContextMenu(Me.components)
-        Me.BulkModifyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.EnableDisableBulkToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.MoveBulkToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SingleContextMenu = New MetroFramework.Controls.MetroContextMenu(Me.components)
-        Me.EnableDisableSingleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.MoveSingleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem4 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.PropertiesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BulkContextMenu = New System.Windows.Forms.ContextMenu()
+        Me.BulkModifyToolStripMenuItem = New System.Windows.Forms.MenuItem()
+        Me.EnableDisableBulkToolStripMenuItem = New System.Windows.Forms.MenuItem()
+        Me.MoveBulkToolStripMenuItem = New System.Windows.Forms.MenuItem()
+        Me.DeleteToolStripMenuItem = New System.Windows.Forms.MenuItem()
+        Me.SingleContextMenu = New System.Windows.Forms.ContextMenu()
+        Me.EnableDisableSingleToolStripMenuItem = New System.Windows.Forms.MenuItem()
+        Me.MoveSingleToolStripMenuItem = New System.Windows.Forms.MenuItem()
+        Me.ToolStripMenuItem4 = New System.Windows.Forms.MenuItem()
+        Me.PropertiesToolStripMenuItem = New System.Windows.Forms.MenuItem()
         Me.SpacerPanel = New System.Windows.Forms.Panel()
         Me.SearchBoxTb = New MetroFramework.Controls.MetroTextBox()
+        Me.DomainTreeView = New SimpleAD.ControlDomainTreeView()
         CType(Me.MainDataGrid, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.MainSplitContainer, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MainSplitContainer.Panel1.SuspendLayout()
         Me.MainSplitContainer.Panel2.SuspendLayout()
         Me.MainSplitContainer.SuspendLayout()
         Me.Panel2.SuspendLayout()
-        Me.BulkContextMenu.SuspendLayout()
-        Me.SingleContextMenu.SuspendLayout()
         Me.SpacerPanel.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -133,7 +130,7 @@ Partial Class ContainerUserReport
         'MainSplitContainer.Panel1
         '
         Me.MainSplitContainer.Panel1.BackColor = System.Drawing.SystemColors.Window
-        Me.MainSplitContainer.Panel1.Controls.Add(Me.DomainPl)
+        Me.MainSplitContainer.Panel1.Controls.Add(Me.DomainTreeView)
         Me.MainSplitContainer.Panel1.Controls.Add(Me.Panel2)
         '
         'MainSplitContainer.Panel2
@@ -143,15 +140,6 @@ Partial Class ContainerUserReport
         Me.MainSplitContainer.SplitterDistance = 170
         Me.MainSplitContainer.SplitterWidth = 2
         Me.MainSplitContainer.TabIndex = 3
-        '
-        'DomainPl
-        '
-        Me.DomainPl.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DomainPl.Location = New System.Drawing.Point(0, 28)
-        Me.DomainPl.Margin = New System.Windows.Forms.Padding(0)
-        Me.DomainPl.Name = "DomainPl"
-        Me.DomainPl.Size = New System.Drawing.Size(170, 411)
-        Me.DomainPl.TabIndex = 2
         '
         'Panel2
         '
@@ -178,65 +166,50 @@ Partial Class ContainerUserReport
         '
         'BulkContextMenu
         '
-        Me.BulkContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BulkModifyToolStripMenuItem, Me.EnableDisableBulkToolStripMenuItem, Me.MoveBulkToolStripMenuItem, Me.DeleteToolStripMenuItem})
-        Me.BulkContextMenu.Name = "BulkContextMenu"
-        Me.BulkContextMenu.Size = New System.Drawing.Size(153, 92)
-        Me.BulkContextMenu.Style = MetroFramework.MetroColorStyle.Purple
+        Me.BulkContextMenu.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.BulkModifyToolStripMenuItem, Me.EnableDisableBulkToolStripMenuItem, Me.MoveBulkToolStripMenuItem, Me.DeleteToolStripMenuItem})
         '
         'BulkModifyToolStripMenuItem
         '
-        Me.BulkModifyToolStripMenuItem.Name = "BulkModifyToolStripMenuItem"
-        Me.BulkModifyToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.BulkModifyToolStripMenuItem.Index = 0
         Me.BulkModifyToolStripMenuItem.Text = "Bulk Modify..."
         '
         'EnableDisableBulkToolStripMenuItem
         '
-        Me.EnableDisableBulkToolStripMenuItem.Name = "EnableDisableBulkToolStripMenuItem"
-        Me.EnableDisableBulkToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.EnableDisableBulkToolStripMenuItem.Index = 1
         Me.EnableDisableBulkToolStripMenuItem.Text = "Enable/Disable"
         '
         'MoveBulkToolStripMenuItem
         '
-        Me.MoveBulkToolStripMenuItem.Name = "MoveBulkToolStripMenuItem"
-        Me.MoveBulkToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.MoveBulkToolStripMenuItem.Index = 2
         Me.MoveBulkToolStripMenuItem.Text = "Move..."
         '
         'DeleteToolStripMenuItem
         '
-        Me.DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem"
-        Me.DeleteToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.DeleteToolStripMenuItem.Index = 3
         Me.DeleteToolStripMenuItem.Text = "Delete"
         '
         'SingleContextMenu
         '
-        Me.SingleContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EnableDisableSingleToolStripMenuItem, Me.MoveSingleToolStripMenuItem, Me.ToolStripMenuItem4, Me.PropertiesToolStripMenuItem})
-        Me.SingleContextMenu.Name = "BulkContextMenu"
-        Me.SingleContextMenu.Size = New System.Drawing.Size(153, 92)
-        Me.SingleContextMenu.Style = MetroFramework.MetroColorStyle.Purple
+        Me.SingleContextMenu.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.EnableDisableSingleToolStripMenuItem, Me.MoveSingleToolStripMenuItem, Me.ToolStripMenuItem4, Me.PropertiesToolStripMenuItem})
         '
         'EnableDisableSingleToolStripMenuItem
         '
-        Me.EnableDisableSingleToolStripMenuItem.Name = "EnableDisableSingleToolStripMenuItem"
-        Me.EnableDisableSingleToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.EnableDisableSingleToolStripMenuItem.Index = 0
         Me.EnableDisableSingleToolStripMenuItem.Text = "Enable/Disable"
         '
         'MoveSingleToolStripMenuItem
         '
-        Me.MoveSingleToolStripMenuItem.Name = "MoveSingleToolStripMenuItem"
-        Me.MoveSingleToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.MoveSingleToolStripMenuItem.Index = 1
         Me.MoveSingleToolStripMenuItem.Text = "Move..."
         '
         'ToolStripMenuItem4
         '
-        Me.ToolStripMenuItem4.Name = "ToolStripMenuItem4"
-        Me.ToolStripMenuItem4.Size = New System.Drawing.Size(152, 22)
+        Me.ToolStripMenuItem4.Index = 2
         Me.ToolStripMenuItem4.Text = "Delete"
         '
         'PropertiesToolStripMenuItem
         '
-        Me.PropertiesToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI Semibold", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.PropertiesToolStripMenuItem.Name = "PropertiesToolStripMenuItem"
-        Me.PropertiesToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.PropertiesToolStripMenuItem.Index = 3
         Me.PropertiesToolStripMenuItem.Text = "Properties..."
         '
         'SpacerPanel
@@ -273,7 +246,6 @@ Partial Class ContainerUserReport
         Me.SearchBoxTb.MaxLength = 32767
         Me.SearchBoxTb.Name = "SearchBoxTb"
         Me.SearchBoxTb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
-        Me.SearchBoxTb.PromptText = "Filter..."
         Me.SearchBoxTb.ScrollBars = System.Windows.Forms.ScrollBars.None
         Me.SearchBoxTb.SelectedText = ""
         Me.SearchBoxTb.SelectionLength = 0
@@ -289,6 +261,19 @@ Partial Class ContainerUserReport
         Me.SearchBoxTb.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
         Me.SearchBoxTb.WaterMarkFont = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         '
+        'DomainTreeView
+        '
+        Me.DomainTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.DomainTreeView.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DomainTreeView.DomainController = Nothing
+        Me.DomainTreeView.DomainName = Nothing
+        Me.DomainTreeView.Font = New System.Drawing.Font("Segoe UI Symbol", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.DomainTreeView.Location = New System.Drawing.Point(0, 28)
+        Me.DomainTreeView.Name = "DomainTreeView"
+        Me.DomainTreeView.SelectedOU = Nothing
+        Me.DomainTreeView.Size = New System.Drawing.Size(170, 411)
+        Me.DomainTreeView.TabIndex = 2
+        '
         'ContainerUserReport
         '
         Me.BackColor = System.Drawing.SystemColors.Window
@@ -303,8 +288,6 @@ Partial Class ContainerUserReport
         Me.MainSplitContainer.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
-        Me.BulkContextMenu.ResumeLayout(False)
-        Me.SingleContextMenu.ResumeLayout(False)
         Me.SpacerPanel.ResumeLayout(False)
         Me.ResumeLayout(False)
 
@@ -312,19 +295,19 @@ Partial Class ContainerUserReport
 
     Friend WithEvents MainDataGrid As MetroFramework.Controls.MetroGrid
     Friend WithEvents MainSplitContainer As SplitContainer
-    Friend WithEvents BulkContextMenu As Controls.MetroContextMenu
-    Friend WithEvents BulkModifyToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents EnableDisableBulkToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents MoveBulkToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents DeleteToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents SingleContextMenu As Controls.MetroContextMenu
-    Friend WithEvents EnableDisableSingleToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents MoveSingleToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem4 As ToolStripMenuItem
-    Friend WithEvents PropertiesToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents BulkContextMenu As ContextMenu
+    Friend WithEvents BulkModifyToolStripMenuItem As MenuItem
+    Friend WithEvents EnableDisableBulkToolStripMenuItem As MenuItem
+    Friend WithEvents MoveBulkToolStripMenuItem As MenuItem
+    Friend WithEvents DeleteToolStripMenuItem As MenuItem
+    Friend WithEvents SingleContextMenu As ContextMenu
+    Friend WithEvents EnableDisableSingleToolStripMenuItem As MenuItem
+    Friend WithEvents MoveSingleToolStripMenuItem As MenuItem
+    Friend WithEvents ToolStripMenuItem4 As MenuItem
+    Friend WithEvents PropertiesToolStripMenuItem As MenuItem
     Friend WithEvents Panel2 As Panel
     Friend WithEvents Label1 As Label
     Friend WithEvents SpacerPanel As Panel
     Friend WithEvents SearchBoxTb As Controls.MetroTextBox
-    Friend WithEvents DomainPl As Panel
+    Friend WithEvents DomainTreeView As ControlDomainTreeView
 End Class

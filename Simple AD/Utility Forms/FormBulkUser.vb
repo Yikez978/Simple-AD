@@ -1,5 +1,4 @@
-﻿Imports System.Text
-Imports Microsoft.WindowsAPICodePack.Dialogs
+﻿Imports Microsoft.WindowsAPICodePack.Dialogs
 
 Public Class FormBulkUser
 

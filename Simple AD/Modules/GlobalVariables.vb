@@ -8,8 +8,6 @@ Public Module GlobalVariables
     Public appData As String = GetFolderPath(SpecialFolder.ApplicationData) & "\Simple AD"
     Public LoginUsernamePrefix As String
 
-    Public DomainItems As New List(Of ControlDomainTreeContainerItem)
-
     Public Property LoginUsername As String
     Public Property LoginPassword As String
     Public Property Office365Username As String

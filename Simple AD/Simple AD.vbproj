@@ -180,18 +180,13 @@
     <Compile Include="Modules\ImageHelper.vb" />
     <Compile Include="LDAP\LDAPDataHelper.vb" />
     <Compile Include="Modules\Office365Helper.vb" />
+    <Compile Include="Modules\PaintHelper.vb" />
     <Compile Include="Modules\ProtectedData.vb" />
     <Compile Include="Modules\ErrorHandling.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="DemoForm.Designer.vb">
-      <DependentUpon>DemoForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="DemoForm.vb">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\CustomTabControlWithClose.vb">
       <SubType>Component</SubType>
@@ -202,21 +197,13 @@
     <Compile Include="UI\FormSimpleAD.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\NativeTreeView.vb">
+    <Compile Include="Modules\TabDragger.vb">
+    </Compile>
+    <Compile Include="UserControls\ControlDomainTreeView.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Modules\TabDragger.vb" />
-    <Compile Include="UserControls\ControlDomainTreeContainer.Designer.vb">
-      <DependentUpon>ControlDomainTreeContainer.vb</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\ControlDomainTreeContainer.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControls\ControlDomainTreeContainerItem.Designer.vb">
-      <DependentUpon>ControlDomainTreeContainerItem.vb</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\ControlDomainTreeContainerItem.vb">
-      <SubType>UserControl</SubType>
+    <Compile Include="UserControls\NativeTreeView.vb">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Utility Forms\FormBulkUserOptions.Designer.vb">
       <DependentUpon>FormBulkUserOptions.vb</DependentUpon>
@@ -275,7 +262,6 @@
     <Compile Include="Modules\ActiveDirectoryHelper.vb" />
     <Compile Include="Classes\ActiveDirectoryIcon.vb" />
     <Compile Include="Classes\ADConnectionChecker.vb" />
-    <Compile Include="Classes\AdTreeNode.vb" />
     <Compile Include="Classes\ApplicationEvents.vb" />
     <Compile Include="Classes\ArrayModdule.vb" />
     <Compile Include="Classes\BulkADWorker.vb" />
@@ -399,15 +385,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DemoForm.resx">
-      <DependentUpon>DemoForm.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\ControlDomainTreeContainer.resx">
-      <DependentUpon>ControlDomainTreeContainer.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\ControlDomainTreeContainerItem.resx">
-      <DependentUpon>ControlDomainTreeContainerItem.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Utility Forms\ActiveDirectory\FormGroupSelection.resx">
       <DependentUpon>FormGroupSelection.vb</DependentUpon>
     </EmbeddedResource>

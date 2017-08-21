@@ -45,7 +45,6 @@ Partial Class FormMain
         Me.BrowseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ImportCSVToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BulkUserWizardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.NewFormToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RecentFilesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CheckForUpdatesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
@@ -109,7 +108,7 @@ Partial Class FormMain
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BrowseToolStripMenuItem, Me.ImportCSVToolStripMenuItem, Me.BulkUserWizardToolStripMenuItem, Me.NewFormToolStripMenuItem, Me.RecentFilesToolStripMenuItem, Me.CheckForUpdatesToolStripMenuItem, Me.ToolStripSeparator1, Me.ExitToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BrowseToolStripMenuItem, Me.ImportCSVToolStripMenuItem, Me.BulkUserWizardToolStripMenuItem, Me.RecentFilesToolStripMenuItem, Me.CheckForUpdatesToolStripMenuItem, Me.ToolStripSeparator1, Me.ExitToolStripMenuItem})
         Me.FileToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI Semilight", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FileToolStripMenuItem.ForeColor = System.Drawing.SystemColors.MenuText
         Me.FileToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
@@ -135,12 +134,6 @@ Partial Class FormMain
         Me.BulkUserWizardToolStripMenuItem.Name = "BulkUserWizardToolStripMenuItem"
         Me.BulkUserWizardToolStripMenuItem.Size = New System.Drawing.Size(178, 22)
         Me.BulkUserWizardToolStripMenuItem.Text = "&Bulk User Wizard..."
-        '
-        'NewFormToolStripMenuItem
-        '
-        Me.NewFormToolStripMenuItem.Name = "NewFormToolStripMenuItem"
-        Me.NewFormToolStripMenuItem.Size = New System.Drawing.Size(178, 22)
-        Me.NewFormToolStripMenuItem.Text = "Demo Form"
         '
         'RecentFilesToolStripMenuItem
         '
@@ -319,7 +312,7 @@ Partial Class FormMain
         '
         Me.ToolStripMenuItemLogin.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.ToolStripMenuItemLogin.Name = "ToolStripMenuItemLogin"
-        Me.ToolStripMenuItemLogin.Size = New System.Drawing.Size(152, 22)
+        Me.ToolStripMenuItemLogin.Size = New System.Drawing.Size(141, 22)
         Me.ToolStripMenuItemLogin.Text = "Switch User..."
         '
         'NodeContextMenu
@@ -529,5 +522,4 @@ Partial Class FormMain
     Friend WithEvents ConsoleToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
     Friend WithEvents BrowseToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents NewFormToolStripMenuItem As ToolStripMenuItem
 End Class

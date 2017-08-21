@@ -12,6 +12,7 @@
     End Sub
 
     Private Sub DataReviewForm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        WindowsApi.SetWindowTheme(Me.Handle, “explorer”, Nothing)
         VersionLb.Text = My.Application.Info.Version.ToString
 
         BuildLdapAttributeMatrix()
@@ -169,11 +170,12 @@
 
     Private Sub OpenActiveDirectoryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenActiveDirectoryToolStripMenuItem.Click
         Try
-            Dim procInfo As New ProcessStartInfo()
-            procInfo.UseShellExecute = True
-            procInfo.FileName = (Environment.SystemDirectory & "\dsa.msc")
-            procInfo.WorkingDirectory = ""
-            procInfo.Verb = "runas"
+            Dim procInfo As New ProcessStartInfo() With {
+            .UseShellExecute = True,
+            .FileName = (Environment.SystemDirectory & "\dsa.msc"),
+            .WorkingDirectory = "",
+            .Verb = "runas"}
+
             Process.Start(procInfo)
         Catch ex As Exception
             Debug.WriteLine("[Error] " & ex.Message)
@@ -215,7 +217,4 @@
         Dim NewReport As JobUserReport = New JobUserReport(ReportType.Explorer)
     End Sub
 
-    Private Sub NewFormToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NewFormToolStripMenuItem.Click
-        DemoForm.Show()
-    End Sub
 End Class

@@ -7,12 +7,11 @@ Public Class FormGroupSelection
         Distribution = 1
     End Enum
 
-    Private DataTableSource As DataTable = New DataTable
+    Private DataTableSource As DataTable
 
     Private Sub GroupSelectionForm_Load() Handles MyBase.Load
 
-        DataTableSource.Columns.Clear()
-        DataTableSource.Rows.Clear()
+        DataTableSource = New DataTable
 
         Dim Namecol As New DataColumn
         Namecol.ColumnName = "Name"

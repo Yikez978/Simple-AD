@@ -135,6 +135,10 @@ Public Class JobUserReport
         Dim Filter As String = Param.Filter
         Dim EntryPath As String = Param.Entry
 
+        If Not DataGridPara.DataSource Is Nothing Then
+            DataGridPara.DataSource.Dispose()
+        End If
+
         Dim dt As New DataTable
 
         For Each Prop In GetLDAPProps()
@@ -223,17 +227,5 @@ Public Class JobUserReport
             Spinner.MainSpinner.Spinning = False
         End If
     End Sub
-
-    Public Shared Function IntToString(value As Integer, baseChars As Char()) As String
-        Dim result As String = String.Empty
-        Dim targetBase As Integer = baseChars.Length
-
-        Do
-            result = baseChars(value Mod targetBase) + result
-            value = value / targetBase
-        Loop While value > 0
-
-        Return result
-    End Function
 
 End Class

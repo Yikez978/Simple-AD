@@ -14,4 +14,8 @@ Friend Class WindowsApi
     Public Shared Function ExtractIconEx(<InAttribute(), MarshalAs(UnmanagedType.LPWStr)> ByVal lpszFile As String, ByVal nIconIndex As Integer, ByRef phiconLarge As IntPtr, ByRef phiconSmall As IntPtr, ByVal nIcons As UInteger) As UInteger
     End Function
 
+    <DllImport("uxtheme", CharSet:=CharSet.Unicode)>
+    Public Shared Function SetWindowTheme(ByVal hWnd As IntPtr, ByVal textSubAppName As String, ByVal textSubIdList As String) As Integer
+    End Function
+
 End Class

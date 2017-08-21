@@ -1,10 +1,10 @@
 ﻿Public Module Enums
 
     Public Enum ReportType
-        CustomLDAP = 0
-        DisabledUsers = 1
-        AllObjects = 2
-        Explorer = 3
+        CustomLDAP
+        DisabledUsers
+        AllObjects
+        Explorer
     End Enum
 
     Public Enum ActiveDirectoryIconType
@@ -45,4 +45,10 @@
         groupPolicyContainer
     End Enum
 
+    Public Enum ADNodeType
+        Container
+        OU
+        Domain
+        Unknown
+    End Enum
 End Module

@@ -22,7 +22,6 @@ Partial Class ContainerUserBulk
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -30,7 +29,7 @@ Partial Class ContainerUserBulk
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.MainSplitContainer0 = New System.Windows.Forms.SplitContainer()
-        Me.DomainPl = New System.Windows.Forms.Panel()
+        Me.DomainTreeView = New SimpleAD.ControlDomainTreeView()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.MainDataGrid = New MetroFramework.Controls.MetroGrid()
@@ -41,11 +40,11 @@ Partial Class ContainerUserBulk
         Me.ProgressBar = New MetroFramework.Controls.MetroProgressBar()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.MetroProgressSpinner = New MetroFramework.Controls.MetroProgressSpinner()
-        Me.CMStripRowRClick = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.CopyValueToClipboardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.InsertNewRow = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DeleteRow = New System.Windows.Forms.ToolStripMenuItem()
-        Me.PropertiesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenu()
+        Me.CopyValueToClipboardToolStripMenuItem = New System.Windows.Forms.MenuItem()
+        Me.InsertNewRow = New System.Windows.Forms.MenuItem()
+        Me.DeleteRow = New System.Windows.Forms.MenuItem()
+        Me.PropertiesToolStripMenuItem = New System.Windows.Forms.MenuItem()
         CType(Me.MainSplitContainer0, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MainSplitContainer0.Panel1.SuspendLayout()
         Me.MainSplitContainer0.Panel2.SuspendLayout()
@@ -53,7 +52,6 @@ Partial Class ContainerUserBulk
         Me.Panel2.SuspendLayout()
         CType(Me.MainDataGrid, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
-        Me.CMStripRowRClick.SuspendLayout()
         Me.SuspendLayout()
         '
         'MainSplitContainer0
@@ -66,7 +64,7 @@ Partial Class ContainerUserBulk
         'MainSplitContainer0.Panel1
         '
         Me.MainSplitContainer0.Panel1.BackColor = System.Drawing.SystemColors.Window
-        Me.MainSplitContainer0.Panel1.Controls.Add(Me.DomainPl)
+        Me.MainSplitContainer0.Panel1.Controls.Add(Me.DomainTreeView)
         Me.MainSplitContainer0.Panel1.Controls.Add(Me.Panel2)
         '
         'MainSplitContainer0.Panel2
@@ -78,14 +76,18 @@ Partial Class ContainerUserBulk
         Me.MainSplitContainer0.TabIndex = 6
         Me.MainSplitContainer0.Visible = False
         '
-        'DomainPl
+        'DomainTreeView
         '
-        Me.DomainPl.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DomainPl.Location = New System.Drawing.Point(0, 28)
-        Me.DomainPl.Margin = New System.Windows.Forms.Padding(0)
-        Me.DomainPl.Name = "DomainPl"
-        Me.DomainPl.Size = New System.Drawing.Size(170, 411)
-        Me.DomainPl.TabIndex = 1
+        Me.DomainTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.DomainTreeView.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DomainTreeView.DomainController = Nothing
+        Me.DomainTreeView.DomainName = Nothing
+        Me.DomainTreeView.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.DomainTreeView.Location = New System.Drawing.Point(0, 28)
+        Me.DomainTreeView.Name = "DomainTreeView"
+        Me.DomainTreeView.SelectedOU = Nothing
+        Me.DomainTreeView.Size = New System.Drawing.Size(170, 411)
+        Me.DomainTreeView.TabIndex = 1
         '
         'Panel2
         '
@@ -259,36 +261,28 @@ Partial Class ContainerUserBulk
         Me.MetroProgressSpinner.Value = 30
         Me.MetroProgressSpinner.Visible = False
         '
-        'CMStripRowRClick
+        'ContextMenuStrip1
         '
-        Me.CMStripRowRClick.ImageScalingSize = New System.Drawing.Size(32, 32)
-        Me.CMStripRowRClick.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CopyValueToClipboardToolStripMenuItem, Me.InsertNewRow, Me.DeleteRow, Me.PropertiesToolStripMenuItem})
-        Me.CMStripRowRClick.Name = "ContextMenuStrip1"
-        Me.CMStripRowRClick.Size = New System.Drawing.Size(194, 92)
+        Me.ContextMenuStrip1.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.CopyValueToClipboardToolStripMenuItem, Me.InsertNewRow, Me.DeleteRow, Me.PropertiesToolStripMenuItem})
         '
         'CopyValueToClipboardToolStripMenuItem
         '
-        Me.CopyValueToClipboardToolStripMenuItem.Name = "CopyValueToClipboardToolStripMenuItem"
-        Me.CopyValueToClipboardToolStripMenuItem.Size = New System.Drawing.Size(193, 22)
+        Me.CopyValueToClipboardToolStripMenuItem.Index = 0
         Me.CopyValueToClipboardToolStripMenuItem.Text = "&Copy"
         '
         'InsertNewRow
         '
-        Me.InsertNewRow.Name = "InsertNewRow"
-        Me.InsertNewRow.Size = New System.Drawing.Size(193, 22)
+        Me.InsertNewRow.Index = 1
         Me.InsertNewRow.Text = "Insert &New User"
         '
         'DeleteRow
         '
-        Me.DeleteRow.Name = "DeleteRow"
-        Me.DeleteRow.Size = New System.Drawing.Size(193, 22)
+        Me.DeleteRow.Index = 2
         Me.DeleteRow.Text = "&Delete Selected User(s)"
         '
         'PropertiesToolStripMenuItem
         '
-        Me.PropertiesToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.PropertiesToolStripMenuItem.Name = "PropertiesToolStripMenuItem"
-        Me.PropertiesToolStripMenuItem.Size = New System.Drawing.Size(193, 22)
+        Me.PropertiesToolStripMenuItem.Index = 3
         Me.PropertiesToolStripMenuItem.Text = "&Properties..."
         '
         'ContainerUserBulk
@@ -307,7 +301,6 @@ Partial Class ContainerUserBulk
         Me.Panel2.PerformLayout()
         CType(Me.MainDataGrid, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel1.ResumeLayout(False)
-        Me.CMStripRowRClick.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -317,16 +310,17 @@ Partial Class ContainerUserBulk
     Friend WithEvents ProgressBar As MetroFramework.Controls.MetroProgressBar
     Friend WithEvents AcceptBt As MetroFramework.Controls.MetroButton
     Friend WithEvents MetroProgressSpinner As MetroFramework.Controls.MetroProgressSpinner
-    Friend WithEvents CMStripRowRClick As ContextMenuStrip
-    Friend WithEvents CopyValueToClipboardToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents InsertNewRow As ToolStripMenuItem
-    Friend WithEvents DeleteRow As ToolStripMenuItem
-    Friend WithEvents PropertiesToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents CMStripRowRClick As ContextMenu
+    Friend WithEvents CopyValueToClipboardToolStripMenuItem As MenuItem
+    Friend WithEvents InsertNewRow As MenuItem
+    Friend WithEvents DeleteRow As MenuItem
+    Friend WithEvents PropertiesToolStripMenuItem As MenuItem
     Friend WithEvents Label1 As Label
     Friend WithEvents Panel2 As Panel
     Friend WithEvents MainDataGrid As Controls.MetroGrid
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents DomainPl As Panel
     Friend WithEvents nameCol As TextAndImageColumn
     Friend WithEvents status As TextAndImageColumn
+    Friend WithEvents ContextMenuStrip1 As ContextMenu
+    Friend WithEvents DomainTreeView As ControlDomainTreeView
 End Class

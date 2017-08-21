@@ -2,11 +2,11 @@
 
     Public Property SelecetdOU As String
 
-    Private WithEvents DomainTree As ControlDomainTreeContainer
+    Private WithEvents DomainTree As ControlDomainTreeView
 
     Public Sub New()
         InitializeComponent()
-        DomainTree = New ControlDomainTreeContainer(Me)
+        DomainTree = New ControlDomainTreeView()
         DomainTree.BackColor = SystemColors.Window
         MainPl.Controls.Add(DomainTree)
     End Sub
@@ -20,7 +20,7 @@
         Me.Close()
     End Sub
 
-    Private Sub SelecetdOuChanged(SelecetedOU As String) Handles DomainTree.SelectedOUChanged
+    Private Sub SelecetdOuChanged(SelecetedOU As String)
         SelecetdOU = SelecetedOU
         OULb.Text = SelecetedOU
     End Sub

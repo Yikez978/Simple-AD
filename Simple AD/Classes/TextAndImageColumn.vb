@@ -78,7 +78,7 @@ Public Class TextAndImageCell
                 Me.imageValue = value
                 Me.imageSize = value.Size
                 Dim inheritedPadding As Padding = Me.InheritedStyle.Padding
-                Me.Style.Padding = New Padding(imageSize.Width, inheritedPadding.Top, inheritedPadding.Right, inheritedPadding.Bottom)
+                Me.Style.Padding = New Padding(imageSize.Width + 6, inheritedPadding.Top, inheritedPadding.Right, inheritedPadding.Bottom)
             End If
         End Set
     End Property
@@ -95,8 +95,7 @@ Public Class TextAndImageCell
             Dim ypos = cellBounds.Location.Y + ((cellBounds.Height - Image.Height) / 2)
 
             graphics.SetClip(cellBounds)
-            'graphics.DrawImageUnscaled(Me.Image, New Point(cellBounds.Location.X, cellBounds.Location.Y - cellBounds.Height + 22))
-            graphics.DrawImageUnscaled(Me.Image, New Point(Xpos, ypos))
+            graphics.DrawImageUnscaled(Me.Image, New Point(Xpos + 6, ypos))
             graphics.EndContainer(container)
         End If
     End Sub

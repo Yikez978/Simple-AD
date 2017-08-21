@@ -6,7 +6,7 @@
     Private _JobName As String
     Private _Path As String
 
-    Private WithEvents _ControlDomainTreeContainer As ControlDomainTreeContainer
+    Private WithEvents _ControlDomainTreeView As ControlDomainTreeView
 
     Private DataTableSource As DataTable
 
@@ -59,10 +59,9 @@
 
         MainDataGrid.DoubleBuffered(True)
 
-        _ControlDomainTreeContainer = New ControlDomainTreeContainer(Me)
         _Job = Job
 
-        Me.DomainPl.Controls.Add(_ControlDomainTreeContainer)
+        _ControlDomainTreeView = Me.DomainTreeView
     End Sub
 
     Public Function GetMainDataGrid() As DataGridView
@@ -73,7 +72,7 @@
         Return Me.MainSplitContainer
     End Function
 
-    Public Function GetDomainPanel() As ControlDomainTreeContainer
+    Public Function GetDomainPanel() As ControlDomainTreeView
         Return Me.MainSplitContainer.Panel1.Controls.Item(0)
     End Function
 
@@ -125,6 +124,7 @@
                         Case Else
                             CellImage.Style.ForeColor = SystemColors.ControlDarkDark
                     End Select
+                    CellImage.Style.BackColor = Color.WhiteSmoke
                 End If
             End If
         Catch Ex As Exception
@@ -134,11 +134,19 @@
 
     Private Sub MainDataGrid_CellMouseDoubleClick(sender As Object, e As EventArgs) Handles PropertiesToolStripMenuItem.Click, MainDataGrid.CellMouseDoubleClick
         Try
-            If Not IsDBNull(MainDataGrid.SelectedRows(0).Cells("sAMAccountName").Value) Then
-                Dim Sam = MainDataGrid.SelectedRows(0).Cells("sAMAccountName").Value
-                Dim Name = MainDataGrid.SelectedRows(0).Cells("name").Value
-                Dim ShowUserProps = New FormUserAttributes(Sam, Name, MainDataGrid.SelectedRows(0).Index)
-            End If
+            Dim oClass As String = MainDataGrid.SelectedRows(0).Cells("objectClass").Value.ToString
+            Select Case True
+                Case (oClass = "container" Or oClass = "organizationalUnit")
+                    Me.Path = MainDataGrid.SelectedRows(0).Cells("distinguishedName").Value
+                    _Job.Refresh(Path)
+                Case (oClass = "user" Or oClass = "group" Or oClass = "computer")
+                    If Not IsDBNull(MainDataGrid.SelectedRows(0).Cells("sAMAccountName").Value) Then
+                        Dim Sam = MainDataGrid.SelectedRows(0).Cells("sAMAccountName").Value
+                        Dim Name = MainDataGrid.SelectedRows(0).Cells("name").Value
+                        Dim ShowUserProps = New FormUserAttributes(Sam, Name, MainDataGrid.SelectedRows(0).Index)
+                    End If
+                Case Else
+            End Select
         Catch Ex As Exception
             Debug.WriteLine("[Error] Unable to load object properties Form: " & Ex.Message)
         End Try
@@ -152,9 +160,9 @@
     Private Sub MainDataGrid_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles MainDataGrid.CellMouseClick
         If MainDataGrid.SelectedRows.Count > 0 Then
             If MainDataGrid.SelectedRows.Count = 1 Then
-                ContextMenuHelper.GetDataGridViewConextMenu(MainDataGrid, e, SingleContextMenu)
+                GetDataGridViewConextMenu(MainDataGrid, e, SingleContextMenu, sender)
             Else
-                ContextMenuHelper.GetDataGridViewConextMenu(MainDataGrid, e, BulkContextMenu)
+                GetDataGridViewConextMenu(MainDataGrid, e, BulkContextMenu, sender)
             End If
         End If
 
@@ -208,7 +216,6 @@
 
     Private Function GetSelectedUsers() As List(Of UserRow)
         Try
-
             Dim UserArray As New List(Of UserRow)
 
             For Each Row As DataGridViewRow In MainDataGrid.SelectedRows
@@ -278,7 +285,7 @@
         End If
     End Sub
 
-    Public Sub SelecetdOu_changed(ByVal Path As String) Handles _ControlDomainTreeContainer.SelectedOUChanged
+    Public Sub SelecetdOu_changed(ByVal Path As String) Handles _ControlDomainTreeView.SelectedOUChanged
         Me.Path = Path
         _Job.Refresh(Path)
     End Sub

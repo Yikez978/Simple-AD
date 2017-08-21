@@ -1,7 +1,9 @@
-﻿Public Class ContainerUserBulk
+﻿Imports System.Runtime.InteropServices
+
+Public Class ContainerUserBulk
     Inherits UserControl
 
-    Public DomainTree As ControlDomainTreeContainer
+    Public DomainTree As ControlDomainTreeView
 
     Private _ID
     Private _JobName
@@ -43,25 +45,15 @@
 
         InitializeComponent()
 
-        DomainTree = New ControlDomainTreeContainer(Me)
-
+        DomainTree = Me.DomainTreeView
         MainDataGrid.DoubleBuffered(True)
-
-        With DomainTree
-            .Dock = DockStyle.Fill
-            .Visible = True
-        End With
-
-        DomainPl.Controls.Add(DomainTree)
-        DomainTree.BringToFront()
-
     End Sub
 
     Public Function GetMainDataGrid() As DataGridView
         Return Me.MainDataGrid
     End Function
 
-    Public Function GetAccecptButton() As MetroFramework.Controls.MetroButton
+    Public Function GetAccecptButton() As Controls.MetroButton
         Return Me.AcceptBt
     End Function
 
@@ -84,7 +76,7 @@
     End Sub
 
     Private Sub MainDataGrid_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles MainDataGrid.CellMouseClick
-        ContextMenuHelper.GetDataGridViewConextMenu(MainDataGrid, e, CMStripRowRClick)
+        ContextMenuHelper.GetDataGridViewConextMenu(MainDataGrid, e, CMStripRowRClick, sender)
     End Sub
 
     Private Sub AcceptBn_Click(sender As Object, e As EventArgs) Handles AcceptBt.Click
@@ -144,7 +136,7 @@
     Private Sub CopyValueToClipboardToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CopyValueToClipboardToolStripMenuItem.Click
         Try
             If Not String.IsNullOrEmpty(CStr(MainDataGrid.SelectedRows(0).Cells("Status").Value)) Then
-                My.Computer.Clipboard.SetText(MainDataGrid.SelectedRows(0).Cells(0).Value, System.Windows.Forms.TextDataFormat.Rtf)
+                My.Computer.Clipboard.SetText(MainDataGrid.SelectedRows(0).Cells(0).Value, TextDataFormat.Rtf)
             End If
         Catch ex As Exception
             Debug.WriteLine("[Error] " & ex.Message)
