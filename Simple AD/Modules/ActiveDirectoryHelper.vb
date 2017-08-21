@@ -42,7 +42,7 @@ Module ActiveDirectoryHelper
                 End Try
                 Return DomainName
             End If
-        Catch AuthEx As System.Security.Authentication.AuthenticationException
+        Catch AuthEx As Security.Authentication.AuthenticationException
             Debug.WriteLine("[Authentication Error] " & AuthEx.InnerException.ToString)
             Return DomainName
         Catch NoneExistantDirEx As ActiveDirectoryObjectNotFoundException

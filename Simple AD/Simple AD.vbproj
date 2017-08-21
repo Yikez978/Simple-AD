@@ -188,6 +188,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="UI\ControlDataGridView.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ControlListView.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI\CustomTabControlWithClose.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -199,7 +205,7 @@
     </Compile>
     <Compile Include="Modules\TabDragger.vb">
     </Compile>
-    <Compile Include="UserControls\ControlDomainTreeView.vb">
+    <Compile Include="UI\ControlDomainTreeView.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UserControls\NativeTreeView.vb">
@@ -525,6 +531,9 @@
     <None Include="Resources\Right.png" />
     <None Include="Resources\ErrorTriangle.png" />
     <None Include="Resources\Delete.png" />
+    <None Include="Resources\containerFlat.png" />
+    <None Include="Resources\OuFlat.png" />
+    <None Include="Resources\UserFlat.png" />
     <Content Include="SimpleADIcon.ico" />
     <None Include="Resources\appbar.check.png" />
     <None Include="Resources\appbar.network.server.disconnect.png" />
@@ -547,9 +556,7 @@
     <Import Include="System.Windows.Forms" />
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UI\CustomTree\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

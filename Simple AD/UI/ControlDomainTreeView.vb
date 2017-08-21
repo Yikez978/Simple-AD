@@ -40,10 +40,13 @@ Public Class ControlDomainTreeView
 
     Public Sub New()
         WindowsApi.SetWindowTheme(Me.Handle, "explorer", Nothing)
+        Me.Margin = New Padding(0, 0, 0, 0)
         Me.HotTracking = True
         Me.ShowLines = False
-        Me.ItemHeight = 18
+        Me.ItemHeight = 22
         Me.Dock = DockStyle.Fill
+        Me.FullRowSelect = True
+        Me.Font = SystemFonts.DefaultFont
 
         Try
             Dim AdImages As New ImageList()
@@ -51,6 +54,10 @@ Public Class ControlDomainTreeView
             AdImages.Images.Add("OuImage", IconOU)
             AdImages.Images.Add("DomainImage", IconDomian)
             AdImages.Images.Add("ContainerImage", IconContainer)
+
+            AdImages.ColorDepth = ColorDepth.Depth24Bit
+            AdImages.ImageSize = New Size(16, 16)
+
             Me.ImageList = AdImages
         Catch ex As Exception
             MessageBox.Show("The following error was encountered whilst attempting to load domain/container/OU icons: " & ex.Message, "Error Loading Icons", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -187,11 +194,9 @@ Public Class ControlDomainTreeView
     Private Sub ControlDomainTreeView_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles Me.AfterSelect
         If Not (SelectedNode Is Nothing) Then
             GlobalVariables.SelectedOU = SelectedNode.ToolTipText
-            Dim Node = DirectCast(e.Node, TreeNode)
-            RaiseEvent SelectedOUChanged(Node.ToolTipText)
+            RaiseEvent SelectedOUChanged(e.Node.ToolTipText)
             FormMain.ToolStripStatusLabelStatus.Text = GlobalVariables.SelectedOU
         End If
-        SelectedNode = e.Node
     End Sub
 
     Private Sub ControlDomainTreeView_BeforeExpand(sender As Object, e As TreeViewCancelEventArgs) Handles Me.BeforeExpand

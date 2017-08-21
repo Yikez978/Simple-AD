@@ -149,6 +149,18 @@ Namespace My
                 Me("AutoLogin") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property UseSystemIcons() As Boolean
+            Get
+                Return CType(Me("UseSystemIcons"),Boolean)
+            End Get
+            Set
+                Me("UseSystemIcons") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

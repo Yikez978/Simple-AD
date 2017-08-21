@@ -54,13 +54,9 @@
         Me.JobName = JobName
 
         Me.Dock = DockStyle.Fill
-
         InitializeComponent()
 
-        MainDataGrid.DoubleBuffered(True)
-
         _Job = Job
-
         _ControlDomainTreeView = Me.DomainTreeView
     End Sub
 
@@ -124,7 +120,6 @@
                         Case Else
                             CellImage.Style.ForeColor = SystemColors.ControlDarkDark
                     End Select
-                    CellImage.Style.BackColor = Color.WhiteSmoke
                 End If
             End If
         Catch Ex As Exception
@@ -165,7 +160,6 @@
                 GetDataGridViewConextMenu(MainDataGrid, e, BulkContextMenu, sender)
             End If
         End If
-
     End Sub
 
     Private Sub EnableDisableSingleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EnableDisableSingleToolStripMenuItem.Click
@@ -205,7 +199,7 @@
 
     Private Sub ToolStripMenuItem4_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem4.Click
         Dim User = GetSelectedUser()
-        Dim DeleteForm = New FormConfirmation("Are you sure you wish to delete " & User & "?", ConfirmationType.delete)
+        Dim DeleteForm = New FormConfirmation("Are you sure you wish to delete " & User & "?", ConfirmationType.Delete)
         DeleteForm.ShowDialog()
         If DeleteForm.DialogResult = DialogResult.Yes Then
             If DeleteADObject(User) Then

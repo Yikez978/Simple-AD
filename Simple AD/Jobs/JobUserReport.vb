@@ -5,10 +5,12 @@ Public Class JobUserReport
     Inherits SimpleADJob
 
     Private DataGrid As DataGridView
+    Private ListView As ListView
     Private TabPage As TabPage
     Private UserReportContainer As ContainerUserReport
     Private Spinner As ControlTabSpinner
     Private GetUsersThread As Threading.Thread
+    Private GetUsersListViewThread As Threading.Thread
     Private _LDAPQuery As String
     Private _Type As ReportType
 
@@ -62,7 +64,7 @@ Public Class JobUserReport
 
     Public Sub Refresh(Optional Path As String = Nothing)
 
-        Spinner.SpinnerVisible = True
+        'Spinner.SpinnerVisible = True
 
         Dim paras As New Jobparameters With {
             .DataGrid = DataGrid,

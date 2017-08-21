@@ -22,8 +22,12 @@
     End Function
 
     Public Function GetImage(ByVal type As ActiveDirectoryIconType) As Image
-        If IO.File.Exists(IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "dsuiext.dll")) Then
-            Return ActiveDirectoryIcon.GetIcon(type).ToBitmap
+        If My.Settings.UseSystemIcons = True Then
+            If IO.File.Exists(IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "dsuiext.dll")) Then
+                Return ActiveDirectoryIcon.GetIcon(type).ToBitmap
+            Else
+                Return GetLocalImage(type)
+            End If
         Else
             Return GetLocalImage(type)
         End If
@@ -32,17 +36,17 @@
     Public Function GetLocalImage(ByVal Type As ActiveDirectoryIconType)
         Select Case Type
             Case ActiveDirectoryIconType.OU
-                Return My.Resources.OU
+                Return My.Resources.OuFlat
             Case ActiveDirectoryIconType.Computer
                 Return My.Resources.Computer
             Case ActiveDirectoryIconType.User
-                Return My.Resources.User
+                Return My.Resources.UserFlat
             Case ActiveDirectoryIconType.DisabledUser
                 Return My.Resources.DisabledUser
             Case ActiveDirectoryIconType.Contact
                 Return My.Resources.Contact
             Case ActiveDirectoryIconType.Container
-                Return My.Resources.Container
+                Return My.Resources.containerFlat
             Case ActiveDirectoryIconType.Domain
                 Return My.Resources.Domain
             Case ActiveDirectoryIconType.Group

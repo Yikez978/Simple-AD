@@ -53,6 +53,8 @@ Partial Class FormOptions
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.results365Lb = New MetroFramework.Controls.MetroLabel()
         Me.results365Tb = New MetroFramework.Controls.MetroTextBox()
+        Me.MetroLabel5 = New MetroFramework.Controls.MetroLabel()
+        Me.IconsToggle = New MetroFramework.Controls.MetroToggle()
         Me.LDAPTabPage.SuspendLayout()
         Me.ReportsGb.SuspendLayout()
         Me.GnGb.SuspendLayout()
@@ -195,6 +197,8 @@ Partial Class FormOptions
         'GroupBox2
         '
         Me.GroupBox2.BackColor = System.Drawing.SystemColors.Window
+        Me.GroupBox2.Controls.Add(Me.MetroLabel5)
+        Me.GroupBox2.Controls.Add(Me.IconsToggle)
         Me.GroupBox2.Controls.Add(Me.MetroLabel4)
         Me.GroupBox2.Controls.Add(Me.AutoLoginToggle)
         Me.GroupBox2.Controls.Add(Me.MetroLabel3)
@@ -278,7 +282,7 @@ Partial Class FormOptions
         Me.VbCb.Enabled = False
         Me.VbCb.Location = New System.Drawing.Point(13, 19)
         Me.VbCb.Name = "VbCb"
-        Me.VbCb.Size = New System.Drawing.Size(150, 15)
+        Me.VbCb.Size = New System.Drawing.Size(149, 15)
         Me.VbCb.Style = MetroFramework.MetroColorStyle.Purple
         Me.VbCb.TabIndex = 2
         Me.VbCb.Text = "Enable &Verbose Logging"
@@ -291,7 +295,7 @@ Partial Class FormOptions
         Me.TabControl1.Controls.Add(Me.Ofice365TabPage)
         Me.TabControl1.Location = New System.Drawing.Point(12, 22)
         Me.TabControl1.Name = "TabControl1"
-        Me.TabControl1.SelectedIndex = 1
+        Me.TabControl1.SelectedIndex = 0
         Me.TabControl1.Size = New System.Drawing.Size(502, 298)
         Me.TabControl1.Style = MetroFramework.MetroColorStyle.Purple
         Me.TabControl1.TabIndex = 0
@@ -487,6 +491,27 @@ Partial Class FormOptions
         Me.results365Tb.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
         Me.results365Tb.WaterMarkFont = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel)
         '
+        'MetroLabel5
+        '
+        Me.MetroLabel5.AutoSize = True
+        Me.MetroLabel5.FontSize = MetroFramework.MetroLabelSize.Small
+        Me.MetroLabel5.Location = New System.Drawing.Point(99, 81)
+        Me.MetroLabel5.Name = "MetroLabel5"
+        Me.MetroLabel5.Size = New System.Drawing.Size(94, 15)
+        Me.MetroLabel5.TabIndex = 5
+        Me.MetroLabel5.Text = "Use System Icons"
+        '
+        'IconsToggle
+        '
+        Me.IconsToggle.AutoSize = True
+        Me.IconsToggle.Location = New System.Drawing.Point(13, 79)
+        Me.IconsToggle.Name = "IconsToggle"
+        Me.IconsToggle.Size = New System.Drawing.Size(80, 17)
+        Me.IconsToggle.Style = MetroFramework.MetroColorStyle.Purple
+        Me.IconsToggle.TabIndex = 4
+        Me.IconsToggle.Text = "Off"
+        Me.IconsToggle.UseSelectable = True
+        '
         'FormOptions
         '
         Me.AcceptButton = Me.OKBt
@@ -558,4 +583,6 @@ Partial Class FormOptions
     Friend WithEvents ProxyToggle As Controls.MetroToggle
     Friend WithEvents MetroLabel4 As Controls.MetroLabel
     Friend WithEvents AutoLoginToggle As Controls.MetroToggle
+    Friend WithEvents MetroLabel5 As Controls.MetroLabel
+    Friend WithEvents IconsToggle As Controls.MetroToggle
 End Class

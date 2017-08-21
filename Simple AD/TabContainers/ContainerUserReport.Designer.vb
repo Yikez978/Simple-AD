@@ -22,6 +22,7 @@ Partial Class ContainerUserReport
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -29,6 +30,7 @@ Partial Class ContainerUserReport
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.MainDataGrid = New MetroFramework.Controls.MetroGrid()
         Me.MainSplitContainer = New System.Windows.Forms.SplitContainer()
+        Me.DomainTreeView = New SimpleAD.ControlDomainTreeView()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.BulkContextMenu = New System.Windows.Forms.ContextMenu()
@@ -43,7 +45,6 @@ Partial Class ContainerUserReport
         Me.PropertiesToolStripMenuItem = New System.Windows.Forms.MenuItem()
         Me.SpacerPanel = New System.Windows.Forms.Panel()
         Me.SearchBoxTb = New MetroFramework.Controls.MetroTextBox()
-        Me.DomainTreeView = New SimpleAD.ControlDomainTreeView()
         CType(Me.MainDataGrid, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.MainSplitContainer, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MainSplitContainer.Panel1.SuspendLayout()
@@ -111,18 +112,20 @@ Partial Class ContainerUserReport
         Me.MainDataGrid.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         Me.MainDataGrid.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.SystemColors.Window
         Me.MainDataGrid.RowTemplate.DefaultCellStyle.Font = New System.Drawing.Font("Segoe UI Symbol", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.MainDataGrid.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.MainDataGrid.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black
+        Me.MainDataGrid.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(230, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.MainDataGrid.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black
         Me.MainDataGrid.RowTemplate.Height = 20
         Me.MainDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.MainDataGrid.ShowEditingIcon = False
-        Me.MainDataGrid.Size = New System.Drawing.Size(706, 439)
+        Me.MainDataGrid.Size = New System.Drawing.Size(707, 439)
         Me.MainDataGrid.Style = MetroFramework.MetroColorStyle.Silver
         Me.MainDataGrid.TabIndex = 0
         Me.MainDataGrid.UseCustomBackColor = True
         '
         'MainSplitContainer
         '
-        Me.MainSplitContainer.BackColor = System.Drawing.Color.FromArgb(CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer))
+        Me.MainSplitContainer.BackColor = System.Drawing.Color.FromArgb(CType(CType(247, Byte), Integer), CType(CType(247, Byte), Integer), CType(CType(247, Byte), Integer))
         Me.MainSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill
         Me.MainSplitContainer.Location = New System.Drawing.Point(0, 0)
         Me.MainSplitContainer.Name = "MainSplitContainer"
@@ -138,8 +141,28 @@ Partial Class ContainerUserReport
         Me.MainSplitContainer.Panel2.Controls.Add(Me.MainDataGrid)
         Me.MainSplitContainer.Size = New System.Drawing.Size(878, 439)
         Me.MainSplitContainer.SplitterDistance = 170
-        Me.MainSplitContainer.SplitterWidth = 2
+        Me.MainSplitContainer.SplitterWidth = 1
         Me.MainSplitContainer.TabIndex = 3
+        '
+        'DomainTreeView
+        '
+        Me.DomainTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.DomainTreeView.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DomainTreeView.DomainController = Nothing
+        Me.DomainTreeView.DomainName = Nothing
+        Me.DomainTreeView.Font = New System.Drawing.Font("Segoe UI Symbol", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.DomainTreeView.FullRowSelect = True
+        Me.DomainTreeView.HotTracking = True
+        Me.DomainTreeView.ImageIndex = 0
+        Me.DomainTreeView.ItemHeight = 22
+        Me.DomainTreeView.Location = New System.Drawing.Point(0, 28)
+        Me.DomainTreeView.Margin = New System.Windows.Forms.Padding(0)
+        Me.DomainTreeView.Name = "DomainTreeView"
+        Me.DomainTreeView.SelectedImageIndex = 0
+        Me.DomainTreeView.SelectedOU = Nothing
+        Me.DomainTreeView.ShowLines = False
+        Me.DomainTreeView.Size = New System.Drawing.Size(170, 411)
+        Me.DomainTreeView.TabIndex = 2
         '
         'Panel2
         '
@@ -246,6 +269,7 @@ Partial Class ContainerUserReport
         Me.SearchBoxTb.MaxLength = 32767
         Me.SearchBoxTb.Name = "SearchBoxTb"
         Me.SearchBoxTb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
+        Me.SearchBoxTb.PromptText = "Filter..."
         Me.SearchBoxTb.ScrollBars = System.Windows.Forms.ScrollBars.None
         Me.SearchBoxTb.SelectedText = ""
         Me.SearchBoxTb.SelectionLength = 0
@@ -260,19 +284,6 @@ Partial Class ContainerUserReport
         Me.SearchBoxTb.WaterMark = "Filter..."
         Me.SearchBoxTb.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
         Me.SearchBoxTb.WaterMarkFont = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        '
-        'DomainTreeView
-        '
-        Me.DomainTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.DomainTreeView.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DomainTreeView.DomainController = Nothing
-        Me.DomainTreeView.DomainName = Nothing
-        Me.DomainTreeView.Font = New System.Drawing.Font("Segoe UI Symbol", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DomainTreeView.Location = New System.Drawing.Point(0, 28)
-        Me.DomainTreeView.Name = "DomainTreeView"
-        Me.DomainTreeView.SelectedOU = Nothing
-        Me.DomainTreeView.Size = New System.Drawing.Size(170, 411)
-        Me.DomainTreeView.TabIndex = 2
         '
         'ContainerUserReport
         '
