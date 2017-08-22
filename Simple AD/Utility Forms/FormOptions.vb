@@ -22,6 +22,7 @@
         ProxyToggle.Checked = My.Settings.UseProxy
         AutoLoginToggle.Checked = My.Settings.AutoLogin
         IconsToggle.Checked = My.Settings.UseSystemIcons
+        UseDataGridToggle.Checked = My.Settings.UseDataGrid
 
         TabControl1.SelectedTab = TabControl1.TabPages.Item(0)
 
@@ -74,6 +75,11 @@
 
     Private Sub IconsToggle_CheckedChanged(sender As Object, e As EventArgs) Handles IconsToggle.CheckedChanged
         My.Settings.UseSystemIcons = IconsToggle.Checked
+        My.Settings.Save()
+    End Sub
+
+    Private Sub UseDataGridToggle_CheckedChanged(sender As Object, e As EventArgs) Handles UseDataGridToggle.CheckedChanged
+        My.Settings.UseDataGrid = UseDataGridToggle.Checked
         My.Settings.Save()
     End Sub
 End Class

@@ -34,6 +34,8 @@ Partial Class FormOptions
         Me.ChCb = New MetroFramework.Controls.MetroCheckBox()
         Me.Preferences = New MetroFramework.Controls.MetroTabPage()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.MetroLabel5 = New MetroFramework.Controls.MetroLabel()
+        Me.IconsToggle = New MetroFramework.Controls.MetroToggle()
         Me.MetroLabel4 = New MetroFramework.Controls.MetroLabel()
         Me.AutoLoginToggle = New MetroFramework.Controls.MetroToggle()
         Me.MetroLabel3 = New MetroFramework.Controls.MetroLabel()
@@ -53,8 +55,8 @@ Partial Class FormOptions
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.results365Lb = New MetroFramework.Controls.MetroLabel()
         Me.results365Tb = New MetroFramework.Controls.MetroTextBox()
-        Me.MetroLabel5 = New MetroFramework.Controls.MetroLabel()
-        Me.IconsToggle = New MetroFramework.Controls.MetroToggle()
+        Me.MetroLabel6 = New MetroFramework.Controls.MetroLabel()
+        Me.UseDataGridToggle = New MetroFramework.Controls.MetroToggle()
         Me.LDAPTabPage.SuspendLayout()
         Me.ReportsGb.SuspendLayout()
         Me.GnGb.SuspendLayout()
@@ -197,6 +199,8 @@ Partial Class FormOptions
         'GroupBox2
         '
         Me.GroupBox2.BackColor = System.Drawing.SystemColors.Window
+        Me.GroupBox2.Controls.Add(Me.MetroLabel6)
+        Me.GroupBox2.Controls.Add(Me.UseDataGridToggle)
         Me.GroupBox2.Controls.Add(Me.MetroLabel5)
         Me.GroupBox2.Controls.Add(Me.IconsToggle)
         Me.GroupBox2.Controls.Add(Me.MetroLabel4)
@@ -209,6 +213,27 @@ Partial Class FormOptions
         Me.GroupBox2.TabIndex = 4
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "General"
+        '
+        'MetroLabel5
+        '
+        Me.MetroLabel5.AutoSize = True
+        Me.MetroLabel5.FontSize = MetroFramework.MetroLabelSize.Small
+        Me.MetroLabel5.Location = New System.Drawing.Point(99, 81)
+        Me.MetroLabel5.Name = "MetroLabel5"
+        Me.MetroLabel5.Size = New System.Drawing.Size(94, 15)
+        Me.MetroLabel5.TabIndex = 5
+        Me.MetroLabel5.Text = "Use System Icons"
+        '
+        'IconsToggle
+        '
+        Me.IconsToggle.AutoSize = True
+        Me.IconsToggle.Location = New System.Drawing.Point(13, 79)
+        Me.IconsToggle.Name = "IconsToggle"
+        Me.IconsToggle.Size = New System.Drawing.Size(80, 17)
+        Me.IconsToggle.Style = MetroFramework.MetroColorStyle.Purple
+        Me.IconsToggle.TabIndex = 4
+        Me.IconsToggle.Text = "Off"
+        Me.IconsToggle.UseSelectable = True
         '
         'MetroLabel4
         '
@@ -282,7 +307,7 @@ Partial Class FormOptions
         Me.VbCb.Enabled = False
         Me.VbCb.Location = New System.Drawing.Point(13, 19)
         Me.VbCb.Name = "VbCb"
-        Me.VbCb.Size = New System.Drawing.Size(149, 15)
+        Me.VbCb.Size = New System.Drawing.Size(150, 15)
         Me.VbCb.Style = MetroFramework.MetroColorStyle.Purple
         Me.VbCb.TabIndex = 2
         Me.VbCb.Text = "Enable &Verbose Logging"
@@ -491,26 +516,26 @@ Partial Class FormOptions
         Me.results365Tb.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
         Me.results365Tb.WaterMarkFont = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel)
         '
-        'MetroLabel5
+        'MetroLabel6
         '
-        Me.MetroLabel5.AutoSize = True
-        Me.MetroLabel5.FontSize = MetroFramework.MetroLabelSize.Small
-        Me.MetroLabel5.Location = New System.Drawing.Point(99, 81)
-        Me.MetroLabel5.Name = "MetroLabel5"
-        Me.MetroLabel5.Size = New System.Drawing.Size(94, 15)
-        Me.MetroLabel5.TabIndex = 5
-        Me.MetroLabel5.Text = "Use System Icons"
+        Me.MetroLabel6.AutoSize = True
+        Me.MetroLabel6.FontSize = MetroFramework.MetroLabelSize.Small
+        Me.MetroLabel6.Location = New System.Drawing.Point(99, 104)
+        Me.MetroLabel6.Name = "MetroLabel6"
+        Me.MetroLabel6.Size = New System.Drawing.Size(262, 15)
+        Me.MetroLabel6.TabIndex = 7
+        Me.MetroLabel6.Text = "Use Spreadsheet Like grid for Reports and Explorer"
         '
-        'IconsToggle
+        'UseDataGridToggle
         '
-        Me.IconsToggle.AutoSize = True
-        Me.IconsToggle.Location = New System.Drawing.Point(13, 79)
-        Me.IconsToggle.Name = "IconsToggle"
-        Me.IconsToggle.Size = New System.Drawing.Size(80, 17)
-        Me.IconsToggle.Style = MetroFramework.MetroColorStyle.Purple
-        Me.IconsToggle.TabIndex = 4
-        Me.IconsToggle.Text = "Off"
-        Me.IconsToggle.UseSelectable = True
+        Me.UseDataGridToggle.AutoSize = True
+        Me.UseDataGridToggle.Location = New System.Drawing.Point(13, 102)
+        Me.UseDataGridToggle.Name = "UseDataGridToggle"
+        Me.UseDataGridToggle.Size = New System.Drawing.Size(80, 17)
+        Me.UseDataGridToggle.Style = MetroFramework.MetroColorStyle.Purple
+        Me.UseDataGridToggle.TabIndex = 6
+        Me.UseDataGridToggle.Text = "Off"
+        Me.UseDataGridToggle.UseSelectable = True
         '
         'FormOptions
         '
@@ -585,4 +610,6 @@ Partial Class FormOptions
     Friend WithEvents AutoLoginToggle As Controls.MetroToggle
     Friend WithEvents MetroLabel5 As Controls.MetroLabel
     Friend WithEvents IconsToggle As Controls.MetroToggle
+    Friend WithEvents MetroLabel6 As Controls.MetroLabel
+    Friend WithEvents UseDataGridToggle As Controls.MetroToggle
 End Class

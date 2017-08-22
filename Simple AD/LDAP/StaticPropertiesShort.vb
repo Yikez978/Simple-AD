@@ -10,16 +10,23 @@
     }
 
     Public LDAPPropsShort() As String = {
-            "givenName",
-            "sn",
-            "userPrincipalName",
-            "sAMAccountName",
-            "displayName",
             "name",
+            "objectClass",
             "description",
-            "sAMAccountType",
             "UserAccountControl",
-            "objectClass"
+            "sAMAccountName",
+            "distinguishedName"
+    }
+
+    Public ListViewPropsColumns() As String = {
+            "name",
+            "objectClass",
+            "description"
+    }
+
+    Public ListViewProps() = {
+            "objectClass",
+            "description"
     }
 
     Public DefaultLDAPColumns() = {

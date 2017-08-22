@@ -20,16 +20,12 @@
                             End If
                         End If
 
-                        'ContextMenuStrip.Show((CInt(Cursor.Position.X)), (CInt(Cursor.Position.Y)))
                         ContextMenuStrip.Show(DataGrid, DataGrid.PointToClient(Cursor.Position))
 
                     End If
 
                 ElseIf DataGrid.SelectedRows.Count > 1 Then
-
-                    'ContextMenuStrip.Show((CInt(Cursor.Position.X)), (CInt(Cursor.Position.Y)))
                     ContextMenuStrip.Show(DataGrid, DataGrid.PointToClient(Cursor.Position))
-
                 End If
 
             Catch Ex As System.ArgumentOutOfRangeException
@@ -38,6 +34,10 @@
                 Return
             End Try
         End If
+    End Sub
+
+    Public Sub GetListViewConextMenu(ListView As ListView, e As EventArgs, ContextMenuStrip As ContextMenu, sender As Object)
+        ContextMenuStrip.Show(ListView, ListView.PointToClient(Cursor.Position))
     End Sub
 
 End Module

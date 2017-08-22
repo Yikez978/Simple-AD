@@ -47,6 +47,8 @@ Public Class ControlDomainTreeView
         Me.Dock = DockStyle.Fill
         Me.FullRowSelect = True
         Me.Font = SystemFonts.DefaultFont
+        Me.HideSelection = False
+        Me.Nodes.Clear()
 
         Try
             Dim AdImages As New ImageList()
@@ -62,8 +64,6 @@ Public Class ControlDomainTreeView
         Catch ex As Exception
             MessageBox.Show("The following error was encountered whilst attempting to load domain/container/OU icons: " & ex.Message, "Error Loading Icons", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
-
-        InitialLoad()
     End Sub
 
     Public Sub InitialLoad()
@@ -82,8 +82,10 @@ Public Class ControlDomainTreeView
                 RootNode.ToolTipText = CStr(RootDirectoryEntry.Properties("distinguishedName").Value).Replace("/", "\/")
             End Using
             RootNode.Text = DomainName
+            RootNode.Name = DomainName
             RootNode.Tag = ADNodeType.Domain
             RootNode.ImageKey = "DomainImage"
+            RootNode.SelectedImageKey = "DomainImage"
             InitialLoadFinished(RootNode, Nothing)
 
         Catch ex As Exception
@@ -132,13 +134,17 @@ Public Class ControlDomainTreeView
                         If ChildObjectType = "organizationalUnit" OrElse ChildObjectType = "container" Then
 
                             Dim ChildNode As New TreeNode
-                            ChildNode.Text = CStr(ChildObject.Properties("name").Value)
+                            Dim NodeName As String = CStr(ChildObject.Properties("name").Value)
+                            ChildNode.Text = NodeName
+                            ChildNode.Name = ChildObject.Properties("distinguishedName").Value
                             If ChildObjectType = "organizationalUnit" Then
                                 ChildNode.Tag = ADNodeType.OU
                                 ChildNode.ImageKey = "OuImage"
+                                ChildNode.SelectedImageKey = "OuImage"
                             ElseIf ChildObjectType = "container" Then
                                 ChildNode.Tag = ADNodeType.Container
                                 ChildNode.ImageKey = "ContainerImage"
+                                ChildNode.SelectedImageKey = "ContainerImage"
                             Else
                                 ChildNode.Tag = ADNodeType.Unknown
                             End If

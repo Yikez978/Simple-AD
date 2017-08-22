@@ -58,7 +58,7 @@ Partial Class FormSelectColumns
         '
         'AvailableColumnsLb
         '
-        Me.AvailableColumnsLb.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.AvailableColumnsLb.BackColor = System.Drawing.Color.FromArgb(CType(CType(247, Byte), Integer), CType(CType(247, Byte), Integer), CType(CType(247, Byte), Integer))
         Me.AvailableColumnsLb.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.AvailableColumnsLb.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.AvailableColumnsLb.ItemHeight = 15
@@ -71,7 +71,7 @@ Partial Class FormSelectColumns
         '
         'CurrentColumnsLb
         '
-        Me.CurrentColumnsLb.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.CurrentColumnsLb.BackColor = System.Drawing.Color.FromArgb(CType(CType(247, Byte), Integer), CType(CType(247, Byte), Integer), CType(CType(247, Byte), Integer))
         Me.CurrentColumnsLb.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.CurrentColumnsLb.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CurrentColumnsLb.ItemHeight = 15

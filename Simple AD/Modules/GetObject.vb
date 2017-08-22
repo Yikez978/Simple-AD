@@ -57,4 +57,14 @@
         End Try
     End Function
 
+    Public Function GetMainListView() As ControlListView
+        Try
+            Dim CurrentTab As ContainerUserReport = GetMainTabCtrl.SelectedTab.Controls.Item(0)
+            Return CurrentTab.MainListView
+        Catch Ex As Exception
+            Debug.WriteLine("[Error] " & Ex.Message)
+            Return Nothing
+        End Try
+    End Function
+
 End Module

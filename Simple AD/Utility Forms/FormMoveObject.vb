@@ -9,6 +9,7 @@
         DomainTree = New ControlDomainTreeView()
         DomainTree.BackColor = SystemColors.Window
         MainPl.Controls.Add(DomainTree)
+        DomainTree.InitialLoad()
     End Sub
 
     Private Sub AcceptBn_Click(sender As Object, e As EventArgs) Handles AcceptBn.Click

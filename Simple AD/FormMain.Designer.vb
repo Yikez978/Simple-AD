@@ -65,6 +65,12 @@ Partial Class FormMain
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.HideEmptyColumnsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SelectColumnsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ModeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SmallIconsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.LargeIconsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ListToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DetailsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.ConsoleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.UserToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -86,6 +92,7 @@ Partial Class FormMain
         Me.ConnectionToolStripStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.UpdateToolStripStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.VersionLb = New MetroFramework.Controls.MetroLabel()
+        Me.ShowGroupsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         SADMenuStrip = New System.Windows.Forms.MenuStrip()
         SADMenuStrip.SuspendLayout()
         Me.NodeContextMenu.SuspendLayout()
@@ -246,7 +253,7 @@ Partial Class FormMain
         '
         'ViewToolStripMenuItem
         '
-        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DomainPanelToolStripMenuItem, Me.ToolStripSeparator2, Me.HideEmptyColumnsToolStripMenuItem, Me.SelectColumnsToolStripMenuItem, Me.ToolStripSeparator3, Me.ConsoleToolStripMenuItem})
+        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DomainPanelToolStripMenuItem, Me.ToolStripSeparator2, Me.HideEmptyColumnsToolStripMenuItem, Me.SelectColumnsToolStripMenuItem, Me.ShowGroupsToolStripMenuItem, Me.ModeToolStripMenuItem, Me.ToolStripSeparator3, Me.ConsoleToolStripMenuItem})
         Me.ViewToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI Semilight", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ViewToolStripMenuItem.ForeColor = System.Drawing.SystemColors.MenuText
         Me.ViewToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -285,6 +292,43 @@ Partial Class FormMain
         Me.SelectColumnsToolStripMenuItem.Name = "SelectColumnsToolStripMenuItem"
         Me.SelectColumnsToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
         Me.SelectColumnsToolStripMenuItem.Text = "&Select Columns..."
+        '
+        'ModeToolStripMenuItem
+        '
+        Me.ModeToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SmallIconsToolStripMenuItem, Me.LargeIconsToolStripMenuItem, Me.ListToolStripMenuItem, Me.DetailsToolStripMenuItem, Me.TileToolStripMenuItem})
+        Me.ModeToolStripMenuItem.Name = "ModeToolStripMenuItem"
+        Me.ModeToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
+        Me.ModeToolStripMenuItem.Text = "Mode"
+        '
+        'SmallIconsToolStripMenuItem
+        '
+        Me.SmallIconsToolStripMenuItem.Name = "SmallIconsToolStripMenuItem"
+        Me.SmallIconsToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
+        Me.SmallIconsToolStripMenuItem.Text = "Small Icons"
+        '
+        'LargeIconsToolStripMenuItem
+        '
+        Me.LargeIconsToolStripMenuItem.Name = "LargeIconsToolStripMenuItem"
+        Me.LargeIconsToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
+        Me.LargeIconsToolStripMenuItem.Text = "Large Icons"
+        '
+        'ListToolStripMenuItem
+        '
+        Me.ListToolStripMenuItem.Name = "ListToolStripMenuItem"
+        Me.ListToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
+        Me.ListToolStripMenuItem.Text = "List"
+        '
+        'DetailsToolStripMenuItem
+        '
+        Me.DetailsToolStripMenuItem.Name = "DetailsToolStripMenuItem"
+        Me.DetailsToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
+        Me.DetailsToolStripMenuItem.Text = "Details"
+        '
+        'TileToolStripMenuItem
+        '
+        Me.TileToolStripMenuItem.Name = "TileToolStripMenuItem"
+        Me.TileToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
+        Me.TileToolStripMenuItem.Text = "Tile"
         '
         'ToolStripSeparator3
         '
@@ -445,6 +489,12 @@ Partial Class FormMain
         Me.VersionLb.UseCustomBackColor = True
         Me.VersionLb.UseCustomForeColor = True
         '
+        'ShowGroupsToolStripMenuItem
+        '
+        Me.ShowGroupsToolStripMenuItem.Name = "ShowGroupsToolStripMenuItem"
+        Me.ShowGroupsToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
+        Me.ShowGroupsToolStripMenuItem.Text = "Show Groups"
+        '
         'FormMain
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
@@ -522,4 +572,11 @@ Partial Class FormMain
     Friend WithEvents ConsoleToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
     Friend WithEvents BrowseToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ModeToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SmallIconsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents LargeIconsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ListToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents DetailsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents TileToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ShowGroupsToolStripMenuItem As ToolStripMenuItem
 End Class

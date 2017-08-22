@@ -5,6 +5,7 @@
     Private _Job As JobUserReport
     Private _JobName As String
     Private _Path As String
+    Private _UseDataGrid
 
     Private WithEvents _ControlDomainTreeView As ControlDomainTreeView
 
@@ -48,16 +49,34 @@
         End Get
     End Property
 
-    Public Sub New(ByVal ID As Integer, ByVal JobName As String, ByVal Job As JobUserReport)
+    Public Sub New(ByVal ID As Integer, ByVal JobName As String, ByVal Job As JobUserReport, ByVal UseDataGrid As Boolean)
 
         Me.ID = ID
         Me.JobName = JobName
 
-        Me.Dock = DockStyle.Fill
         InitializeComponent()
 
         _Job = Job
         _ControlDomainTreeView = Me.DomainTreeView
+        _ControlDomainTreeView.InitialLoad()
+        _UseDataGrid = UseDataGrid
+
+        MainListView.Activation = ItemActivation.Standard
+        NameColumn.ImageGetter = New BrightIdeasSoftware.ImageGetterDelegate(AddressOf NameImageGetter)
+
+        Select Case _UseDataGrid
+            Case True
+                MainDataGrid.Visible = True
+                MainListView.Dispose()
+                'DirectoryListHeader.Dispose()
+            Case False
+                MainListView.Visible = True
+                MainDataGrid.Dispose()
+                DirectoryHeaderPl.Dispose()
+        End Select
+
+        Me.Dock = DockStyle.Fill
+
     End Sub
 
     Public Function GetMainDataGrid() As DataGridView
@@ -127,24 +146,55 @@
         End Try
     End Sub
 
-    Private Sub MainDataGrid_CellMouseDoubleClick(sender As Object, e As EventArgs) Handles PropertiesToolStripMenuItem.Click, MainDataGrid.CellMouseDoubleClick
-        Try
-            Dim oClass As String = MainDataGrid.SelectedRows(0).Cells("objectClass").Value.ToString
-            Select Case True
-                Case (oClass = "container" Or oClass = "organizationalUnit")
-                    Me.Path = MainDataGrid.SelectedRows(0).Cells("distinguishedName").Value
-                    _Job.Refresh(Path)
-                Case (oClass = "user" Or oClass = "group" Or oClass = "computer")
-                    If Not IsDBNull(MainDataGrid.SelectedRows(0).Cells("sAMAccountName").Value) Then
-                        Dim Sam = MainDataGrid.SelectedRows(0).Cells("sAMAccountName").Value
-                        Dim Name = MainDataGrid.SelectedRows(0).Cells("name").Value
-                        Dim ShowUserProps = New FormUserAttributes(Sam, Name, MainDataGrid.SelectedRows(0).Index)
-                    End If
-                Case Else
-            End Select
-        Catch Ex As Exception
-            Debug.WriteLine("[Error] Unable to load object properties Form: " & Ex.Message)
-        End Try
+    Private Sub Item_CellMouseDoubleClick(sender As Object, e As EventArgs) Handles PropertiesToolStripMenuItem.Click, MainDataGrid.CellMouseDoubleClick
+        'Try
+
+        Select Case _UseDataGrid
+            Case True
+                Dim oClass As String = MainDataGrid.SelectedRows(0).Cells("objectClass").Value.ToString
+
+                Select Case True
+                    Case (oClass = "container" Or oClass = "organizationalUnit")
+                        Me.Path = MainDataGrid.SelectedRows(0).Cells("distinguishedName").Value
+                        Dim Nodes As TreeNode() = _ControlDomainTreeView.Nodes.Find(Path, True)
+                        If Nodes.Count > 0 Then
+                            _ControlDomainTreeView.SelectedNode = Nodes(0)
+                            Nodes(0).Expand()
+                        End If
+                        _Job.Refresh(Path)
+                    Case (oClass = "user" Or oClass = "group" Or oClass = "computer")
+                        If Not IsDBNull(MainDataGrid.SelectedRows(0).Cells("sAMAccountName").Value) Then
+                            Dim Sam = MainDataGrid.SelectedRows(0).Cells("sAMAccountName").Value
+                            Dim Name = MainDataGrid.SelectedRows(0).Cells("name").Value
+                            Dim ShowUserProps = New FormUserAttributes(Sam, Name, MainDataGrid.SelectedRows(0).Index)
+                        End If
+                    Case Else
+                End Select
+            Case False
+                If MainListView.SelectedItems.Count > 0 Then
+                    Dim oClass As String = MainListView.SelectedItem.RowObject.Type
+                    Select Case True
+                        Case (oClass = "container" Or oClass = "organizationalUnit")
+                            Me.Path = MainListView.SelectedItem.RowObject.DistinguishedName
+                            Dim Nodes As TreeNode() = _ControlDomainTreeView.Nodes.Find(Path, True)
+                            If Nodes.Count > 0 Then
+                                _ControlDomainTreeView.SelectedNode = Nodes(0)
+                                Nodes(0).Expand()
+                            End If
+                            _Job.Refresh(Path)
+                        Case (oClass = "user" Or oClass = "group" Or oClass = "computer")
+                            If Not IsDBNull(MainListView.SelectedItem.RowObject.SAMAccountName) Then
+                                Dim Sam = MainListView.SelectedItem.RowObject.SAMAccountName
+                                Dim Name = MainListView.SelectedItem.RowObject.Name
+                                Dim ShowUserProps = New FormUserAttributes(Sam, Name, MainListView.SelectedItem.Index)
+                            End If
+                        Case Else
+                    End Select
+                End If
+        End Select
+        'Catch Ex As Exception
+        '    Debug.WriteLine("[Error] Unable to load object properties Form: " & Ex.Message)
+        'End Try
     End Sub
 
     Private Sub BulkModifyToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BulkModifyToolStripMenuItem.Click
@@ -185,16 +235,22 @@
     End Sub
 
     Private Function GetSelectedUser() As String
-        Try
-            If Not String.IsNullOrEmpty(MainDataGrid.SelectedRows(0).Cells("sAMAccountName").Value) Then
-                Return MainDataGrid.SelectedRows(0).Cells("sAMAccountName").Value
-            Else
-                Return Nothing
-            End If
-        Catch Ex As Exception
-            Debug.WriteLine("[Error] Unable to change the active state of the seleceted user account: " & Ex.Message)
-            Return Nothing
-        End Try
+        'Try
+        Select Case _UseDataGrid
+            Case True
+                If Not String.IsNullOrEmpty(MainDataGrid.SelectedRows(0).Cells("sAMAccountName").Value) Then
+                    Return MainDataGrid.SelectedRows(0).Cells("sAMAccountName").Value
+                Else
+                    Return Nothing
+                End If
+            Case False
+                Return MainListView.SelectedItem.RowObject.SAMAccountName
+        End Select
+        Return Nothing
+        'Catch Ex As Exception
+        'Debug.WriteLine("[Error] Unable to change the active state of the seleceted user account: " & Ex.Message)
+        'Return Nothing
+        'End Try
     End Function
 
     Private Sub ToolStripMenuItem4_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem4.Click
@@ -283,6 +339,65 @@
         Me.Path = Path
         _Job.Refresh(Path)
     End Sub
+
+    Private Sub DetailsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DetailsToolStripMenuItem.Click
+        MainListView.View = View.Details
+    End Sub
+
+    Private Sub SmallIconsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SmallIconsToolStripMenuItem.Click
+        MainListView.View = View.SmallIcon
+    End Sub
+
+    Private Sub LargeIconsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LargeIconsToolStripMenuItem.Click
+        MainListView.View = View.LargeIcon
+    End Sub
+
+    Private Sub ListToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ListToolStripMenuItem.Click
+        MainListView.View = View.List
+    End Sub
+
+    Private Sub MainListView_ItemActivate(sender As Object, e As MouseEventArgs)
+        If e.Button = MouseButtons.Right Then
+            If MainListView.SelectedItems.Count = 1 Then
+                GetListViewConextMenu(MainListView, e, SingleContextMenu, Me)
+            ElseIf MainListView.SelectedItems.Count > 1 Then
+                GetListViewConextMenu(MainListView, e, BulkContextMenu, Me)
+            End If
+        End If
+    End Sub
+
+    Private Sub MainListView_CellRightClick(sender As Object, e As BrightIdeasSoftware.CellRightClickEventArgs) Handles MainListView.CellRightClick
+        If MainListView.SelectedItems.Count = 1 Then
+            GetListViewConextMenu(MainListView, e, SingleContextMenu, Me)
+        ElseIf MainListView.SelectedItems.Count > 1 Then
+            GetListViewConextMenu(MainListView, e, BulkContextMenu, Me)
+        End If
+    End Sub
+
+    Public Function NameImageGetter(rowObject As Object) As Object
+        Dim DomainObject As DomainObject = DirectCast(rowObject, DomainObject)
+        Select Case DomainObject.Type
+            Case "user"
+                Dim UserAccountControl As String = DomainObject.UserAccountControl
+                If UserAccountControl = "546" Or UserAccountControl = "514" Or UserAccountControl = "66082" Or UserAccountControl = "66050" Then
+                    Return "DisabledUserImage"
+                Else
+                    Return "UserImage"
+                End If
+            Case "computer"
+                Return "ComputerImage"
+            Case "group"
+                Return "GroupImage"
+            Case "container"
+                Return "ContainerImage"
+            Case "organizationalUnit"
+                Return "OuImage"
+            Case "contact"
+                Return "ContactImage"
+            Case Else
+        End Select
+        Return Nothing
+    End Function
 
 End Class
 

@@ -1,6 +1,4 @@
-﻿Imports System.Runtime.InteropServices
-
-Public Class ContainerUserBulk
+﻿Public Class ContainerUserBulk
     Inherits UserControl
 
     Public DomainTree As ControlDomainTreeView
@@ -46,6 +44,7 @@ Public Class ContainerUserBulk
         InitializeComponent()
 
         DomainTree = Me.DomainTreeView
+        DomainTree.InitialLoad()
         MainDataGrid.DoubleBuffered(True)
     End Sub
 

@@ -12,7 +12,7 @@
     End Sub
 
     Private Sub DataReviewForm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        WindowsApi.SetWindowTheme(Me.Handle, “explorer”, Nothing)
+        'WindowsApi.SetWindowTheme(Me.Handle, “explorer”, Nothing)
         VersionLb.Text = My.Application.Info.Version.ToString
 
         BuildLdapAttributeMatrix()
@@ -157,7 +157,7 @@
     End Sub
 
     Private Sub DisabledUsersToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DisabledUsersToolStripMenuItem.Click
-        Dim NewReport As JobUserReport = New JobUserReport(ReportType.DisabledUsers)
+        Dim NewReport As JobUserReport = New JobUserReport(ReportType.DisabledUsers, My.Settings.UseDataGrid)
     End Sub
 
     Private Sub CustomQueryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CustomQueryToolStripMenuItem.Click
@@ -206,7 +206,7 @@
     End Sub
 
     Private Sub EntireDirectoryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EntireDirectoryToolStripMenuItem.Click
-        Dim NewReport As JobUserReport = New JobUserReport(ReportType.AllObjects)
+        Dim NewReport As JobUserReport = New JobUserReport(ReportType.AllObjects, My.Settings.UseDataGrid)
     End Sub
 
     Private Sub ConsoleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConsoleToolStripMenuItem.Click
@@ -214,7 +214,30 @@
     End Sub
 
     Private Sub BrowseToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BrowseToolStripMenuItem.Click
-        Dim NewReport As JobUserReport = New JobUserReport(ReportType.Explorer)
+        Dim NewReport As JobUserReport = New JobUserReport(ReportType.Explorer, My.Settings.UseDataGrid)
     End Sub
 
+    Private Sub DetailsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DetailsToolStripMenuItem.Click
+        GetMainListView().View = View.Details
+    End Sub
+
+    Private Sub ListToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ListToolStripMenuItem.Click
+        GetMainListView().View = View.List
+    End Sub
+
+    Private Sub LargeIconsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LargeIconsToolStripMenuItem.Click
+        GetMainListView().View = View.LargeIcon
+    End Sub
+
+    Private Sub SmallIconsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SmallIconsToolStripMenuItem.Click
+        GetMainListView().View = View.SmallIcon
+    End Sub
+
+    Private Sub TileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TileToolStripMenuItem.Click
+        GetMainListView().View = View.Tile
+    End Sub
+
+    Private Sub ShowGroupsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowGroupsToolStripMenuItem.Click
+        GetMainListView().ShowGroups = True
+    End Sub
 End Class
