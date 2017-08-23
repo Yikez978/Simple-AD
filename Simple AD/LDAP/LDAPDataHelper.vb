@@ -17,9 +17,9 @@ Module LDAPDataHelper
         Return Nothing
     End Function
 
-    Public Function GetUserFromDataGridViewRow(ByVal Grid As DataGridView, ByVal Row As DataGridViewRow) As UserObject
+    Public Function GetUserFromDataGridViewRow(ByVal Grid As DataGridView, ByVal Row As DataGridViewRow) As UserDomainObject
 
-        Dim User As New UserObject
+        Dim User As New UserDomainObject
 
         'Debug.WriteLine("[Info] New User request Started")
 

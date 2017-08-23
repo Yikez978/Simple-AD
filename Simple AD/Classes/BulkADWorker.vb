@@ -8,7 +8,7 @@ Public Class BulkADWorker
 
     Private _BulkUserContainer As ContainerUserBulk
     Private _SourceGrid As DataGridView
-    Private bw As BackgroundWorker = New BackgroundWorker
+    Private BackgroundWorker As BackgroundWorker = New BackgroundWorker
     Private _JobClass As JobUserBulk
 
     Public Property BulkUserContainerObject As ContainerUserBulk
@@ -21,8 +21,7 @@ Public Class BulkADWorker
     End Property
 
 
-    Public Sub New(SourceGrid As DataGridView, bulkUserContainer As ContainerUserBulk, JobClass As JobUserBulk)
-        _SourceGrid = SourceGrid
+    Public Sub New(bulkUserContainer As ContainerUserBulk, JobClass As JobUserBulk)
         BulkUserContainerObject = bulkUserContainer
         _JobClass = JobClass
         _BulkUserContainer.GetProgressBar.Maximum = _SourceGrid.Rows.Count
@@ -33,26 +32,23 @@ Public Class BulkADWorker
 
     Public Sub RunBulkUserSetup()
 
-        With bw
+        With BackgroundWorker
             .WorkerReportsProgress = True
             .WorkerSupportsCancellation = True
         End With
 
-        AddHandler bw.DoWork, AddressOf Bw_DoWork
-        AddHandler bw.ProgressChanged, AddressOf bw_ProgressChanged
-        AddHandler bw.RunWorkerCompleted, AddressOf Bw_RunWorkerCompleted
+        AddHandler BackgroundWorker.DoWork, AddressOf BackgroundWorker_DoWork
+        AddHandler BackgroundWorker.ProgressChanged, AddressOf BackgroundWorker_ProgressChanged
+        AddHandler BackgroundWorker.RunWorkerCompleted, AddressOf BackgroundWorker_RunWorkerCompleted
 
-        If Not (bw.IsBusy) Then
-            bw.RunWorkerAsync()
+        If Not (BackgroundWorker.IsBusy) Then
+            BackgroundWorker.RunWorkerAsync()
         End If
-        bw.Dispose()
-
-        _BulkUserContainer.GetSpinner().Visible = True
-        _BulkUserContainer.GetSpinner().Spinning = True
+        BackgroundWorker.Dispose()
 
     End Sub
 
-    Private Sub Bw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
+    Private Sub BackgroundWorker_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
         Dim worker As BackgroundWorker = CType(sender, BackgroundWorker)
 
         Debug.WriteLine("[Info] BulkADWorkers Class Main Worker Initiated")
@@ -78,7 +74,7 @@ Public Class BulkADWorker
         Catch Ex As Exception
             Debug.WriteLine("[Error] Unable to create Domain Context object from PrincipalContext: " & Ex.Message)
             Dim DomainContextError As New FormAlert(DomainContextErrorMessage & Environment.NewLine & Ex.Message, AlertType.ErrorAlert)
-            _BulkUserContainer.Invoke(New Action(Of Object, Object)(AddressOf Bw_RunWorkerCompleted), Me, Nothing)
+            _BulkUserContainer.Invoke(New Action(Of Object, Object)(AddressOf BackgroundWorker_RunWorkerCompleted), Me, Nothing)
             DomainContextError.ShowDialog()
             Exit Sub
         End Try
@@ -97,7 +93,7 @@ Public Class BulkADWorker
                     End If
 
                     Dim row As DataGridViewRow = autoMainDataGrid.Rows(i)
-                    Dim User As UserObject = GetUserFromDataGridViewRow(autoMainDataGrid, row)
+                    Dim User As UserDomainObject = GetUserFromDataGridViewRow(autoMainDataGrid, row)
 
                     Try
 
@@ -252,7 +248,7 @@ Public Class BulkADWorker
 
     End Sub
 
-    Private Sub bw_ProgressChanged(ByVal sender As Object, ByVal e As ProgressChangedEventArgs)
+    Private Sub BackgroundWorker_ProgressChanged(ByVal sender As Object, ByVal e As ProgressChangedEventArgs)
 
         'User creation Succeded
         If e.ProgressPercentage = 0 Then
@@ -285,14 +281,11 @@ Public Class BulkADWorker
         _BulkUserContainer.GetProgressBar.PerformStep()
     End Sub
 
-    Private Sub Bw_RunWorkerCompleted(ByVal sender As Object, ByVal e As RunWorkerCompletedEventArgs)
+    Private Sub BackgroundWorker_RunWorkerCompleted(ByVal sender As Object, ByVal e As RunWorkerCompletedEventArgs)
 
         _BulkUserContainer.ProgressBar.Visible = False
         _BulkUserContainer.AcceptBt.Enabled = False
         _BulkUserContainer.AcceptBt.Text = "Done"
-
-        _BulkUserContainer.GetSpinner().Visible = False
-        _BulkUserContainer.GetSpinner().Spinning = False
 
         OngoingBulkJobs.Remove(Me)
 
@@ -312,8 +305,8 @@ Public Class BulkADWorker
     End Sub
 
     Public Sub CancelWork()
-        If bw.WorkerSupportsCancellation = True Then
-            bw.CancelAsync()
+        If BackgroundWorker.WorkerSupportsCancellation = True Then
+            BackgroundWorker.CancelAsync()
         End If
     End Sub
 

@@ -7,7 +7,6 @@ Public Class JobOffice365
     Private DataGrid As DataGridView
     Private TabPage As TabPage
     Private NewOffice365Container As ContainerOffice365
-    Private Spinner As ControlTabSpinner
     Private Connect365Thread As New Threading.Thread(AddressOf GetOffice365Users)
 
     Private _Email
@@ -44,12 +43,6 @@ Public Class JobOffice365
         GetMainTabCtrl.SelectedTab.Controls.Add(NewOffice365Container)
         GetMainTabCtrl.Visible = True
 
-        Spinner = New ControlTabSpinner("Connecting to " & Domain(1).ToString, NewOffice365Container)
-        Spinner.SpinnerVisible = True
-
-        TabPage.Controls.Add(Spinner)
-        Spinner.BringToFront()
-
         Dim paras As New Jobparameters
         paras.DataGrid = DataGrid
 
@@ -73,8 +66,6 @@ Public Class JobOffice365
                         column.Visible = False
                     End If
                 Next
-
-                Spinner.Dispose()
                 NewOffice365Container.Visible = True
             End If
         End If
@@ -159,8 +150,7 @@ Public Class JobOffice365
             NewOffice365Container.Invoke(New Action(Of String, String)(AddressOf FailedToLoadData), ErrorMessage, InnerException)
 
         Else
-            Spinner.SpinnerVisible = False
-            Spinner.DisplayText = ErrorMessage
+
         End If
     End Sub
 

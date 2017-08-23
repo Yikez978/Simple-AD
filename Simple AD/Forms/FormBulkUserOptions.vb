@@ -15,7 +15,6 @@
             _JobClass.EnableAccounts = EnAcTg.Checked
             _JobClass.ForcePasswordReset = FpwdTg.Checked
 
-            _ContainerUserBulk.MainDataGrid.ReadOnly = True
             _ContainerUserBulk.AcceptBt.Enabled = False
             FormMain.StatusStrip.BackColor = Color.FromArgb(202, 81, 0)
             FormMain.ToolStripStatusLabelStatus.Text = "Starting new Bulk User Job. ID: " & _ContainerUserBulk.ID
@@ -24,7 +23,7 @@
             _ContainerUserBulk.ProgressBar.Show()
             _ContainerUserBulk.ProgressBar.BringToFront()
 
-            Dim Worker = New BulkADWorker(_ContainerUserBulk.MainDataGrid, _ContainerUserBulk, _ContainerUserBulk.JobClass)
+            Dim Worker = New BulkADWorker(_ContainerUserBulk, _ContainerUserBulk.JobClass)
             OngoingBulkJobs.Add(Worker)
             Worker.RunBulkUserSetup()
         Catch Ex As Exception

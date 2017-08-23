@@ -184,8 +184,7 @@ Module ActiveDirectoryHelper
         Using context
             If (context.ValidateCredentials(LoginUsername, LoginPassword)) Then
 
-                Dim existedUserPrincipal As UserPrincipal = New UserPrincipal(context)
-                existedUserPrincipal.SamAccountName = samAccountName
+                Dim existedUserPrincipal As UserPrincipal = New UserPrincipal(context) With {.SamAccountName = samAccountName}
                 Dim searcher As PrincipalSearcher = New PrincipalSearcher(existedUserPrincipal)
 
                 If (searcher.FindOne() IsNot Nothing) Then
@@ -206,7 +205,7 @@ Module ActiveDirectoryHelper
         Return Net.Dns.GetHostAddresses(GetSingleDomainController(LoginUsername, LoginPassword))
     End Function
 
-    Public Function GetDirEntryFromSAM(ByVal sAMAccountName As String) As DirectoryEntry
+    Public Function GetDirEntryFromDomainObject(ByVal DomainObject As DomainObject) As DirectoryEntry
         Try
             Using Entry As DirectoryEntry = New DirectoryEntry(GetDirEntryPath, LoginUsername, LoginPassword)
 
@@ -214,7 +213,7 @@ Module ActiveDirectoryHelper
 
                 With DirSearcher
                     .SearchRoot = Entry
-                    .Filter = "(sAMAccountName=" & sAMAccountName & ")"
+                    .Filter = "(sAMAccountName=" & DomainObject.SAMAccountName & ")"
                 End With
 
                 DirSearcher.PropertiesToLoad.AddRange(GetLDAPProps())
@@ -224,7 +223,7 @@ Module ActiveDirectoryHelper
                 Return result.GetDirectoryEntry
             End Using
         Catch Ex As Exception
-            Debug.WriteLine("[Error] Unabel to retrieve directory entry with the supplied username (" & sAMAccountName & "): " & Ex.Message)
+            Debug.WriteLine("[Error] Unabel to retrieve directory entry with the supplied username (" & DomainObject.SAMAccountName & "): " & Ex.Message)
         End Try
         Return Nothing
     End Function
@@ -249,9 +248,9 @@ Module ActiveDirectoryHelper
         End Try
     End Function
 
-    Public Function EnableADUserUsingUserAccountControl(Username As String) As Integer
+    Public Function EnableADUserUsingUserAccountControl(ByVal DomainObject As DomainObject) As Integer
         Try
-            Using userEntry As DirectoryEntry = GetDirEntryFromSAM(Username)
+            Using userEntry As DirectoryEntry = GetDirEntryFromDomainObject(DomainObject)
 
                 Dim old_UAC As Integer = CInt(userEntry.Properties("userAccountControl")(0))
 
@@ -271,9 +270,9 @@ Module ActiveDirectoryHelper
         End Try
     End Function
 
-    Public Function DisableADUserUsingUserAccountControl(Username As String) As Integer
+    Public Function DisableADUserUsingUserAccountControl(DomainObject As DomainObject) As Integer
         Try
-            Using userEntry As DirectoryEntry = GetDirEntryFromSAM(Username)
+            Using userEntry As DirectoryEntry = GetDirEntryFromDomainObject(DomainObject)
 
                 Dim old_UAC As Integer = CInt(userEntry.Properties("userAccountControl")(0))
 
@@ -293,9 +292,9 @@ Module ActiveDirectoryHelper
         End Try
     End Function
 
-    Public Function IsAccountEnabled(ByVal Username As String) As Boolean
+    Public Function IsAccountEnabled(ByVal DomainObject As DomainObject) As Boolean
         Try
-            Using userEntry As DirectoryEntry = GetDirEntryFromSAM(Username)
+            Using userEntry As DirectoryEntry = GetDirEntryFromDomainObject(DomainObject)
                 Const ADS_UF_ACCOUNTDISABLE As Integer = &H2
 
                 Dim Flags As Integer = CInt(userEntry.Properties("userAccountControl").Value)
@@ -307,14 +306,14 @@ Module ActiveDirectoryHelper
 
             End Using
         Catch Ex As Exception
-            Debug.WriteLine("[Error] Unable to retrive the status of the supplied account (" & Username & "): " & Ex.Message)
+            Debug.WriteLine("[Error] Unable to retrive the status of the supplied account (" & DomainObject.Name & "): " & Ex.Message)
         End Try
         Return Nothing
     End Function
 
-    Public Function DeleteADObject(ByVal Username As String) As Boolean
-        Debug.WriteLine("[Info] Delete requested on user: " & Username)
-        Dim UserEntry As DirectoryEntry = GetDirEntryFromSAM(Username)
+    Public Function DeleteADObject(ByVal DomainObject As DomainObject) As Boolean
+        Debug.WriteLine("[Info] Delete requested on user: " & DomainObject.Name)
+        Dim UserEntry As DirectoryEntry = GetDirEntryFromDomainObject(DomainObject)
         Try
             If Not UserEntry Is Nothing Then
                 UserEntry.DeleteTree()
@@ -324,14 +323,14 @@ Module ActiveDirectoryHelper
             End If
             Return False
         Catch Ex As Exception
-            Debug.WriteLine("[Error] Unable to Delete User (" & Username & "): " & Ex.Message & Environment.NewLine & Ex.StackTrace.ToString)
+            Debug.WriteLine("[Error] Unable to Delete User (" & DomainObject.Name & "): " & Ex.Message & Environment.NewLine & Ex.StackTrace.ToString)
             Return False
         End Try
     End Function
 
-    Public Function MoveADObject(ByVal Username As String, ByVal Container As String) As Boolean
-        Debug.WriteLine("[Info] Move requested on object: " & Username & " to container at: " & Container)
-        Dim UserEntry As DirectoryEntry = GetDirEntryFromSAM(Username)
+    Public Function MoveADObject(ByVal DomainObject As DomainObject, ByVal Container As String) As Boolean
+        Debug.WriteLine("[Info] Move requested on object: " & DomainObject.Name & " to container at: " & Container)
+        Dim UserEntry As DirectoryEntry = GetDirEntryFromDomainObject(DomainObject)
         Try
             If Not UserEntry Is Nothing Then
                 Dim Path As String
@@ -341,12 +340,12 @@ Module ActiveDirectoryHelper
                     Path = "LDAP://" & LoginUsernamePrefix & "/" & Container
                 End If
                 UserEntry.MoveTo(New DirectoryEntry(Path, LoginUsername, LoginPassword, AuthenticationTypes.Secure))
-                Debug.WriteLine("[Info] Successfully moved object (" & Username & ") to container (" & Container & ")")
+                Debug.WriteLine("[Info] Successfully moved object (" & DomainObject.Name & ") to container (" & Container & ")")
                 Return True
             End If
             Return False
         Catch Ex As Exception
-            Debug.WriteLine("[Error] Unable to Move User (" & Username & ") to Container (" & Container & "): " & Ex.Message & Environment.NewLine & Ex.StackTrace.ToString)
+            Debug.WriteLine("[Error] Unable to Move User (" & DomainObject.Name & ") to Container (" & Container & "): " & Ex.Message & Environment.NewLine & Ex.StackTrace.ToString)
             Return False
         End Try
     End Function

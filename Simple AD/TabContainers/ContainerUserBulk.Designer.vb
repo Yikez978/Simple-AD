@@ -23,19 +23,25 @@ Partial Class ContainerUserBulk
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim TreeNode13 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Everything", 3, 3)
+        Dim TreeNode14 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Disabled Users", 4, 4)
+        Dim TreeNode15 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Built In Views", 2, 2, New System.Windows.Forms.TreeNode() {TreeNode13, TreeNode14})
+        Dim TreeNode16 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Everything", 3, 3)
+        Dim TreeNode17 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Disabled Users", 4, 4)
+        Dim TreeNode18 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Built In Views", 2, 2, New System.Windows.Forms.TreeNode() {TreeNode16, TreeNode17})
+        Dim TreeNode19 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Everything", 3, 3)
+        Dim TreeNode20 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Disabled Users", 4, 4)
+        Dim TreeNode21 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Built In Views", 2, 2, New System.Windows.Forms.TreeNode() {TreeNode19, TreeNode20})
+        Dim TreeNode22 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Everything", 3, 3)
+        Dim TreeNode23 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Disabled Users", 4, 4)
+        Dim TreeNode24 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Built In Views", 2, 2, New System.Windows.Forms.TreeNode() {TreeNode22, TreeNode23})
         Me.MainSplitContainer0 = New System.Windows.Forms.SplitContainer()
         Me.DomainTreeView = New SimpleAD.ControlDomainTreeView()
-        Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.MainDataGrid = New MetroFramework.Controls.MetroGrid()
-        Me.nameCol = New SimpleAD.TextAndImageColumn()
-        Me.status = New SimpleAD.TextAndImageColumn()
+        Me.MainListView = New SimpleAD.ControlListView()
+        Me.NameColumn = CType(New BrightIdeasSoftware.OLVColumn(), BrightIdeasSoftware.OLVColumn)
+        Me.TypeColumn = CType(New BrightIdeasSoftware.OLVColumn(), BrightIdeasSoftware.OLVColumn)
+        Me.DescriptionColumn = CType(New BrightIdeasSoftware.OLVColumn(), BrightIdeasSoftware.OLVColumn)
+        Me.ControlListView1 = New SimpleAD.ControlListView()
         Me.AcceptBt = New MetroFramework.Controls.MetroButton()
         Me.CancelBn = New MetroFramework.Controls.MetroButton()
         Me.ProgressBar = New MetroFramework.Controls.MetroProgressBar()
@@ -50,8 +56,8 @@ Partial Class ContainerUserBulk
         Me.MainSplitContainer0.Panel1.SuspendLayout()
         Me.MainSplitContainer0.Panel2.SuspendLayout()
         Me.MainSplitContainer0.SuspendLayout()
-        Me.Panel2.SuspendLayout()
-        CType(Me.MainDataGrid, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.MainListView, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ControlListView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -66,16 +72,15 @@ Partial Class ContainerUserBulk
         '
         Me.MainSplitContainer0.Panel1.BackColor = System.Drawing.SystemColors.Window
         Me.MainSplitContainer0.Panel1.Controls.Add(Me.DomainTreeView)
-        Me.MainSplitContainer0.Panel1.Controls.Add(Me.Panel2)
         '
         'MainSplitContainer0.Panel2
         '
-        Me.MainSplitContainer0.Panel2.Controls.Add(Me.MainDataGrid)
+        Me.MainSplitContainer0.Panel2.Controls.Add(Me.MainListView)
+        Me.MainSplitContainer0.Panel2.Controls.Add(Me.ControlListView1)
         Me.MainSplitContainer0.Size = New System.Drawing.Size(878, 439)
         Me.MainSplitContainer0.SplitterDistance = 220
         Me.MainSplitContainer0.SplitterWidth = 1
         Me.MainSplitContainer0.TabIndex = 6
-        Me.MainSplitContainer0.Visible = False
         '
         'DomainTreeView
         '
@@ -85,130 +90,138 @@ Partial Class ContainerUserBulk
         Me.DomainTreeView.DomainName = Nothing
         Me.DomainTreeView.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DomainTreeView.FullRowSelect = True
+        Me.DomainTreeView.HideSelection = False
         Me.DomainTreeView.HotTracking = True
         Me.DomainTreeView.ImageIndex = 0
         Me.DomainTreeView.ItemHeight = 24
-        Me.DomainTreeView.Location = New System.Drawing.Point(0, 28)
+        Me.DomainTreeView.Location = New System.Drawing.Point(0, 0)
         Me.DomainTreeView.Margin = New System.Windows.Forms.Padding(0)
         Me.DomainTreeView.Name = "DomainTreeView"
+        TreeNode13.ImageIndex = 3
+        TreeNode13.Name = "EverythingNode"
+        TreeNode13.SelectedImageIndex = 3
+        TreeNode13.Text = "Everything"
+        TreeNode14.ImageIndex = 4
+        TreeNode14.Name = "DisabledUsersNode"
+        TreeNode14.SelectedImageIndex = 4
+        TreeNode14.Text = "Disabled Users"
+        TreeNode15.ImageIndex = 2
+        TreeNode15.Name = "BuiltInRoot"
+        TreeNode15.SelectedImageIndex = 2
+        TreeNode15.Text = "Built In Views"
+        TreeNode16.ImageIndex = 3
+        TreeNode16.Name = "EverythingNode"
+        TreeNode16.SelectedImageIndex = 3
+        TreeNode16.Text = "Everything"
+        TreeNode17.ImageIndex = 4
+        TreeNode17.Name = "DisabledUsersNode"
+        TreeNode17.SelectedImageIndex = 4
+        TreeNode17.Text = "Disabled Users"
+        TreeNode18.ImageIndex = 2
+        TreeNode18.Name = "BuiltInRoot"
+        TreeNode18.SelectedImageIndex = 2
+        TreeNode18.Text = "Built In Views"
+        TreeNode19.ImageIndex = 3
+        TreeNode19.Name = "EverythingNode"
+        TreeNode19.SelectedImageIndex = 3
+        TreeNode19.Text = "Everything"
+        TreeNode20.ImageIndex = 4
+        TreeNode20.Name = "DisabledUsersNode"
+        TreeNode20.SelectedImageIndex = 4
+        TreeNode20.Text = "Disabled Users"
+        TreeNode21.ImageIndex = 2
+        TreeNode21.Name = "BuiltInRoot"
+        TreeNode21.SelectedImageIndex = 2
+        TreeNode21.Text = "Built In Views"
+        TreeNode22.ImageIndex = 3
+        TreeNode22.Name = "EverythingNode"
+        TreeNode22.SelectedImageIndex = 3
+        TreeNode22.Text = "Everything"
+        TreeNode23.ImageIndex = 4
+        TreeNode23.Name = "DisabledUsersNode"
+        TreeNode23.SelectedImageIndex = 4
+        TreeNode23.Text = "Disabled Users"
+        TreeNode24.ImageIndex = 2
+        TreeNode24.Name = "BuiltInRoot"
+        TreeNode24.SelectedImageIndex = 2
+        TreeNode24.Text = "Built In Views"
+        Me.DomainTreeView.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode15, TreeNode18, TreeNode21, TreeNode24})
         Me.DomainTreeView.SelectedImageIndex = 0
         Me.DomainTreeView.SelectedOU = Nothing
         Me.DomainTreeView.ShowLines = False
-        Me.DomainTreeView.Size = New System.Drawing.Size(220, 411)
+        Me.DomainTreeView.Size = New System.Drawing.Size(220, 439)
         Me.DomainTreeView.TabIndex = 1
         '
-        'Panel2
+        'MainListView
         '
-        Me.Panel2.BackColor = System.Drawing.Color.FromArgb(CType(CType(85, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(85, Byte), Integer))
-        Me.Panel2.Controls.Add(Me.Label1)
-        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Panel2.Location = New System.Drawing.Point(0, 0)
-        Me.Panel2.MaximumSize = New System.Drawing.Size(0, 28)
-        Me.Panel2.MinimumSize = New System.Drawing.Size(0, 28)
-        Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(220, 28)
-        Me.Panel2.TabIndex = 0
+        Me.MainListView.Activation = System.Windows.Forms.ItemActivation.TwoClick
+        Me.MainListView.AllColumns.Add(Me.NameColumn)
+        Me.MainListView.AllColumns.Add(Me.TypeColumn)
+        Me.MainListView.AllColumns.Add(Me.DescriptionColumn)
+        Me.MainListView.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.MainListView.CellEditUseWholeCell = False
+        Me.MainListView.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.NameColumn, Me.TypeColumn, Me.DescriptionColumn})
+        Me.MainListView.Cursor = System.Windows.Forms.Cursors.Default
+        Me.MainListView.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.MainListView.EmptyListMsg = "No Results"
+        Me.MainListView.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.MainListView.FullRowSelect = True
+        Me.MainListView.HeaderUsesThemes = True
+        Me.MainListView.HideSelection = False
+        Me.MainListView.IncludeColumnHeadersInCopy = True
+        Me.MainListView.Location = New System.Drawing.Point(0, 0)
+        Me.MainListView.Name = "MainListView"
+        Me.MainListView.OwnerDraw = False
+        Me.MainListView.RowHeight = 21
+        Me.MainListView.ShowGroups = False
+        Me.MainListView.Size = New System.Drawing.Size(657, 439)
+        Me.MainListView.TabIndex = 1
+        Me.MainListView.UseCompatibleStateImageBehavior = False
+        Me.MainListView.UseExplorerTheme = True
+        Me.MainListView.UseFiltering = True
+        Me.MainListView.UseNotifyPropertyChanged = True
+        Me.MainListView.View = System.Windows.Forms.View.Details
         '
-        'Label1
+        'NameColumn
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.ForeColor = System.Drawing.SystemColors.Window
-        Me.Label1.Location = New System.Drawing.Point(3, 7)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(55, 15)
-        Me.Label1.TabIndex = 0
-        Me.Label1.Text = "Directory"
+        Me.NameColumn.AspectName = "Name"
+        Me.NameColumn.Text = "Name"
         '
-        'MainDataGrid
+        'TypeColumn
         '
-        Me.MainDataGrid.AllowUserToAddRows = False
-        Me.MainDataGrid.AllowUserToDeleteRows = False
-        Me.MainDataGrid.AllowUserToOrderColumns = True
-        Me.MainDataGrid.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ControlLightLight
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlDarkDark
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlLightLight
-        Me.MainDataGrid.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
-        Me.MainDataGrid.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.MainDataGrid.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.MainDataGrid.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None
-        Me.MainDataGrid.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(85, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(85, Byte), Integer))
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(102, Byte), Integer), CType(CType(102, Byte), Integer), CType(CType(102, Byte), Integer))
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer))
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.MainDataGrid.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
-        Me.MainDataGrid.ColumnHeadersHeight = 28
-        Me.MainDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
-        Me.MainDataGrid.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.nameCol, Me.status})
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(102, Byte), Integer), CType(CType(102, Byte), Integer), CType(CType(102, Byte), Integer))
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer))
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.MainDataGrid.DefaultCellStyle = DataGridViewCellStyle4
-        Me.MainDataGrid.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.MainDataGrid.EnableHeadersVisualStyles = False
-        Me.MainDataGrid.Font = New System.Drawing.Font("Segoe UI", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel)
-        Me.MainDataGrid.GridColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.MainDataGrid.Location = New System.Drawing.Point(0, 0)
-        Me.MainDataGrid.Name = "MainDataGrid"
-        Me.MainDataGrid.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(85, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(85, Byte), Integer))
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(102, Byte), Integer), CType(CType(102, Byte), Integer), CType(CType(102, Byte), Integer))
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer), CType(CType(17, Byte), Integer))
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.MainDataGrid.RowHeadersDefaultCellStyle = DataGridViewCellStyle5
-        Me.MainDataGrid.RowHeadersVisible = False
-        Me.MainDataGrid.RowHeadersWidth = 44
-        Me.MainDataGrid.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.ControlLightLight
-        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlDarkDark
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.ControlLightLight
-        Me.MainDataGrid.RowsDefaultCellStyle = DataGridViewCellStyle6
-        Me.MainDataGrid.RowTemplate.DefaultCellStyle.Font = New System.Drawing.Font("Segoe UI Symbol", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.MainDataGrid.RowTemplate.Height = 20
-        Me.MainDataGrid.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.MainDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.MainDataGrid.ShowEditingIcon = False
-        Me.MainDataGrid.Size = New System.Drawing.Size(657, 439)
-        Me.MainDataGrid.Style = MetroFramework.MetroColorStyle.Silver
-        Me.MainDataGrid.TabIndex = 1
+        Me.TypeColumn.AspectName = "TypeFriendly"
+        Me.TypeColumn.Text = "Type"
         '
-        'nameCol
+        'DescriptionColumn
         '
-        Me.nameCol.DataPropertyName = "name"
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Padding = New System.Windows.Forms.Padding(20, 0, 0, 0)
-        Me.nameCol.DefaultCellStyle = DataGridViewCellStyle3
-        Me.nameCol.Frozen = True
-        Me.nameCol.HeaderText = "Name"
-        Me.nameCol.Image = Global.SimpleAD.My.Resources.Resources.User
-        Me.nameCol.MinimumWidth = 100
-        Me.nameCol.Name = "nameCol"
-        Me.nameCol.Width = 260
+        Me.DescriptionColumn.AspectName = "Description"
+        Me.DescriptionColumn.Text = "Description"
         '
-        'status
+        'ControlListView1
         '
-        Me.status.DataPropertyName = "status"
-        Me.status.Frozen = True
-        Me.status.HeaderText = "Status"
-        Me.status.Image = Nothing
-        Me.status.MinimumWidth = 100
-        Me.status.Name = "status"
-        Me.status.ReadOnly = True
-        Me.status.Width = 200
+        Me.ControlListView1.Activation = System.Windows.Forms.ItemActivation.TwoClick
+        Me.ControlListView1.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.ControlListView1.CellEditUseWholeCell = False
+        Me.ControlListView1.Cursor = System.Windows.Forms.Cursors.Default
+        Me.ControlListView1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ControlListView1.EmptyListMsg = "No Results"
+        Me.ControlListView1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ControlListView1.FullRowSelect = True
+        Me.ControlListView1.HeaderUsesThemes = True
+        Me.ControlListView1.HideSelection = False
+        Me.ControlListView1.IncludeColumnHeadersInCopy = True
+        Me.ControlListView1.Location = New System.Drawing.Point(0, 0)
+        Me.ControlListView1.Name = "ControlListView1"
+        Me.ControlListView1.OwnerDraw = False
+        Me.ControlListView1.RowHeight = 21
+        Me.ControlListView1.ShowGroups = False
+        Me.ControlListView1.Size = New System.Drawing.Size(657, 439)
+        Me.ControlListView1.TabIndex = 1
+        Me.ControlListView1.UseCompatibleStateImageBehavior = False
+        Me.ControlListView1.UseExplorerTheme = True
+        Me.ControlListView1.UseFiltering = True
+        Me.ControlListView1.UseNotifyPropertyChanged = True
+        Me.ControlListView1.View = System.Windows.Forms.View.Details
         '
         'AcceptBt
         '
@@ -305,9 +318,8 @@ Partial Class ContainerUserBulk
         Me.MainSplitContainer0.Panel2.ResumeLayout(False)
         CType(Me.MainSplitContainer0, System.ComponentModel.ISupportInitialize).EndInit()
         Me.MainSplitContainer0.ResumeLayout(False)
-        Me.Panel2.ResumeLayout(False)
-        Me.Panel2.PerformLayout()
-        CType(Me.MainDataGrid, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.MainListView, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ControlListView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
@@ -323,12 +335,12 @@ Partial Class ContainerUserBulk
     Friend WithEvents InsertNewRow As MenuItem
     Friend WithEvents DeleteRow As MenuItem
     Friend WithEvents PropertiesToolStripMenuItem As MenuItem
-    Friend WithEvents Label1 As Label
-    Friend WithEvents Panel2 As Panel
-    Friend WithEvents MainDataGrid As Controls.MetroGrid
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents nameCol As TextAndImageColumn
-    Friend WithEvents status As TextAndImageColumn
     Friend WithEvents ContextMenuStrip1 As ContextMenu
     Friend WithEvents DomainTreeView As ControlDomainTreeView
+    Friend WithEvents ControlListView1 As ControlListView
+    Friend WithEvents MainListView As ControlListView
+    Friend WithEvents NameColumn As OLVColumn
+    Friend WithEvents DescriptionColumn As OLVColumn
+    Friend WithEvents TypeColumn As OLVColumn
 End Class

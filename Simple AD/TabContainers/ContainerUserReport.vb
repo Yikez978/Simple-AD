@@ -5,11 +5,9 @@
     Private _Job As JobUserReport
     Private _JobName As String
     Private _Path As String
-    Private _UseDataGrid
 
     Private WithEvents _ControlDomainTreeView As ControlDomainTreeView
-
-    Private DataTableSource As DataTable
+    Private TextMatchFilter As TextMatchFilter
 
     Public Property ID As Integer
         Set(value As Integer)
@@ -45,14 +43,19 @@
 
         InitializeComponent()
 
-        Me.DomainTreeView.Nodes(0).Expand()
-
         _Job = Job
         _ControlDomainTreeView = Me.DomainTreeView
         _ControlDomainTreeView.InitialLoad()
 
         MainListView.Activation = ItemActivation.Standard
-        NameColumn.ImageGetter = New BrightIdeasSoftware.ImageGetterDelegate(AddressOf NameImageGetter)
+        NameColumn.ImageGetter = New ImageGetterDelegate(AddressOf NameImageGetter)
+
+        Dim HighlightTextRenderer = New HighlightTextRenderer(TextMatchFilter)
+
+        HighlightTextRenderer.FramePen = New Pen(Color.AliceBlue)
+
+        MainListView.DefaultRenderer = HighlightTextRenderer
+        MainListView.RestoreState(Encoding.Default.GetBytes(My.Settings.ListViewSettings))
 
         Me.Dock = DockStyle.Fill
 
@@ -68,56 +71,55 @@
 
     Private Sub SearchBoxTb_TextChanged(sender As Object, e As EventArgs) Handles SearchBoxTb.TextChanged
         If Not String.IsNullOrEmpty(SearchBoxTb.Text) Then
-            'FilterDataGrid(SearchBoxTb.Text.Trim)
+            TextMatchFilter = TextMatchFilter.Contains(MainListView, SearchBoxTb.Text)
+            MainListView.ModelFilter = TextMatchFilter
         Else
-            'MainDataGrid.DataSource = DataTableSource
+            MainListView.ModelFilter = Nothing
         End If
     End Sub
 
 
     Private Sub Item_CellMouseDoubleClick(sender As Object, e As EventArgs) Handles PropertiesToolStripMenuItem.Click, MainListView.ItemActivate
-        'Try
-        If MainListView.SelectedItems.Count > 0 Then
-            Dim oClass As String = MainListView.SelectedItem.RowObject.Type
-            Select Case True
-                Case (oClass = "container" Or oClass = "organizationalUnit")
-                    Me.Path = MainListView.SelectedItem.RowObject.DistinguishedName
-                    Dim Nodes As TreeNode() = _ControlDomainTreeView.Nodes.Find(Path, True)
-                    If Nodes.Count > 0 Then
-                        _ControlDomainTreeView.SelectedNode = Nodes(0)
-                        Nodes(0).Expand()
-                    End If
-                    _Job.Refresh(Path)
-                Case (oClass = "user" Or oClass = "group" Or oClass = "computer")
-                    If Not IsDBNull(MainListView.SelectedItem.RowObject.SAMAccountName) Then
-                        Dim Sam = MainListView.SelectedItem.RowObject.SAMAccountName
-                        Dim Name = MainListView.SelectedItem.RowObject.Name
-                        Dim ShowUserProps = New FormUserAttributes(Sam, Name, MainListView.SelectedItem, _Job)
-                    End If
-                Case Else
-            End Select
-        End If
-        'Catch Ex As Exception
-        '    Debug.WriteLine("[Error] Unable to load object properties Form: " & Ex.Message)
-        'End Try
+        Try
+            If MainListView.SelectedItems.Count > 0 Then
+                Dim oClass As String = MainListView.SelectedItem.RowObject.Type
+                Select Case True
+                    Case (oClass = "container" Or oClass = "organizationalUnit")
+                        Me.Path = MainListView.SelectedItem.RowObject.DistinguishedName
+                        Dim Nodes As TreeNode() = _ControlDomainTreeView.Nodes.Find(Path, True)
+                        If Nodes.Count > 0 Then
+                            _ControlDomainTreeView.SelectedNode = Nodes(0)
+                            Nodes(0).Expand()
+                        End If
+                        _Job.Refresh(Path)
+                    Case (oClass = "user" Or oClass = "group" Or oClass = "computer")
+                        If Not IsDBNull(MainListView.SelectedItem.RowObject.SAMAccountName) Then
+                            Dim ShowUserProps = New FormUserAttributes(MainListView.SelectedItem.RowObject, _Job)
+                        End If
+                    Case Else
+                End Select
+            End If
+        Catch Ex As Exception
+            Debug.WriteLine("[Error] Unable to load object properties Form: " & Ex.Message)
+        End Try
     End Sub
 
     Private Sub BulkModifyToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BulkModifyToolStripMenuItem.Click
-        Dim SelectedItems As List(Of BrightIdeasSoftware.OLVListItem) = GetSelectedUsers()
+        Dim SelectedItems As List(Of OLVListItem) = GetSelectedUsers()
         Dim NewBulkModifyForm = New FormUserAttributesBulk(SelectedItems, _Job)
     End Sub
 
     Private Sub EnableDisableSingleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EnableDisableSingleToolStripMenuItem.Click
         Try
-            Dim Username As String = GetSelectedUser()
+            Dim DomainObject As DomainObject = GetSelectedUser()
 
-            If IsAccountEnabled(Username) Then
-                Dim IsEnableAccountSuccessfull As Integer = EnableADUserUsingUserAccountControl(Username)
+            If IsAccountEnabled(DomainObject) Then
+                Dim IsEnableAccountSuccessfull As Integer = EnableADUserUsingUserAccountControl(DomainObject)
                 If Not IsEnableAccountSuccessfull = Nothing Then
                     _Job.Refresh()
                 End If
             Else
-                Dim IsDisnableAccountSuccessfull As Integer = DisableADUserUsingUserAccountControl(Username)
+                Dim IsDisnableAccountSuccessfull As Integer = DisableADUserUsingUserAccountControl(DomainObject)
                 If Not IsDisnableAccountSuccessfull = Nothing Then
                     _Job.Refresh()
                 End If
@@ -127,31 +129,31 @@
         End Try
     End Sub
 
-    Private Function GetSelectedUser() As String
+    Private Function GetSelectedUser() As DomainObject
         Try
-            Return MainListView.SelectedItem.RowObject.SAMAccountName
+            Return MainListView.SelectedItem.RowObject
         Catch Ex As Exception
             Debug.WriteLine("[Error] Unable to change the active state of the seleceted user account: " & Ex.Message)
             Return Nothing
         End Try
     End Function
 
-    Private Sub ToolStripMenuItem4_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem4.Click
-        Dim User = GetSelectedUser()
-        Dim DeleteForm = New FormConfirmation("Are you sure you wish to delete " & User & "?", ConfirmationType.Delete)
+    Private Sub DeleteSingleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteSingleToolStripMenuItem.Click
+        Dim DomainObject As DomainObject = GetSelectedUser()
+        Dim DeleteForm = New FormConfirmation("Are you sure you wish to delete " & DomainObject.Name & "?", ConfirmationType.Delete)
         DeleteForm.ShowDialog()
         If DeleteForm.DialogResult = DialogResult.Yes Then
-            If DeleteADObject(User) Then
+            If DeleteADObject(DomainObject) Then
                 _Job.Refresh()
             End If
         End If
     End Sub
 
-    Private Function GetSelectedUsers() As List(Of BrightIdeasSoftware.OLVListItem)
+    Private Function GetSelectedUsers() As List(Of OLVListItem)
         Try
-            Dim UserArray As New List(Of BrightIdeasSoftware.OLVListItem)
+            Dim UserArray As New List(Of OLVListItem)
 
-            For Each Item As BrightIdeasSoftware.OLVListItem In MainListView.SelectedItems
+            For Each Item As OLVListItem In MainListView.SelectedItems
                 UserArray.Add(Item)
             Next
             Return UserArray
@@ -163,17 +165,17 @@
 
     Private Sub EnableDisableBulkToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EnableDisableBulkToolStripMenuItem.Click
         Try
-            For Each Item As BrightIdeasSoftware.OLVListItem In GetSelectedUsers()
+            For Each Item As OLVListItem In GetSelectedUsers()
 
-                Dim Username As String = Item.RowObject.SAMAccountName
+                Dim DomainObject As DomainObject = Item.RowObject
 
-                If IsAccountEnabled(Username) Then
-                    Dim IsEnableAccountSuccessfull As Integer = EnableADUserUsingUserAccountControl(Username)
+                If IsAccountEnabled(DomainObject) Then
+                    Dim IsEnableAccountSuccessfull As Integer = EnableADUserUsingUserAccountControl(DomainObject)
                     If Not IsEnableAccountSuccessfull = Nothing Then
                         _Job.Refresh()
                     End If
                 Else
-                    Dim IsDisnableAccountSuccessfull As Integer = DisableADUserUsingUserAccountControl(Username)
+                    Dim IsDisnableAccountSuccessfull As Integer = DisableADUserUsingUserAccountControl(DomainObject)
                     If Not IsDisnableAccountSuccessfull = Nothing Then
                         _Job.Refresh()
                     End If
@@ -185,12 +187,12 @@
     End Sub
 
     Private Sub DeleteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteToolStripMenuItem.Click
-        Dim SelectedUsers As List(Of BrightIdeasSoftware.OLVListItem) = GetSelectedUsers()
+        Dim SelectedUsers As List(Of OLVListItem) = GetSelectedUsers()
         Dim DeleteForm = New FormConfirmation("Are you sure you wish to delete " & SelectedUsers.Count & " objects?", ConfirmationType.Delete)
         Dim IsBatchSuccesfull = False
         DeleteForm.ShowDialog()
         If DeleteForm.DialogResult = DialogResult.Yes Then
-            For Each Item As BrightIdeasSoftware.OLVListItem In SelectedUsers
+            For Each Item As OLVListItem In SelectedUsers
                 If DeleteADObject(Item.RowObject.SAMAccountName) Then
                     IsBatchSuccesfull = True
                 End If
@@ -202,17 +204,16 @@
     End Sub
 
     Private Sub MoveSingleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MoveSingleToolStripMenuItem.Click
-        Dim ObjectName = MainListView.SelectedItem.RowObject.Name
-        Dim ObjectSam = MainListView.SelectedItem.RowObject.SAMAccountName
+        Dim DomainObject As DomainObject = MainListView.SelectedItem.RowObject
         Dim MoveForm = New FormMoveObject
         MoveForm.ShowDialog()
         If MoveForm.DialogResult = DialogResult.Yes Then
-            If MoveADObject(ObjectSam, MoveForm.SelecetdOU) = True Then
+            If MoveADObject(DomainObject, MoveForm.SelecetdOU) = True Then
                 _Job.Refresh()
-                Dim ResultForm = New FormAlert(ObjectName & " has been moved to:" & Environment.NewLine & MoveForm.SelecetdOU, AlertType.Success)
+                Dim ResultForm = New FormAlert(DomainObject.Name & " has been moved to:" & Environment.NewLine & MoveForm.SelecetdOU, AlertType.Success)
                 ResultForm.ShowDialog()
             Else
-                Dim ResultForm = New FormAlert("An Error occured while trying to move" & ObjectName & " to:" & Environment.NewLine & MoveForm.SelecetdOU, AlertType.ErrorAlert)
+                Dim ResultForm = New FormAlert("An Error occured while trying to move " & DomainObject.Name & " to:" & Environment.NewLine & MoveForm.SelecetdOU, AlertType.ErrorAlert)
                 ResultForm.ShowDialog()
             End If
         End If
@@ -247,7 +248,7 @@
         MainListView.View = View.List
     End Sub
 
-    Private Sub MainListView_CellRightClick(sender As Object, e As BrightIdeasSoftware.CellRightClickEventArgs) Handles MainListView.CellRightClick
+    Private Sub MainListView_CellRightClick(sender As Object, e As CellRightClickEventArgs) Handles MainListView.CellRightClick
         If MainListView.SelectedItems.Count = 1 Then
             Dim oClass = MainListView.SelectedItem.RowObject.Type
             If (oClass = "user" Or oClass = "group" Or oClass = "computer" Or oClass = "container" Or oClass = "organizationalUnit") Then
@@ -284,7 +285,7 @@
         Return Nothing
     End Function
 
-    Private Sub MainListView_CellToolTipShowing(sender As Object, e As BrightIdeasSoftware.ToolTipShowingEventArgs) Handles MainListView.CellToolTipShowing
+    Private Sub MainListView_CellToolTipShowing(sender As Object, e As ToolTipShowingEventArgs) Handles MainListView.CellToolTipShowing
         If e.Column Is TypeColumn Then
             e.Text = CStr(e.Model.TypeFull)
         End If
@@ -293,7 +294,7 @@
         End If
     End Sub
 
-    Private Sub MainListView_AfterSorting(sender As Object, e As BrightIdeasSoftware.AfterSortingEventArgs) Handles MainListView.AfterSorting
+    Private Sub MainListView_AfterSorting(sender As Object, e As AfterSortingEventArgs) Handles MainListView.AfterSorting
         If Not e.SortOrder = SortOrder.None Then
             MainListView.ShowGroups = True
         End If
@@ -313,9 +314,4 @@
         Dim StringToCopy As String = MainListView.SelectedItem.RowObject.DistinguishedName
         My.Computer.Clipboard.SetText(StringToCopy)
     End Sub
-End Class
-
-Public Class UserRow
-    Property Username As String
-    Property Row As DataGridViewRow
 End Class

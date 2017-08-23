@@ -2,7 +2,7 @@
 
 Public Class FormUserAttributes
 
-    Private _sAMAccountName As String
+    Private _DomainObject As DomainObject
     Private _defualtCellValue As Object
     Private _Job As JobUserReport
 
@@ -12,18 +12,18 @@ Public Class FormUserAttributes
     Private ValCol As New DataColumn("Value")
     Private DisplCol As New DataColumn("Attribute")
 
-    Public Sub New(ByVal sAMAccountName As String, ByVal Name As String, Item As BrightIdeasSoftware.OLVListItem, ByVal Job As JobUserReport)
+    Public Sub New(DomainObject As DomainObject, ByVal Job As JobUserReport)
 
         InitializeComponent()
 
-        Text = Name
-        ObjectName.Text = Name
-        ObjectType.Text = GetProperName(GetDirEntryFromSAM(sAMAccountName).SchemaClassName)
+        Text = DomainObject.Name
+        ObjectName.Text = DomainObject.Name
+        ObjectType.Text = GetProperName(GetDirEntryFromDomainObject(DomainObject).SchemaClassName)
 
         DropDownFilter.SelectedIndex = 0
 
         _Job = Job
-        _sAMAccountName = sAMAccountName
+        _DomainObject = DomainObject
 
         DataTableSource.Columns.Add(AtrCol)
         DataTableSource.Columns.Add(DisplCol)
@@ -32,12 +32,12 @@ Public Class FormUserAttributes
         Show()
 
         Dim LoadAtrThread As New Threading.Thread(AddressOf LoadAttributes)
-        LoadAtrThread.Start(sAMAccountName)
+        LoadAtrThread.Start(_DomainObject)
     End Sub
 
-    Private Sub LoadAttributes(ByVal sAMAccountName As String)
+    Private Sub LoadAttributes(ByVal DomainObject As DomainObject)
 
-        Dim ObjectDirEntry As DirectoryEntry = GetDirEntryFromSAM(sAMAccountName)
+        Dim ObjectDirEntry As DirectoryEntry = GetDirEntryFromDomainObject(DomainObject)
 
         For Each Prop In ObjectDirEntry.Properties.PropertyNames
             If Not ObjectDirEntry.Properties(Prop) Is Nothing Then
@@ -106,7 +106,7 @@ Public Class FormUserAttributes
 
     Private Sub MainDataGrid_CellLeave(sender As Object, e As DataGridViewCellEventArgs) Handles MainDataGrid.CellEndEdit
 
-        Dim Entry As DirectoryEntry = GetDirEntryFromSAM(_sAMAccountName)
+        Dim Entry As DirectoryEntry = GetDirEntryFromDomainObject(_DomainObject)
         Dim Attr As String = MainDataGrid.Rows(e.RowIndex).Cells("AttributeFull").Value
         Dim Value As String
 

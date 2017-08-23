@@ -12,6 +12,10 @@ Public Class ControlDomainTreeView
     Public Event EveryThingSeleceted()
     Public Event DisabledUsersSeleceted()
 
+    Public EverythingTreeNode As TreeNode = New TreeNode("Everything", 3, 3)
+    Public DisabledUsersTreeNode As TreeNode = New TreeNode("Disabled Users", 4, 4)
+    Public BuiltInTreeNode As TreeNode = New TreeNode("Built In Views", 2, 2, New TreeNode() {EverythingTreeNode, DisabledUsersTreeNode})
+
     Property DomainName As String
         Set(value As String)
             _DomainName = value
@@ -41,6 +45,7 @@ Public Class ControlDomainTreeView
     End Property
 
     Public Sub New()
+
         WindowsApi.SetWindowTheme(Me.Handle, "explorer", Nothing)
         Me.Margin = New Padding(0, 0, 0, 0)
         Me.HotTracking = True
@@ -51,6 +56,8 @@ Public Class ControlDomainTreeView
         Me.Font = SystemFonts.DefaultFont
         Me.HideSelection = False
         Me.Nodes.Clear()
+        Me.LoadNodes()
+        Me.BuiltInTreeNode.Expand()
 
         Try
             Dim AdImages As New ImageList()
@@ -68,6 +75,22 @@ Public Class ControlDomainTreeView
         Catch ex As Exception
             MessageBox.Show("The following error was encountered whilst attempting to load domain/container/OU icons: " & ex.Message, "Error Loading Icons", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+    End Sub
+
+    Public Sub LoadNodes()
+        EverythingTreeNode.ImageIndex = 3
+        EverythingTreeNode.Name = "EverythingNode"
+        EverythingTreeNode.SelectedImageIndex = 3
+        EverythingTreeNode.Text = "Everything"
+        DisabledUsersTreeNode.ImageIndex = 4
+        DisabledUsersTreeNode.Name = "DisabledUsersNode"
+        DisabledUsersTreeNode.SelectedImageIndex = 4
+        DisabledUsersTreeNode.Text = "Disabled Users"
+        BuiltInTreeNode.ImageIndex = 2
+        BuiltInTreeNode.Name = "BuiltInRoot"
+        BuiltInTreeNode.SelectedImageIndex = 2
+        BuiltInTreeNode.Text = "Built In Views"
+        Me.Nodes.AddRange(New TreeNode() {BuiltInTreeNode})
     End Sub
 
     Public Sub InitialLoad()
@@ -104,10 +127,10 @@ Public Class ControlDomainTreeView
             If Not Me.IsDisposed Then
                 Try
                     If String.IsNullOrEmpty(ErrorMessage) Then
-
                         RootNode.Nodes.Add(New TreeNode)
                         Me.Nodes.Add(RootNode)
                         RootNode.Expand()
+                        Me.SelectedNode = RootNode
                     End If
                 Catch ex As Exception
                 End Try
@@ -202,7 +225,7 @@ Public Class ControlDomainTreeView
     End Sub
 
     Private Sub ControlDomainTreeView_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles Me.AfterSelect
-        If Not (SelectedNode Is Nothing) Then
+        If Not e.Node Is Nothing Then
             Select Case SelectedNode.Text
                 Case "Built In Views"
                 Case "Disabled Users"
@@ -210,9 +233,11 @@ Public Class ControlDomainTreeView
                 Case "Everything"
                     RaiseEvent EveryThingSeleceted()
                 Case Else
-                    GlobalVariables.SelectedOU = SelectedNode.ToolTipText
-                    RaiseEvent SelectedOUChanged(e.Node.ToolTipText)
-                    FormMain.ToolStripStatusLabelStatus.Text = GlobalVariables.SelectedOU
+                    If Not e.Node.ToolTipText Is Nothing Then
+                        GlobalVariables.SelectedOU = SelectedNode.ToolTipText
+                        RaiseEvent SelectedOUChanged(e.Node.ToolTipText)
+                        FormMain.ToolStripStatusLabelStatus.Text = GlobalVariables.SelectedOU
+                    End If
             End Select
         End If
     End Sub

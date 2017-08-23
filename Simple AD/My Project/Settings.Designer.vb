@@ -164,13 +164,13 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property UseDataGrid() As Boolean
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property ListViewSettings() As String
             Get
-                Return CType(Me("UseDataGrid"),Boolean)
+                Return CType(Me("ListViewSettings"),String)
             End Get
             Set
-                Me("UseDataGrid") = value
+                Me("ListViewSettings") = value
             End Set
         End Property
     End Class

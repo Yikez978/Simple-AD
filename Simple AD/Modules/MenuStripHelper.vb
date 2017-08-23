@@ -1,6 +1,6 @@
-﻿Public Class MenuStripHelper
+﻿Public Module MenuStripHelper
 
-    Public Shared Sub SubMenuClickHandler(ByVal sender As Object, ByVal e As EventArgs)
+    Public Sub SubMenuClickHandler(ByVal sender As Object, ByVal e As EventArgs)
         Dim btn As ToolStripMenuItem = DirectCast(sender, ToolStripMenuItem)
 
         Dim DomainItem As ToolStripMenuItem
@@ -46,4 +46,4 @@
 
     End Sub
 
-End Class
+End Module

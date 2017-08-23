@@ -2,7 +2,7 @@
 
 Public Class ADConnectionChecker
 
-    Private bw As BackgroundWorker = New BackgroundWorker
+    Private BackgroundWorker As BackgroundWorker = New BackgroundWorker
 
     Private ConnectionState As Integer
 
@@ -15,49 +15,49 @@ Public Class ADConnectionChecker
 
         ConnectionState = 2
 
-        bw.WorkerReportsProgress = True
-        bw.WorkerSupportsCancellation = True
+        BackgroundWorker.WorkerReportsProgress = True
+        BackgroundWorker.WorkerSupportsCancellation = True
 
-        AddHandler bw.DoWork, AddressOf bw_DoWork
-        AddHandler bw.ProgressChanged, AddressOf bw_ProgressChanged
-        AddHandler bw.RunWorkerCompleted, AddressOf bw_RunWorkerCompleted
+        AddHandler BackgroundWorker.DoWork, AddressOf BackgroundWorker_DoWork
+        AddHandler BackgroundWorker.ProgressChanged, AddressOf BackgroundWorker_ProgressChanged
+        AddHandler BackgroundWorker.RunWorkerCompleted, AddressOf BackgroundWorker_RunWorkerCompleted
 
-        If Not bw.IsBusy = True Then
-            bw.RunWorkerAsync()
+        If Not BackgroundWorker.IsBusy = True Then
+            BackgroundWorker.RunWorkerAsync()
         End If
 
-        If bw.WorkerSupportsCancellation = True Then
-            bw.CancelAsync()
+        If BackgroundWorker.WorkerSupportsCancellation = True Then
+            BackgroundWorker.CancelAsync()
         End If
 
     End Sub
 
-    Private Sub bw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
+    Private Sub BackgroundWorker_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
         Dim worker As BackgroundWorker = CType(sender, BackgroundWorker)
 
-        If bw.CancellationPending = True Then
+        If BackgroundWorker.CancellationPending = True Then
             e.Cancel = True
         Else
             Dim connectionStatus As Boolean = ValidateActiveDirectoryLogin(GetFQDN, LoginUsername, LoginPassword, LoginUsernamePrefix)
 
             If connectionStatus Then
-                bw.ReportProgress(1)
+                BackgroundWorker.ReportProgress(1)
             Else
-                bw.ReportProgress(0)
+                BackgroundWorker.ReportProgress(0)
             End If
 
             System.Threading.Thread.Sleep(5000)
         End If
     End Sub
 
-    Private Sub bw_RunWorkerCompleted(ByVal sender As Object, ByVal e As RunWorkerCompletedEventArgs)
+    Private Sub BackgroundWorker_RunWorkerCompleted(ByVal sender As Object, ByVal e As RunWorkerCompletedEventArgs)
 
-        If Not bw.IsBusy = True Then
-            bw.RunWorkerAsync()
+        If Not BackgroundWorker.IsBusy = True Then
+            BackgroundWorker.RunWorkerAsync()
         End If
     End Sub
 
-    Private Sub bw_ProgressChanged(ByVal sender As Object, ByVal e As ProgressChangedEventArgs)
+    Private Sub BackgroundWorker_ProgressChanged(ByVal sender As Object, ByVal e As ProgressChangedEventArgs)
 
         If Not ConnectionState = e.ProgressPercentage Then
 
@@ -76,8 +76,8 @@ Public Class ADConnectionChecker
     End Sub
 
     Public Sub StopChecker()
-        If bw.WorkerSupportsCancellation Then
-            bw.CancelAsync()
+        If BackgroundWorker.WorkerSupportsCancellation Then
+            BackgroundWorker.CancelAsync()
         End If
     End Sub
 

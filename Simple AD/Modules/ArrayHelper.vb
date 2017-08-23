@@ -1,4 +1,4 @@
-﻿Module ArrayModdule
+﻿Module ArrayHelper
     <System.Runtime.CompilerServices.Extension()>
     Public Sub RemoveAt(Of T)(ByRef arr As T(), ByVal index As Integer)
         Dim uBound = arr.GetUpperBound(0)

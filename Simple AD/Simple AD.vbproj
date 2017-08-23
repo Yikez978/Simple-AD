@@ -171,9 +171,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\DomainObject.vb" />
+    <Compile Include="Objects\DomainObject.vb" />
     <Compile Include="Classes\WindowsAPI.vb" />
-    <Compile Include="Interfaces\IJobContainer.vb" />
     <Compile Include="Jobs\SimpleADJob.vb" />
     <Compile Include="LDAP\LDAPKey.vb" />
     <Compile Include="Modules\DataGridHelper.vb" />
@@ -192,9 +191,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="UI\ControlDataGridView.vb">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Objects\UserDomainObject.vb" />
     <Compile Include="UI\ControlListView.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -204,7 +201,7 @@
     <Compile Include="UI\CustomTabControl.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI\FormSimpleAD.vb">
+    <Compile Include="Forms\FormSimpleAD.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Modules\TabDragger.vb">
@@ -212,73 +209,70 @@
     <Compile Include="UI\ControlDomainTreeView.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UserControls\NativeTreeView.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Utility Forms\FormBulkUserOptions.Designer.vb">
+    <Compile Include="Forms\FormBulkUserOptions.Designer.vb">
       <DependentUpon>FormBulkUserOptions.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utility Forms\FormBulkUserOptions.vb">
+    <Compile Include="Forms\FormBulkUserOptions.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Utility Forms\FormConfirmation.Designer.vb">
+    <Compile Include="Forms\FormConfirmation.Designer.vb">
       <DependentUpon>FormConfirmation.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utility Forms\FormConfirmation.vb">
+    <Compile Include="Forms\FormConfirmation.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Utility Forms\FormConsole.Designer.vb">
+    <Compile Include="Forms\FormConsole.Designer.vb">
       <DependentUpon>FormConsole.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utility Forms\FormConsole.vb">
+    <Compile Include="Forms\FormConsole.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Utility Forms\FormAlert.Designer.vb">
+    <Compile Include="Forms\FormAlert.Designer.vb">
       <DependentUpon>FormAlert.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utility Forms\FormAlert.vb">
+    <Compile Include="Forms\FormAlert.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Utility Forms\FormMoveObject.Designer.vb">
+    <Compile Include="Forms\FormMoveObject.Designer.vb">
       <DependentUpon>FormMoveObject.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utility Forms\FormMoveObject.vb">
+    <Compile Include="Forms\FormMoveObject.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Utility Forms\FormUpdate.Designer.vb">
+    <Compile Include="Forms\FormUpdate.Designer.vb">
       <DependentUpon>FormUpdate.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utility Forms\FormUpdate.vb">
+    <Compile Include="Forms\FormUpdate.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Utility Forms\FormLDAPQuery.Designer.vb">
+    <Compile Include="Forms\FormLDAPQuery.Designer.vb">
       <DependentUpon>FormLDAPQuery.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utility Forms\FormLDAPQuery.vb">
+    <Compile Include="Forms\FormLDAPQuery.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Utility Forms\ActiveDirectory\FormGroupSelection.Designer.vb">
+    <Compile Include="Forms\ActiveDirectory\FormGroupSelection.Designer.vb">
       <DependentUpon>FormGroupSelection.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utility Forms\ActiveDirectory\FormGroupSelection.vb">
+    <Compile Include="Forms\ActiveDirectory\FormGroupSelection.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Utility Forms\FormBulkUser.Designer.vb">
+    <Compile Include="Forms\FormBulkUser.Designer.vb">
       <DependentUpon>FormBulkUser.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utility Forms\FormBulkUser.vb">
+    <Compile Include="Forms\FormBulkUser.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Modules\ActiveDirectoryHelper.vb" />
     <Compile Include="Classes\ActiveDirectoryIcon.vb" />
     <Compile Include="Classes\ADConnectionChecker.vb" />
     <Compile Include="Classes\ApplicationEvents.vb" />
-    <Compile Include="Classes\ArrayModdule.vb" />
+    <Compile Include="Modules\ArrayHelper.vb" />
     <Compile Include="Classes\BulkADWorker.vb" />
     <Compile Include="Modules\ContextMenuHelper.vb" />
-    <Compile Include="Classes\ControlHelper.vb" />
+    <Compile Include="Modules\ControlHelper.vb" />
     <Compile Include="Modules\ExtendedMethods.vb" />
-    <Compile Include="Classes\FileExportHelper.vb" />
+    <Compile Include="Modules\FileExportHelper.vb" />
     <Compile Include="LDAP\StaticProperties.vb" />
     <Compile Include="Jobs\JobOffice365.vb" />
     <Compile Include="Jobs\JobUserReport.vb" />
@@ -287,12 +281,12 @@
     <Compile Include="Modules\GlobalVariables.vb" />
     <Compile Include="Modules\HideColumnsWorker.vb" />
     <Compile Include="Modules\LocalData.vb" />
-    <Compile Include="Classes\MenuStripHelper.vb" />
+    <Compile Include="Modules\MenuStripHelper.vb" />
     <Compile Include="Modules\StringHelper.vb" />
-    <Compile Include="Utility Forms\FormImportValidation.Designer.vb">
+    <Compile Include="Forms\FormImportValidation.Designer.vb">
       <DependentUpon>FormImportValidation.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utility Forms\FormImportValidation.vb">
+    <Compile Include="Forms\FormImportValidation.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="TabContainers\ContainerUserBulk.Designer.vb">
@@ -302,17 +296,17 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Classes\TextAndImageColumn.vb" />
-    <Compile Include="Utility Forms\FormSelectColumns.Designer.vb">
+    <Compile Include="Forms\FormSelectColumns.Designer.vb">
       <DependentUpon>FormSelectColumns.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utility Forms\FormSelectColumns.vb">
+    <Compile Include="Forms\FormSelectColumns.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Classes\GlobalSuppressions.vb" />
-    <Compile Include="Utility Forms\FormLogin.Designer.vb">
+    <Compile Include="Forms\FormLogin.Designer.vb">
       <DependentUpon>FormLogin.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utility Forms\FormLogin.vb">
+    <Compile Include="Forms\FormLogin.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -331,14 +325,13 @@
     <Compile Include="FormMain.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Utility Forms\FormOptions.Designer.vb">
+    <Compile Include="Forms\FormOptions.Designer.vb">
       <DependentUpon>FormOptions.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utility Forms\FormOptions.vb">
+    <Compile Include="Forms\FormOptions.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Classes\References.vb" />
-    <Compile Include="Objects\ObjectUser.vb" />
     <Compile Include="UserControls\ControlRecentFilesButton.Designer.vb">
       <DependentUpon>ControlRecentFilesButton.vb</DependentUpon>
     </Compile>
@@ -357,69 +350,63 @@
     <Compile Include="TabContainers\ContainerOffice365.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\ControlTabSpinner.Designer.vb">
-      <DependentUpon>ControlTabSpinner.vb</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\ControlTabSpinner.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="UserControls\ControlUsernameContructorChunk.Designer.vb">
       <DependentUpon>ControlUsernameContructorChunk.vb</DependentUpon>
     </Compile>
     <Compile Include="UserControls\ControlUsernameContructorChunk.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Utility Forms\FormUserAttributes.Designer.vb">
+    <Compile Include="Forms\FormUserAttributes.Designer.vb">
       <DependentUpon>FormUserAttributes.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utility Forms\FormUserAttributes.vb">
+    <Compile Include="Forms\FormUserAttributes.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Utility Forms\FormLDAPMatrix.Designer.vb">
+    <Compile Include="Forms\FormLDAPMatrix.Designer.vb">
       <DependentUpon>FormLDAPMatrix.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utility Forms\FormLDAPMatrix.vb">
+    <Compile Include="Forms\FormLDAPMatrix.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Utility Forms\FormUserAttributesBulk.Designer.vb">
+    <Compile Include="Forms\FormUserAttributesBulk.Designer.vb">
       <DependentUpon>FormUserAttributesBulk.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utility Forms\FormUserAttributesBulk.vb">
+    <Compile Include="Forms\FormUserAttributesBulk.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Utility Forms\Office 365\FormO365Login.Designer.vb">
+    <Compile Include="Forms\Office 365\FormO365Login.Designer.vb">
       <DependentUpon>FormO365Login.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utility Forms\Office 365\FormO365Login.vb">
+    <Compile Include="Forms\Office 365\FormO365Login.vb">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Utility Forms\ActiveDirectory\FormGroupSelection.resx">
+    <EmbeddedResource Include="Forms\ActiveDirectory\FormGroupSelection.resx">
       <DependentUpon>FormGroupSelection.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Utility Forms\FormBulkUser.resx">
+    <EmbeddedResource Include="Forms\FormBulkUser.resx">
       <DependentUpon>FormBulkUser.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Utility Forms\FormBulkUserOptions.resx">
+    <EmbeddedResource Include="Forms\FormBulkUserOptions.resx">
       <DependentUpon>FormBulkUserOptions.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Utility Forms\FormConfirmation.resx">
+    <EmbeddedResource Include="Forms\FormConfirmation.resx">
       <DependentUpon>FormConfirmation.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Utility Forms\FormConsole.resx">
+    <EmbeddedResource Include="Forms\FormConsole.resx">
       <DependentUpon>FormConsole.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Utility Forms\FormAlert.resx">
+    <EmbeddedResource Include="Forms\FormAlert.resx">
       <DependentUpon>FormAlert.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Utility Forms\FormImportValidation.resx">
+    <EmbeddedResource Include="Forms\FormImportValidation.resx">
       <DependentUpon>FormImportValidation.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Utility Forms\FormLDAPQuery.resx">
+    <EmbeddedResource Include="Forms\FormLDAPQuery.resx">
       <DependentUpon>FormLDAPQuery.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Utility Forms\FormLogin.resx">
+    <EmbeddedResource Include="Forms\FormLogin.resx">
       <DependentUpon>FormLogin.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -431,28 +418,28 @@
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Utility Forms\FormMoveObject.resx">
+    <EmbeddedResource Include="Forms\FormMoveObject.resx">
       <DependentUpon>FormMoveObject.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Utility Forms\FormUpdate.resx">
+    <EmbeddedResource Include="Forms\FormUpdate.resx">
       <DependentUpon>FormUpdate.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Utility Forms\FormUserAttributes.resx">
+    <EmbeddedResource Include="Forms\FormUserAttributes.resx">
       <DependentUpon>FormUserAttributes.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Utility Forms\FormLDAPMatrix.resx">
+    <EmbeddedResource Include="Forms\FormLDAPMatrix.resx">
       <DependentUpon>FormLDAPMatrix.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Utility Forms\FormUserAttributesBulk.resx">
+    <EmbeddedResource Include="Forms\FormUserAttributesBulk.resx">
       <DependentUpon>FormUserAttributesBulk.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Utility Forms\Office 365\FormO365Login.resx">
+    <EmbeddedResource Include="Forms\Office 365\FormO365Login.resx">
       <DependentUpon>FormO365Login.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Utility Forms\FormOptions.resx">
+    <EmbeddedResource Include="Forms\FormOptions.resx">
       <DependentUpon>FormOptions.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Utility Forms\FormSelectColumns.resx">
+    <EmbeddedResource Include="Forms\FormSelectColumns.resx">
       <DependentUpon>FormSelectColumns.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TabContainers\ContainerUserBulk.resx">
@@ -466,9 +453,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TabContainers\ContainerOffice365.resx">
       <DependentUpon>ContainerOffice365.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\ControlTabSpinner.resx">
-      <DependentUpon>ControlTabSpinner.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\ControlUsernameContructorChunk.resx">
       <DependentUpon>ControlUsernameContructorChunk.vb</DependentUpon>
@@ -547,6 +531,7 @@
     <None Include="Resources\LogoIcon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Import Include="BrightIdeasSoftware" />
     <Import Include="MetroFramework" />
     <Import Include="Microsoft.VisualBasic" />
     <Import Include="Microsoft.Win32" />
@@ -562,7 +547,9 @@
     <Import Include="System.Windows.Forms" />
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

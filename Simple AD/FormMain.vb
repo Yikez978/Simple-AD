@@ -1,4 +1,6 @@
-﻿Public Class FormMain
+﻿Imports System.ComponentModel
+
+Public Class FormMain
 
     Private ftdt As New DataTable
 
@@ -12,7 +14,6 @@
     End Sub
 
     Private Sub DataReviewForm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        'WindowsApi.SetWindowTheme(Me.Handle, “explorer”, Nothing)
         VersionLb.Text = My.Application.Info.Version.ToString
 
         BuildLdapAttributeMatrix()
@@ -27,7 +28,7 @@
             Dim RunUpdateCheck As New FormUpdate
         End If
 
-        Dim NewReport As JobUserReport = New JobUserReport(ReportType.Explorer, My.Settings.UseDataGrid)
+        Dim NewReport As JobUserReport = New JobUserReport(ReportType.Explorer)
 
     End Sub
 
@@ -160,7 +161,7 @@
     End Sub
 
     Private Sub DisabledUsersToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DisabledUsersToolStripMenuItem.Click
-        Dim NewReport As JobUserReport = New JobUserReport(ReportType.DisabledUsers, My.Settings.UseDataGrid)
+        Dim NewReport As JobUserReport = New JobUserReport(ReportType.DisabledUsers)
     End Sub
 
     Private Sub CustomQueryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CustomQueryToolStripMenuItem.Click
@@ -209,7 +210,7 @@
     End Sub
 
     Private Sub EntireDirectoryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EntireDirectoryToolStripMenuItem.Click
-        Dim NewReport As JobUserReport = New JobUserReport(ReportType.AllObjects, My.Settings.UseDataGrid)
+        Dim NewReport As JobUserReport = New JobUserReport(ReportType.AllObjects)
     End Sub
 
     Private Sub ConsoleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConsoleToolStripMenuItem.Click
@@ -217,7 +218,7 @@
     End Sub
 
     Private Sub BrowseToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BrowseToolStripMenuItem.Click
-        Dim NewReport As JobUserReport = New JobUserReport(ReportType.Explorer, My.Settings.UseDataGrid)
+        Dim NewReport As JobUserReport = New JobUserReport(ReportType.Explorer)
     End Sub
 
     Private Sub DetailsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DetailsToolStripMenuItem.Click
@@ -242,5 +243,12 @@
 
     Private Sub ShowGroupsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowGroupsToolStripMenuItem.Click
         GetMainListView().ShowGroups = True
+    End Sub
+
+    Private Sub FormMain_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        If GetMainListView() IsNot Nothing Then
+            My.Settings.ListViewSettings = Encoding.Default.GetString(GetMainListView.SaveState)
+            My.Settings.Save()
+        End If
     End Sub
 End Class

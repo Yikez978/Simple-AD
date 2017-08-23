@@ -108,7 +108,7 @@
             Dim PropertyToModify As String = Row.Cells("AttributeFull").Value.ToString
             Dim NewValue As String = Row.Cells("Value").Value.ToString
 
-            If SetADProperty(GetDirEntryFromSAM(Item.RowObject.SAMAccountName), PropertyToModify, NewValue) = True Then
+            If SetADProperty(GetDirEntryFromDomainObject(Item.RowObject), PropertyToModify, NewValue) = True Then
                 IsBatchSuccessfull = True
             Else
                 Dim ErrorMsg = New FormAlert("Falied to modify the attribute: " & Row.Cells("AttributeFull").Value.ToString & " for user: " & Item.RowObject.SAMAccountName, AlertType.ErrorAlert)

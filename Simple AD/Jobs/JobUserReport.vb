@@ -7,7 +7,7 @@ Public Class JobUserReport
     Private ListView As ListView
     Private TabPage As TabPage
     Private UserReportContainer As ContainerUserReport
-    Private Spinner As ControlTabSpinner
+    Private FindObjectsThread As Threading.Thread
 
     Private _Path As String
     Private _LDAPQuery As String
@@ -22,7 +22,6 @@ Public Class JobUserReport
     Public Sub New(ByVal Type As ReportType, Optional LDAPQuery As String = Nothing)
         Dim NewId = GenerateJobID()
         UserReportContainer = New ContainerUserReport(NewId, "Report - " & Type.ToString, Me)
-        UserReportContainer.Dock = DockStyle.Fill
 
         _Type = Type
 
@@ -39,6 +38,7 @@ Public Class JobUserReport
         GetMainTabCtrl().TabPages.Add(TabPage)
         TabPage.SuspendLayout()
         TabPage.Controls.Add(UserReportContainer)
+        UserReportContainer.Dock = DockStyle.Fill
         MainListView = UserReportContainer.MainListView
         GetMainTabCtrl().SelectTab(GetMainTabCtrl().TabCount - 1)
         GetMainTabCtrl().Visible = True
@@ -54,9 +54,24 @@ Public Class JobUserReport
                 UserReportContainer.MainSplitContainer.Panel1Collapsed = True
         End Select
 
-        Spinner = New ControlTabSpinner("Generating Report...", UserReportContainer)
-        TabPage.Controls.Add(Spinner)
+        Dim AdImages As New ImageList()
 
+        AdImages.Images.Add("OuImage", IconOU)
+        AdImages.Images.Add("DomainImage", IconDomian)
+        AdImages.Images.Add("ContainerImage", IconContainer)
+        AdImages.Images.Add("GroupImage", IconGroup)
+        AdImages.Images.Add("ComputerImage", IconComputer)
+        AdImages.Images.Add("UserImage", IconUser)
+        AdImages.Images.Add("DisabledUserImage", IconDisabledUSer)
+        AdImages.Images.Add("ContactImage", IconContact)
+        AdImages.Images.Add("UnknownImage", IconUnknown)
+        AdImages.ColorDepth = ColorDepth.Depth24Bit
+        AdImages.ImageSize = New Size(16, 16)
+
+        MainListView.SmallImageList = AdImages
+        MainListView.LargeImageList = AdImages
+
+        TabPage.ResumeLayout()
         Refresh()
     End Sub
 
@@ -85,14 +100,13 @@ Public Class JobUserReport
                     paras.Entry = _Path
                 End If
         End Select
-        GetUsersListView(paras)
+        MainListView.BeginUpdate()
+        FindObjectsThread = New Threading.Thread(AddressOf GetUsersListView) With {.IsBackground = True}
+        FindObjectsThread.Start(paras)
     End Sub
 
     Private Sub GetUsersListView(ByVal Param As Jobparameters)
         Try
-            MainListView.BeginUpdate()
-            MainListView.HideSelection = False
-            MainListView.Font = SystemFonts.DefaultFont
 
             Dim Type As ReportType = Param.Type
             Dim Filter As String = Param.Filter
@@ -116,23 +130,6 @@ Public Class JobUserReport
             DirSearcher.PropertiesToLoad.AddRange(LDAPPropsShort)
 
             Dim results As SearchResultCollection = DirSearcher.FindAll()
-
-            Dim AdImages As New ImageList()
-
-            AdImages.Images.Add("OuImage", IconOU)
-            AdImages.Images.Add("DomainImage", IconDomian)
-            AdImages.Images.Add("ContainerImage", IconContainer)
-            AdImages.Images.Add("GroupImage", IconGroup)
-            AdImages.Images.Add("ComputerImage", IconComputer)
-            AdImages.Images.Add("UserImage", IconUser)
-            AdImages.Images.Add("DisabledUserImage", IconDisabledUSer)
-            AdImages.Images.Add("ContactImage", IconContact)
-            AdImages.Images.Add("UnknownImage", IconUnknown)
-            AdImages.ColorDepth = ColorDepth.Depth24Bit
-            AdImages.ImageSize = New Size(16, 16)
-
-            MainListView.SmallImageList = AdImages
-            MainListView.LargeImageList = AdImages
 
             Dim DomainObjectList = New List(Of DomainObject)
 
@@ -176,13 +173,12 @@ Public Class JobUserReport
 
                     DomainObjectList.Add(DomainObject)
 
-                    End If
+                End If
             Next
 
-            MainListView.SetObjects(DomainObjectList)
-            MainListView.EndUpdate()
+            MainListView.Invoke(New Action(Of List(Of DomainObject))(AddressOf AfterFindObjects), DomainObjectList)
 
-        Catch ArgEx As System.ArgumentException
+        Catch ArgEx As ArgumentException
             ReportError(ArgEx)
             Debug.WriteLine("[Error] " & ArgEx.GetBaseException.ToString & ArgEx.Message)
         Catch Ex As Exception
@@ -191,13 +187,19 @@ Public Class JobUserReport
         End Try
     End Sub
 
+    Private Sub AfterFindObjects(ByVal DomainObjectList As List(Of DomainObject))
+        MainListView.SetObjects(DomainObjectList)
+        MainListView.EndUpdate()
+    End Sub
+
     Private Sub ReportError(ByVal ErrorMessage As Exception)
-        If UserReportContainer.InvokeRequired Then
-            UserReportContainer.Invoke(New Action(Of Exception)(AddressOf ReportError), ErrorMessage)
-        Else
-            Spinner.DisplayText = ErrorMessage.Message
-            Spinner.ErrorBoxText = ErrorMessage.StackTrace.ToString
-            Spinner.MainSpinner.Spinning = False
+        If Not UserReportContainer Is Nothing Then
+            If UserReportContainer.InvokeRequired Then
+                UserReportContainer.Invoke(New Action(Of Exception)(AddressOf ReportError), ErrorMessage)
+            Else
+                Debug.WriteLine("[Error] " & ErrorMessage.Message)
+                Debug.WriteLine("[Error] " & ErrorMessage.StackTrace.ToString)
+            End If
         End If
     End Sub
 
