@@ -7,15 +7,17 @@
     Private DisplCol As New DataColumn("Attribute")
     Private ReadyCol As New DataColumn("Ready")
 
-    Private _Users As New List(Of UserRow)
+    Private _Users As New List(Of BrightIdeasSoftware.OLVListItem)
+    Private _Job As JobUserReport
 
     Private IsWorking As Boolean
 
-    Public Sub New(ByVal Users As List(Of UserRow))
+    Public Sub New(ByVal Users As List(Of BrightIdeasSoftware.OLVListItem), ByVal Job As JobUserReport)
 
         InitializeComponent()
 
         _Users = Users
+        _Job = Job
 
         DropDownFilter.SelectedIndex = 0
 
@@ -71,7 +73,7 @@
                     Case "proxyAddresses"
                         BulkModifyProxyAddress(Row)
                     Case Else
-                        Dim ModifyThread As New Threading.Thread(AddressOf BulkModifyAbstract)
+                        Dim ModifyThread As New Threading.Thread(AddressOf BulkModifyAbstractHandler)
                         ModifyThread.Start(Row)
                 End Select
             Next
@@ -90,18 +92,45 @@
 
     End Sub
 
-    Private Sub BulkModifyAbstract(ByVal Row As DataGridViewRow)
-        For Each User As UserRow In _Users
+    Private Sub BulkModifyAbstractHandler(ByVal Row As DataGridViewRow)
+        If BulkModifyAbstract(Row) = True Then
+            Me.Invoke(New Action(Of DataGridViewRow, Boolean)(AddressOf UpdateUI), Row, True)
+        Else
+            Me.Invoke(New Action(Of DataGridViewRow, Boolean)(AddressOf UpdateUI), Row, False)
+        End If
+        Me.Invoke(New Action(AddressOf RefreshJob))
+    End Sub
+
+    Private Function BulkModifyAbstract(ByVal Row As DataGridViewRow) As Boolean
+        Dim IsBatchSuccessfull As Boolean = False
+
+        For Each Item As BrightIdeasSoftware.OLVListItem In _Users
             Dim PropertyToModify As String = Row.Cells("AttributeFull").Value.ToString
             Dim NewValue As String = Row.Cells("Value").Value.ToString
 
-            If SetADProperty(GetDirEntryFromSAM(User.Username), PropertyToModify, NewValue) = True Then
-                If User.Row.DataGridView.Columns.Contains(PropertyToModify) Then
-                    User.Row.DataGridView.Invoke(New Action(Sub() User.Row.Cells.Item(PropertyToModify).Value = NewValue))
-                End If
+            If SetADProperty(GetDirEntryFromSAM(Item.RowObject.SAMAccountName), PropertyToModify, NewValue) = True Then
+                IsBatchSuccessfull = True
             Else
-                Dim ErrorMsg = New FormAlert("Falied to modify the attribute: " & Row.Cells("AttributeFull").Value.ToString & " for user: " & User.Username, AlertType.ErrorAlert)
+                Dim ErrorMsg = New FormAlert("Falied to modify the attribute: " & Row.Cells("AttributeFull").Value.ToString & " for user: " & Item.RowObject.SAMAccountName, AlertType.ErrorAlert)
             End If
         Next
+
+        If IsBatchSuccessfull = True Then
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
+    Private Sub UpdateUI(ByVal Row As DataGridViewRow, ByVal Status As Boolean)
+        If Status = True Then
+            Row.DefaultCellStyle.BackColor = Color.LightGreen
+        Else
+            Row.DefaultCellStyle.BackColor = Color.LightPink
+        End If
+    End Sub
+
+    Private Sub RefreshJob()
+        _Job.Refresh()
     End Sub
 End Class

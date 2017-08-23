@@ -21,7 +21,7 @@
         Me.Close()
     End Sub
 
-    Private Sub SelecetdOuChanged(SelecetedOU As String)
+    Private Sub SelecetdOuChanged(SelecetedOU As String) Handles DomainTree.SelectedOUChanged
         SelecetdOU = SelecetedOU
         OULb.Text = SelecetedOU
     End Sub

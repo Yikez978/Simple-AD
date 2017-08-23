@@ -1,35 +1,28 @@
 ﻿Imports System.DirectoryServices
-Imports System.Security.Principal
 
 Public Class JobUserReport
     Inherits SimpleADJob
 
-    Private DataGrid As DataGridView
     Private MainListView As ControlListView
     Private ListView As ListView
     Private TabPage As TabPage
     Private UserReportContainer As ContainerUserReport
     Private Spinner As ControlTabSpinner
-    Private GetUsersThread As Threading.Thread
-    Private GetUsersListViewThread As Threading.Thread
 
-    Private _UseDataGrid As Boolean
+    Private _Path As String
     Private _LDAPQuery As String
     Private _Type As ReportType
 
     Public Class Jobparameters
-        Property DataGrid As DataGridView
         Property Type As ReportType
         Property Filter As String
         Property Entry As String
     End Class
 
-    Public Sub New(ByVal Type As ReportType, useDataGrid As Boolean, Optional LDAPQuery As String = Nothing)
+    Public Sub New(ByVal Type As ReportType, Optional LDAPQuery As String = Nothing)
         Dim NewId = GenerateJobID()
-        UserReportContainer = New ContainerUserReport(NewId, "Report - " & Type.ToString, Me, useDataGrid)
+        UserReportContainer = New ContainerUserReport(NewId, "Report - " & Type.ToString, Me)
         UserReportContainer.Dock = DockStyle.Fill
-        UserReportContainer.MainDataGrid.Visible = False
-        _UseDataGrid = useDataGrid
 
         _Type = Type
 
@@ -46,7 +39,6 @@ Public Class JobUserReport
         GetMainTabCtrl().TabPages.Add(TabPage)
         TabPage.SuspendLayout()
         TabPage.Controls.Add(UserReportContainer)
-        DataGrid = UserReportContainer.GetMainDataGrid()
         MainListView = UserReportContainer.MainListView
         GetMainTabCtrl().SelectTab(GetMainTabCtrl().TabCount - 1)
         GetMainTabCtrl().Visible = True
@@ -68,12 +60,13 @@ Public Class JobUserReport
         Refresh()
     End Sub
 
-    Public Sub Refresh(Optional Path As String = Nothing)
+    Public Sub Refresh(Optional Path As String = Nothing, Optional JobType As ReportType = Nothing)
 
-        'Spinner.SpinnerVisible = True
+        If Not JobType = Nothing Then
+            _Type = JobType
+        End If
 
         Dim paras As New Jobparameters With {
-            .DataGrid = DataGrid,
             .Type = _Type
         }
 
@@ -87,148 +80,12 @@ Public Class JobUserReport
             Case ReportType.Explorer
                 If Not String.IsNullOrEmpty(Path) Then
                     paras.Entry = Path
+                    _Path = Path
+                Else
+                    paras.Entry = _Path
                 End If
         End Select
-
-        Select Case _UseDataGrid
-            Case True
-                GetUsersThread = New Threading.Thread(AddressOf GetUsers) With {.IsBackground = True}
-                GetUsersThread.Start(paras)
-            Case False
-                GetUsersListView(paras)
-        End Select
-    End Sub
-
-    Private Sub ApplyDataSource(ByVal datagrid As DataGridView, ByVal datasource As DataTable)
-        If datagrid.InvokeRequired Then
-            datagrid.Invoke(New Action(Of DataGridView, DataTable)(AddressOf ApplyDataSource), datagrid, datasource)
-        Else
-            If Not FormMain.IsDisposed Then
-                UserReportContainer.Datasource = datasource
-
-                datagrid.Columns.Remove("name")
-
-                Dim Name As New TextAndImageColumn
-
-                With Name
-                    .Name = "name"
-                    .DataPropertyName = "name"
-                    .HeaderText = "Name"
-                    .Visible = True
-                    .Frozen = True
-                    .FillWeight = 80
-                    .DefaultCellStyle.BackColor = Color.WhiteSmoke
-                End With
-
-                datagrid.Columns.Insert(0, Name)
-
-                For Each column As DataGridViewColumn In datagrid.Columns
-
-                    column.HeaderText = GetFriendlyLDAPName(column.Name)
-
-                    If Not DefaultLDAPColumns.Contains(column.Name) Then
-                        column.Visible = False
-                    Else
-                        column.Width = 260
-                        column.FillWeight = 50
-                    End If
-                Next
-
-                Spinner.Dispose()
-                UserReportContainer.MainDataGrid.Visible = True
-                TabPage.ResumeLayout()
-            End If
-        End If
-    End Sub
-
-    Private Sub GetUsers(ByVal Param As Jobparameters)
-
-        Dim DataGridPara As DataGridView = Param.DataGrid
-        Dim Type As ReportType = Param.Type
-        Dim Filter As String = Param.Filter
-        Dim EntryPath As String = Param.Entry
-
-        If Not DataGridPara.DataSource Is Nothing Then
-            DataGridPara.DataSource.Dispose()
-        End If
-
-        Dim dt As New DataTable
-
-        For Each Prop In GetLDAPProps()
-            If Not dt.Columns.Contains(Prop) Then
-                dt.Columns.Add(New DataColumn(Prop, GetType(String)))
-            End If
-        Next
-
-        Dim Entry As DirectoryEntry = GetDirEntry(Param.Entry)
-
-        Dim DirSearcher As DirectorySearcher = New DirectorySearcher(GetDirEntryPath)
-
-        With DirSearcher
-            .SearchRoot = Entry
-            .Filter = Param.Filter
-            Select Case Type
-                Case ReportType.Explorer
-                    .SearchScope = SearchScope.OneLevel
-                Case Else
-                    .SearchScope = SearchScope.Subtree
-            End Select
-        End With
-
-        If Not My.Settings.LoadAdvLDAP Then
-            DirSearcher.PropertiesToLoad.AddRange(GetLDAPProps())
-        End If
-
-        Try
-            Dim results As SearchResultCollection = DirSearcher.FindAll()
-
-            For Each result As SearchResult In results
-                Dim NewRow As DataRow = dt.NewRow
-
-                Dim myResultPropColl As ResultPropertyCollection
-                myResultPropColl = result.Properties
-                Dim myKey As String
-                For Each myKey In myResultPropColl.PropertyNames
-                    If Not dt.Columns.Contains(myKey) Then
-                        dt.Columns.Add(New DataColumn(myKey, GetType(String)))
-                    End If
-                Next myKey
-
-                For Each column As DataColumn In dt.Columns()
-                    If Not result.Properties(column.ColumnName) Is Nothing Then
-                        If result.Properties(column.ColumnName).Count > 0 Then
-                            If result.Properties(column.ColumnName).Count > 1 Then
-                                For i As Integer = 0 To result.Properties(column.ColumnName).Count - 1
-                                    NewRow.Item(column.ColumnName) = result.Properties(column.ColumnName).Item(i).ToString
-                                Next
-                            Else
-                                If result.Properties(column.ColumnName).Item(0).GetType() = GetType(Byte()) Then
-                                    Try
-                                        Dim DecodedByte As Guid = New Guid(DirectCast(result.Properties(column.ColumnName).Item(0), Byte()))
-                                        NewRow.Item(column.ColumnName) = DecodedByte.ToString
-                                    Catch
-                                        NewRow.Item(column.ColumnName) = ""
-                                    End Try
-                                Else
-                                    NewRow.Item(column.ColumnName) = result.Properties(column.ColumnName).Item(0).ToString
-                                End If
-                            End If
-                        End If
-                    Else
-                        NewRow.Item(column.ColumnName) = ""
-                    End If
-                Next
-                dt.Rows.Add(NewRow)
-            Next
-
-            ApplyDataSource(DataGridPara, dt)
-        Catch ArgEx As System.ArgumentException
-            ReportError(ArgEx)
-            Debug.WriteLine("[Error] " & ArgEx.GetBaseException.ToString & ArgEx.Message)
-        Catch Ex As Exception
-            Debug.WriteLine("[Error] " & Ex.GetBaseException.ToString & Ex.Message)
-            ReportError(Ex)
-        End Try
+        GetUsersListView(paras)
     End Sub
 
     Private Sub GetUsersListView(ByVal Param As Jobparameters)
@@ -262,7 +119,7 @@ Public Class JobUserReport
 
             Dim AdImages As New ImageList()
 
-            AdImages.Images.Add("OuImage", ListIconOU)
+            AdImages.Images.Add("OuImage", IconOU)
             AdImages.Images.Add("DomainImage", IconDomian)
             AdImages.Images.Add("ContainerImage", IconContainer)
             AdImages.Images.Add("GroupImage", IconGroup)
@@ -270,6 +127,7 @@ Public Class JobUserReport
             AdImages.Images.Add("UserImage", IconUser)
             AdImages.Images.Add("DisabledUserImage", IconDisabledUSer)
             AdImages.Images.Add("ContactImage", IconContact)
+            AdImages.Images.Add("UnknownImage", IconUnknown)
             AdImages.ColorDepth = ColorDepth.Depth24Bit
             AdImages.ImageSize = New Size(16, 16)
 
@@ -299,10 +157,26 @@ Public Class JobUserReport
                         DomainObject.Description = result.Properties.Item("description").Item(0)
                     End If
 
-                    DomainObject.Type = result.Properties.Item("objectClass").Item(result.Properties.Item("objectClass").Count - 1)
+                    If result.Properties("userAccountControl").Count > 0 Then
+                        DomainObject.UserAccountControl = result.Properties.Item("userAccountControl").Item(0)
+                    End If
+
+                    If result.Properties.Item("objectClass").Count > 0 Then
+                        Dim ObjectType As String = result.Properties.Item("objectClass").Item(result.Properties.Item("objectClass").Count - 1)
+                        DomainObject.Type = ObjectType
+                        DomainObject.TypeFriendly = GetFriendlyTypeName(ObjectType)
+
+                        Dim TypeStringBuilder As New StringBuilder
+
+                        For Each Item As Object In result.Properties.Item("objectClass")
+                            TypeStringBuilder.AppendLine(CStr(Item) & ";")
+                        Next
+                        DomainObject.TypeFull = TypeStringBuilder.ToString
+                    End If
+
                     DomainObjectList.Add(DomainObject)
 
-                End If
+                    End If
             Next
 
             MainListView.SetObjects(DomainObjectList)
@@ -326,10 +200,5 @@ Public Class JobUserReport
             Spinner.MainSpinner.Spinning = False
         End If
     End Sub
-
-    Public Class ListViewItemTag
-        Property Dn As String
-        Property Sam As String
-    End Class
 
 End Class

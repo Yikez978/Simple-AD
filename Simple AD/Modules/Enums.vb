@@ -16,6 +16,8 @@
         User = 12
         OU = 13
         DisabledUser = 27
+        Unknown
+        Search
     End Enum
 
     Public Enum ConfirmationType

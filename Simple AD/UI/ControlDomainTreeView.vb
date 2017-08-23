@@ -9,6 +9,8 @@ Public Class ControlDomainTreeView
     Private _SelectedOU As String
 
     Public Event SelectedOUChanged(ByVal Path As String)
+    Public Event EveryThingSeleceted()
+    Public Event DisabledUsersSeleceted()
 
     Property DomainName As String
         Set(value As String)
@@ -56,6 +58,8 @@ Public Class ControlDomainTreeView
             AdImages.Images.Add("OuImage", IconOU)
             AdImages.Images.Add("DomainImage", IconDomian)
             AdImages.Images.Add("ContainerImage", IconContainer)
+            AdImages.Images.Add("EveryThingImage", IconSearch)
+            AdImages.Images.Add("DisabledUsers", IconDisabledUSer)
 
             AdImages.ColorDepth = ColorDepth.Depth24Bit
             AdImages.ImageSize = New Size(16, 16)
@@ -199,9 +203,17 @@ Public Class ControlDomainTreeView
 
     Private Sub ControlDomainTreeView_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles Me.AfterSelect
         If Not (SelectedNode Is Nothing) Then
-            GlobalVariables.SelectedOU = SelectedNode.ToolTipText
-            RaiseEvent SelectedOUChanged(e.Node.ToolTipText)
-            FormMain.ToolStripStatusLabelStatus.Text = GlobalVariables.SelectedOU
+            Select Case SelectedNode.Text
+                Case "Built In Views"
+                Case "Disabled Users"
+                    RaiseEvent DisabledUsersSeleceted()
+                Case "Everything"
+                    RaiseEvent EveryThingSeleceted()
+                Case Else
+                    GlobalVariables.SelectedOU = SelectedNode.ToolTipText
+                    RaiseEvent SelectedOUChanged(e.Node.ToolTipText)
+                    FormMain.ToolStripStatusLabelStatus.Text = GlobalVariables.SelectedOU
+            End Select
         End If
     End Sub
 

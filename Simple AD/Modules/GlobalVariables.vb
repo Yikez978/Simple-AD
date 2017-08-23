@@ -25,15 +25,9 @@ Public Module GlobalVariables
     Public Property IconOU As Image = GetImage(ActiveDirectoryIconType.OU)
     Public Property IconDomian As Image = GetImage(ActiveDirectoryIconType.Domain)
     Public Property IconContainer As Image = GetImage(ActiveDirectoryIconType.Container)
+    Public Property IconUnknown As Image = GetImage(ActiveDirectoryIconType.Unknown)
     Public Property IconContact As Image = GetImage(ActiveDirectoryIconType.Contact)
-
-    Public Property ListIconGroup As Image
-    Public Property ListIconUser As Image = GetImage(ActiveDirectoryIconType.User)
-    Public Property ListIconComputer As Image = GetImage(ActiveDirectoryIconType.Computer)
-    Public Property ListIconDisabledUSer As Image = GetImage(ActiveDirectoryIconType.DisabledUser)
-    Public Property ListIconOU As Image = GetImage(ActiveDirectoryIconType.OU)
-    Public Property ListIconContainer As Image
-
+    Public Property IconSearch As Image = GetImage(ActiveDirectoryIconType.Search)
     Public HiddenColums As New List(Of String)
     Public TempHiddenColumns As New List(Of String)
     Public CustomColumns As New List(Of String)

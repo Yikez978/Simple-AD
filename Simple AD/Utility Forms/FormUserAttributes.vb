@@ -3,8 +3,8 @@
 Public Class FormUserAttributes
 
     Private _sAMAccountName As String
-    Private _rowindex As Integer
     Private _defualtCellValue As Object
+    Private _Job As JobUserReport
 
     Private DataTableSource As New DataTable
 
@@ -12,7 +12,7 @@ Public Class FormUserAttributes
     Private ValCol As New DataColumn("Value")
     Private DisplCol As New DataColumn("Attribute")
 
-    Public Sub New(ByVal sAMAccountName As String, ByVal Name As String, rowindex As Integer)
+    Public Sub New(ByVal sAMAccountName As String, ByVal Name As String, Item As BrightIdeasSoftware.OLVListItem, ByVal Job As JobUserReport)
 
         InitializeComponent()
 
@@ -22,7 +22,7 @@ Public Class FormUserAttributes
 
         DropDownFilter.SelectedIndex = 0
 
-        _rowindex = rowindex
+        _Job = Job
         _sAMAccountName = sAMAccountName
 
         DataTableSource.Columns.Add(AtrCol)
@@ -117,9 +117,7 @@ Public Class FormUserAttributes
         End If
 
         If SetADProperty(Entry, Attr, Value) Then
-            If GetMainDataGrid.Columns.Contains(Attr) Then
-                GetMainDataGrid.Rows.Item(_rowindex).Cells(Attr).Value = MainDataGrid.Rows(e.RowIndex).Cells("Value").Value
-            End If
+            _Job.Refresh()
         Else
             MainDataGrid.Rows(e.RowIndex).Cells("Value").Value = _defualtCellValue
         End If

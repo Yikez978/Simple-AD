@@ -51,8 +51,10 @@
                 Return My.Resources.Domain
             Case ActiveDirectoryIconType.Group
                 Return My.Resources.Group
-            Case Else
-                Return Nothing
+            Case ActiveDirectoryIconType.Unknown
+                Return My.Resources.UnknownFlat
+            Case ActiveDirectoryIconType.Search
+                Return My.Resources.Search
         End Select
         Return Nothing
     End Function

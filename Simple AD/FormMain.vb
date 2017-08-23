@@ -26,6 +26,9 @@
         If My.Settings.CheckForUpdatesOnStart = True Then
             Dim RunUpdateCheck As New FormUpdate
         End If
+
+        Dim NewReport As JobUserReport = New JobUserReport(ReportType.Explorer, My.Settings.UseDataGrid)
+
     End Sub
 
     Private Sub HideEmptyColumnsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles HideEmptyColumnsToolStripMenuItem.Click
