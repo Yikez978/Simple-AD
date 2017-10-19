@@ -1,10 +1,38 @@
 ﻿Public Module Enums
 
+    Public Enum SimpleADJobType
+        UserImport
+        BulkDelete
+        BulkMove
+        BulkPasswordReset
+        Explorer
+        PasswordReset
+        Move
+        Rename
+        Delete
+        EnableDisable
+    End Enum
+
+    Public Enum SimpleADJobStatus
+        Idle
+        InProgress
+        Errors
+        Failed
+        Completed
+    End Enum
+
     Public Enum ReportType
         CustomLDAP
         DisabledUsers
         AllObjects
         Explorer
+        AllAdmins
+    End Enum
+
+    Public Enum ImportJobStatus
+        Pending
+        InProgress
+        Finished
     End Enum
 
     Public Enum ActiveDirectoryIconType
@@ -14,6 +42,10 @@
         Domain = 5
         Group = 7
         User = 12
+        UserError
+        UserSuccess
+        UserFailed
+        UserPending
         OU = 13
         DisabledUser = 27
         Unknown
@@ -22,6 +54,7 @@
 
     Public Enum ConfirmationType
         Delete
+        Close
     End Enum
 
     Public Enum AlertType
@@ -53,4 +86,5 @@
         Domain
         Unknown
     End Enum
+
 End Module

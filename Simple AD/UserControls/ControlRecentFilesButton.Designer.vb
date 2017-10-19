@@ -73,7 +73,7 @@ Partial Class ControlRecentFilesButton
         Me.PictureBox.TabIndex = 2
         Me.PictureBox.TabStop = False
         '
-        'RecentFilesButton
+        'ControlRecentFilesButton
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -82,7 +82,7 @@ Partial Class ControlRecentFilesButton
         Me.Controls.Add(Me.PictureBox)
         Me.Controls.Add(Me.FileNameLb)
         Me.Controls.Add(Me.FileTitleLb)
-        Me.Name = "RecentFilesButton"
+        Me.Name = "ControlRecentFilesButton"
         Me.Padding = New System.Windows.Forms.Padding(4)
         Me.Size = New System.Drawing.Size(496, 50)
         CType(Me.PictureBox, System.ComponentModel.ISupportInitialize).EndInit()

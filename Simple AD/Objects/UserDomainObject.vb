@@ -1,5 +1,17 @@
-﻿Public Class UserDomainObject
+﻿Imports System.ComponentModel
+
+Public Class UserDomainObject
     Inherits DomainObject
+
+    Private _Status
+    Public Overrides Property Status As String
+        Set(value As String)
+            _Status = value
+        End Set
+        Get
+            Return _Status
+        End Get
+    End Property
 
     Private _GivenName
     Public Property GivenName As String
@@ -8,7 +20,6 @@
         End Set
         Get
             Return _GivenName
-            OnPropertyChanged("GivenName")
         End Get
     End Property
 
@@ -19,7 +30,6 @@
         End Set
         Get
             Return _Password
-            OnPropertyChanged("Password")
         End Get
     End Property
 
@@ -30,7 +40,6 @@
         End Set
         Get
             Return _DisplayName
-            OnPropertyChanged("DisplayName")
         End Get
     End Property
 
@@ -41,7 +50,6 @@
         End Set
         Get
             Return _Sn
-            OnPropertyChanged("Sn")
         End Get
     End Property
 
@@ -52,7 +60,6 @@
         End Set
         Get
             Return _HomeDirectory
-            OnPropertyChanged("HomeDirectory")
         End Get
     End Property
 
@@ -63,7 +70,6 @@
         End Set
         Get
             Return _HomeDrive
-            OnPropertyChanged("HomeDrive")
         End Get
     End Property
 
@@ -74,7 +80,6 @@
         End Set
         Get
             Return _Pager
-            OnPropertyChanged("Pager")
         End Get
     End Property
 
@@ -85,7 +90,6 @@
         End Set
         Get
             Return _TsProfilePath
-            OnPropertyChanged("TsProfilePath")
         End Get
     End Property
 
@@ -96,7 +100,96 @@
         End Set
         Get
             Return _ScriptPath
-            OnPropertyChanged("ScriptPath")
+        End Get
+    End Property
+
+    Private _Mail
+    Public Property Mail As String
+        Set(value As String)
+            _Mail = value
+        End Set
+        Get
+            Return _Mail
+        End Get
+    End Property
+
+    Private _ProfilePath
+    Public Property ProfilePath As String
+        Set(value As String)
+            _ProfilePath = value
+        End Set
+        Get
+            Return _ProfilePath
+        End Get
+    End Property
+
+    Private _Office
+    Public Property Office As String
+        Set(value As String)
+            _Office = value
+        End Set
+        Get
+            Return _Office
+        End Get
+    End Property
+
+    Private _Department
+    Public Property Department As String
+        Set(value As String)
+            _Department = value
+        End Set
+        Get
+            Return _Department
+        End Get
+    End Property
+
+    Private _Company
+    Public Property Company As String
+        Set(value As String)
+            _Company = value
+        End Set
+        Get
+            Return _Company
+        End Get
+    End Property
+
+    Private _Manager
+    Public Property Manager As String
+        Set(value As String)
+            _Manager = value
+        End Set
+        Get
+            Return _Manager
+        End Get
+    End Property
+
+    Private _Title
+    Public Property Title As String
+        Set(value As String)
+            _Title = value
+        End Set
+        Get
+            Return _Title
+        End Get
+    End Property
+
+    Private _TelephoneNumber
+    Public Property TelephoneNumber As String
+        Set(value As String)
+            _TelephoneNumber = value
+        End Set
+        Get
+            Return _TelephoneNumber
+        End Get
+    End Property
+
+    Private _wWWHomePage
+    Public Property WWWHomePage As String
+        Set(value As String)
+            _wWWHomePage = value
+        End Set
+        Get
+            Return _wWWHomePage
         End Get
     End Property
 

@@ -133,17 +133,13 @@ Friend Class TabForm
         MyBase.New()
         Me.AutoScaleDimensions = New SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = AutoScaleMode.Font
-        Me.BorderStyle = Forms.MetroFormBorderStyle.FixedSingle
         Me.StartPosition = FormStartPosition.Manual
-        Me.Padding = New Padding(1, 1, 1, 20)
-        Me.Style = MetroColorStyle.Purple
+        Me.Padding = New Padding(1, 1, 1, 1)
         Me.Icon = My.Resources.SimpleADIcon
         Me.SizeGripStyle = SizeGripStyle.Show
         Me.MinimizeBox = True
         Me.MaximizeBox = True
         Me.BackColor = SystemColors.Window
-        Me.CustomBackcolor = SystemColors.Window
-        Me.CustomForecolor = SystemColors.MenuText
         Me.tabPage = tabPage
         tabPage.Tag = Me
         Me.tabControl = DirectCast(tabPage.Parent, TabControl)

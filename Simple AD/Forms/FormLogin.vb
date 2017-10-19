@@ -3,6 +3,7 @@
 Public Class FormLogin
 
     Private LoginThread As Thread
+    Public Property SwitchUser As Boolean
 
     Private Class LoginCredentials
         Property Username As String
@@ -11,46 +12,21 @@ Public Class FormLogin
 
     Public Sub New()
         InitializeComponent()
-        AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf UnhandledExceptionEventRaised
-    End Sub
-
-    Protected Overrides Sub SetVisibleCore(ByVal value As Boolean)
-
-        If My.Settings.AutoLogin = False Then
-            value = True
-        Else
-            If Not Me.IsHandleCreated Then
-                If Not Me.IsDisposed Then
-                    Me.CreateHandle()
-                    value = False
-                End If
-            End If
-            End If
-
-        MyBase.SetVisibleCore(value)
-
-        If Not Application.OpenForms().OfType(Of FormMain).Any Then
-            If My.Settings.AutoLogin = True Then
-                AutoLogin()
-            End If
-        End If
-    End Sub
-
-    Sub UnhandledExceptionEventRaised(ByVal sender As Object, ByVal e As UnhandledExceptionEventArgs)
-        If e.IsTerminating Then
-            Dim o As Object = e.ExceptionObject
-            Debug.WriteLine("[Error] " & o.ToString)
-            MessageBox.Show(o.ToString, "Simple AD has encountered an unexpected Error", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error) ' use EventLog instead
-        End If
     End Sub
 
     Private Sub LoginForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        If Not Application.OpenForms().OfType(Of FormMain).Any Then
-            AutoLogin()
-        End If
+        If My.Settings.ForceLogin = True Then
+            If Not Application.OpenForms().OfType(Of FormMain).Any Then
+                AutoLogin()
+            End If
 
-        UnTb.Select()
-        OKBn.Enabled = False
+            UnTb.Select()
+            OKBn.Enabled = False
+
+            UnTb_TextChanged(Nothing, Nothing)
+        Else
+            FormMain.Show()
+        End If
     End Sub
 
     Private Sub AutoLogin()
@@ -68,9 +44,10 @@ Public Class FormLogin
                     .IsBackground = True
                 End With
 
-                Dim creds As New LoginCredentials
-                creds.Username = UnTb.Text
-                creds.Password = PwdTb.Text
+                Dim creds As New LoginCredentials With {
+                    .Username = UnTb.Text,
+                    .Password = PwdTb.Text
+                }
 
                 If My.Settings.AutoLogin = True Then
                     If Not LoginThread.IsAlive Then
@@ -124,9 +101,10 @@ Public Class FormLogin
         OKBn.Enabled = False
         CancelBn.Enabled = True
 
-        Dim creds As New LoginCredentials
-        creds.Username = UnTb.Text
-        creds.Password = PwdTb.Text
+        Dim creds As New LoginCredentials With {
+            .Username = UnTb.Text,
+            .Password = PwdTb.Text
+        }
 
         LoginThread.Start(creds)
     End Sub
@@ -165,11 +143,20 @@ Public Class FormLogin
                 My.Settings.Password = DataProtection.Protect(TempPassword)
             End If
 
+            If SwitchUser Then
+                GetContainerExplorer.Invoke(New Action(Sub() RefreshAfterUsersSwitch()))
+            End If
+
             LoginSuccess()
-        Else
-            LoginFailed()
+            Else
+                LoginFailed()
         End If
 
+    End Sub
+
+    Private Sub RefreshAfterUsersSwitch()
+        GetContainerExplorer.Job.Refresh()
+        GetContainerExplorer.DomainTreeView.RefreshNodes()
     End Sub
 
     Private Sub LoginSuccess()
@@ -177,11 +164,9 @@ Public Class FormLogin
             Me.Invoke(New Action(AddressOf LoginSuccess))
         Else
             FormMain.Show()
-
             Dim ADC = New ADConnectionChecker
 
             ADC.Start()
-            Close()
         End If
     End Sub
 
@@ -206,12 +191,7 @@ Public Class FormLogin
         End If
     End Sub
 
-    Private Sub PwdTb_TextChanged(sender As Object, e As EventArgs) Handles PwdTb.TextChanged
-        PwdTb.DisplayIcon = False
-        ErLb.Hide()
-    End Sub
-
-    Private Sub UnTb_TextChanged(sender As Object, e As EventArgs) Handles UnTb.TextChanged
+    Private Sub UnTb_TextChanged(sender As Object, e As EventArgs) Handles UnTb.TextChanged, PwdTb.TextChanged
         PwdTb.DisplayIcon = False
         ErLb.Hide()
 

@@ -11,6 +11,14 @@ Public Module StringHelper
         Return StrConv(Name, VbStrConv.ProperCase)
     End Function
 
+    Function CleanInput(strIn As String) As String
+        Try
+            Return Regex.Replace(strIn, "[^\w\.@-]", " ").Trim
+        Catch e As RegexMatchTimeoutException
+            Return String.Empty
+        End Try
+    End Function
+
     Public Function GetFriendlyTypeName(ByVal Type As String) As String
         Select Case Type
             Case "user"
@@ -47,6 +55,34 @@ Public Module StringHelper
             Throw New ArgumentException("ARGH!")
         End If
         Return Input.First().ToString().ToUpper() + Input.Substring(1)
+    End Function
+
+    Public Function GetStringValue(ByVal Input As Object) As String
+        If Not Input Is Nothing Then
+            If Input.GetType() = GetType(String) Then
+                Return Input
+            ElseIf Input.GetType() = GetType(Byte()) Then
+                If DirectCast(Input, Byte()).Length = 16 Then
+                    Dim DecodedByte As Guid = New Guid(DirectCast(Input, Byte()))
+                    Return DecodedByte.ToString
+                Else
+                    Return "Unable to Decode Byte Value"
+                End If
+            ElseIf Input.GetType() = GetType(Guid) Then
+                Return Input.ToString
+            ElseIf Input.GetType() = GetType(Integer) Then
+                Return Input.ToString()
+            ElseIf Input.GetType() = GetType(DateTime) Then
+                Return Input.ToString()
+            ElseIf Input.GetType() = GetType(Boolean) Then
+                Return Input.ToString()
+            Else
+                Return Nothing
+            End If
+        Else
+            Return Nothing
+        End If
+
     End Function
 
 End Module

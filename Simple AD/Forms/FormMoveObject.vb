@@ -6,8 +6,9 @@
 
     Public Sub New()
         InitializeComponent()
-        DomainTree = New ControlDomainTreeView()
-        DomainTree.BackColor = SystemColors.Window
+        DomainTree = New ControlDomainTreeView
+        DomainTree.BorderStyle = BorderStyle.None
+        DomainTree.BringToFront()
         MainPl.Controls.Add(DomainTree)
         DomainTree.InitialLoad()
     End Sub
@@ -23,7 +24,14 @@
 
     Private Sub SelecetdOuChanged(SelecetedOU As String) Handles DomainTree.SelectedOUChanged
         SelecetdOU = SelecetedOU
-        OULb.Text = SelecetedOU
+        OULb.Text = "Seleceted Path: " & SelecetedOU
     End Sub
 
+    Private Sub FooterPl_Paint(sender As Object, e As PaintEventArgs) Handles FooterPl.Paint
+        Dim s As Panel = FooterPl
+        If Not s Is Nothing Then
+            Dim Pen As New Pen(Color.FromArgb(217, 217, 217))
+            e.Graphics.DrawLine(Pen, 0, 0, s.Width, 0)
+        End If
+    End Sub
 End Class

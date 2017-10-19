@@ -14,7 +14,7 @@
 
     Private Sub RunBn_Click(sender As Object, e As EventArgs) Handles RunBn.Click
         Me.Hide()
-        Dim NewCustomQueryReport As JobUserReport = New JobUserReport(ReportType.CustomLDAP, QueryTb.Text.Trim)
+        Dim NewCustomQueryReport As JobExplorer = New JobExplorer(ReportType.CustomLDAP, QueryTb.Text.Trim)
         Me.Close()
     End Sub
 End Class

@@ -50,7 +50,7 @@
     End Sub
 
     Private Sub RecentFilesButton_Click(sender As Object, e As EventArgs) Handles MyBase.MouseDown
-        Dim RecentImportFile = New JobUserBulk(_Path)
+        Dim RecentImportFile = New JobImport(_Path)
     End Sub
 
     Private Function GetMouseoverControl() As Boolean

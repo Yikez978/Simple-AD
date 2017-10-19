@@ -7,6 +7,9 @@ Public Class ControlListView
     Private Shared Function SetWindowTheme(hWnd As IntPtr, pszSubAppName As String, pszSubIdList As String) As Integer
     End Function
 
+
+
+
     Protected Overrides Sub CreateHandle()
         MyBase.CreateHandle()
         SetWindowTheme(Me.Handle, "explorer", Nothing)
@@ -32,9 +35,21 @@ Public Class ControlListView
         Me.Size = New System.Drawing.Size(402, 271)
         Me.TabIndex = 1
         Me.UseCompatibleStateImageBehavior = False
-        Me.UseExplorerTheme = True
         Me.UseFiltering = True
         Me.View = System.Windows.Forms.View.Details
+        Me.UseHotControls = False
+        Me.UseExplorerTheme = True
+
+        Dim TextOverlay As New TextOverlay
+        TextOverlay.TextColor = SystemColors.ControlDark
+        TextOverlay.BackColor = SystemColors.ControlLightLight
+        TextOverlay.BorderColor = SystemColors.ControlDark
+        TextOverlay.BorderWidth = 1.0F
+        TextOverlay.CornerRounding = 1.0F
+        TextOverlay.Font = DefaultFont
+        TextOverlay.Alignment = ContentAlignment.MiddleCenter
+
+        Me.EmptyListMsgOverlay = TextOverlay
     End Sub
 
 End Class

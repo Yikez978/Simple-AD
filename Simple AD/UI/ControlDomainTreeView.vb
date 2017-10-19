@@ -1,5 +1,6 @@
 ﻿Imports System.DirectoryServices
 Imports System.DirectoryServices.ActiveDirectory
+Imports System.Runtime.InteropServices
 
 Public Class ControlDomainTreeView
     Inherits TreeView
@@ -11,10 +12,14 @@ Public Class ControlDomainTreeView
     Public Event SelectedOUChanged(ByVal Path As String)
     Public Event EveryThingSeleceted()
     Public Event DisabledUsersSeleceted()
+    Public Event AllAdminsSeleceted()
 
     Public EverythingTreeNode As TreeNode = New TreeNode("Everything", 3, 3)
     Public DisabledUsersTreeNode As TreeNode = New TreeNode("Disabled Users", 4, 4)
-    Public BuiltInTreeNode As TreeNode = New TreeNode("Built In Views", 2, 2, New TreeNode() {EverythingTreeNode, DisabledUsersTreeNode})
+    Public AllAdminsTreeNode As TreeNode = New TreeNode("All Admins", 5, 5)
+    Public BuiltInTreeNode As TreeNode = New TreeNode("Built In Views", 2, 2, New TreeNode() {EverythingTreeNode, DisabledUsersTreeNode, AllAdminsTreeNode})
+
+#Region "Properties"
 
     Property DomainName As String
         Set(value As String)
@@ -44,9 +49,26 @@ Public Class ControlDomainTreeView
         End Get
     End Property
 
+#End Region
+
+#Region "Double Buffer"
+
+    Protected Overrides Sub OnHandleCreated(e As EventArgs)
+        SendMessage(Me.Handle, TVM_SETEXTENDEDSTYLE, New IntPtr(TVS_EX_DOUBLEBUFFER), New IntPtr(TVS_EX_DOUBLEBUFFER))
+        MyBase.OnHandleCreated(e)
+    End Sub
+    ' Pinvoke:
+    Private Const TVM_SETEXTENDEDSTYLE As Integer = &H1100 + 44
+    Private Const TVM_GETEXTENDEDSTYLE As Integer = &H1100 + 45
+    Private Const TVS_EX_DOUBLEBUFFER As Integer = &H4
+    <DllImport("user32.dll")>
+    Private Shared Function SendMessage(hWnd As IntPtr, msg As Integer, wp As IntPtr, lp As IntPtr) As IntPtr
+    End Function
+
+#End Region
+
     Public Sub New()
 
-        WindowsApi.SetWindowTheme(Me.Handle, "explorer", Nothing)
         Me.Margin = New Padding(0, 0, 0, 0)
         Me.HotTracking = True
         Me.ShowLines = False
@@ -56,8 +78,9 @@ Public Class ControlDomainTreeView
         Me.Font = SystemFonts.DefaultFont
         Me.HideSelection = False
         Me.Nodes.Clear()
-        Me.LoadNodes()
         Me.BuiltInTreeNode.Expand()
+
+        WindowsApi.SetWindowTheme(Me.Handle, "explorer", Nothing)
 
         Try
             Dim AdImages As New ImageList()
@@ -67,7 +90,7 @@ Public Class ControlDomainTreeView
             AdImages.Images.Add("ContainerImage", IconContainer)
             AdImages.Images.Add("EveryThingImage", IconSearch)
             AdImages.Images.Add("DisabledUsers", IconDisabledUSer)
-
+            AdImages.Images.Add("Users", IconUser)
             AdImages.ColorDepth = ColorDepth.Depth24Bit
             AdImages.ImageSize = New Size(16, 16)
 
@@ -77,33 +100,24 @@ Public Class ControlDomainTreeView
         End Try
     End Sub
 
-    Public Sub LoadNodes()
-        EverythingTreeNode.ImageIndex = 3
-        EverythingTreeNode.Name = "EverythingNode"
-        EverythingTreeNode.SelectedImageIndex = 3
-        EverythingTreeNode.Text = "Everything"
-        DisabledUsersTreeNode.ImageIndex = 4
-        DisabledUsersTreeNode.Name = "DisabledUsersNode"
-        DisabledUsersTreeNode.SelectedImageIndex = 4
-        DisabledUsersTreeNode.Text = "Disabled Users"
-        BuiltInTreeNode.ImageIndex = 2
-        BuiltInTreeNode.Name = "BuiltInRoot"
-        BuiltInTreeNode.SelectedImageIndex = 2
-        BuiltInTreeNode.Text = "Built In Views"
-        Me.Nodes.AddRange(New TreeNode() {BuiltInTreeNode})
+    Public Sub RefreshNodes()
+        SuspendLayout()
+        Nodes.Clear()
+        Nodes.Add(BuiltInTreeNode)
+        InitialLoad()
     End Sub
 
     Public Sub InitialLoad()
         Try
-            If String.IsNullOrEmpty(_DomainName) Then
-                DomainName = GetLocalDomainName()
-            End If
+
+            DomainName = GetLocalDomainName()
+
             If String.IsNullOrEmpty(_DomainController) Then
-                _DomainController = GetSingleDomainController(LoginUsername, LoginPassword)
+                _DomainController = GetSingleDomainController()
             End If
 
             Dim RootNode = New TreeNode
-            Dim DomainObject As Domain = Domain.GetDomain(GetDomainContext(LoginUsername, LoginPassword))
+            Dim DomainObject As Domain = Domain.GetDomain(GetDomainContext)
 
             Using RootDirectoryEntry As DirectoryEntry = DomainObject.GetDirectoryEntry
                 RootNode.ToolTipText = CStr(RootDirectoryEntry.Properties("distinguishedName").Value).Replace("/", "\/")
@@ -115,8 +129,9 @@ Public Class ControlDomainTreeView
             RootNode.SelectedImageKey = "DomainImage"
             InitialLoadFinished(RootNode, Nothing)
 
-        Catch ex As Exception
-            InitialLoadFinished(Nothing, ex.Message)
+        Catch Ex As Exception
+            Debug.WriteLine("[Erorr] An error occured during the domain tree Inital Load: " & Ex.Message)
+            InitialLoadFinished(Nothing, Ex.Message)
         End Try
     End Sub
 
@@ -130,7 +145,6 @@ Public Class ControlDomainTreeView
                         RootNode.Nodes.Add(New TreeNode)
                         Me.Nodes.Add(RootNode)
                         RootNode.Expand()
-                        Me.SelectedNode = RootNode
                     End If
                 Catch ex As Exception
                 End Try
@@ -144,14 +158,9 @@ Public Class ControlDomainTreeView
 
         Try
 
-            Dim RootDirectoryEntry As New DirectoryEntry(GetDirEntryPath() & ":389/" & RootNode.ToolTipText)
+            Dim RootDirectoryEntry As New DirectoryEntry(GetDirEntryPath() & ":389/" & RootNode.ToolTipText, LoginUsername, LoginPassword, AuthenticationTypes.Secure)
 
             Using RootDirectoryEntry
-
-                RootDirectoryEntry.AuthenticationType = AuthenticationTypes.Secure
-
-                RootDirectoryEntry.Username = LoginUsername
-                RootDirectoryEntry.Password = LoginPassword
 
                 For Each ChildObject As DirectoryEntry In RootDirectoryEntry.Children
                     Try
@@ -197,7 +206,7 @@ Public Class ControlDomainTreeView
             End Using
             LoadFinished(True, Nothing, RootNodeObject, Children)
         Catch Ex As Exception
-            Debug.WriteLine("[Error] Error Loading Nodes: " & Ex.Message)
+
         End Try
     End Sub
 
@@ -224,10 +233,29 @@ Public Class ControlDomainTreeView
         End If
     End Sub
 
+    Private Sub ControlDomainTreeView_BeforeExpand(sender As Object, e As TreeViewCancelEventArgs) Handles Me.BeforeExpand
+        Try
+            Dim ExpandedNode As TreeNode = e.Node
+
+            If Not ExpandedNode.Tag Is Nothing Then
+                If ExpandedNode.Tag.GetType = GetType(ADNodeType) Then
+                    If ExpandedNode.Nodes.Count > 0 Then
+                        Dim bgThread As New Threading.Thread(AddressOf LoadAdNodes)
+                        bgThread.Start(ExpandedNode)
+                    End If
+                End If
+            End If
+        Catch ex As Exception
+            Debug.WriteLine("[Error] Internal Error - Failed to get required information from expanded container node: " & ex.Message)
+        End Try
+    End Sub
+
     Private Sub ControlDomainTreeView_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles Me.AfterSelect
         If Not e.Node Is Nothing Then
             Select Case SelectedNode.Text
                 Case "Built In Views"
+                Case "All Admins"
+                    RaiseEvent AllAdminsSeleceted()
                 Case "Disabled Users"
                     RaiseEvent DisabledUsersSeleceted()
                 Case "Everything"
@@ -242,15 +270,4 @@ Public Class ControlDomainTreeView
         End If
     End Sub
 
-    Private Sub ControlDomainTreeView_BeforeExpand(sender As Object, e As TreeViewCancelEventArgs) Handles Me.BeforeExpand
-        Try
-            Dim ExpandedNode As TreeNode = e.Node
-            If ExpandedNode.Nodes.Count > 0 Then
-                Dim bgThread As New Threading.Thread(AddressOf LoadAdNodes)
-                bgThread.Start(ExpandedNode)
-            End If
-        Catch ex As Exception
-            Debug.WriteLine("[Error] Internal Error - Failed to get required information from expanded container node: " & ex.Message, "Container Expand Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
 End Class

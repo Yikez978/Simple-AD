@@ -41,40 +41,44 @@ Partial Class FormUpdate
         '
         'BodyLb
         '
+        Me.BodyLb.Anchor = System.Windows.Forms.AnchorStyles.Bottom
         Me.BodyLb.AutoSize = True
-        Me.BodyLb.Location = New System.Drawing.Point(23, 72)
+        Me.BodyLb.Location = New System.Drawing.Point(23, 11)
         Me.BodyLb.Name = "BodyLb"
         Me.BodyLb.Size = New System.Drawing.Size(100, 19)
         Me.BodyLb.TabIndex = 0
         Me.BodyLb.Text = "Main Body Text"
+        Me.BodyLb.UseCustomBackColor = True
         '
         'UpdateToggle
         '
         Me.UpdateToggle.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.UpdateToggle.AutoSize = True
-        Me.UpdateToggle.Location = New System.Drawing.Point(23, 186)
+        Me.UpdateToggle.Location = New System.Drawing.Point(23, 125)
         Me.UpdateToggle.Name = "UpdateToggle"
         Me.UpdateToggle.Size = New System.Drawing.Size(80, 17)
         Me.UpdateToggle.Style = MetroFramework.MetroColorStyle.Purple
         Me.UpdateToggle.TabIndex = 3
         Me.UpdateToggle.Text = "Off"
+        Me.UpdateToggle.UseCustomBackColor = True
         Me.UpdateToggle.UseSelectable = True
         '
         'MetroLabel2
         '
         Me.MetroLabel2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.MetroLabel2.AutoSize = True
-        Me.MetroLabel2.Location = New System.Drawing.Point(109, 184)
+        Me.MetroLabel2.Location = New System.Drawing.Point(109, 123)
         Me.MetroLabel2.Name = "MetroLabel2"
         Me.MetroLabel2.Size = New System.Drawing.Size(178, 19)
         Me.MetroLabel2.TabIndex = 4
         Me.MetroLabel2.Text = "Check for updates on Launch"
+        Me.MetroLabel2.UseCustomBackColor = True
         '
         'UpdateBn
         '
         Me.UpdateBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.UpdateBn.Enabled = False
-        Me.UpdateBn.Location = New System.Drawing.Point(321, 184)
+        Me.UpdateBn.Location = New System.Drawing.Point(321, 123)
         Me.UpdateBn.Name = "UpdateBn"
         Me.UpdateBn.Size = New System.Drawing.Size(75, 23)
         Me.UpdateBn.TabIndex = 5
@@ -85,7 +89,7 @@ Partial Class FormUpdate
         '
         Me.CancelBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CancelBn.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.CancelBn.Location = New System.Drawing.Point(402, 184)
+        Me.CancelBn.Location = New System.Drawing.Point(402, 123)
         Me.CancelBn.Name = "CancelBn"
         Me.CancelBn.Size = New System.Drawing.Size(75, 23)
         Me.CancelBn.TabIndex = 6
@@ -94,6 +98,7 @@ Partial Class FormUpdate
         '
         'MetroPanel1
         '
+        Me.MetroPanel1.Anchor = System.Windows.Forms.AnchorStyles.Bottom
         Me.MetroPanel1.BackColor = System.Drawing.SystemColors.ControlDark
         Me.MetroPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.MetroPanel1.Controls.Add(Me.OldVerLb)
@@ -101,7 +106,7 @@ Partial Class FormUpdate
         Me.MetroPanel1.HorizontalScrollbarBarColor = True
         Me.MetroPanel1.HorizontalScrollbarHighlightOnWheel = False
         Me.MetroPanel1.HorizontalScrollbarSize = 10
-        Me.MetroPanel1.Location = New System.Drawing.Point(23, 107)
+        Me.MetroPanel1.Location = New System.Drawing.Point(23, 46)
         Me.MetroPanel1.Name = "MetroPanel1"
         Me.MetroPanel1.Padding = New System.Windows.Forms.Padding(10, 16, 10, 10)
         Me.MetroPanel1.Size = New System.Drawing.Size(211, 53)
@@ -143,6 +148,7 @@ Partial Class FormUpdate
         '
         'NewBuildPl
         '
+        Me.NewBuildPl.Anchor = System.Windows.Forms.AnchorStyles.Bottom
         Me.NewBuildPl.BackColor = System.Drawing.SystemColors.ControlDarkDark
         Me.NewBuildPl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.NewBuildPl.Controls.Add(Me.NewVerLb)
@@ -150,7 +156,7 @@ Partial Class FormUpdate
         Me.NewBuildPl.HorizontalScrollbarBarColor = True
         Me.NewBuildPl.HorizontalScrollbarHighlightOnWheel = False
         Me.NewBuildPl.HorizontalScrollbarSize = 10
-        Me.NewBuildPl.Location = New System.Drawing.Point(240, 107)
+        Me.NewBuildPl.Location = New System.Drawing.Point(240, 46)
         Me.NewBuildPl.Name = "NewBuildPl"
         Me.NewBuildPl.Padding = New System.Windows.Forms.Padding(10, 16, 10, 10)
         Me.NewBuildPl.Size = New System.Drawing.Size(211, 53)
@@ -193,12 +199,14 @@ Partial Class FormUpdate
         '
         'Spinner
         '
-        Me.Spinner.Location = New System.Drawing.Point(427, 21)
+        Me.Spinner.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.Spinner.Location = New System.Drawing.Point(423, 12)
         Me.Spinner.Maximum = 100
         Me.Spinner.Name = "Spinner"
-        Me.Spinner.Size = New System.Drawing.Size(50, 52)
+        Me.Spinner.Size = New System.Drawing.Size(28, 28)
         Me.Spinner.Style = MetroFramework.MetroColorStyle.Purple
         Me.Spinner.TabIndex = 9
+        Me.Spinner.UseCustomBackColor = True
         Me.Spinner.UseSelectable = True
         Me.Spinner.Value = 10
         '
@@ -207,8 +215,9 @@ Partial Class FormUpdate
         Me.AcceptButton = Me.UpdateBn
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer))
         Me.CancelButton = Me.CancelBn
-        Me.ClientSize = New System.Drawing.Size(500, 226)
+        Me.ClientSize = New System.Drawing.Size(500, 165)
         Me.Controls.Add(Me.Spinner)
         Me.Controls.Add(Me.NewBuildPl)
         Me.Controls.Add(Me.MetroPanel1)
@@ -217,17 +226,14 @@ Partial Class FormUpdate
         Me.Controls.Add(Me.MetroLabel2)
         Me.Controls.Add(Me.UpdateToggle)
         Me.Controls.Add(Me.BodyLb)
-        Me.CustomBackcolor = System.Drawing.SystemColors.Window
-        Me.CustomForecolor = System.Drawing.SystemColors.MenuText
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "FormUpdate"
-        Me.Resizable = False
-        Me.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow
         Me.ShowIcon = False
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
-        Me.Style = MetroFramework.MetroColorStyle.Purple
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Update"
         Me.MetroPanel1.ResumeLayout(False)
         Me.MetroPanel1.PerformLayout()

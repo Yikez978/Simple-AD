@@ -73,7 +73,7 @@ Public Module LocalData
     End Sub
 
     Private Sub RecentFileMenuIte_CLick(ByVal ImportFile As String)
-        Dim RecentImportFile = New JobUserBulk(ImportFile)
+        Dim RecentImportFile = New JobImport(ImportFile)
     End Sub
 
 End Module

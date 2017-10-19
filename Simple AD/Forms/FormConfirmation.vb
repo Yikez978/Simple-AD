@@ -11,18 +11,19 @@
             Case ConfirmationType.Delete
                 MainPb.Image = My.Resources.Delete
                 AcceptBn.Text = "Delete"
+            Case ConfirmationType.Close
+                MainPb.Image = My.Resources.ExitForm
+                AcceptBn.Text = "Exit"
         End Select
     End Sub
 
     Private Sub AcceptBn_Click(ByVal sender As System.Object, ByVal e As EventArgs) Handles AcceptBn.Click
-
         DialogResult = DialogResult.Yes
         Close()
     End Sub
 
     Private Sub CancelBn_Click(ByVal sender As System.Object, ByVal e As EventArgs) Handles CancelBn.Click
-
-        DialogResult = Windows.Forms.DialogResult.No
+        DialogResult = DialogResult.No
         Close()
     End Sub
 End Class

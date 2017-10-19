@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Simple AD"
-#define MyAppVersion "0.1.1.10"
+#define MyAppVersion "0.2.1.44"
 #define MyAppPublisher "Joel Crosby"
 #define MyAppURL "https://simple-ad.appspot.com/"
 #define MyAppExeName "SimpleAD.exe"
@@ -44,6 +44,7 @@ Source: "C:\Users\jcrosby\OneDrive\Projects\Simple AD\Simple AD\bin\Debug\Micros
 Source: "C:\Users\jcrosby\OneDrive\Projects\Simple AD\Simple AD\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\jcrosby\OneDrive\Projects\Simple AD\Simple AD\bin\Debug\System.Management.Automation.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\jcrosby\OneDrive\Projects\Simple AD\Simple AD\bin\Debug\UNOLibs.Net.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\jcrosby\OneDrive\Projects\Simple AD\Simple AD\bin\Debug\ObjectListView.dll"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

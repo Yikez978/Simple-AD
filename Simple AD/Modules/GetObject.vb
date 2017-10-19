@@ -31,25 +31,14 @@
         End Try
     End Function
 
-    Public Function GetMainDataGrid() As DataGridView
-        Try
-            Dim CurrentTab As TabPage = GetMainTabCtrl.SelectedTab
-            Dim MainContainer As Object = CurrentTab.Controls.Item(0)
-            Return MainContainer.GetMainDataGrid()
-        Catch Ex As Exception
-            Debug.WriteLine("[Error] " & Ex.Message)
-            Return Nothing
-        End Try
-    End Function
-
-    Public Function GetBulkUserContainer() As ContainerUserBulk
-        Dim CurrentTab As ContainerUserBulk = GetMainTabCtrl.SelectedTab.Controls.Item(0)
+    Public Function GetBulkUserContainer() As ContainerImport
+        Dim CurrentTab As ContainerImport = GetMainTabCtrl.SelectedTab.Controls.Item(0)
         Return CurrentTab
     End Function
 
     Public Function GetDomainPanel() As ControlDomainTreeView
         Try
-            Dim CurrentTab As ContainerUserReport = GetMainTabCtrl.SelectedTab.Controls.Item(0)
+            Dim CurrentTab As ContainerExplorer = GetMainTabCtrl.SelectedTab.Controls.Item(0)
             Return CurrentTab.GetDomainPanel()
         Catch Ex As Exception
             Debug.WriteLine("[Error] " & Ex.Message)
@@ -59,12 +48,53 @@
 
     Public Function GetMainListView() As ControlListView
         Try
-            Dim CurrentTab As ContainerUserReport = GetMainTabCtrl.SelectedTab.Controls.Item(0)
-            Return CurrentTab.MainListView
+            Dim CurrentTab As Object = GetMainTabCtrl.SelectedTab.Controls.Item(0)
+            Return CurrentTab.GetMainListView()
         Catch Ex As Exception
             Debug.WriteLine("[Error] " & Ex.Message)
             Return Nothing
         End Try
+    End Function
+
+    Public Function GetStatusStrip() As StatusStrip
+        Try
+            Return FormMain.StatusStrip()
+        Catch Ex As Exception
+            Debug.WriteLine("[Error] " & Ex.Message)
+            Return Nothing
+        End Try
+    End Function
+
+    Public Function GetExplorerTab() As TabPage
+        Return FormMain.MainTabCtrl.TabPages("ExplorerTab")
+    End Function
+
+    Public Function GetImportTab() As TabPage
+        Return FormMain.MainTabCtrl.TabPages("ImportTab")
+    End Function
+
+    Public Function GetTemplateTab() As TabPage
+        Return FormMain.MainTabCtrl.TabPages("TemplateTab")
+    End Function
+
+    Public ExplorerContainerHandle As ContainerExplorer
+    Public Function GetContainerExplorer() As ContainerExplorer
+        Return ExplorerContainerHandle
+    End Function
+
+    Public ImportContainerHandle As ContainerImport
+    Public Function GetContainerImport() As ContainerImport
+        Return ImportContainerHandle
+    End Function
+
+    Public TemplateContainerHandle As ContainerTemplate
+    Public Function GetContainerTemplate() As ContainerTemplate
+        Return TemplateContainerHandle
+    End Function
+
+    Public TaskFlowHandle As TableLayoutPanel
+    Public Function GetTaskFlow() As TableLayoutPanel
+        Return TaskFlowHandle
     End Function
 
 End Module

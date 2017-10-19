@@ -15,7 +15,9 @@
             "description",
             "UserAccountControl",
             "sAMAccountName",
-            "distinguishedName"
+            "distinguishedName",
+            "isCriticalSystemObject",
+            "showInAdvancedViewOnly"
     }
 
     Public ListViewPropsColumns() As String = {

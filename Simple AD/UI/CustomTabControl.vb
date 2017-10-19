@@ -4,62 +4,87 @@ Imports System.Runtime.InteropServices
 Public Class CustomTabControl
     Inherits TabControl
 
-#Region " Windows Form Designer generated code "
+    Private _hotTabIndex As Int32 = -1
+    Private _HotTrackTabColor As Color = Color.FromArgb(211, 191, 221)
+    Private _TabColor As Color = SystemColors.Window
 
     Public Sub New()
         MyBase.New()
-
-        'This call is required by the Windows Form Designer.
-        InitializeComponent()
-
-        'Add any initialization after the InitializeComponent() call
-        SetStyle(ControlStyles.AllPaintingInWmPaint Or
-                ControlStyles.DoubleBuffer Or
-                ControlStyles.ResizeRedraw Or
-                ControlStyles.UserPaint, True)
-
+        Me.SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.ResizeRedraw Or ControlStyles.UserPaint, True)
     End Sub
 
-    'UserControl1 overrides dispose to clean up the component list.
-    Protected Overloads Overrides Sub Dispose(ByVal disposing As Boolean)
-        If disposing Then
-            If Not (components Is Nothing) Then
-                components.Dispose()
+#Region " Properties "
+
+    Private Property HotTabIndex As Int32
+        Get
+            Return _hotTabIndex
+        End Get
+        Set(ByVal value As Int32)
+            If _hotTabIndex <> value Then
+                _hotTabIndex = value
+                Me.Invalidate()
             End If
-        End If
-        MyBase.Dispose(disposing)
-    End Sub
+        End Set
+    End Property
 
-    'Required by the Windows Form Designer
-    Private components As System.ComponentModel.IContainer
+    Public Property HotTrackTabColor As Color
+        Set(value As Color)
+            _HotTrackTabColor = value
+        End Set
+        Get
+            Return _HotTrackTabColor
+        End Get
+    End Property
 
-    'NOTE: The following procedure is required by the Windows Form Designer
-    'It can be modified using the Windows Form Designer.  
-    'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        components = New System.ComponentModel.Container
-    End Sub
+    Public Property TabColor As Color
+        Set(value As Color)
+            _TabColor = value
+        End Set
+        Get
+            Return _TabColor
+        End Get
+    End Property
+
+    Public Overrides ReadOnly Property DisplayRectangle() As Rectangle
+        Get
+            Dim tabStripHeight, itemHeight As Int32
+
+            If Me.Alignment <= TabAlignment.Bottom Then
+                itemHeight = Me.ItemSize.Height
+            Else
+                itemHeight = Me.ItemSize.Width
+            End If
+
+            If Me.Appearance = TabAppearance.Normal Then
+                tabStripHeight = 3 + (itemHeight * Me.RowCount)
+            Else
+                tabStripHeight = (itemHeight) * Me.RowCount
+            End If
+            Select Case Me.Alignment
+                Case TabAlignment.Top
+                    Return New Rectangle(0, tabStripHeight, Width, Height - tabStripHeight)
+                Case TabAlignment.Bottom
+                    Return New Rectangle(4, 4, Width - 8, Height - tabStripHeight - 4)
+                Case TabAlignment.Left
+                    Return New Rectangle(tabStripHeight, 4, Width - tabStripHeight - 4, Height - 8)
+                Case TabAlignment.Right
+                    Return New Rectangle(4, 4, Width - tabStripHeight - 4, Height - 8)
+            End Select
+        End Get
+    End Property
 
 #End Region
 
-#Region " InterOP "
+#Region "Double Buffer"
 
-    <StructLayout(LayoutKind.Sequential)>
-    Private Structure NMHDR
-        Public HWND As Int32
-        Public idFrom As Int32
-        Public code As Int32
-        Public Overloads Function ToString() As String
-            Return String.Format("Hwnd: {0}, ControlID: {1}, Code: {2}", HWND, idFrom, code)
-        End Function
-    End Structure
+    Protected Overrides Sub OnHandleCreated(e As EventArgs)
+        SendMessage(Me.Handle, TVM_SETEXTENDEDSTYLE, New IntPtr(TVS_EX_DOUBLEBUFFER), New IntPtr(TVS_EX_DOUBLEBUFFER))
+        MyBase.OnHandleCreated(e)
+    End Sub
 
-    Private Const TCN_FIRST As Int32 = &HFFFFFFFFFFFFFDDA&
-    Private Const TCN_SELCHANGING As Int32 = (TCN_FIRST - 2)
-
-    Private Const WM_USER As Int32 = &H400&
-    Private Const WM_NOTIFY As Int32 = &H4E&
-    Private Const WM_REFLECT As Int32 = WM_USER + &H1C00&
+    Private Const TVM_SETEXTENDEDSTYLE As Integer = &H1100 + 44
+    Private Const TVM_GETEXTENDEDSTYLE As Integer = &H1100 + 45
+    Private Const TVS_EX_DOUBLEBUFFER As Integer = &H4
 
 #End Region
 
@@ -68,8 +93,7 @@ Public Class CustomTabControl
     'As well as exposing the property to the Designer we want it to behave just like any other 
     'controls BackColor property so we need some clever manipulation.
     Private m_Backcolor As Color = Color.Empty
-    <Browsable(True),
-    Description("The background color used to display text and graphics in a control.")>
+    <Browsable(True), Description("The background color used to display text and graphics in a control.")>
     Public Overrides Property BackColor() As Color
         Get
             If m_Backcolor.Equals(Color.Empty) Then
@@ -97,188 +121,170 @@ Public Class CustomTabControl
         Invalidate()
     End Sub
 
-    Public Overrides ReadOnly Property DisplayRectangle() As System.Drawing.Rectangle
-        Get
-            Dim tabStripHeight, itemHeight As Int32
-
-            If Me.Alignment <= TabAlignment.Bottom Then
-                itemHeight = Me.ItemSize.Height
-            Else
-                itemHeight = Me.ItemSize.Width
-            End If
-
-            If Me.Appearance = TabAppearance.Normal Then
-                tabStripHeight = 5 + (itemHeight * Me.RowCount)
-            Else
-                tabStripHeight = (3 + itemHeight) * Me.RowCount
-            End If
-            Select Case Me.Alignment
-                Case TabAlignment.Top
-                    Return New Rectangle(0, tabStripHeight, Width, Height - tabStripHeight)
-                Case TabAlignment.Bottom
-                    Return New Rectangle(4, 4, Width - 8, Height - tabStripHeight - 4)
-                Case TabAlignment.Left
-                    Return New Rectangle(tabStripHeight, 4, Width - tabStripHeight - 4, Height - 8)
-                Case TabAlignment.Right
-                    Return New Rectangle(4, 4, Width - tabStripHeight - 4, Height - 8)
-            End Select
-        End Get
-    End Property
-
 #End Region
 
-    Protected Overrides Sub OnParentBackColorChanged(ByVal e As System.EventArgs)
-        MyBase.OnParentBackColorChanged(e)
-        Invalidate()
+#Region " Overridden Methods"
+
+    Protected Overrides Sub OnCreateControl()
+        MyBase.OnCreateControl()
+        Me.OnFontChanged(EventArgs.Empty)
     End Sub
 
-    Private _InactiveTabBackColor
+    Protected Overrides Sub OnFontChanged(ByVal e As System.EventArgs)
+        MyBase.OnFontChanged(e)
+        Dim hFont As IntPtr = Me.Font.ToHfont()
+        SendMessage(Me.Handle, WM_SETFONT, hFont, New IntPtr(-1))
+        SendMessage(Me.Handle, WM_FONTCHANGE, IntPtr.Zero, IntPtr.Zero)
+        Me.UpdateStyles()
+    End Sub
 
-    Public Property InactiveTabBackColor As Color
-        Set(value As Color)
-            _InactiveTabBackColor = value
-        End Set
-        Get
-            Return _InactiveTabBackColor
-        End Get
-    End Property
+    Protected Overrides Sub OnMouseMove(ByVal e As System.Windows.Forms.MouseEventArgs)
+        MyBase.OnMouseMove(e)
+        Dim HTI As New TCHITTESTINFO(e.X, e.Y)
+        HotTabIndex = SendMessage(Me.Handle, TCM_HITTEST, IntPtr.Zero, HTI)
+    End Sub
 
-    Protected Overrides Sub OnSelectedIndexChanged(ByVal e As System.EventArgs)
-        MyBase.OnSelectedIndexChanged(e)
-        Invalidate()
+    Protected Overrides Sub OnMouseLeave(ByVal e As System.EventArgs)
+        MyBase.OnMouseLeave(e)
+        HotTabIndex = -1
+    End Sub
+
+    Protected Overrides Sub OnPaintBackground(ByVal pevent As System.Windows.Forms.PaintEventArgs)
+        MyBase.OnPaintBackground(pevent)
+        For id As Int32 = 0 To Me.TabCount - 1
+            DrawTabBackground(pevent.Graphics, id)
+        Next
     End Sub
 
     Protected Overrides Sub OnPaint(ByVal e As System.Windows.Forms.PaintEventArgs)
-        If Not SelectedTab Is Nothing Then
-            MyBase.OnPaint(e)
-            e.Graphics.Clear(BackColor)
-            Dim r As Rectangle = Me.ClientRectangle
-            If TabCount <= 0 Then Return
-            'Draw a custom background for Transparent TabPages
-            r = SelectedTab.Bounds
-            Dim sf As New StringFormat
-            sf.Alignment = StringAlignment.Center
-            sf.LineAlignment = StringAlignment.Center
-            Dim DrawFont As New Font(Font.FontFamily, 24, FontStyle.Regular, GraphicsUnit.Pixel)
-            ControlPaint.DrawStringDisabled(e.Graphics, "Micks Ownerdraw TabControl", DrawFont, BackColor, RectangleF.op_Implicit(r), sf)
-            DrawFont.Dispose()
-            'Draw a border around TabPage
-            r.Inflate(3, 3)
-            Dim tp As TabPage = TabPages(SelectedIndex)
-            Dim PaintBrush As New SolidBrush(tp.BackColor)
-            e.Graphics.FillRectangle(PaintBrush, r)
-            ControlPaint.DrawBorder(e.Graphics, r, PaintBrush.Color, ButtonBorderStyle.None)
-            'Draw the Tabs
-            For index As Integer = 0 To TabCount - 1
-                tp = TabPages(index)
-                r = GetTabRect(index)
-                Dim bs As ButtonBorderStyle = ButtonBorderStyle.None
-                If index = SelectedIndex Then bs = ButtonBorderStyle.None
-
-                If index = SelectedIndex Then
-                    PaintBrush.Color = tp.BackColor
-                Else
-                    PaintBrush.Color = InactiveTabBackColor
-                End If
-
-                e.Graphics.FillRectangle(PaintBrush, r)
-                ControlPaint.DrawBorder(e.Graphics, r, PaintBrush.Color, bs)
-
-                If index = SelectedIndex Then
-                    PaintBrush.Color = InactiveTabBackColor
-                Else
-                    PaintBrush.Color = tp.ForeColor
-                End If
-
-
-                'Set up rotation for left and right aligned tabs
-                If Alignment = TabAlignment.Left Or Alignment = TabAlignment.Right Then
-                    Dim RotateAngle As Single = 90
-                    If Alignment = TabAlignment.Left Then RotateAngle = 270
-                    Dim cp As New PointF(r.Left + (r.Width \ 2), r.Top + (r.Height \ 2))
-                    e.Graphics.TranslateTransform(cp.X, cp.Y)
-                    e.Graphics.RotateTransform(RotateAngle)
-                    r = New Rectangle(-(r.Height \ 2), -(r.Width \ 2), r.Height, r.Width)
-                End If
-                'Draw the Tab Text
-
-                If tp.Enabled Then
-                    If index = tp.TabIndex Then
-                        e.Graphics.DrawString(tp.Text, Font, PaintBrush, RectangleF.op_Implicit(r), sf)
-                    Else
-                        e.Graphics.DrawString(tp.Text, Font, PaintBrush, RectangleF.op_Implicit(r), sf)
-                    End If
-                Else
-                    ControlPaint.DrawStringDisabled(e.Graphics, tp.Text, Font, tp.BackColor, RectangleF.op_Implicit(r), sf)
-                End If
-
-                e.Graphics.ResetTransform()
-
-            Next
-            PaintBrush.Dispose()
-        End If
+        MyBase.OnPaint(e)
+        For id As Int32 = 0 To Me.TabCount - 1
+            DrawTabContent(e.Graphics, id)
+        Next
     End Sub
 
-    <Description("Occurs as a tab is being changed.")>
-    Public Event SelectedIndexChanging As SelectedTabPageChangeEventHandler
-
-    Protected Overrides Sub WndProc(ByRef m As System.Windows.Forms.Message)
-        If m.Msg = (WM_REFLECT + WM_NOTIFY) Then
-            Dim hdr As NMHDR = DirectCast(Marshal.PtrToStructure(m.LParam, GetType(NMHDR)), NMHDR)
-            If hdr.code = TCN_SELCHANGING Then
-                Dim tp As TabPage = TestTab(Me.PointToClient(Cursor.Position))
-                If Not tp Is Nothing Then
-                    Dim e As New TabPageChangeEventArgs(Me.SelectedTab, tp)
-                    RaiseEvent SelectedIndexChanging(Me, e)
-                    If e.Cancel OrElse tp.Enabled = False Then
-                        m.Result = New IntPtr(1)
-                        Return
-                    End If
-                End If
-            End If
+    Protected Overrides Sub WndProc(ByRef m As Message)
+        If m.Msg = TCM_SETPADDING Then
+            m.LParam = MAKELPARAM(Me.Padding.X \ 2, Me.Padding.Y)
+        End If
+        If m.Msg = WM_MOUSEDOWN AndAlso Not Me.DesignMode Then
+            Dim pt As Point = Me.PointToClient(Cursor.Position)
         End If
         MyBase.WndProc(m)
     End Sub
 
-    Private Function TestTab(ByVal pt As Point) As TabPage
-        For index As Integer = 0 To TabCount - 1
-            If GetTabRect(index).Contains(pt.X, pt.Y) Then
-                Return TabPages(index)
-            End If
-        Next
-        Return Nothing
+#End Region
+
+#Region " Private Methods "
+
+    Private Function MAKELPARAM(ByVal lo As Integer, ByVal hi As Integer) As IntPtr
+        Return New IntPtr((hi << 16) Or (lo And &HFFFF))
     End Function
 
-End Class
+    Private Sub DrawTabBackground(ByVal graphics As Graphics, ByVal id As Integer)
+        If id = SelectedIndex Then
+            Dim Brush = New SolidBrush(Me.TabPages(id).BackColor)
+            Dim Pen As Pen = New Pen(_HotTrackTabColor)
+            Dim rc As Rectangle = GetTabRect(id)
+            rc.Width -= 5
+            rc.Height -= -5
+            graphics.FillRectangle(Brush, rc)
+            graphics.DrawRectangle(Pen, rc)
+        ElseIf id = HotTabIndex Then
+            Dim rc As Rectangle = GetTabRect(id)
+            rc.Width -= 5
+            rc.Height -= -5
+            Dim Brush As Brush = New SolidBrush(_HotTrackTabColor)
+            Dim Pen As Pen = New Pen(Me.TabPages(id).BackColor)
+            graphics.FillRectangle(Brush, rc)
+            graphics.DrawRectangle(Pen, rc)
+        Else
+            Dim rc As Rectangle = GetTabRect(id)
+            rc.Width -= 5
+            rc.Height -= -5
+            Dim Brush As Brush = New SolidBrush(_TabColor)
+            Dim Pen As Pen = New Pen(Color.FromArgb(217, 217, 217))
+            graphics.FillRectangle(Brush, rc)
+            graphics.DrawRectangle(Pen, rc)
+        End If
 
-#Region " EventArgs Class's "
+        Dim Pen0 As New Pen(Color.FromArgb(217, 217, 217))
+        graphics.DrawLine(Pen0, 0, DisplayRectangle.Y - 1, DisplayRectangle.Width, DisplayRectangle.Y - 1)
 
-Public Class TabPageChangeEventArgs
-    Inherits EventArgs
-
-    Private _Selected As TabPage
-    Private _PreSelected As TabPage
-    Public Cancel As Boolean = False
-
-    Public ReadOnly Property CurrentTab() As TabPage
-        Get
-            Return _Selected
-        End Get
-    End Property
-
-    Public ReadOnly Property NextTab() As TabPage
-        Get
-            Return _PreSelected
-        End Get
-    End Property
-
-    Public Sub New(ByVal CurrentTab As TabPage, ByVal NextTab As TabPage)
-        _Selected = CurrentTab
-        _PreSelected = NextTab
     End Sub
 
-End Class
+    Private Sub DrawTabContent(ByVal graphics As Graphics, ByVal id As Integer)
+        Dim selectedOrHot As Boolean = id = Me.SelectedIndex OrElse id = Me.HotTabIndex
+        Dim vertical As Boolean = Me.Alignment >= 2
 
-Public Delegate Sub SelectedTabPageChangeEventHandler(ByVal sender As Object, ByVal e As TabPageChangeEventArgs)
+        Dim tabRect As Rectangle = GetTabRect(id)
+        Dim contentRect As Rectangle = New Rectangle(New Point(8, 0), tabRect.Size)
+        Dim textrect As Rectangle = contentRect
+        textrect.Width -= FontHeight
+
+        Dim frColor As Color = If(id = SelectedIndex, Color.White, Me.ForeColor)
+        Dim bkColor As Color = If(id = SelectedIndex, Me.TabPages(id).BackColor, Me.BackColor)
+        Using bm As Bitmap = New Bitmap(contentRect.Width, contentRect.Height)
+            Using bmGraphics As Graphics = Graphics.FromImage(bm)
+                If selectedOrHot Then
+                    If id = Me.SelectedIndex Then
+                        TextRenderer.DrawText(bmGraphics, Me.TabPages(id).Text, Me.Font, textrect, frColor, Me.TabPages(id).BackColor)
+                    Else
+                        TextRenderer.DrawText(bmGraphics, Me.TabPages(id).Text, Me.Font, textrect, frColor, _HotTrackTabColor)
+                    End If
+                Else
+                    TextRenderer.DrawText(bmGraphics, Me.TabPages(id).Text, Me.Font, textrect, frColor, _TabColor)
+                End If
+            End Using
+            If vertical Then
+                If Me.Alignment = TabAlignment.Left Then
+                    bm.RotateFlip(RotateFlipType.Rotate270FlipNone)
+                Else
+                    bm.RotateFlip(RotateFlipType.Rotate90FlipNone)
+                End If
+            End If
+            graphics.DrawImage(bm, tabRect)
+        End Using
+    End Sub
 
 #End Region
+
+#Region " Interop "
+
+    <DllImport("user32.dll")>
+    Private Shared Function SendMessage(ByVal hWnd As IntPtr, ByVal msg As Int32, ByVal wParam As IntPtr, ByVal lParam As IntPtr) As IntPtr
+    End Function
+
+    <DllImport("user32.dll")>
+    Private Shared Function SendMessage(ByVal hwnd As IntPtr, ByVal msg As Int32, ByVal wParam As IntPtr, ByRef lParam As TCHITTESTINFO) As Int32
+    End Function
+
+    <System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential)>
+    Private Structure TCHITTESTINFO
+        Public pt As Point
+        Public flags As TCHITTESTFLAGS
+        Public Sub New(ByVal x As Int32, ByVal y As Int32)
+            pt = New Point(x, y)
+        End Sub
+    End Structure
+
+    <Flags()>
+    Private Enum TCHITTESTFLAGS
+        TCHT_NOWHERE = 1
+        TCHT_ONITEMICON = 2
+        TCHT_ONITEMLABEL = 4
+        TCHT_ONITEM = TCHT_ONITEMICON Or TCHT_ONITEMLABEL
+    End Enum
+
+    Private Const WM_NULL As Int32 = &H0
+    Private Const WM_SETFONT = &H30
+    Private Const WM_FONTCHANGE = &H1D
+    Private Const WM_MOUSEDOWN As Int32 = &H201
+
+    Private Const TCM_FIRST = &H1300
+    Private Const TCM_HITTEST = TCM_FIRST + 13
+    Private Const TCM_SETPADDING = TCM_FIRST ' + 43
+
+#End Region
+
+End Class

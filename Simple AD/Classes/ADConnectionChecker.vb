@@ -6,11 +6,6 @@ Public Class ADConnectionChecker
 
     Private ConnectionState As Integer
 
-    Public Sub New()
-
-    End Sub
-
-
     Public Sub Start()
 
         ConnectionState = 2
@@ -62,11 +57,11 @@ Public Class ADConnectionChecker
         If Not ConnectionState = e.ProgressPercentage Then
 
             If (e.ProgressPercentage = 1) Then
-                FormMain.ConnectionToolStripStatusLabel.Image = New Bitmap(My.Resources.appbar_network_server_connecting, 26, 26)
+                FormMain.ConnectionToolStripStatusLabel.Image = New Bitmap(My.Resources.Connection, 26, 26)
                 FormMain.ConnectionToolStripStatusLabel.Text = "Connected to " & CStr(GetLocalDomainName())
-                FormMain.ConnectionToolStripStatusLabel.ToolTipText = "Domain: " & GetLocalDomainName() & Environment.NewLine & "FQDN: " & GetFQDN() & Environment.NewLine & "DC Net BIOS: " & GetSingleDomainController(LoginUsername, LoginPassword)
+                FormMain.ConnectionToolStripStatusLabel.ToolTipText = "Domain: " & GetLocalDomainName() & Environment.NewLine & "FQDN: " & GetFQDN() & Environment.NewLine & "DC Net BIOS: " & GetSingleDomainController()
             Else
-                FormMain.ConnectionToolStripStatusLabel.Image = New Bitmap(My.Resources.appbar_network_server_disconnect, 24, 24)
+                FormMain.ConnectionToolStripStatusLabel.Image = New Bitmap(My.Resources.Connection, 24, 24)
                 FormMain.ConnectionToolStripStatusLabel.Text = "Unable to connect to any valid login server"
             End If
         End If

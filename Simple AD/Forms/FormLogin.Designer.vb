@@ -42,7 +42,7 @@ Partial Class FormLogin
         '
         '
         Me.PwdTb.CustomButton.Image = Nothing
-        Me.PwdTb.CustomButton.Location = New System.Drawing.Point(354, 1)
+        Me.PwdTb.CustomButton.Location = New System.Drawing.Point(372, 1)
         Me.PwdTb.CustomButton.Name = ""
         Me.PwdTb.CustomButton.Size = New System.Drawing.Size(21, 21)
         Me.PwdTb.CustomButton.Style = MetroFramework.MetroColorStyle.Blue
@@ -50,10 +50,10 @@ Partial Class FormLogin
         Me.PwdTb.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light
         Me.PwdTb.CustomButton.UseSelectable = True
         Me.PwdTb.CustomButton.Visible = False
-        Me.PwdTb.Icon = Global.SimpleAD.My.Resources.Resources.ErrorAlt
+        Me.PwdTb.Icon = Global.SimpleAD.My.Resources.Resources.ErrorSmall
         Me.PwdTb.IconRight = True
         Me.PwdTb.Lines = New String(-1) {}
-        Me.PwdTb.Location = New System.Drawing.Point(23, 92)
+        Me.PwdTb.Location = New System.Drawing.Point(22, 41)
         Me.PwdTb.MaxLength = 32767
         Me.PwdTb.Name = "PwdTb"
         Me.PwdTb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(9679)
@@ -62,7 +62,7 @@ Partial Class FormLogin
         Me.PwdTb.SelectionLength = 0
         Me.PwdTb.SelectionStart = 0
         Me.PwdTb.ShortcutsEnabled = True
-        Me.PwdTb.Size = New System.Drawing.Size(376, 23)
+        Me.PwdTb.Size = New System.Drawing.Size(394, 23)
         Me.PwdTb.Style = MetroFramework.MetroColorStyle.Purple
         Me.PwdTb.TabIndex = 18
         Me.PwdTb.UseSelectable = True
@@ -80,7 +80,7 @@ Partial Class FormLogin
         '
         '
         Me.UnTb.CustomButton.Image = Nothing
-        Me.UnTb.CustomButton.Location = New System.Drawing.Point(354, 1)
+        Me.UnTb.CustomButton.Location = New System.Drawing.Point(372, 1)
         Me.UnTb.CustomButton.Name = ""
         Me.UnTb.CustomButton.Size = New System.Drawing.Size(21, 21)
         Me.UnTb.CustomButton.Style = MetroFramework.MetroColorStyle.Blue
@@ -89,7 +89,7 @@ Partial Class FormLogin
         Me.UnTb.CustomButton.UseSelectable = True
         Me.UnTb.CustomButton.Visible = False
         Me.UnTb.Lines = New String(-1) {}
-        Me.UnTb.Location = New System.Drawing.Point(23, 63)
+        Me.UnTb.Location = New System.Drawing.Point(22, 12)
         Me.UnTb.MaxLength = 32767
         Me.UnTb.Name = "UnTb"
         Me.UnTb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
@@ -98,7 +98,7 @@ Partial Class FormLogin
         Me.UnTb.SelectionLength = 0
         Me.UnTb.SelectionStart = 0
         Me.UnTb.ShortcutsEnabled = True
-        Me.UnTb.Size = New System.Drawing.Size(376, 23)
+        Me.UnTb.Size = New System.Drawing.Size(394, 23)
         Me.UnTb.Style = MetroFramework.MetroColorStyle.Purple
         Me.UnTb.TabIndex = 17
         Me.UnTb.UseSelectable = True
@@ -112,11 +112,12 @@ Partial Class FormLogin
         Me.ErLb.AutoSize = True
         Me.ErLb.FontSize = MetroFramework.MetroLabelSize.Small
         Me.ErLb.ForeColor = System.Drawing.Color.IndianRed
-        Me.ErLb.Location = New System.Drawing.Point(12, 142)
+        Me.ErLb.Location = New System.Drawing.Point(12, 92)
         Me.ErLb.Name = "ErLb"
-        Me.ErLb.Size = New System.Drawing.Size(181, 15)
+        Me.ErLb.Size = New System.Drawing.Size(180, 15)
         Me.ErLb.TabIndex = 16
         Me.ErLb.Text = "Username or Password is Incorrect"
+        Me.ErLb.UseCustomBackColor = True
         Me.ErLb.Visible = False
         '
         'CancelBn
@@ -124,7 +125,7 @@ Partial Class FormLogin
         Me.CancelBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CancelBn.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.CancelBn.Enabled = False
-        Me.CancelBn.Location = New System.Drawing.Point(338, 138)
+        Me.CancelBn.Location = New System.Drawing.Point(338, 88)
         Me.CancelBn.Name = "CancelBn"
         Me.CancelBn.Size = New System.Drawing.Size(75, 23)
         Me.CancelBn.TabIndex = 13
@@ -134,7 +135,7 @@ Partial Class FormLogin
         'OKBn
         '
         Me.OKBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.OKBn.Location = New System.Drawing.Point(257, 138)
+        Me.OKBn.Location = New System.Drawing.Point(257, 88)
         Me.OKBn.Name = "OKBn"
         Me.OKBn.Size = New System.Drawing.Size(75, 23)
         Me.OKBn.TabIndex = 12
@@ -143,13 +144,14 @@ Partial Class FormLogin
         '
         'Spinner
         '
-        Me.Spinner.Location = New System.Drawing.Point(363, 23)
+        Me.Spinner.Location = New System.Drawing.Point(203, 81)
         Me.Spinner.Maximum = 100
         Me.Spinner.Name = "Spinner"
         Me.Spinner.Size = New System.Drawing.Size(36, 34)
         Me.Spinner.Speed = 2.0!
         Me.Spinner.Style = MetroFramework.MetroColorStyle.Purple
         Me.Spinner.TabIndex = 19
+        Me.Spinner.UseCustomBackColor = True
         Me.Spinner.UseSelectable = True
         Me.Spinner.Value = 30
         Me.Spinner.Visible = False
@@ -158,21 +160,22 @@ Partial Class FormLogin
         '
         Me.RememberCheckBox.AutoSize = True
         Me.RememberCheckBox.ForeColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.RememberCheckBox.Location = New System.Drawing.Point(23, 121)
+        Me.RememberCheckBox.Location = New System.Drawing.Point(22, 70)
         Me.RememberCheckBox.Name = "RememberCheckBox"
         Me.RememberCheckBox.Size = New System.Drawing.Size(101, 15)
         Me.RememberCheckBox.Style = MetroFramework.MetroColorStyle.Purple
         Me.RememberCheckBox.TabIndex = 20
         Me.RememberCheckBox.Text = "Remember Me"
+        Me.RememberCheckBox.UseCustomBackColor = True
         Me.RememberCheckBox.UseSelectable = True
         '
         'FormLogin
         '
         Me.AcceptButton = Me.OKBn
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
-        Me.BorderStyle = MetroFramework.Forms.MetroFormBorderStyle.FixedSingle
+        Me.BackColor = System.Drawing.SystemColors.Window
         Me.CancelButton = Me.CancelBn
-        Me.ClientSize = New System.Drawing.Size(428, 174)
+        Me.ClientSize = New System.Drawing.Size(428, 124)
         Me.Controls.Add(Me.RememberCheckBox)
         Me.Controls.Add(Me.Spinner)
         Me.Controls.Add(Me.PwdTb)
@@ -180,15 +183,12 @@ Partial Class FormLogin
         Me.Controls.Add(Me.ErLb)
         Me.Controls.Add(Me.CancelBn)
         Me.Controls.Add(Me.OKBn)
-        Me.CustomBackcolor = System.Drawing.SystemColors.Window
-        Me.CustomForecolor = System.Drawing.SystemColors.MenuText
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "FormLogin"
-        Me.Resizable = False
-        Me.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow
-        Me.Style = MetroFramework.MetroColorStyle.Purple
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Simple AD"
         Me.ResumeLayout(False)
         Me.PerformLayout()

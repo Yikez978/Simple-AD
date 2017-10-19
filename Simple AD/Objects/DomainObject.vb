@@ -1,13 +1,16 @@
 ﻿Imports System.ComponentModel
 
 Public Class DomainObject
-    Implements INotifyPropertyChanged
 
-    Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
-
-    Protected Sub OnPropertyChanged(ByVal name As String)
-        RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(name))
-    End Sub
+    Private StatusValue
+    Public Overridable Property Status As String
+        Set(value As String)
+            StatusValue = value
+        End Set
+        Get
+            Return StatusValue
+        End Get
+    End Property
 
     Private NameValue As String
     Public Property Name As String
@@ -16,7 +19,6 @@ Public Class DomainObject
         End Get
         Set(ByVal value As String)
             NameValue = value
-            OnPropertyChanged("Name")
         End Set
     End Property
 
@@ -27,7 +29,6 @@ Public Class DomainObject
         End Get
         Set(ByVal value As String)
             DescriptionValue = value
-            OnPropertyChanged("Description")
         End Set
     End Property
 
@@ -38,7 +39,6 @@ Public Class DomainObject
         End Get
         Set(ByVal value As String)
             TypeValue = value
-            OnPropertyChanged("Type")
         End Set
     End Property
 
@@ -49,7 +49,6 @@ Public Class DomainObject
         End Get
         Set(ByVal value As String)
             TypeFullValue = value
-            OnPropertyChanged("TypeFull")
         End Set
     End Property
 
@@ -60,7 +59,6 @@ Public Class DomainObject
         End Get
         Set(ByVal value As String)
             TypeFriendlyValue = value
-            OnPropertyChanged("TypeFriendly")
         End Set
     End Property
 
@@ -71,7 +69,6 @@ Public Class DomainObject
         End Get
         Set(ByVal value As String)
             DistinguishedNameValue = value
-            OnPropertyChanged("DistinguishedName")
         End Set
     End Property
 
@@ -82,7 +79,6 @@ Public Class DomainObject
         End Get
         Set(ByVal value As String)
             SAMAccountNameValue = value
-            OnPropertyChanged("SAMAccountName")
         End Set
     End Property
 
@@ -93,8 +89,26 @@ Public Class DomainObject
         End Get
         Set(ByVal value As String)
             UserAccountControlValue = value
-            OnPropertyChanged("UserAccountControl")
         End Set
     End Property
 
+    Private IsCriticalSystemObjectValue As Boolean
+    Public Property IsCriticalSystemObject As Boolean
+        Get
+            Return IsCriticalSystemObjectValue
+        End Get
+        Set(ByVal value As Boolean)
+            IsCriticalSystemObjectValue = value
+        End Set
+    End Property
+
+    Private ShowInAdvancedViewOnlyValue As Boolean
+    Public Property ShowInAdvancedViewOnly As Boolean
+        Get
+            Return ShowInAdvancedViewOnlyValue
+        End Get
+        Set(ByVal value As Boolean)
+            ShowInAdvancedViewOnlyValue = value
+        End Set
+    End Property
 End Class

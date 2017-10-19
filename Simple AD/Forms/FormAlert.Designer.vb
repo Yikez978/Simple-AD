@@ -26,13 +26,14 @@ Partial Class FormAlert
         Me.CloseBn = New MetroFramework.Controls.MetroButton()
         Me.MainPb = New System.Windows.Forms.PictureBox()
         Me.MainLb = New MetroFramework.Controls.MetroLabel()
+        Me.ControlFooterPl1 = New SimpleAD.ControlFooterPl()
         CType(Me.MainPb, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'CloseBn
         '
         Me.CloseBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.CloseBn.Location = New System.Drawing.Point(302, 112)
+        Me.CloseBn.Location = New System.Drawing.Point(316, 101)
         Me.CloseBn.Name = "CloseBn"
         Me.CloseBn.Size = New System.Drawing.Size(75, 23)
         Me.CloseBn.TabIndex = 0
@@ -41,7 +42,7 @@ Partial Class FormAlert
         '
         'MainPb
         '
-        Me.MainPb.Location = New System.Drawing.Point(23, 63)
+        Me.MainPb.Location = New System.Drawing.Point(12, 12)
         Me.MainPb.Name = "MainPb"
         Me.MainPb.Size = New System.Drawing.Size(64, 64)
         Me.MainPb.TabIndex = 2
@@ -51,32 +52,42 @@ Partial Class FormAlert
         'MainLb
         '
         Me.MainLb.FontSize = MetroFramework.MetroLabelSize.Small
-        Me.MainLb.Location = New System.Drawing.Point(93, 63)
+        Me.MainLb.Location = New System.Drawing.Point(82, 12)
         Me.MainLb.Name = "MainLb"
-        Me.MainLb.Size = New System.Drawing.Size(277, 49)
+        Me.MainLb.Size = New System.Drawing.Size(299, 49)
         Me.MainLb.TabIndex = 3
         Me.MainLb.Text = "Alert Text"
         Me.MainLb.WrapToLine = True
+        '
+        'ControlFooterPl1
+        '
+        Me.ControlFooterPl1.BackColor = System.Drawing.Color.FromArgb(CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer))
+        Me.ControlFooterPl1.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.ControlFooterPl1.Location = New System.Drawing.Point(0, 87)
+        Me.ControlFooterPl1.Name = "ControlFooterPl1"
+        Me.ControlFooterPl1.Size = New System.Drawing.Size(403, 49)
+        Me.ControlFooterPl1.TabIndex = 4
         '
         'FormAlert
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
-        Me.ClientSize = New System.Drawing.Size(400, 158)
+        Me.BackColor = System.Drawing.SystemColors.Window
+        Me.ClientSize = New System.Drawing.Size(403, 136)
         Me.Controls.Add(Me.MainLb)
         Me.Controls.Add(Me.MainPb)
         Me.Controls.Add(Me.CloseBn)
-        Me.CustomBackcolor = System.Drawing.SystemColors.Window
-        Me.CustomForecolor = System.Drawing.SystemColors.MenuText
+        Me.Controls.Add(Me.ControlFooterPl1)
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "FormAlert"
-        Me.Resizable = False
+        Me.ShowInTaskbar = False
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
-        Me.Style = MetroFramework.MetroColorStyle.Purple
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.Text = "Alert"
         CType(Me.MainPb, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -86,4 +97,5 @@ Partial Class FormAlert
     Friend WithEvents CloseBn As Controls.MetroButton
     Friend WithEvents MainPb As PictureBox
     Friend WithEvents MainLb As Controls.MetroLabel
+    Friend WithEvents ControlFooterPl1 As ControlFooterPl
 End Class

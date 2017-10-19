@@ -63,7 +63,11 @@ Public Module LDAPDictionary
         If LDAPDictionary.ContainsKey(Attr) Then
             If Not String.IsNullOrEmpty(LDAPDictionary.Item(Attr).AttrDisplayName) Then
                 Return LDAPDictionary.Item(Attr).AttrDisplayName
+            Else
+                Return GetProperFromCamelCase(Attr)
             End If
+        Else
+            Return GetProperFromCamelCase(Attr)
         End If
         Return Attr
     End Function

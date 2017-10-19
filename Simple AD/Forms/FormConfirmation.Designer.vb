@@ -27,14 +27,16 @@ Partial Class FormConfirmation
         Me.AcceptBn = New MetroFramework.Controls.MetroButton()
         Me.MainLb = New MetroFramework.Controls.MetroLabel()
         Me.MainPb = New System.Windows.Forms.PictureBox()
+        Me.ControlFooterPl1 = New SimpleAD.ControlFooterPl()
         CType(Me.MainPb, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ControlFooterPl1.SuspendLayout()
         Me.SuspendLayout()
         '
         'CancelBn
         '
         Me.CancelBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CancelBn.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.CancelBn.Location = New System.Drawing.Point(302, 112)
+        Me.CancelBn.Location = New System.Drawing.Point(313, 13)
         Me.CancelBn.Name = "CancelBn"
         Me.CancelBn.Size = New System.Drawing.Size(75, 23)
         Me.CancelBn.TabIndex = 0
@@ -44,7 +46,7 @@ Partial Class FormConfirmation
         'AcceptBn
         '
         Me.AcceptBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.AcceptBn.Location = New System.Drawing.Point(221, 112)
+        Me.AcceptBn.Location = New System.Drawing.Point(232, 13)
         Me.AcceptBn.Name = "AcceptBn"
         Me.AcceptBn.Size = New System.Drawing.Size(75, 23)
         Me.AcceptBn.TabIndex = 1
@@ -53,43 +55,56 @@ Partial Class FormConfirmation
         '
         'MainLb
         '
-        Me.MainLb.Location = New System.Drawing.Point(93, 63)
+        Me.MainLb.Location = New System.Drawing.Point(82, 12)
         Me.MainLb.MaximumSize = New System.Drawing.Size(277, 49)
         Me.MainLb.Name = "MainLb"
         Me.MainLb.Size = New System.Drawing.Size(277, 46)
         Me.MainLb.TabIndex = 2
         Me.MainLb.Text = "Are you sure you wish to delete"
+        Me.MainLb.UseCustomBackColor = True
         Me.MainLb.WrapToLine = True
         '
         'MainPb
         '
-        Me.MainPb.Location = New System.Drawing.Point(23, 63)
+        Me.MainPb.Location = New System.Drawing.Point(12, 12)
         Me.MainPb.Name = "MainPb"
         Me.MainPb.Size = New System.Drawing.Size(64, 64)
+        Me.MainPb.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.MainPb.TabIndex = 3
         Me.MainPb.TabStop = False
+        '
+        'ControlFooterPl1
+        '
+        Me.ControlFooterPl1.BackColor = System.Drawing.Color.FromArgb(CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer))
+        Me.ControlFooterPl1.Controls.Add(Me.CancelBn)
+        Me.ControlFooterPl1.Controls.Add(Me.AcceptBn)
+        Me.ControlFooterPl1.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.ControlFooterPl1.Location = New System.Drawing.Point(0, 91)
+        Me.ControlFooterPl1.Name = "ControlFooterPl1"
+        Me.ControlFooterPl1.Size = New System.Drawing.Size(400, 48)
+        Me.ControlFooterPl1.TabIndex = 4
         '
         'FormConfirmation
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.SystemColors.Window
         Me.CancelButton = Me.CancelBn
-        Me.ClientSize = New System.Drawing.Size(400, 158)
+        Me.ClientSize = New System.Drawing.Size(400, 139)
         Me.Controls.Add(Me.MainPb)
         Me.Controls.Add(Me.MainLb)
-        Me.Controls.Add(Me.AcceptBn)
-        Me.Controls.Add(Me.CancelBn)
-        Me.CustomBackcolor = System.Drawing.SystemColors.Window
-        Me.CustomForecolor = System.Drawing.SystemColors.MenuText
+        Me.Controls.Add(Me.ControlFooterPl1)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "FormConfirmation"
-        Me.Resizable = False
+        Me.ShowInTaskbar = False
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
-        Me.Style = MetroFramework.MetroColorStyle.Purple
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.Text = "Confirm"
         CType(Me.MainPb, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ControlFooterPl1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -98,4 +113,5 @@ Partial Class FormConfirmation
     Friend WithEvents AcceptBn As Controls.MetroButton
     Friend WithEvents MainLb As Controls.MetroLabel
     Friend WithEvents MainPb As PictureBox
+    Friend WithEvents ControlFooterPl1 As ControlFooterPl
 End Class

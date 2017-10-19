@@ -29,23 +29,22 @@ Partial Class FormLDAPQuery
         '
         'QueryTb
         '
-        Me.QueryTb.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         '
         '
         '
         Me.QueryTb.CustomButton.Image = Nothing
-        Me.QueryTb.CustomButton.Location = New System.Drawing.Point(374, 1)
+        Me.QueryTb.CustomButton.Location = New System.Drawing.Point(336, 1)
         Me.QueryTb.CustomButton.Name = ""
-        Me.QueryTb.CustomButton.Size = New System.Drawing.Size(21, 21)
+        Me.QueryTb.CustomButton.Size = New System.Drawing.Size(69, 69)
         Me.QueryTb.CustomButton.Style = MetroFramework.MetroColorStyle.Blue
         Me.QueryTb.CustomButton.TabIndex = 1
         Me.QueryTb.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light
         Me.QueryTb.CustomButton.UseSelectable = True
         Me.QueryTb.CustomButton.Visible = False
         Me.QueryTb.Lines = New String(-1) {}
-        Me.QueryTb.Location = New System.Drawing.Point(23, 29)
+        Me.QueryTb.Location = New System.Drawing.Point(12, 12)
         Me.QueryTb.MaxLength = 32767
+        Me.QueryTb.Multiline = True
         Me.QueryTb.Name = "QueryTb"
         Me.QueryTb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
         Me.QueryTb.ScrollBars = System.Windows.Forms.ScrollBars.None
@@ -53,18 +52,17 @@ Partial Class FormLDAPQuery
         Me.QueryTb.SelectionLength = 0
         Me.QueryTb.SelectionStart = 0
         Me.QueryTb.ShortcutsEnabled = True
-        Me.QueryTb.Size = New System.Drawing.Size(396, 23)
+        Me.QueryTb.Size = New System.Drawing.Size(406, 71)
         Me.QueryTb.Style = MetroFramework.MetroColorStyle.Silver
         Me.QueryTb.TabIndex = 0
         Me.QueryTb.UseSelectable = True
         Me.QueryTb.WaterMark = "LDAP Query"
         Me.QueryTb.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
-        Me.QueryTb.WaterMarkFont = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel)
+        Me.QueryTb.WaterMarkFont = New System.Drawing.Font("Segoe UI Semilight", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         '
         'RunBn
         '
-        Me.RunBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.RunBn.Location = New System.Drawing.Point(425, 29)
+        Me.RunBn.Location = New System.Drawing.Point(343, 89)
         Me.RunBn.Name = "RunBn"
         Me.RunBn.Size = New System.Drawing.Size(75, 23)
         Me.RunBn.TabIndex = 1
@@ -76,21 +74,17 @@ Partial Class FormLDAPQuery
         Me.AcceptButton = Me.RunBn
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(523, 75)
+        Me.BackColor = System.Drawing.SystemColors.Control
+        Me.ClientSize = New System.Drawing.Size(429, 125)
         Me.Controls.Add(Me.RunBn)
         Me.Controls.Add(Me.QueryTb)
-        Me.CustomBackcolor = System.Drawing.SystemColors.Window
-        Me.CustomForecolor = System.Drawing.SystemColors.ControlText
-        Me.DisplayHeader = False
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "FormLDAPQuery"
-        Me.Padding = New System.Windows.Forms.Padding(20, 30, 20, 20)
-        Me.Resizable = False
-        Me.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
-        Me.Style = MetroFramework.MetroColorStyle.Silver
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "LDAPQueryForm"
         Me.ResumeLayout(False)
 

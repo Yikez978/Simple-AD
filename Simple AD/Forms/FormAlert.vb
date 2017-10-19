@@ -7,10 +7,10 @@
 
         Select Case AlertType
             Case AlertType.ErrorAlert
-                MainPb.Image = My.Resources.ErrorTriangle
+                MainPb.Image = My.Resources.Failed
                 Text = "Error"
             Case AlertType.Success
-                MainPb.Image = My.Resources.CheckTick
+                MainPb.Image = My.Resources.Success
                 Text = "Success"
         End Select
 

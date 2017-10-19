@@ -15,7 +15,6 @@ Public Module DataProtection
         Catch e As CryptographicException
             Debug.WriteLine("Data was not encrypted. An error occurred.")
             Debug.WriteLine(e.Message.ToString())
-            'MsgBox("Data was not encrypted. An error occurred." & Environment.NewLine & e.Message.ToString)
             Return Nothing
         End Try
 
@@ -31,7 +30,6 @@ Public Module DataProtection
         Catch e As CryptographicException
             Debug.WriteLine("Data was not decrypted. An error occurred.")
             Debug.WriteLine(e.Message.ToString())
-            'MsgBox("Data was not decrypted. An error occurred." & Environment.NewLine & e.Message.ToString)
             Return Nothing
         End Try
 

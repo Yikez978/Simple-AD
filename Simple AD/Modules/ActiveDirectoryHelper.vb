@@ -4,27 +4,31 @@ Imports System.DirectoryServices.ActiveDirectory
 
 Module ActiveDirectoryHelper
 
-    Public Function GetSingleDomainController(ByVal ConnectionUsername As String, ByVal ConnectionPassword As String) As String
-        Return Domain.GetDomain(GetDomainContext(ConnectionUsername, ConnectionPassword)).PdcRoleOwner.Name
-    End Function
-
-    Public Function GetDomainContext(ByVal ConnectionUsername As String, ByVal ConnectionPassword As String) As DirectoryContext
-        If String.IsNullOrEmpty(ConnectionUsername) Then
-            Return New DirectoryContext(DirectoryContextType.Domain, GetLocalDomainName)
-        ElseIf String.IsNullOrEmpty(LoginUsernamePrefix) Then
-            Return New DirectoryContext(DirectoryContextType.Domain, GetLocalDomainName, ConnectionUsername, ConnectionPassword)
+    Public Function GetSingleDomainController() As String
+        If String.IsNullOrEmpty(LoginUsernamePrefix) Then
+            Return Domain.GetCurrentDomain.PdcRoleOwner.Name
         Else
-            Return New DirectoryContext(DirectoryContextType.DirectoryServer, LoginUsernamePrefix, ConnectionUsername, ConnectionPassword)
+            Return Domain.GetDomain(GetDomainContext).PdcRoleOwner.Name
         End If
     End Function
 
-    Public Function GetPrincipalContext(ByVal ConnectionUsername As String, ByVal ConnectionPassword As String) As PrincipalContext
-        If String.IsNullOrEmpty(ConnectionUsername) Then
+    Public Function GetDomainContext() As DirectoryContext
+        If String.IsNullOrEmpty(LoginUsername) Then
+            Return New DirectoryContext(DirectoryContextType.DirectoryServer, GetSingleDomainController)
+        ElseIf String.IsNullOrEmpty(LoginUsernamePrefix) Then
+            Return New DirectoryContext(DirectoryContextType.DirectoryServer, GetSingleDomainController, LoginUsername, LoginPassword)
+        Else
+            Return New DirectoryContext(DirectoryContextType.DirectoryServer, LoginUsernamePrefix, LoginUsername, LoginPassword)
+        End If
+    End Function
+
+    Public Function GetPrincipalContext() As PrincipalContext
+        If String.IsNullOrEmpty(LoginUsername) Then
             Return New PrincipalContext(ContextType.Domain, GetLocalDomainName)
         ElseIf String.IsNullOrEmpty(LoginUsernamePrefix) Then
-            Return New PrincipalContext(ContextType.Machine, GetDomainControllerIPAddress(0).ToString, ConnectionUsername, ConnectionPassword)
+            Return New PrincipalContext(ContextType.Domain, GetLocalDomainName, LoginUsername, LoginPassword)
         Else
-            Return New PrincipalContext(ContextType.Machine, LoginUsernamePrefix, ConnectionUsername, ConnectionPassword)
+            Return New PrincipalContext(ContextType.Domain, LoginUsernamePrefix, LoginUsername, LoginPassword)
         End If
     End Function
 
@@ -68,7 +72,7 @@ Module ActiveDirectoryHelper
         Dim entry As String
 
         If String.IsNullOrEmpty(LoginUsernamePrefix) Then
-            entry = "LDAP://" & GetSingleDomainController(LoginUsername, LoginPassword)
+            entry = "LDAP://" & GetSingleDomainController()
         Else
             entry = "LDAP://" & LoginUsernamePrefix
         End If
@@ -88,12 +92,17 @@ Module ActiveDirectoryHelper
         Dim DisplayName As String = "User"
         Try
 
-            Dim Entry As DirectoryEntry = New DirectoryEntry(GetDirEntryPath, LoginUsername, LoginPassword)
+            Dim Entry As DirectoryEntry = GetDirEntry()
             Dim DirSearcher As DirectorySearcher = New DirectorySearcher(GetDirEntryPath)
 
             With DirSearcher
                 .SearchRoot = Entry
-                .Filter = "(&(objectClass=user)(sAMAccountName=" & LoginUsername & "))"
+                If Not LoginUsername Is Nothing Then
+                    .Filter = "(&(objectClass=user)(sAMAccountName=" & LoginUsername & "))"
+                Else
+                    .Filter = "(&(objectClass=user)(sAMAccountName=" & Environment.UserName & "))"
+                End If
+
             End With
 
             Dim Result As SearchResult = DirSearcher.FindOne
@@ -202,30 +211,34 @@ Module ActiveDirectoryHelper
     End Function
 
     Public Function GetDomainControllerIPAddress() As Net.IPAddress()
-        Return Net.Dns.GetHostAddresses(GetSingleDomainController(LoginUsername, LoginPassword))
+        Return Net.Dns.GetHostAddresses(GetSingleDomainController())
     End Function
 
     Public Function GetDirEntryFromDomainObject(ByVal DomainObject As DomainObject) As DirectoryEntry
         Try
-            Using Entry As DirectoryEntry = New DirectoryEntry(GetDirEntryPath, LoginUsername, LoginPassword)
+            Using Entry As DirectoryEntry = GetDirEntry()
 
                 Dim DirSearcher As DirectorySearcher = New DirectorySearcher(GetDirEntryPath)
 
                 With DirSearcher
                     .SearchRoot = Entry
-                    .Filter = "(sAMAccountName=" & DomainObject.SAMAccountName & ")"
+                    .Filter = "(distinguishedName=" & DomainObject.DistinguishedName & ")"
                 End With
 
                 DirSearcher.PropertiesToLoad.AddRange(GetLDAPProps())
 
                 Dim result As SearchResult = DirSearcher.FindOne()
 
-                Return result.GetDirectoryEntry
+                If result IsNot Nothing Then
+                    Return result.GetDirectoryEntry
+                Else
+                    Return Nothing
+                End If
             End Using
         Catch Ex As Exception
             Debug.WriteLine("[Error] Unabel to retrieve directory entry with the supplied username (" & DomainObject.SAMAccountName & "): " & Ex.Message)
+            Return Nothing
         End Try
-        Return Nothing
     End Function
 
     Public Function GetUPNSuffix() As String()
@@ -264,6 +277,11 @@ Module ActiveDirectoryHelper
             End Using
 
             Return Nothing
+        Catch AccessDenideEx As UnauthorizedAccessException
+            Dim ErrorDialog = New FormAlert("Access Denied", AlertType.ErrorAlert)
+            ErrorDialog.Location = GetDialogLocation(ErrorDialog)
+            ErrorDialog.ShowDialog()
+            Return Nothing
         Catch Ex As Exception
             Debug.WriteLine("[Error] Unable to Enable User account though userAccountControl property: " & Ex.Message)
             Return Nothing
@@ -285,6 +303,11 @@ Module ActiveDirectoryHelper
                 Return userEntry.Properties("userAccountControl")(0)
             End Using
 
+            Return Nothing
+        Catch AccessDenideEx As UnauthorizedAccessException
+            Dim ErrorDialog = New FormAlert("Access Denied", AlertType.ErrorAlert)
+            ErrorDialog.Location = GetDialogLocation(ErrorDialog)
+            ErrorDialog.ShowDialog()
             Return Nothing
         Catch Ex As Exception
             Debug.WriteLine("[Error] Unable to Disable User account though userAccountControl property: " & Ex.Message)
@@ -311,7 +334,12 @@ Module ActiveDirectoryHelper
         Return Nothing
     End Function
 
-    Public Function DeleteADObject(ByVal DomainObject As DomainObject) As Boolean
+    Public Function DeleteADObject(ByVal DomainObject As DomainObject, Optional IsBackground As Boolean = False) As Boolean
+
+        If Not IsBackground Then
+            Threading.ThreadPool.QueueUserWorkItem(Sub() DeleteADObject(DomainObject, True))
+        End If
+
         Debug.WriteLine("[Info] Delete requested on user: " & DomainObject.Name)
         Dim UserEntry As DirectoryEntry = GetDirEntryFromDomainObject(DomainObject)
         Try
@@ -346,6 +374,68 @@ Module ActiveDirectoryHelper
             Return False
         Catch Ex As Exception
             Debug.WriteLine("[Error] Unable to Move User (" & DomainObject.Name & ") to Container (" & Container & "): " & Ex.Message & Environment.NewLine & Ex.StackTrace.ToString)
+            Return False
+        End Try
+    End Function
+
+    Public Function ResetUserPassword(ByVal UserObject As UserDomainObject, ByVal Password As String, ForceReset As Boolean) As Boolean
+        Debug.WriteLine("[Info] Password reset requested on object: " & UserObject.Name)
+        Try
+            Try
+                Dim UserPr As UserPrincipal = UserPrincipal.FindByIdentity(GetPrincipalContext(), IdentityType.SamAccountName, UserObject.SAMAccountName)
+                UserPr.SetPassword(Password)
+                If ForceReset = True Then
+                    UserPr.ExpirePasswordNow()
+                End If
+                UserPr.Save()
+                Return True
+            Catch Ex As Exception
+                Dim UserPrincipalError As String = "[Error] Unable to create UserPrincipal object with user (" & UserObject.Name & "): " & Ex.Message
+                Debug.WriteLine(UserPrincipalError)
+                If Not Ex.InnerException Is Nothing Then
+                    Debug.WriteLine("[Inner Exception] " & Ex.InnerException.Message)
+                End If
+                Return False
+            End Try
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
+
+    Public Function GetSchemaPropeterties(ByVal Schema As String) As ReadOnlyActiveDirectorySchemaPropertyCollection
+        Dim Properties As ICollection(Of String) = New List(Of String)
+
+        Try
+            Dim Adschemaclass As ActiveDirectorySchemaClass = ActiveDirectorySchema.GetSchema(GetDomainContext()).FindClass(Schema)
+            Dim PropCol As ReadOnlyActiveDirectorySchemaPropertyCollection = Adschemaclass.GetAllProperties()
+
+            Return PropCol
+        Catch AuthEx As UnauthorizedAccessException
+            Debug.WriteLine("[Error] Unable to read AD Schema: " & AuthEx.Message)
+            Return Nothing
+        End Try
+    End Function
+
+    Public Function ConvertADSLargeIntegerToInt64(AdsLargeInteger As Object) As Int64
+
+        Dim HighPart = DirectCast(AdsLargeInteger.[GetType]().InvokeMember("HighPart", Reflection.BindingFlags.GetProperty, Nothing, AdsLargeInteger, Nothing), Int32)
+        Dim LowPart = DirectCast(AdsLargeInteger.[GetType]().InvokeMember("LowPart", Reflection.BindingFlags.GetProperty, Nothing, AdsLargeInteger, Nothing), Int32)
+        Return HighPart * Convert.ToInt64(UInt32.MaxValue) + 1 + LowPart
+    End Function
+
+    Public Function RenameObject(ByVal DomainObject As DomainObject, ByVal Name As String) As Boolean
+        Debug.WriteLine("[Info] Rename requested on object: " & DomainObject.Name)
+        Try
+            Dim DomainObjectDE As DirectoryEntry = GetDirEntryFromDomainObject(DomainObject)
+            DomainObjectDE.Rename("CN=" & Name)
+            DomainObjectDE.CommitChanges()
+            Return True
+        Catch Ex As Exception
+            Dim RenameError As String = "[Error] Unable rename object (" & DomainObject.Name & "): " & Ex.Message
+            Debug.WriteLine(RenameError)
+            If Not Ex.InnerException Is Nothing Then
+                Debug.WriteLine("[Inner Exception] " & Ex.InnerException.Message)
+            End If
             Return False
         End Try
     End Function

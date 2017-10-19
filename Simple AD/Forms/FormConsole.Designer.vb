@@ -24,7 +24,6 @@ Partial Class FormConsole
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormConsole))
         Me.RichTextBox = New System.Windows.Forms.RichTextBox()
-        Me.MainLb = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'RichTextBox
@@ -34,22 +33,12 @@ Partial Class FormConsole
         Me.RichTextBox.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RichTextBox.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RichTextBox.ForeColor = System.Drawing.Color.Silver
-        Me.RichTextBox.Location = New System.Drawing.Point(1, 30)
+        Me.RichTextBox.Location = New System.Drawing.Point(0, 0)
         Me.RichTextBox.Name = "RichTextBox"
         Me.RichTextBox.ReadOnly = True
-        Me.RichTextBox.Size = New System.Drawing.Size(719, 356)
+        Me.RichTextBox.Size = New System.Drawing.Size(721, 387)
         Me.RichTextBox.TabIndex = 0
         Me.RichTextBox.Text = ""
-        '
-        'MainLb
-        '
-        Me.MainLb.AutoSize = True
-        Me.MainLb.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.MainLb.Location = New System.Drawing.Point(9, 7)
-        Me.MainLb.Name = "MainLb"
-        Me.MainLb.Size = New System.Drawing.Size(100, 15)
-        Me.MainLb.TabIndex = 2
-        Me.MainLb.Text = "Simple AD Debug"
         '
         'FormConsole
         '
@@ -57,20 +46,13 @@ Partial Class FormConsole
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(721, 387)
         Me.Controls.Add(Me.RichTextBox)
-        Me.Controls.Add(Me.MainLb)
-        Me.CustomBackcolor = System.Drawing.SystemColors.Window
-        Me.DisplayHeader = False
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "FormConsole"
-        Me.Padding = New System.Windows.Forms.Padding(1, 30, 1, 1)
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show
-        Me.Style = MetroFramework.MetroColorStyle.Purple
         Me.Text = "Console"
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
 
     Friend WithEvents RichTextBox As RichTextBox
-    Friend WithEvents MainLb As Label
 End Class

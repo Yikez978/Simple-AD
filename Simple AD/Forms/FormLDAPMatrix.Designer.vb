@@ -67,7 +67,7 @@ Partial Class FormLDAPMatrix
         Me.MainDataGrid.Font = New System.Drawing.Font("Segoe UI", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel)
         Me.MainDataGrid.GridColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.MainDataGrid.HighLightPercentage = 0.8!
-        Me.MainDataGrid.Location = New System.Drawing.Point(20, 60)
+        Me.MainDataGrid.Location = New System.Drawing.Point(0, 0)
         Me.MainDataGrid.Name = "MainDataGrid"
         Me.MainDataGrid.ReadOnly = True
         Me.MainDataGrid.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
@@ -94,7 +94,7 @@ Partial Class FormLDAPMatrix
         Me.MainDataGrid.RowTemplate.Height = 20
         Me.MainDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.MainDataGrid.ShowEditingIcon = False
-        Me.MainDataGrid.Size = New System.Drawing.Size(807, 482)
+        Me.MainDataGrid.Size = New System.Drawing.Size(847, 562)
         Me.MainDataGrid.Style = MetroFramework.MetroColorStyle.Silver
         Me.MainDataGrid.TabIndex = 1
         Me.MainDataGrid.UseCustomBackColor = True
@@ -105,10 +105,9 @@ Partial Class FormLDAPMatrix
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(847, 562)
         Me.Controls.Add(Me.MainDataGrid)
-        Me.CustomBackcolor = System.Drawing.SystemColors.Window
-        Me.CustomForecolor = System.Drawing.SystemColors.MenuText
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "FormLDAPMatrix"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "LDAP Attributes Matrix"
         CType(Me.MainDataGrid, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)

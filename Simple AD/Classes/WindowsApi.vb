@@ -17,5 +17,19 @@ Friend Class WindowsApi
     <DllImport("uxtheme", CharSet:=CharSet.Unicode)>
     Public Shared Function SetWindowTheme(ByVal hWnd As IntPtr, ByVal textSubAppName As String, ByVal textSubIdList As String) As Integer
     End Function
+End Class
 
+Friend NotInheritable Class NativeWinAPI
+    Private Sub New()
+    End Sub
+    Friend Shared ReadOnly GWL_EXSTYLE As Integer = -20
+    Friend Shared ReadOnly WS_EX_COMPOSITE As Integer = &H2000000
+
+    <DllImport("user32")>
+    Friend Shared Function GetWindowLong(hWnd As IntPtr, nIndex As Integer) As Integer
+    End Function
+
+    <DllImport("user32")>
+    Friend Shared Function SetWindowLong(hWnd As IntPtr, nIndex As Integer, dwNewLong As Long) As Integer
+    End Function
 End Class

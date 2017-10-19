@@ -61,9 +61,10 @@ Public Class FormUpdate
             BodyLb.Text = "Unable to reach update server"
             FormMain.UpdateToolStripStatusLabel.Text = "Unable to reach update server"
         End If
+        Me.Invalidate()
     End Sub
 
-    Private Sub updateBn_Click(sender As Object, e As EventArgs) Handles UpdateBn.Click
+    Private Sub UpdateBn_Click(sender As Object, e As EventArgs) Handles UpdateBn.Click
         AutoUpdater.DownloadUpdate()
     End Sub
 

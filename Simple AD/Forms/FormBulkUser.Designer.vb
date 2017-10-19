@@ -23,17 +23,17 @@ Partial Class FormBulkUser
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormBulkUser))
-        Me.CancelBn = New MetroFramework.Controls.MetroButton()
         Me.AcceptBn = New MetroFramework.Controls.MetroButton()
-        Me.MainTabControl = New MetroFramework.Controls.MetroTabControl()
-        Me.InputTab = New MetroFramework.Controls.MetroTabPage()
+        Me.MainTabControl = New SimpleAD.CustomTabControl()
+        Me.InputTab = New System.Windows.Forms.TabPage()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.ValidateBn = New MetroFramework.Controls.MetroButton()
         Me.SnTb = New MetroFramework.Controls.MetroTextBox()
         Me.FnTb = New MetroFramework.Controls.MetroTextBox()
-        Me.Label1 = New MetroFramework.Controls.MetroLabel()
-        Me.SnLb = New MetroFramework.Controls.MetroLabel()
-        Me.FnLb = New MetroFramework.Controls.MetroLabel()
-        Me.UsernameConTab = New MetroFramework.Controls.MetroTabPage()
+        Me.ControlHeaderPanel1 = New SimpleAD.ControlHeaderPanel()
+        Me.UsernameConTab = New System.Windows.Forms.TabPage()
         Me.NumberComboBox = New MetroFramework.Controls.MetroComboBox()
         Me.NumberBn = New MetroFramework.Controls.MetroButton()
         Me.StringDragTb = New MetroFramework.Controls.MetroTextBox()
@@ -45,7 +45,8 @@ Partial Class FormBulkUser
         Me.SnDragBn = New MetroFramework.Controls.MetroButton()
         Me.FnDragBn = New MetroFramework.Controls.MetroButton()
         Me.MainFlow = New System.Windows.Forms.FlowLayoutPanel()
-        Me.PropertiesTab = New MetroFramework.Controls.MetroTabPage()
+        Me.ControlHeaderPanel2 = New SimpleAD.ControlHeaderPanel()
+        Me.PropertiesTab = New System.Windows.Forms.TabPage()
         Me.GroupBn = New MetroFramework.Controls.MetroButton()
         Me.GroupLb = New MetroFramework.Controls.MetroLabel()
         Me.GroupListBox = New System.Windows.Forms.ListBox()
@@ -65,27 +66,23 @@ Partial Class FormBulkUser
         Me.HomeFolderBn = New MetroFramework.Controls.MetroButton()
         Me.ProfilePathTb = New MetroFramework.Controls.MetroTextBox()
         Me.HomeFolderTb = New MetroFramework.Controls.MetroTextBox()
+        Me.ControlHeaderPanel3 = New SimpleAD.ControlHeaderPanel()
         Me.ToolTip = New MetroFramework.Components.MetroToolTip()
+        Me.FooterPl = New System.Windows.Forms.Panel()
+        Me.PreviewBn = New MetroFramework.Controls.MetroButton()
+        Me.CancelBn = New MetroFramework.Controls.MetroButton()
         Me.MainTabControl.SuspendLayout()
         Me.InputTab.SuspendLayout()
+        Me.ControlHeaderPanel1.SuspendLayout()
         Me.UsernameConTab.SuspendLayout()
         Me.PropertiesTab.SuspendLayout()
+        Me.FooterPl.SuspendLayout()
         Me.SuspendLayout()
-        '
-        'CancelBn
-        '
-        Me.CancelBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.CancelBn.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.CancelBn.Location = New System.Drawing.Point(472, 358)
-        Me.CancelBn.Name = "CancelBn"
-        Me.CancelBn.Size = New System.Drawing.Size(75, 23)
-        Me.CancelBn.TabIndex = 0
-        Me.CancelBn.Text = "Cancel"
-        Me.CancelBn.UseSelectable = True
         '
         'AcceptBn
         '
         Me.AcceptBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.AcceptBn.Enabled = False
         Me.AcceptBn.Location = New System.Drawing.Point(553, 358)
         Me.AcceptBn.Name = "AcceptBn"
         Me.AcceptBn.Size = New System.Drawing.Size(75, 23)
@@ -98,39 +95,71 @@ Partial Class FormBulkUser
         Me.MainTabControl.Controls.Add(Me.InputTab)
         Me.MainTabControl.Controls.Add(Me.UsernameConTab)
         Me.MainTabControl.Controls.Add(Me.PropertiesTab)
-        Me.MainTabControl.Location = New System.Drawing.Point(13, 63)
+        Me.MainTabControl.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.MainTabControl.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed
+        Me.MainTabControl.Font = New System.Drawing.Font("Segoe UI Semilight", 9.75!)
+        Me.MainTabControl.HotTrack = True
+        Me.MainTabControl.HotTrackTabColor = System.Drawing.Color.FromArgb(CType(CType(211, Byte), Integer), CType(CType(191, Byte), Integer), CType(CType(221, Byte), Integer))
+        Me.MainTabControl.ItemSize = New System.Drawing.Size(0, 32)
+        Me.MainTabControl.Location = New System.Drawing.Point(0, 8)
+        Me.MainTabControl.Margin = New System.Windows.Forms.Padding(4)
         Me.MainTabControl.Name = "MainTabControl"
+        Me.MainTabControl.Padding = New System.Drawing.Point(24, 0)
         Me.MainTabControl.SelectedIndex = 0
-        Me.MainTabControl.Size = New System.Drawing.Size(615, 289)
-        Me.MainTabControl.Style = MetroFramework.MetroColorStyle.Purple
+        Me.MainTabControl.Size = New System.Drawing.Size(640, 337)
+        Me.MainTabControl.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight
+        Me.MainTabControl.TabColor = System.Drawing.SystemColors.Window
         Me.MainTabControl.TabIndex = 2
-        Me.MainTabControl.UseSelectable = True
         '
         'InputTab
         '
-        Me.InputTab.Controls.Add(Me.ValidateBn)
+        Me.InputTab.BackColor = System.Drawing.Color.FromArgb(CType(CType(124, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(153, Byte), Integer))
+        Me.InputTab.Controls.Add(Me.Label3)
+        Me.InputTab.Controls.Add(Me.Label2)
+        Me.InputTab.Controls.Add(Me.Label1)
         Me.InputTab.Controls.Add(Me.SnTb)
         Me.InputTab.Controls.Add(Me.FnTb)
-        Me.InputTab.Controls.Add(Me.Label1)
-        Me.InputTab.Controls.Add(Me.SnLb)
-        Me.InputTab.Controls.Add(Me.FnLb)
-        Me.InputTab.HorizontalScrollbarBarColor = True
-        Me.InputTab.HorizontalScrollbarHighlightOnWheel = False
-        Me.InputTab.HorizontalScrollbarSize = 10
-        Me.InputTab.Location = New System.Drawing.Point(4, 38)
+        Me.InputTab.Controls.Add(Me.ControlHeaderPanel1)
+        Me.InputTab.Location = New System.Drawing.Point(0, 35)
         Me.InputTab.Name = "InputTab"
-        Me.InputTab.Padding = New System.Windows.Forms.Padding(3)
-        Me.InputTab.Size = New System.Drawing.Size(607, 247)
+        Me.InputTab.Size = New System.Drawing.Size(640, 302)
         Me.InputTab.TabIndex = 0
         Me.InputTab.Text = "Data Input"
-        Me.InputTab.VerticalScrollbarBarColor = True
-        Me.InputTab.VerticalScrollbarHighlightOnWheel = False
-        Me.InputTab.VerticalScrollbarSize = 10
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.BackColor = System.Drawing.SystemColors.Window
+        Me.Label3.Location = New System.Drawing.Point(325, 53)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(58, 17)
+        Me.Label3.TabIndex = 11
+        Me.Label3.Text = "Surname"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.BackColor = System.Drawing.SystemColors.Window
+        Me.Label2.Location = New System.Drawing.Point(15, 53)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(62, 17)
+        Me.Label2.TabIndex = 10
+        Me.Label2.Text = "Firstname"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.BackColor = System.Drawing.SystemColors.Window
+        Me.Label1.Location = New System.Drawing.Point(15, 17)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(517, 17)
+        Me.Label1.TabIndex = 9
+        Me.Label1.Text = "Paste the names of the users you want to import into the input fiels below. Then " &
+    "click Next."
         '
         'ValidateBn
         '
-        Me.ValidateBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.ValidateBn.Location = New System.Drawing.Point(18, 218)
+        Me.ValidateBn.Location = New System.Drawing.Point(15, 269)
         Me.ValidateBn.Name = "ValidateBn"
         Me.ValidateBn.Size = New System.Drawing.Size(75, 23)
         Me.ValidateBn.TabIndex = 7
@@ -139,20 +168,23 @@ Partial Class FormBulkUser
         '
         'SnTb
         '
+        Me.SnTb.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         '
         '
         '
         Me.SnTb.CustomButton.Image = Nothing
-        Me.SnTb.CustomButton.Location = New System.Drawing.Point(127, 1)
+        Me.SnTb.CustomButton.Location = New System.Drawing.Point(110, 1)
         Me.SnTb.CustomButton.Name = ""
-        Me.SnTb.CustomButton.Size = New System.Drawing.Size(129, 129)
+        Me.SnTb.CustomButton.Size = New System.Drawing.Size(189, 189)
         Me.SnTb.CustomButton.Style = MetroFramework.MetroColorStyle.Blue
         Me.SnTb.CustomButton.TabIndex = 1
         Me.SnTb.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light
         Me.SnTb.CustomButton.UseSelectable = True
         Me.SnTb.CustomButton.Visible = False
         Me.SnTb.Lines = New String(-1) {}
-        Me.SnTb.Location = New System.Drawing.Point(289, 75)
+        Me.SnTb.Location = New System.Drawing.Point(328, 72)
         Me.SnTb.MaxLength = 32767
         Me.SnTb.Multiline = True
         Me.SnTb.Name = "SnTb"
@@ -163,7 +195,7 @@ Partial Class FormBulkUser
         Me.SnTb.SelectionStart = 0
         Me.SnTb.ShortcutsEnabled = True
         Me.SnTb.ShowClearButton = True
-        Me.SnTb.Size = New System.Drawing.Size(257, 131)
+        Me.SnTb.Size = New System.Drawing.Size(300, 191)
         Me.SnTb.Style = MetroFramework.MetroColorStyle.Purple
         Me.SnTb.TabIndex = 8
         Me.SnTb.UseSelectable = True
@@ -172,20 +204,23 @@ Partial Class FormBulkUser
         '
         'FnTb
         '
+        Me.FnTb.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         '
         '
         '
         Me.FnTb.CustomButton.Image = Nothing
-        Me.FnTb.CustomButton.Location = New System.Drawing.Point(127, 1)
+        Me.FnTb.CustomButton.Location = New System.Drawing.Point(117, 1)
         Me.FnTb.CustomButton.Name = ""
-        Me.FnTb.CustomButton.Size = New System.Drawing.Size(129, 129)
+        Me.FnTb.CustomButton.Size = New System.Drawing.Size(189, 189)
         Me.FnTb.CustomButton.Style = MetroFramework.MetroColorStyle.Blue
         Me.FnTb.CustomButton.TabIndex = 1
         Me.FnTb.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light
         Me.FnTb.CustomButton.UseSelectable = True
         Me.FnTb.CustomButton.Visible = False
         Me.FnTb.Lines = New String(-1) {}
-        Me.FnTb.Location = New System.Drawing.Point(18, 75)
+        Me.FnTb.Location = New System.Drawing.Point(15, 72)
         Me.FnTb.MaxLength = 32767
         Me.FnTb.Multiline = True
         Me.FnTb.Name = "FnTb"
@@ -196,44 +231,26 @@ Partial Class FormBulkUser
         Me.FnTb.SelectionStart = 0
         Me.FnTb.ShortcutsEnabled = True
         Me.FnTb.ShowClearButton = True
-        Me.FnTb.Size = New System.Drawing.Size(257, 131)
+        Me.FnTb.Size = New System.Drawing.Size(307, 191)
         Me.FnTb.Style = MetroFramework.MetroColorStyle.Purple
         Me.FnTb.TabIndex = 7
         Me.FnTb.UseSelectable = True
         Me.FnTb.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
         Me.FnTb.WaterMarkFont = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel)
         '
-        'Label1
+        'ControlHeaderPanel1
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(12, 11)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(534, 19)
-        Me.Label1.TabIndex = 6
-        Me.Label1.Text = "Paste the names of the users you want to import into the input fiels below. Then " &
-    "click Next."
-        '
-        'SnLb
-        '
-        Me.SnLb.AutoSize = True
-        Me.SnLb.Location = New System.Drawing.Point(293, 53)
-        Me.SnLb.Name = "SnLb"
-        Me.SnLb.Size = New System.Drawing.Size(67, 19)
-        Me.SnLb.TabIndex = 5
-        Me.SnLb.Text = "LastName"
-        '
-        'FnLb
-        '
-        Me.FnLb.AutoSize = True
-        Me.FnLb.Location = New System.Drawing.Point(18, 53)
-        Me.FnLb.Name = "FnLb"
-        Me.FnLb.Size = New System.Drawing.Size(73, 19)
-        Me.FnLb.TabIndex = 4
-        Me.FnLb.Text = "First Name"
+        Me.ControlHeaderPanel1.BackColor = System.Drawing.SystemColors.Window
+        Me.ControlHeaderPanel1.Controls.Add(Me.ValidateBn)
+        Me.ControlHeaderPanel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ControlHeaderPanel1.Location = New System.Drawing.Point(0, 0)
+        Me.ControlHeaderPanel1.Name = "ControlHeaderPanel1"
+        Me.ControlHeaderPanel1.Size = New System.Drawing.Size(640, 302)
+        Me.ControlHeaderPanel1.TabIndex = 12
         '
         'UsernameConTab
         '
-        Me.UsernameConTab.BackColor = System.Drawing.SystemColors.Control
+        Me.UsernameConTab.BackColor = System.Drawing.Color.FromArgb(CType(CType(124, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(153, Byte), Integer))
         Me.UsernameConTab.Controls.Add(Me.NumberComboBox)
         Me.UsernameConTab.Controls.Add(Me.NumberBn)
         Me.UsernameConTab.Controls.Add(Me.StringDragTb)
@@ -245,18 +262,12 @@ Partial Class FormBulkUser
         Me.UsernameConTab.Controls.Add(Me.SnDragBn)
         Me.UsernameConTab.Controls.Add(Me.FnDragBn)
         Me.UsernameConTab.Controls.Add(Me.MainFlow)
-        Me.UsernameConTab.HorizontalScrollbarBarColor = True
-        Me.UsernameConTab.HorizontalScrollbarHighlightOnWheel = False
-        Me.UsernameConTab.HorizontalScrollbarSize = 10
-        Me.UsernameConTab.Location = New System.Drawing.Point(4, 35)
+        Me.UsernameConTab.Controls.Add(Me.ControlHeaderPanel2)
+        Me.UsernameConTab.Location = New System.Drawing.Point(0, 35)
         Me.UsernameConTab.Name = "UsernameConTab"
-        Me.UsernameConTab.Padding = New System.Windows.Forms.Padding(3)
-        Me.UsernameConTab.Size = New System.Drawing.Size(607, 250)
+        Me.UsernameConTab.Size = New System.Drawing.Size(640, 302)
         Me.UsernameConTab.TabIndex = 1
         Me.UsernameConTab.Text = "Username Constructor"
-        Me.UsernameConTab.VerticalScrollbarBarColor = True
-        Me.UsernameConTab.VerticalScrollbarHighlightOnWheel = False
-        Me.UsernameConTab.VerticalScrollbarSize = 10
         '
         'NumberComboBox
         '
@@ -333,7 +344,7 @@ Partial Class FormBulkUser
         Me.MainUnPreview.FontSize = MetroFramework.MetroLabelSize.Tall
         Me.MainUnPreview.FontWeight = MetroFramework.MetroLabelWeight.Regular
         Me.MainUnPreview.ForeColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.MainUnPreview.Location = New System.Drawing.Point(8, 198)
+        Me.MainUnPreview.Location = New System.Drawing.Point(15, 201)
         Me.MainUnPreview.Name = "MainUnPreview"
         Me.MainUnPreview.Size = New System.Drawing.Size(156, 25)
         Me.MainUnPreview.TabIndex = 8
@@ -344,7 +355,7 @@ Partial Class FormBulkUser
         '
         Me.PreviewFlavorLb.AutoSize = True
         Me.PreviewFlavorLb.ForeColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.PreviewFlavorLb.Location = New System.Drawing.Point(8, 179)
+        Me.PreviewFlavorLb.Location = New System.Drawing.Point(15, 173)
         Me.PreviewFlavorLb.Name = "PreviewFlavorLb"
         Me.PreviewFlavorLb.Size = New System.Drawing.Size(73, 19)
         Me.PreviewFlavorLb.TabIndex = 7
@@ -352,7 +363,7 @@ Partial Class FormBulkUser
         '
         'Sn1DragBn
         '
-        Me.Sn1DragBn.Location = New System.Drawing.Point(87, 134)
+        Me.Sn1DragBn.Location = New System.Drawing.Point(99, 134)
         Me.Sn1DragBn.Name = "Sn1DragBn"
         Me.Sn1DragBn.Size = New System.Drawing.Size(75, 23)
         Me.Sn1DragBn.Style = MetroFramework.MetroColorStyle.Purple
@@ -362,7 +373,7 @@ Partial Class FormBulkUser
         '
         'Fn1DragBn
         '
-        Me.Fn1DragBn.Location = New System.Drawing.Point(6, 134)
+        Me.Fn1DragBn.Location = New System.Drawing.Point(18, 134)
         Me.Fn1DragBn.Name = "Fn1DragBn"
         Me.Fn1DragBn.Size = New System.Drawing.Size(75, 23)
         Me.Fn1DragBn.Style = MetroFramework.MetroColorStyle.Purple
@@ -372,7 +383,7 @@ Partial Class FormBulkUser
         '
         'SnDragBn
         '
-        Me.SnDragBn.Location = New System.Drawing.Point(87, 105)
+        Me.SnDragBn.Location = New System.Drawing.Point(99, 105)
         Me.SnDragBn.Name = "SnDragBn"
         Me.SnDragBn.Size = New System.Drawing.Size(75, 23)
         Me.SnDragBn.Style = MetroFramework.MetroColorStyle.Purple
@@ -382,7 +393,7 @@ Partial Class FormBulkUser
         '
         'FnDragBn
         '
-        Me.FnDragBn.Location = New System.Drawing.Point(6, 105)
+        Me.FnDragBn.Location = New System.Drawing.Point(18, 105)
         Me.FnDragBn.Name = "FnDragBn"
         Me.FnDragBn.Size = New System.Drawing.Size(75, 23)
         Me.FnDragBn.Style = MetroFramework.MetroColorStyle.Purple
@@ -394,16 +405,26 @@ Partial Class FormBulkUser
         '
         Me.MainFlow.AllowDrop = True
         Me.MainFlow.AutoScroll = True
+        Me.MainFlow.BackColor = System.Drawing.Color.FromArgb(CType(CType(211, Byte), Integer), CType(CType(191, Byte), Integer), CType(CType(221, Byte), Integer))
         Me.MainFlow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.MainFlow.Location = New System.Drawing.Point(6, 38)
+        Me.MainFlow.Location = New System.Drawing.Point(16, 38)
         Me.MainFlow.Name = "MainFlow"
         Me.MainFlow.Padding = New System.Windows.Forms.Padding(2)
-        Me.MainFlow.Size = New System.Drawing.Size(594, 52)
+        Me.MainFlow.Size = New System.Drawing.Size(606, 52)
         Me.MainFlow.TabIndex = 2
+        '
+        'ControlHeaderPanel2
+        '
+        Me.ControlHeaderPanel2.BackColor = System.Drawing.SystemColors.Window
+        Me.ControlHeaderPanel2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ControlHeaderPanel2.Location = New System.Drawing.Point(0, 0)
+        Me.ControlHeaderPanel2.Name = "ControlHeaderPanel2"
+        Me.ControlHeaderPanel2.Size = New System.Drawing.Size(640, 302)
+        Me.ControlHeaderPanel2.TabIndex = 14
         '
         'PropertiesTab
         '
-        Me.PropertiesTab.BackColor = System.Drawing.SystemColors.Window
+        Me.PropertiesTab.BackColor = System.Drawing.Color.FromArgb(CType(CType(124, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(153, Byte), Integer))
         Me.PropertiesTab.Controls.Add(Me.GroupBn)
         Me.PropertiesTab.Controls.Add(Me.GroupLb)
         Me.PropertiesTab.Controls.Add(Me.GroupListBox)
@@ -423,17 +444,12 @@ Partial Class FormBulkUser
         Me.PropertiesTab.Controls.Add(Me.HomeFolderBn)
         Me.PropertiesTab.Controls.Add(Me.ProfilePathTb)
         Me.PropertiesTab.Controls.Add(Me.HomeFolderTb)
-        Me.PropertiesTab.HorizontalScrollbarBarColor = True
-        Me.PropertiesTab.HorizontalScrollbarHighlightOnWheel = False
-        Me.PropertiesTab.HorizontalScrollbarSize = 10
-        Me.PropertiesTab.Location = New System.Drawing.Point(4, 35)
+        Me.PropertiesTab.Controls.Add(Me.ControlHeaderPanel3)
+        Me.PropertiesTab.Location = New System.Drawing.Point(0, 35)
         Me.PropertiesTab.Name = "PropertiesTab"
-        Me.PropertiesTab.Size = New System.Drawing.Size(607, 250)
+        Me.PropertiesTab.Size = New System.Drawing.Size(640, 302)
         Me.PropertiesTab.TabIndex = 2
         Me.PropertiesTab.Text = "Properties"
-        Me.PropertiesTab.VerticalScrollbarBarColor = True
-        Me.PropertiesTab.VerticalScrollbarHighlightOnWheel = False
-        Me.PropertiesTab.VerticalScrollbarSize = 10
         '
         'GroupBn
         '
@@ -470,7 +486,7 @@ Partial Class FormBulkUser
         Me.MetroLabel1.AutoSize = True
         Me.MetroLabel1.Location = New System.Drawing.Point(233, 196)
         Me.MetroLabel1.Name = "MetroLabel1"
-        Me.MetroLabel1.Size = New System.Drawing.Size(105, 19)
+        Me.MetroLabel1.Size = New System.Drawing.Size(104, 19)
         Me.MetroLabel1.TabIndex = 17
         Me.MetroLabel1.Text = "RDS Profile Path"
         '
@@ -510,7 +526,7 @@ Partial Class FormBulkUser
         Me.PagerLb.AutoSize = True
         Me.PagerLb.Location = New System.Drawing.Point(233, 167)
         Me.PagerLb.Name = "PagerLb"
-        Me.PagerLb.Size = New System.Drawing.Size(44, 19)
+        Me.PagerLb.Size = New System.Drawing.Size(43, 19)
         Me.PagerLb.TabIndex = 15
         Me.PagerLb.Text = "Pager"
         '
@@ -650,19 +666,19 @@ Partial Class FormBulkUser
         '
         'ProfilePathLb
         '
-        Me.ProfilePathLb.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.ProfilePathLb.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ProfilePathLb.AutoSize = True
-        Me.ProfilePathLb.Location = New System.Drawing.Point(17, 51)
+        Me.ProfilePathLb.Location = New System.Drawing.Point(17, 57)
         Me.ProfilePathLb.Name = "ProfilePathLb"
-        Me.ProfilePathLb.Size = New System.Drawing.Size(77, 19)
+        Me.ProfilePathLb.Size = New System.Drawing.Size(76, 19)
         Me.ProfilePathLb.TabIndex = 7
         Me.ProfilePathLb.Text = "Profile Path"
         '
         'HomeFolderLb
         '
-        Me.HomeFolderLb.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.HomeFolderLb.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.HomeFolderLb.AutoSize = True
-        Me.HomeFolderLb.Location = New System.Drawing.Point(17, 21)
+        Me.HomeFolderLb.Location = New System.Drawing.Point(17, 27)
         Me.HomeFolderLb.Name = "HomeFolderLb"
         Me.HomeFolderLb.Size = New System.Drawing.Size(87, 19)
         Me.HomeFolderLb.TabIndex = 6
@@ -752,52 +768,87 @@ Partial Class FormBulkUser
         Me.HomeFolderTb.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
         Me.HomeFolderTb.WaterMarkFont = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel)
         '
+        'ControlHeaderPanel3
+        '
+        Me.ControlHeaderPanel3.BackColor = System.Drawing.SystemColors.Window
+        Me.ControlHeaderPanel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ControlHeaderPanel3.Location = New System.Drawing.Point(0, 0)
+        Me.ControlHeaderPanel3.Name = "ControlHeaderPanel3"
+        Me.ControlHeaderPanel3.Size = New System.Drawing.Size(640, 302)
+        Me.ControlHeaderPanel3.TabIndex = 21
+        '
         'ToolTip
         '
         Me.ToolTip.Style = MetroFramework.MetroColorStyle.Blue
         Me.ToolTip.StyleManager = Nothing
         Me.ToolTip.Theme = MetroFramework.MetroThemeStyle.Light
         '
+        'FooterPl
+        '
+        Me.FooterPl.Controls.Add(Me.PreviewBn)
+        Me.FooterPl.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.FooterPl.Location = New System.Drawing.Point(0, 345)
+        Me.FooterPl.MaximumSize = New System.Drawing.Size(0, 48)
+        Me.FooterPl.Name = "FooterPl"
+        Me.FooterPl.Size = New System.Drawing.Size(640, 48)
+        Me.FooterPl.TabIndex = 3
+        '
+        'PreviewBn
+        '
+        Me.PreviewBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PreviewBn.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.PreviewBn.Location = New System.Drawing.Point(348, 13)
+        Me.PreviewBn.Name = "PreviewBn"
+        Me.PreviewBn.Size = New System.Drawing.Size(108, 23)
+        Me.PreviewBn.TabIndex = 4
+        Me.PreviewBn.Text = "Preview Users"
+        Me.PreviewBn.UseSelectable = True
+        '
+        'CancelBn
+        '
+        Me.CancelBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.CancelBn.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.CancelBn.Location = New System.Drawing.Point(472, 358)
+        Me.CancelBn.Name = "CancelBn"
+        Me.CancelBn.Size = New System.Drawing.Size(75, 23)
+        Me.CancelBn.TabIndex = 0
+        Me.CancelBn.Text = "Cancel"
+        Me.CancelBn.UseSelectable = True
+        '
         'FormBulkUser
         '
         Me.AcceptButton = Me.AcceptBn
+        Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer))
         Me.CancelButton = Me.CancelBn
         Me.ClientSize = New System.Drawing.Size(640, 393)
         Me.Controls.Add(Me.MainTabControl)
         Me.Controls.Add(Me.AcceptBn)
         Me.Controls.Add(Me.CancelBn)
-        Me.CustomBackcolor = System.Drawing.SystemColors.Window
-        Me.CustomForecolor = System.Drawing.SystemColors.MenuText
+        Me.Controls.Add(Me.FooterPl)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "FormBulkUser"
-        Me.Resizable = False
-        Me.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow
+        Me.Padding = New System.Windows.Forms.Padding(0, 8, 0, 0)
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
-        Me.Style = MetroFramework.MetroColorStyle.Purple
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Bulk User Wizard"
         Me.MainTabControl.ResumeLayout(False)
         Me.InputTab.ResumeLayout(False)
         Me.InputTab.PerformLayout()
+        Me.ControlHeaderPanel1.ResumeLayout(False)
         Me.UsernameConTab.ResumeLayout(False)
         Me.UsernameConTab.PerformLayout()
         Me.PropertiesTab.ResumeLayout(False)
         Me.PropertiesTab.PerformLayout()
+        Me.FooterPl.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents CancelBn As MetroFramework.Controls.MetroButton
     Friend WithEvents AcceptBn As MetroFramework.Controls.MetroButton
-    Friend WithEvents MainTabControl As MetroFramework.Controls.MetroTabControl
-    Friend WithEvents InputTab As MetroFramework.Controls.MetroTabPage
-    Friend WithEvents UsernameConTab As MetroFramework.Controls.MetroTabPage
-    Friend WithEvents SnLb As MetroFramework.Controls.MetroLabel
-    Friend WithEvents FnLb As MetroFramework.Controls.MetroLabel
-    Friend WithEvents Label1 As MetroFramework.Controls.MetroLabel
-    Friend WithEvents ValidateBn As MetroFramework.Controls.MetroButton
-    Friend WithEvents SnTb As MetroFramework.Controls.MetroTextBox
-    Friend WithEvents FnTb As MetroFramework.Controls.MetroTextBox
+    Friend WithEvents MainTabControl As SimpleAD.CustomTabControl
+    Friend WithEvents UsernameConTab As TabPage
     Friend WithEvents Sn1DragBn As MetroFramework.Controls.MetroButton
     Friend WithEvents Fn1DragBn As MetroFramework.Controls.MetroButton
     Friend WithEvents SnDragBn As MetroFramework.Controls.MetroButton
@@ -815,7 +866,7 @@ Partial Class FormBulkUser
     Friend WithEvents HomeFolderBn As MetroFramework.Controls.MetroButton
     Friend WithEvents ProfilePathTb As MetroFramework.Controls.MetroTextBox
     Friend WithEvents HomeFolderTb As MetroFramework.Controls.MetroTextBox
-    Friend WithEvents PropertiesTab As MetroFramework.Controls.MetroTabPage
+    Friend WithEvents PropertiesTab As TabPage
     Friend WithEvents ProfilePathLb As MetroFramework.Controls.MetroLabel
     Friend WithEvents HomeDriveLb As MetroFramework.Controls.MetroLabel
     Friend WithEvents HomeDriveCombo As MetroFramework.Controls.MetroComboBox
@@ -830,4 +881,17 @@ Partial Class FormBulkUser
     Friend WithEvents MetroTextBox2 As MetroFramework.Controls.MetroTextBox
     Friend WithEvents PagerLb As MetroFramework.Controls.MetroLabel
     Friend WithEvents PagerTb As MetroFramework.Controls.MetroTextBox
+    Friend WithEvents FooterPl As Panel
+    Friend WithEvents PreviewBn As Controls.MetroButton
+    Friend WithEvents CancelBn As Controls.MetroButton
+    Friend WithEvents InputTab As TabPage
+    Friend WithEvents Label3 As Label
+    Friend WithEvents Label2 As Label
+    Friend WithEvents Label1 As Label
+    Friend WithEvents ValidateBn As Controls.MetroButton
+    Friend WithEvents SnTb As Controls.MetroTextBox
+    Friend WithEvents FnTb As Controls.MetroTextBox
+    Friend WithEvents ControlHeaderPanel1 As ControlHeaderPanel
+    Friend WithEvents ControlHeaderPanel2 As ControlHeaderPanel
+    Friend WithEvents ControlHeaderPanel3 As ControlHeaderPanel
 End Class

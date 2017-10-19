@@ -165,12 +165,36 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property ListViewSettings() As String
+        Public Property ExplorerListViewSettings() As String
             Get
-                Return CType(Me("ListViewSettings"),String)
+                Return CType(Me("ExplorerListViewSettings"),String)
             End Get
             Set
-                Me("ListViewSettings") = value
+                Me("ExplorerListViewSettings") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("100")>  _
+        Public Property BulkUserThreadCount() As Integer
+            Get
+                Return CType(Me("BulkUserThreadCount"),Integer)
+            End Get
+            Set
+                Me("BulkUserThreadCount") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property ForceLogin() As Boolean
+            Get
+                Return CType(Me("ForceLogin"),Boolean)
+            End Get
+            Set
+                Me("ForceLogin") = value
             End Set
         End Property
     End Class

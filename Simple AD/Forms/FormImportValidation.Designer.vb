@@ -38,8 +38,9 @@ Partial Class FormImportValidation
         'HeaderLb
         '
         Me.HeaderLb.AutoSize = True
+        Me.HeaderLb.BackColor = System.Drawing.Color.FromArgb(CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer))
         Me.HeaderLb.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.HeaderLb.Location = New System.Drawing.Point(25, 72)
+        Me.HeaderLb.Location = New System.Drawing.Point(12, 9)
         Me.HeaderLb.Name = "HeaderLb"
         Me.HeaderLb.Size = New System.Drawing.Size(340, 14)
         Me.HeaderLb.TabIndex = 0
@@ -76,7 +77,7 @@ Partial Class FormImportValidation
         Me.ErrorDataGrid.EnableHeadersVisualStyles = False
         Me.ErrorDataGrid.Font = New System.Drawing.Font("Segoe UI", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel)
         Me.ErrorDataGrid.GridColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.ErrorDataGrid.Location = New System.Drawing.Point(20, 98)
+        Me.ErrorDataGrid.Location = New System.Drawing.Point(0, 34)
         Me.ErrorDataGrid.Name = "ErrorDataGrid"
         Me.ErrorDataGrid.ReadOnly = True
         Me.ErrorDataGrid.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
@@ -96,7 +97,7 @@ Partial Class FormImportValidation
         Me.ErrorDataGrid.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.SystemColors.ControlText
         Me.ErrorDataGrid.RowTemplate.DefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.ErrorDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.ErrorDataGrid.Size = New System.Drawing.Size(460, 104)
+        Me.ErrorDataGrid.Size = New System.Drawing.Size(500, 188)
         Me.ErrorDataGrid.Style = MetroFramework.MetroColorStyle.Purple
         Me.ErrorDataGrid.TabIndex = 1
         '
@@ -104,7 +105,7 @@ Partial Class FormImportValidation
         '
         Me.CancelBtn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CancelBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.CancelBtn.Location = New System.Drawing.Point(397, 214)
+        Me.CancelBtn.Location = New System.Drawing.Point(413, 231)
         Me.CancelBtn.Name = "CancelBtn"
         Me.CancelBtn.Size = New System.Drawing.Size(75, 23)
         Me.CancelBtn.TabIndex = 2
@@ -114,7 +115,7 @@ Partial Class FormImportValidation
         'ImportBtn
         '
         Me.ImportBtn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ImportBtn.Location = New System.Drawing.Point(244, 214)
+        Me.ImportBtn.Location = New System.Drawing.Point(260, 231)
         Me.ImportBtn.Name = "ImportBtn"
         Me.ImportBtn.Size = New System.Drawing.Size(147, 23)
         Me.ImportBtn.TabIndex = 3
@@ -123,26 +124,29 @@ Partial Class FormImportValidation
         '
         'SplitterBottom
         '
+        Me.SplitterBottom.BackColor = System.Drawing.Color.FromArgb(CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer))
         Me.SplitterBottom.Cursor = System.Windows.Forms.Cursors.HSplit
         Me.SplitterBottom.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.SplitterBottom.Location = New System.Drawing.Point(20, 202)
+        Me.SplitterBottom.Location = New System.Drawing.Point(0, 222)
         Me.SplitterBottom.Name = "SplitterBottom"
-        Me.SplitterBottom.Size = New System.Drawing.Size(460, 44)
+        Me.SplitterBottom.Size = New System.Drawing.Size(500, 44)
         Me.SplitterBottom.TabIndex = 5
         Me.SplitterBottom.TabStop = False
         '
         'SplitterTop
         '
+        Me.SplitterTop.BackColor = System.Drawing.Color.FromArgb(CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer))
         Me.SplitterTop.Cursor = System.Windows.Forms.Cursors.Default
         Me.SplitterTop.Dock = System.Windows.Forms.DockStyle.Top
-        Me.SplitterTop.Location = New System.Drawing.Point(20, 60)
+        Me.SplitterTop.Location = New System.Drawing.Point(0, 0)
         Me.SplitterTop.Name = "SplitterTop"
-        Me.SplitterTop.Size = New System.Drawing.Size(460, 38)
+        Me.SplitterTop.Size = New System.Drawing.Size(500, 34)
         Me.SplitterTop.TabIndex = 6
         Me.SplitterTop.TabStop = False
         '
         'FormImportValidation
         '
+        Me.BackColor = System.Drawing.SystemColors.Window
         Me.CancelButton = Me.CancelBtn
         Me.ClientSize = New System.Drawing.Size(500, 266)
         Me.Controls.Add(Me.ImportBtn)
@@ -151,12 +155,9 @@ Partial Class FormImportValidation
         Me.Controls.Add(Me.HeaderLb)
         Me.Controls.Add(Me.SplitterBottom)
         Me.Controls.Add(Me.SplitterTop)
-        Me.CustomBackcolor = System.Drawing.SystemColors.Window
-        Me.CustomForecolor = System.Drawing.SystemColors.MenuText
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "FormImportValidation"
-        Me.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow
-        Me.Style = MetroFramework.MetroColorStyle.Purple
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "File Validation"
         CType(Me.ErrorDataGrid, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
