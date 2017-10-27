@@ -1,5 +1,4 @@
 # Simple-AD
-Simple AD - Active Directory Management Tool
 
 Simple AD is an open source Active Directory management tool designed to provide more tools to help administer active diretcory domains. Its Main features are:
 
