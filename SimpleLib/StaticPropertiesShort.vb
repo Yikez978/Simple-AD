@@ -1,4 +1,4 @@
-﻿Module StaticPropertiesShort
+﻿Public Module StaticPropertiesShort
     Public Office365PropsShort() As String = {
             "SamAccountName",
             "UserPrincipalName",
@@ -17,7 +17,8 @@
             "sAMAccountName",
             "distinguishedName",
             "isCriticalSystemObject",
-            "showInAdvancedViewOnly"
+            "showInAdvancedViewOnly",
+            "objectSid"
     }
 
     Public ListViewPropsColumns() As String = {

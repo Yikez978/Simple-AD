@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
 
+<SerializableAttribute>
 Public Class ControlListView
     Inherits ObjectListView
 

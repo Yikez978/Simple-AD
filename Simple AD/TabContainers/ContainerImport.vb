@@ -1,4 +1,6 @@
-﻿Public Class ContainerImport
+﻿Imports SimpleLib
+
+Public Class ContainerImport
     Inherits UserControl
 
     Private WithEvents FormOptions As FormBulkUserOptions
@@ -66,7 +68,7 @@
 
         MainListView.ShowGroups = True
         MainListView.PrimarySortColumn = StatusColumn
-        MainListView.RestoreState(Encoding.Default.GetBytes(My.Settings.ExplorerListViewSettings))
+        MainListView.RestoreState(Encoding.Default.GetBytes(My.Settings.ImportListViewSettings))
     End Sub
 
     Public Function GetAccecptButton() As Controls.MetroButton
@@ -75,10 +77,6 @@
 
     Public Function GetMainSplitContainer0() As SplitContainer
         Return Me.MainSplitContainer0
-    End Function
-
-    Public Function GetProgressBar() As ProgressBar
-        Return Me.ProgressBar
     End Function
 
     Public Function GetMainListView() As ObjectListView
@@ -109,6 +107,20 @@
             FilterUsers(INode)
             MainListView.EndUpdate()
         End If
+
+        Select Case SelectedJob.JobStatus
+            Case SimpleADJobStatus.Idle
+                Me.AcceptBt.Enabled = True
+                Me.AcceptBt.Text = "Start"
+            Case SimpleADJobStatus.InProgress
+                Me.AcceptBt.Enabled = False
+                Me.AcceptBt.Text = "Running"
+            Case SimpleADJobStatus.Completed
+                Me.AcceptBt.Enabled = False
+                Me.AcceptBt.Text = "Done"
+        End Select
+
+
     End Sub
 
     Private Sub RefreshJob(ByVal CurrentJob As JobImport, INode As ImportJobNode)
@@ -141,14 +153,10 @@
 
             Me.Invoke(Sub() Me.MainListView.ModelFilter = Filter)
 
-            End If
+        End If
     End Sub
 
     Private Sub WorkerComplpeted() Handles FormOptions.JobCompleted
-        Me.ProgressBar.Visible = False
-        Me.AcceptBt.Enabled = False
-        Me.AcceptBt.Text = "Done"
-
         If Not OngoingBulkJobs.Count > 0 Then
             WorkInProgress = False
         End If
@@ -193,36 +201,27 @@
         End If
     End Sub
 
-    Public Sub LoadNodes(ByVal Job As JobImport)
-        MainTreeView.BeginUpdate()
+    Public Sub ClearJobNodes()
+        BeginControlUpdate(TreeViewPanel)
+        MainTreeView.Nodes.Clear()
+    End Sub
 
-        Dim RootNode As New ImportJobNode With {.Name = Job.Name, .Text = Job.Name, .Job = Job, .FilterKey = "All", .ImageKey = "Import", .SelectedImageKey = "Import"}
+    Public Sub LoadJobNodes(ByVal Job As JobImport)
+
+        Dim RootNode As New ImportJobNode With {.Name = Job.JobName, .Text = Job.JobName, .Job = Job, .FilterKey = "All", .ImageKey = "Import", .SelectedImageKey = "Import"}
         MainTreeView.Nodes.Add(RootNode)
 
-        Dim All As New ImportJobNode With {.Name = Job.Name, .Text = "All", .Job = Job, .FilterKey = "All", .ImageKey = "GroupFlat", .SelectedImageKey = "GroupFlat"}
-        Dim Pending As New ImportJobNode With {.Name = Job.Name, .Text = "Pending", .Job = Job, .FilterKey = "Pending", .ImageKey = "UserFlat", .SelectedImageKey = "UserFlat"}
-        Dim Completed As New ImportJobNode With {.Name = Job.Name, .Text = "Completed", .Job = Job, .FilterKey = "Completed", .ImageKey = "Success", .SelectedImageKey = "Success"}
-        Dim Errors As New ImportJobNode With {.Name = Job.Name, .Text = "Errors", .Job = Job, .FilterKey = "Errors", .ImageKey = "Error", .SelectedImageKey = "Error"}
-        Dim Failed As New ImportJobNode With {.Name = Job.Name, .Text = "Failed", .Job = Job, .FilterKey = "Failed", .ImageKey = "Failed", .SelectedImageKey = "Failed"}
+        Dim All As New ImportJobNode With {.Name = Job.JobName, .Text = "All", .Job = Job, .FilterKey = "All", .ImageKey = "GroupFlat", .SelectedImageKey = "GroupFlat"}
+        Dim Pending As New ImportJobNode With {.Name = Job.FileName, .Text = "Pending", .Job = Job, .FilterKey = "Pending", .ImageKey = "UserFlat", .SelectedImageKey = "UserFlat"}
+        Dim Completed As New ImportJobNode With {.Name = Job.FileName, .Text = "Completed", .Job = Job, .FilterKey = "Completed", .ImageKey = "Success", .SelectedImageKey = "Success"}
+        Dim Errors As New ImportJobNode With {.Name = Job.FileName, .Text = "Errors", .Job = Job, .FilterKey = "Errors", .ImageKey = "Error", .SelectedImageKey = "Error"}
+        Dim Failed As New ImportJobNode With {.Name = Job.FileName, .Text = "Failed", .Job = Job, .FilterKey = "Failed", .ImageKey = "Failed", .SelectedImageKey = "Failed"}
 
         Dim SubNodes As TreeNode() = {All, Pending, Completed, Errors, Failed}
 
         RootNode.Nodes.AddRange(SubNodes)
-        RootNode.Expand()
 
         CurrentJob = Job
-
-        Threading.ThreadPool.QueueUserWorkItem(Sub() FinishImportJob(Job))
-    End Sub
-
-    Private Sub FinishImportJob(ByVal Job As JobImport)
-        If Me.InvokeRequired Then
-            MainListView.SetObjects(Job.Users)
-            Me.Invoke(New Action(Of JobImport)(AddressOf FinishImportJob), Job)
-        Else
-            MainListView.EndUpdate()
-            MainTreeView.EndUpdate()
-        End If
     End Sub
 
     Public Class StatusFilter

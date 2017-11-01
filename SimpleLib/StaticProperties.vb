@@ -1,4 +1,4 @@
-﻿Module StaticProperties
+﻿Public Module StaticProperties
     Public Office365Props() As String = {
             "Database",
             "MailboxProvisioningConstraint",

@@ -1,4 +1,6 @@
-﻿Public Module ContextMenuHelper
+﻿Imports SimpleLib
+
+Public Module ContextMenuHelper
 
     Public Sub GetListViewConextMenu(ListView As ListView, e As EventArgs, ContextMenuStrip As ContextMenu, sender As Object, RowObject As DomainObject)
         If RowObject Is Nothing Then
@@ -85,7 +87,6 @@
     Private ComputerMenuItems As String() = {
         "RenameMenuItem",
         "CopyToClipBoardToolStripMenuItem",
-        "EnableDisableSingleToolStripMenuItem",
         "MoveSingleToolStripMenuItem",
         "DeleteSingleToolStripMenuItem",
         "PropertiesToolStripMenuItem"

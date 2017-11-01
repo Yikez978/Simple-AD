@@ -1,4 +1,6 @@
-﻿Public Class FormBulkUserOptions
+﻿Imports SimpleLib
+
+Public Class FormBulkUserOptions
 
     Private _JobClass As JobImport
     Private _ContainerUserBulk As ContainerImport
@@ -21,29 +23,28 @@
 
     Private Sub ConfirmBn_Click(sender As Object, e As EventArgs) Handles ConfirmBn.Click
 
-        _JobClass.CreateHomeFodlers = CrHfldrTg.Checked
-        _JobClass.EnableAccounts = EnAcTg.Checked
-        _JobClass.ForcePasswordReset = FpwdTg.Checked
+        If Not DomainTreeView.SelectedNode Is DomainTreeView.TopNode Then
 
-        _ContainerUserBulk.AcceptBt.Enabled = False
+            _JobClass.CreateHomeFodlers = CrHfldrTg.Checked
+            _JobClass.EnableAccounts = EnAcTg.Checked
+            _JobClass.ForcePasswordReset = FpwdTg.Checked
 
-        WorkInProgress = True
+            _ContainerUserBulk.AcceptBt.Enabled = False
 
+            WorkInProgress = True
 
-        _ContainerUserBulk.ProgressBar.Show()
-        _ContainerUserBulk.ProgressBar.BringToFront()
+            Dim ObjectsList As New List(Of DomainObject)
 
-        Dim ObjectsList As New List(Of DomainObject)
+            _ListView.SelectAll()
+            For Each DomainObject As DomainObject In _ListView.SelectedObjects
+                ObjectsList.Add(DomainObject)
+            Next
+            _ListView.DeselectAll()
 
-        _ListView.SelectAll()
-        For Each DomainObject As DomainObject In _ListView.SelectedObjects
-            ObjectsList.Add(DomainObject)
-        Next
-        _ListView.DeselectAll()
-
-        _Worker = New BulkADWorker(ObjectsList, _ListView, _ContainerUserBulk, _JobClass, _Path)
-        OngoingBulkJobs.Add(_Worker)
-        Me.Close()
+            _Worker = New BulkADWorker(ObjectsList, _ListView, _ContainerUserBulk, _JobClass, _Path)
+            OngoingBulkJobs.Add(_Worker)
+            Me.Close()
+        End If
     End Sub
 
     Public Function GetBulkWorker() As BulkADWorker

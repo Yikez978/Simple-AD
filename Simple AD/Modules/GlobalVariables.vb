@@ -6,12 +6,9 @@ Public Module GlobalVariables
     Public ButtonHoverClickColor = SystemColors.ButtonShadow
 
     Public appData As String = GetFolderPath(SpecialFolder.ApplicationData) & "\Simple AD"
-    Public LoginUsernamePrefix As String
 
     Public UpdateURI As String = "http://storage.googleapis.com/simple-ad.appspot.com/SimpleAD/versioninfo.xml"
 
-    Public Property LoginUsername As String
-    Public Property LoginPassword As String
 
     Public Property Office365Username As String
     Public Property Office365Password As String
@@ -66,7 +63,6 @@ Public Module GlobalVariables
 
     Public MainViewMode As String
     Public ProcessedUsers As Integer = 0
-    Public SelectedOU = ""
     Public RightClickedTab As TabPage
 
 #Region "Options"

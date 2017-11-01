@@ -32,24 +32,24 @@ Public Module LocalData
 
     Public Sub GetRecentFileList()
 
-        If Not IO.Directory.Exists(appData) Then
-            IO.Directory.CreateDirectory(appData)
+        If Not Directory.Exists(appData) Then
+            Directory.CreateDirectory(appData)
         End If
 
-        If Not IO.File.Exists(appData & "\SimpleAD.txt") Then
+        If Not File.Exists(appData & "\SimpleAD.txt") Then
             File.Create(appData & "\SimpleAD.txt").Close()
         End If
 
     End Sub
 
     Public Sub PopulateRecentFileList()
-        If IO.File.Exists(appData & "\SimpleAD.txt") Then
+        If File.Exists(appData & "\SimpleAD.txt") Then
 
             Dim RecntFileStreamReader As New StreamReader(appData & "\SimpleAD.txt")
             Dim recentFilesList As New List(Of String)
 
             For Each item As ToolStripDropDownItem In FormMain.RecentFilesToolStripMenuItem.DropDownItems
-                recentFilesList.Add(CStr(item.Text))
+                recentFilesList.Add(item.Text)
             Next
 
             While Not RecntFileStreamReader.EndOfStream
@@ -60,7 +60,7 @@ Public Module LocalData
                         AddHandler RecentFileItem.Click, Sub(Sender, e) RecentFileMenuIte_CLick(Line)
 
                         Try
-                            RecentFileItem.Image = New Bitmap(Drawing.Icon.ExtractAssociatedIcon(Line).ToBitmap, New Size(17, 17))
+                            RecentFileItem.Image = New Bitmap(Icon.ExtractAssociatedIcon(Line).ToBitmap, New Size(17, 17))
                             RecentFileItem.ImageScaling = ToolStripItemImageScaling.None
                         Catch Ex As Exception
                             Debug.WriteLine("Unable to load image from file " & Line & " {0}" & Ex.Message)

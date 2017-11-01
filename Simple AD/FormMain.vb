@@ -1,4 +1,5 @@
-﻿Imports System.ComponentModel
+﻿Imports SimpleLib
+Imports System.ComponentModel
 
 Public Class FormMain
 
@@ -13,11 +14,16 @@ Public Class FormMain
     End Sub
 
     Private Sub FormMain_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-
         PopulateRecentFileList()
-        UserToolStripMenuItem.Text = GetDisplayName()
+        MainFormStart()
 
-        'Dim DragTabs As New TabDragger(MainTabCtrl, TabDragBehavior.TabDragOut)
+        GetTaskFlow.Width = MainSideBarSplitContainer.Panel2.Width
+
+    End Sub
+
+    Public Sub MainFormStart()
+
+        UserToolStripMenuItem.Text = GetDisplayName()
 
         If My.Settings.CheckForUpdatesOnStart = True Then
             Dim RunUpdateCheck As New FormUpdate
@@ -28,17 +34,10 @@ Public Class FormMain
 
         Dim NewReport As JobExplorer = New JobExplorer(ReportType.Explorer)
         GetContainerExplorer.DomainTreeView.SelectedNode = GetContainerExplorer.DomainTreeView.TopNode
+
     End Sub
 
-    Private Sub ExportAsCSVToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        With ExportCSVDialog
-            .Title = "Export CSV File"
-            .Filter = "Comma Dellimited|*.csv"
-            .FileName = "SimpleAD_Export"
-        End With
-
-        ExportCSVDialog.ShowDialog()
-    End Sub
+#Region "Event Handlers"
 
     Private Sub OptionsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OptionsToolStripMenuItem.Click
         FormOptions.ShowDialog()
@@ -56,33 +55,26 @@ Public Class FormMain
         Application.Exit()
     End Sub
 
-    Private Sub MainApplicationForm_Closed(sender As Object, e As EventArgs) Handles Me.Closed
-        Application.Exit()
-    End Sub
-
-    Private Sub ViewSideBarToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        GetMainSplitContainer1.Panel2Collapsed = Not GetMainSplitContainer1.Panel2Collapsed
-    End Sub
-
     Public Sub FileToolStripMenuItem_DropDownOpening(sender As Object, e As EventArgs) Handles FileToolStripMenuItem.DropDownOpening
         PopulateRecentFileList()
     End Sub
 
     Private Sub ToolStripMenuItemLogin_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItemLogin.Click
-        FormLogin.ShowDialog()
+        Dim Login = New FormLogin
+        Login.ShowDialog()
     End Sub
 
     Private Sub DomainPanelToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DomainPanelToolStripMenuItem.Click
         GetMainSplitContainer0.Panel1Collapsed = Not GetMainSplitContainer0.Panel1Collapsed
     End Sub
 
+    Private Sub TaskPanelToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TaskPanelToolStripMenuItem.Click
+        MainSideBarSplitContainer.Panel2Collapsed = Not MainSideBarSplitContainer.Panel2Collapsed
+    End Sub
+
     Private Sub BulkUserWizardToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BulkUserWizardToolStripMenuItem.Click
         Dim BulkUser = New FormBulkUser()
         BulkUser.ShowDialog()
-    End Sub
-
-    Public Sub CloseTab(TabPage As TabPage)
-        GetMainTabCtrl.TabPages.Remove(TabPage)
     End Sub
 
     Private Sub MainTabCtrl_MouseClick(ByVal sender As Object, ByVal e As MouseEventArgs) Handles MainTabCtrl.Click
@@ -94,18 +86,6 @@ Public Class FormMain
                 End If
             Next index
         End If
-    End Sub
-
-    Private Sub DisabledUsersToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        Dim NewReport As JobExplorer = New JobExplorer(ReportType.DisabledUsers)
-    End Sub
-
-    Private Sub CustomQueryToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        FormLDAPQuery.ShowDialog()
-    End Sub
-
-    Private Sub CloseToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        CloseTab(RightClickedTab)
     End Sub
 
     Private Sub OpenActiveDirectoryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenActiveDirectoryToolStripMenuItem.Click
@@ -122,33 +102,12 @@ Public Class FormMain
         End Try
     End Sub
 
-    Private Sub MainTabCtrl_Selected(sender As Object, e As TabControlEventArgs)
-        If Not e.TabPage Is Nothing Then
-            If e.TabPage.Tag = "365" Then
-                Me.Refresh()
-            ElseIf e.TabPage.Tag = "Report" Then
-
-                Me.Refresh()
-            Else
-                Me.Refresh()
-            End If
-        End If
-    End Sub
-
     Private Sub CheckForUpdatesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CheckForUpdatesToolStripMenuItem.Click
         FormUpdate.Show()
     End Sub
 
-    Private Sub EntireDirectoryToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        Dim NewReport As JobExplorer = New JobExplorer(ReportType.AllObjects)
-    End Sub
-
     Private Sub ConsoleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConsoleToolStripMenuItem.Click
         FormConsole.Show()
-    End Sub
-
-    Private Sub BrowseToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BrowseToolStripMenuItem.Click
-        Dim NewReport As JobExplorer = New JobExplorer(ReportType.Explorer)
     End Sub
 
     Private Sub DetailsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DetailsToolStripMenuItem.Click
@@ -198,9 +157,15 @@ Public Class FormMain
         If OngoingBulkJobs.Count > 0 Then
 
             Dim ClosePromptForm = New FormConfirmation("Are you sure you wish to close Simple AD? This will Cancel ongoing Jobs.", ConfirmationType.Close)
+            ClosePromptForm.StartPosition = FormStartPosition.CenterScreen
             ClosePromptForm.ShowDialog()
 
             If ClosePromptForm.DialogResult = DialogResult.Yes Then
+
+                For Each ImportJob As BulkADWorker In OngoingBulkJobs
+                    ImportJob._JobClass.JobStatus = SimpleADJobStatus.Canceled
+                Next
+
                 OngoingBulkJobs.Clear()
                 Application.Exit()
             Else
@@ -209,7 +174,6 @@ Public Class FormMain
         End If
     End Sub
 
-    Private Sub SideBarToggle_Click(sender As Object, e As EventArgs) Handles SideBarToggle.Click
-        MainSideBarSplitContainer.Panel2Collapsed = Not SideBarToggle.Checked
-    End Sub
+#End Region
+
 End Class

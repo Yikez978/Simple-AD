@@ -2,6 +2,8 @@
 Imports System.Runtime.Serialization
 Imports System.Runtime.Serialization.Formatters.Binary
 
+Imports SimpleLib
+
 Public Class FormNewTemplate
 
     Public Property Template As UserTemplate

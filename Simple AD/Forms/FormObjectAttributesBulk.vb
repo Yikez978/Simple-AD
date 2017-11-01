@@ -1,4 +1,6 @@
-﻿Public Class FormObjectAttributesBulk
+﻿Imports SimpleLib
+
+Public Class FormObjectAttributesBulk
 
     Private DataTableSource As New DataTable
 
@@ -28,18 +30,18 @@
 
         Show()
 
-        Dim LoadAtrThread As New Threading.Thread(AddressOf LoadAttributes)
-        LoadAtrThread.Start()
+        'Dim LoadAtrThread As New Threading.Thread(AddressOf LoadAttributes)
+        'LoadAtrThread.Start()
 
     End Sub
 
-    Private Sub LoadAttributes()
-        For Each Prop As String In LDAPBulkSupportedProps
-            DataTableSource.Rows.Add(Prop, GetFriendlyLDAPName(Prop), "", False)
-        Next
+    'Private Sub LoadAttributes()
+    '    For Each Prop As String In LDAPBulkSupportedProps
+    '        DataTableSource.Rows.Add(Prop, GetFriendlyLDAPName(Prop), "", False)
+    '    Next
 
-        LoadFinished()
-    End Sub
+    '    LoadFinished()
+    'End Sub
 
     Private Sub LoadFinished()
         If Me.InvokeRequired Then

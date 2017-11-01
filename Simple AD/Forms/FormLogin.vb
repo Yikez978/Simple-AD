@@ -1,4 +1,5 @@
 ﻿Imports System.Threading
+Imports SimpleLib
 
 Public Class FormLogin
 
@@ -12,55 +13,11 @@ Public Class FormLogin
 
     Public Sub New()
         InitializeComponent()
-    End Sub
 
-    Private Sub LoginForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        If My.Settings.ForceLogin = True Then
-            If Not Application.OpenForms().OfType(Of FormMain).Any Then
-                AutoLogin()
-            End If
+        UnTb.Select()
+        OKBn.Enabled = False
 
-            UnTb.Select()
-            OKBn.Enabled = False
-
-            UnTb_TextChanged(Nothing, Nothing)
-        Else
-            FormMain.Show()
-        End If
-    End Sub
-
-    Private Sub AutoLogin()
-        If Not String.IsNullOrEmpty(My.Settings.Username) Then
-
-            Try
-                UnTb.Text = Unprotect(My.Settings.Username)
-                PwdTb.Text = Unprotect(My.Settings.Password)
-
-                OKBn.Enabled = True
-
-                LoginThread = New Thread(AddressOf Login)
-
-                With LoginThread
-                    .IsBackground = True
-                End With
-
-                Dim creds As New LoginCredentials With {
-                    .Username = UnTb.Text,
-                    .Password = PwdTb.Text
-                }
-
-                If My.Settings.AutoLogin = True Then
-                    If Not LoginThread.IsAlive Then
-                        LoginThread.Start(creds)
-                    End If
-                End If
-
-            Catch Ex As Exception
-                Debug.WriteLine("[Error] " & Ex.Message)
-            End Try
-        Else
-            Me.Show()
-        End If
+        UnTb_TextChanged(Nothing, Nothing)
     End Sub
 
     Private Sub CancelBn_Click(sender As Object, e As EventArgs) Handles CancelBn.Click
@@ -143,30 +100,21 @@ Public Class FormLogin
                 My.Settings.Password = DataProtection.Protect(TempPassword)
             End If
 
-            If SwitchUser Then
-                GetContainerExplorer.Invoke(New Action(Sub() RefreshAfterUsersSwitch()))
-            End If
-
             LoginSuccess()
-            Else
-                LoginFailed()
+
+        Else
+            LoginFailed()
         End If
 
-    End Sub
-
-    Private Sub RefreshAfterUsersSwitch()
-        GetContainerExplorer.Job.Refresh()
-        GetContainerExplorer.DomainTreeView.RefreshNodes()
     End Sub
 
     Private Sub LoginSuccess()
         If Me.InvokeRequired Then
             Me.Invoke(New Action(AddressOf LoginSuccess))
         Else
-            FormMain.Show()
-            Dim ADC = New ADConnectionChecker
-
-            ADC.Start()
+            GetContainerExplorer.DomainTreeView.RefreshNodes()
+            FormMain.MainFormStart()
+            Me.Close()
         End If
     End Sub
 

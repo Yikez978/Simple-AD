@@ -1,4 +1,6 @@
-﻿Public Class ContainerExplorer
+﻿Imports SimpleLib
+
+Public Class ContainerExplorer
     Inherits UserControl
 
     Private WithEvents _ControlDomainTreeView As ControlDomainTreeView
@@ -22,7 +24,12 @@
         LoadImages()
 
         MainListView.PrimarySortColumn = TypeColumn
-        MainListView.RestoreState(Encoding.Default.GetBytes(My.Settings.ExplorerListViewSettings))
+        MainListView.Sort()
+
+        If Not My.Settings.ExplorerListViewSettings Is Nothing Then
+            MainListView.RestoreState(Encoding.Default.GetBytes(My.Settings.ExplorerListViewSettings))
+        End If
+
         Me.DomainTreeView.TopNode.Expand()
 
     End Sub
@@ -121,29 +128,7 @@
     End Sub
 
     Private Sub DeleteBulkToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteBulkToolStripMenuItem.Click
-        Dim SelectedUsers As List(Of OLVListItem) = GetSelectedUsers()
-        Dim DeleteForm = New FormConfirmation("Are you sure you wish to delete " & SelectedUsers.Count & " objects?", ConfirmationType.Delete)
-        Dim IsBatchSuccesfull = False
-        DeleteForm.Location = GetDialogLocation(DeleteForm)
-        DeleteForm.ShowDialog()
-        If DeleteForm.DialogResult = DialogResult.Yes Then
-            For Each Item As OLVListItem In SelectedUsers
-                If DeleteADObject(Item.RowObject) Then
-                    IsBatchSuccesfull = True
-                End If
-            Next
-            If IsBatchSuccesfull = True Then
-                _Job.Refresh()
-                Dim ResultForm = New FormAlert("Deleted the selected objects", AlertType.Success)
-                ResultForm.Location = GetDialogLocation(FormMain)
-                ResultForm.ShowDialog()
-            Else
-                _Job.Refresh()
-                Dim ResultForm = New FormAlert("An error occured while trying to delete some/all of the selected objects", AlertType.ErrorAlert)
-                ResultForm.Location = GetDialogLocation(FormMain)
-                ResultForm.ShowDialog()
-            End If
-        End If
+        Dim DeleteBulkJob As JobDeleteBulk = New JobDeleteBulk(MainListView.SelectedObjects, Job)
     End Sub
 
     Private Sub MoveSingleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MoveSingleToolStripMenuItem.Click
@@ -255,30 +240,7 @@
     End Sub
 
     Private Sub MoveBulkToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MoveBulkToolStripMenuItem.Click
-        Dim MoveForm = New FormMoveObject
-        MoveForm.Location = GetDialogLocation(MoveForm)
-        MoveForm.ShowDialog(FormMain)
-        If MoveForm.DialogResult = DialogResult.Yes Then
-            Dim ErrorsOccured As Boolean = False
-            For Each Item As OLVListItem In GetSelectedUsers()
-                Dim DomainObject As DomainObject = Item.RowObject
-                If MoveADObject(DomainObject, MoveForm.SelecetdOU) = True Then
-                Else
-                    ErrorsOccured = True
-                End If
-            Next
-            If ErrorsOccured = False Then
-                _Job.Refresh()
-                Dim ResultForm = New FormAlert("Moved Selected Objects to:" & Environment.NewLine & MoveForm.SelecetdOU, AlertType.Success)
-                ResultForm.Location = GetDialogLocation(MoveForm)
-                ResultForm.ShowDialog()
-            Else
-                _Job.Refresh()
-                Dim ResultForm = New FormAlert("An Error occured while trying to move objects to:" & Environment.NewLine & MoveForm.SelecetdOU, AlertType.ErrorAlert)
-                ResultForm.Location = GetDialogLocation(MoveForm)
-                ResultForm.ShowDialog()
-            End If
-        End If
+        Dim MoveBulkJob As JobMoveBulk = New JobMoveBulk(MainListView.SelectedObjects, Job)
     End Sub
 
     'Private Sub MainListView_ItemsChanging(sender As Object, e As ItemsChangingEventArgs) Handles MainListView.ItemsChanging
@@ -311,7 +273,7 @@
             .Images.Add("GroupImage", IconGroupLarge)
             .Images.Add("ComputerImage", IconComputerLarge)
             .Images.Add("UserImage", IconUserLarge)
-            .Images.Add("DisabledUserImage", IconDisabledUSerLarge)
+            .Images.Add("DisabledUserImage", IconDisabledUserLarge)
             .Images.Add("ContactImage", IconContactLarge)
             .Images.Add("UnknownImage", IconUnknownLarge)
             .ColorDepth = ColorDepth.Depth24Bit

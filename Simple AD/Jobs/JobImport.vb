@@ -1,9 +1,17 @@
-﻿Public Class JobImport
+﻿Imports SimpleLib
+Imports System.Runtime.Serialization
+Imports System.Security.Permissions
+
+<Serializable()>
+Public Class JobImport
     Inherits SimpleADJob
+    Implements ISerializable
 
     Dim ErForm As New FormImportValidation
 
-    Private File As String
+#Region "Properties"
+
+    Private JobFile As String
     Private DisplayNamebool As Boolean
     Private NewImportJobContainer As ContainerImport
     Private TabPage As TabPage
@@ -13,18 +21,21 @@
     Public CreateHomeFodlers As Boolean
     Public EnableAccounts As Boolean
 
-    Public Status As ImportJobStatus
-
-    Public Name As String
+    Public Property FileName As String
 
     Public Property Users As New List(Of SimpleADBulkUserDomainObject)
 
+#End Region
+
     Public Sub New(ByVal ImportFile As String)
-        MyBase.New(SimpleADJobType.UserImport, ImportFile.Split(New Char() {"\"})(ImportFile.Split(New Char() {"\"}).Count - 1))
+        MyBase.New
+
+        JobFile = ImportFile
+        JobType = SimpleADJobType.UserImport
+        JobName = ImportFile.Split(New Char() {"\"})(ImportFile.Split(New Char() {"\"}).Count - 1)
+        FileName = JobName
 
         Dim FullName As String() = ImportFile.Split(New Char() {"\"})
-        Me.Name = FullName(FullName.Count - 1)
-        Me.Status = ImportJobStatus.Pending
 
         MainListView = GetContainerImport.MainListView
 
@@ -155,15 +166,16 @@
             NewUserObject.Status = "Pending"
             Users.Add(NewUserObject)
         Next
-
+        Datatable.Dispose()
         ImportFinished()
     End Sub
 
     Private Sub ImportFinished()
-        If ImportContainerHandle.InvokeRequired Then
-            ImportContainerHandle.Invoke(New Action(AddressOf ImportFinished))
+        If GetContainerImport.InvokeRequired Then
+            GetContainerImport.Invoke(New Action(AddressOf ImportFinished))
         Else
-            GetContainerImport.LoadNodes(Me)
+            JobProgressMax = Users.Count
+            NewTask(Me)
         End If
     End Sub
 
@@ -171,8 +183,51 @@
         If NewImportJobContainer.InvokeRequired Then
             NewImportJobContainer.Invoke(New Action(Of String)(AddressOf ImportFailed), ErrorMessage)
         Else
-
+            Dim ImportFailedForm = New FormAlert("Import Failed - " & ErrorMessage, AlertType.ErrorAlert)
+            ImportFailedForm.StartPosition = FormStartPosition.CenterScreen
+            ImportFailedForm.ShowDialog()
         End If
     End Sub
+
+#Region "Serialisation"
+    Protected Sub New(info As SerializationInfo, context As StreamingContext)
+        JobName = info.GetString("JobName")
+        JobType = DirectCast([Enum].Parse(GetType(SimpleADJobType), info.GetString("JobType")), SimpleADJobType)
+        JobOwner = info.GetString("JobOwner")
+        JobCreated = info.GetDateTime("JobCreated")
+        JobDescription = info.GetString("JobDescription")
+        JobStatus = DirectCast([Enum].Parse(GetType(SimpleADJobStatus), info.GetString("JobStatus")), SimpleADJobStatus)
+        JobProgress = info.GetInt32("JobProgress")
+        JobProgressMax = info.GetInt32("JobProgressMax")
+
+        FileName = info.GetString("FileName")
+        JobFile = info.GetString("JobFile")
+        'Users = info.GetValue("Users", GetType(List(Of SimpleADBulkUserDomainObject)))
+
+        ForcePasswordReset = info.GetBoolean("ForcePasswordReset")
+        CreateHomeFodlers = info.GetBoolean("CreateHomeFodlers")
+        EnableAccounts = info.GetBoolean("EnableAccounts")
+    End Sub
+
+    <SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter:=True)>
+    Public Overrides Sub GetObjectData(info As SerializationInfo, context As StreamingContext) Implements ISerializable.GetObjectData
+        info.AddValue("JobName", JobName)
+        info.AddValue("JobType", JobType.ToString)
+        info.AddValue("JobOwner", JobOwner)
+        info.AddValue("JobCreated", JobCreated)
+        info.AddValue("JobDescription", JobDescription)
+        info.AddValue("JobStatus", JobStatus.ToString)
+        info.AddValue("JobProgress", JobProgress)
+        info.AddValue("JobProgressMax", JobProgressMax)
+
+        info.AddValue("JobFile", JobFile)
+        info.AddValue("FileName", FileName)
+        'info.AddValue("Users", Users)
+
+        info.AddValue("ForcePasswordReset", ForcePasswordReset)
+        info.AddValue("CreateHomeFodlers", CreateHomeFodlers)
+        info.AddValue("EnableAccounts", EnableAccounts)
+    End Sub
+#End Region
 
 End Class

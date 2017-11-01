@@ -1,6 +1,8 @@
 ﻿Public Class ControlSplitConatiner
     Inherits SplitContainer
 
+    Public Property SpliterHeight As Integer
+
     Private ReadOnly Property HandleColor As Color
         Get
             If IsWindows7() Then
@@ -48,10 +50,18 @@
     Private Sub ControlSplitConatiner_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
         Dim s As SplitContainer = Me
         If Not s Is Nothing Then
-            Dim Top As Integer = 0 '5
+            Dim Top As Integer
+
+            If SpliterHeight = Nothing Then
+                Top = 0
+            Else
+                Top = SpliterHeight
+            End If
+
             Dim Bottom As Integer = s.Height '- 5
             Dim Left As Integer = s.SplitterDistance
             Dim Right As Integer = Left + s.SplitterWidth - 1
+
             Dim Pen As New Pen(HandleColor)
             e.Graphics.DrawLine(Pen, Right, Top, Right, Bottom)
         End If

@@ -1,7 +1,13 @@
 ﻿Imports System.DirectoryServices
+Imports System.Runtime.Serialization
+Imports System.Security.Permissions
+Imports System.Security.Principal
+Imports SimpleLib
 
+<Serializable()>
 Public Class JobExplorer
     Inherits SimpleADJob
+    Implements ISerializable
 
     Private MainListView As ControlListView
     Private MainTreeView As ControlDomainTreeView
@@ -20,7 +26,11 @@ Public Class JobExplorer
     End Class
 
     Public Sub New(ByVal Type As ReportType, Optional LDAPQuery As String = Nothing)
-        MyBase.New(SimpleADJobType.Explorer, GetDomainNetBiosName)
+        MyBase.New
+
+        JobType = SimpleADJobType.Explorer
+        JobName = GetProperName(GetDomainNetBiosName())
+        NewTask(Me)
 
         _Type = Type
 
@@ -65,7 +75,8 @@ Public Class JobExplorer
                 End If
         End Select
 
-        MainListView.BeginUpdate()
+        JobStatus = SimpleADJobStatus.InProgress
+        'MainListView.BeginUpdate()
         Threading.ThreadPool.QueueUserWorkItem(Sub() GetObjects(paras))
 
     End Sub
@@ -152,6 +163,11 @@ Public Class JobExplorer
                             DomainObject.ShowInAdvancedViewOnly = result.Properties.Item("showInAdvancedViewOnly").Item(0)
                         End If
 
+                        If result.Properties.Contains("ObjectSid") Then
+                            DomainObject.ObjectSid = New SecurityIdentifier(result.Properties("ObjectSid")(0), 0)
+                        End If
+
+
                         DomainObjectList.Add(DomainObject)
                     End If
                 End If
@@ -170,10 +186,12 @@ Public Class JobExplorer
 
     Private Sub AfterFindObjects(ByVal DomainObjectList As List(Of DomainObject))
         MainListView.SetObjects(DomainObjectList)
-        MainListView.EndUpdate()
+        'MainListView.EndUpdate()
+        JobStatus = SimpleADJobStatus.Completed
     End Sub
 
     Private Sub ReportError(ByVal ErrorMessage As Exception)
+        JobStatus = SimpleADJobStatus.Errors
         If Not UserReportContainer Is Nothing Then
             If UserReportContainer.InvokeRequired Then
                 UserReportContainer.Invoke(New Action(Of Exception)(AddressOf ReportError), ErrorMessage)
@@ -183,5 +201,26 @@ Public Class JobExplorer
             End If
         End If
     End Sub
+
+#Region "Serialisation"
+    Protected Sub New(info As SerializationInfo, context As StreamingContext)
+        JobName = info.GetString("JobName")
+        JobType = DirectCast([Enum].Parse(GetType(SimpleADJobType), info.GetString("JobType")), SimpleADJobType)
+        JobOwner = info.GetString("JobOwner")
+        JobCreated = info.GetDateTime("JobCreated")
+        JobDescription = info.GetString("JobDescription")
+        JobStatus = DirectCast([Enum].Parse(GetType(SimpleADJobStatus), info.GetString("JobStatus")), SimpleADJobStatus)
+    End Sub
+
+    <SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter:=True)>
+    Public Overrides Sub GetObjectData(info As SerializationInfo, context As StreamingContext) Implements ISerializable.GetObjectData
+        info.AddValue("JobName", JobName)
+        info.AddValue("JobType", JobType.ToString)
+        info.AddValue("JobOwner", JobOwner)
+        info.AddValue("JobCreated", JobCreated)
+        info.AddValue("JobDescription", JobDescription)
+        info.AddValue("JobStatus", JobStatus.ToString)
+    End Sub
+#End Region
 
 End Class

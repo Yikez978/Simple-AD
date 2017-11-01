@@ -32,12 +32,21 @@
 
         HostJob = Job
 
-        TaskName = HostJob.JobName
+        MainProgressBar.Maximum = HostJob.JobProgressMax
+        MainProgressBar.Step = 1
+        MainProgressBar.Value = HostJob.JobProgress
+
+        AddHandler HostJob.ProgressChanged, AddressOf ProgressChanged
+
+        Select Case HostJob.JobType
+            Case SimpleADJobType.Explorer
+                Me.Visible = False
+        End Select
+
+        TaskName = HostJob.JobType.ToString & " - " & HostJob.JobName
         TaskDescription = HostJob.JobOwner & " | " & HostJob.JobCreated
 
         UpdateStatus(Job.JobStatus)
-
-        Me.Dock = DockStyle.Top
 
         For Each Control As Control In Me.Controls
             AddHandler Control.MouseEnter, AddressOf ControlTaskCard_MouseEnter
@@ -45,24 +54,47 @@
         Next
 
         GetTaskFlow.Controls.Add(Me)
-    End Sub
 
-    Private Sub StopTaskBn_Click(sender As Object, e As EventArgs) Handles StopTaskBn.Click
-        Dispose()
+        Dock = DockStyle.Top
+        BringToFront()
+
+
     End Sub
 
     Private Sub ControlTaskCard_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
         BackColor = SystemColors.Control
-        StopTaskBn.Visible = True
     End Sub
 
     Private Sub ControlTaskCard_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
         BackColor = SystemColors.Window
-        StopTaskBn.Visible = False
     End Sub
 
     Private Sub JobStatusChanged(Status As SimpleADJobStatus) Handles HostJob.StatusChanged
         UpdateStatus(Status)
+        SaveStatus()
+    End Sub
+
+    Private Sub ProgressChanged()
+
+        If Me.InvokeRequired Then
+            Me.Invoke(New Action(AddressOf ProgressChanged))
+        Else
+            If Not MainProgressBar.IsDisposed Then
+
+                If Not MainProgressBar.Visible Then
+                    StatusLb.Visible = False
+                    MainProgressBar.Visible = True
+                End If
+
+                MainProgressBar.PerformStep()
+
+                If MainProgressBar.Value = MainProgressBar.Maximum Then
+                    MainProgressBar.Dispose()
+                    StatusLb.Visible = True
+                End If
+
+            End If
+        End If
     End Sub
 
     Private Sub UpdateStatus(ByVal Status As SimpleADJobStatus)
@@ -74,13 +106,17 @@
         Select Case HostJob.JobType
             Case SimpleADJobType.Delete
                 Return My.Resources.JobDelete
+            Case SimpleADJobType.BulkDelete
+                Return My.Resources.JobDelete
             Case SimpleADJobType.PasswordReset
                 Return My.Resources.JobPasswordReset
             Case SimpleADJobType.Rename
                 Return My.Resources.JobRename
             Case SimpleADJobType.UserImport
-                Return My.Resources.JobExplorer
+                Return My.Resources.JobImport
             Case SimpleADJobType.Move
+                Return My.Resources.JobMove
+            Case SimpleADJobType.BulkMove
                 Return My.Resources.JobMove
             Case SimpleADJobType.Explorer
                 Return My.Resources.JobExplorer

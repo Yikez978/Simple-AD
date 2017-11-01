@@ -46,6 +46,11 @@ Public Class ContainerTemplate
     End Sub
 
     Private Sub ContainerTemplate_Load(sender As Object, e As EventArgs) Handles Me.Load
+
+        If Not Directory.Exists(".\Templates") Then
+            Directory.CreateDirectory(".\Templates")
+        End If
+
         RefreshTamplates()
     End Sub
 
@@ -53,9 +58,6 @@ Public Class ContainerTemplate
         Dim TemplateList As New List(Of UserTemplate)
 
         If HasWritePermissionOnDir(".\Templates") Then
-            If Not Directory.Exists(".\Templates") Then
-                Directory.CreateDirectory(".\Templates")
-            End If
 
             For Each File As String In Directory.GetFiles(".\Templates\")
 

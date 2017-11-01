@@ -63,16 +63,6 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property _Error() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("Error", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
         Friend ReadOnly Property CheckTick() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("CheckTick", resourceCulture)
@@ -183,6 +173,16 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property Error0() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Error0", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property ErrorSmall() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("ErrorSmall", resourceCulture)
@@ -276,6 +276,16 @@ Namespace My.Resources
         Friend ReadOnly Property JobExplorer() As System.Drawing.Icon
             Get
                 Dim obj As Object = ResourceManager.GetObject("JobExplorer", resourceCulture)
+                Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        '''</summary>
+        Friend ReadOnly Property JobImport() As System.Drawing.Icon
+            Get
+                Dim obj As Object = ResourceManager.GetObject("JobImport", resourceCulture)
                 Return CType(obj,System.Drawing.Icon)
             End Get
         End Property
@@ -377,6 +387,16 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("SuccessSmall", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        '''</summary>
+        Friend ReadOnly Property SystemTask() As System.Drawing.Icon
+            Get
+                Dim obj As Object = ResourceManager.GetObject("SystemTask", resourceCulture)
+                Return CType(obj,System.Drawing.Icon)
             End Get
         End Property
         

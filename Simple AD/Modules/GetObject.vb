@@ -92,8 +92,8 @@
         Return TemplateContainerHandle
     End Function
 
-    Public TaskFlowHandle As TableLayoutPanel
-    Public Function GetTaskFlow() As TableLayoutPanel
+    Public TaskFlowHandle As Panel
+    Public Function GetTaskFlow() As Panel
         Return TaskFlowHandle
     End Function
 

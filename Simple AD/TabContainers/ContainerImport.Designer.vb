@@ -30,17 +30,17 @@ Partial Class ContainerImport
         Me.DescriptionColumn = CType(New BrightIdeasSoftware.OLVColumn(), BrightIdeasSoftware.OLVColumn)
         Me.StatusColumn = CType(New BrightIdeasSoftware.OLVColumn(), BrightIdeasSoftware.OLVColumn)
         Me.FooterPl = New SimpleAD.ControlFooterPl()
-        Me.MetroProgressSpinner = New MetroFramework.Controls.MetroProgressSpinner()
-        Me.ProgressBar = New MetroFramework.Controls.MetroProgressBar()
         Me.AcceptBt = New MetroFramework.Controls.MetroButton()
         Me.CancelBn = New MetroFramework.Controls.MetroButton()
         Me.ImportBn = New SimpleAD.ControlFlatButton()
+        Me.TreeViewPanel = New System.Windows.Forms.Panel()
         CType(Me.MainSplitContainer0, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MainSplitContainer0.Panel1.SuspendLayout()
         Me.MainSplitContainer0.Panel2.SuspendLayout()
         Me.MainSplitContainer0.SuspendLayout()
         CType(Me.MainListView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FooterPl.SuspendLayout()
+        Me.TreeViewPanel.SuspendLayout()
         Me.SuspendLayout()
         '
         'MainSplitContainer0
@@ -54,13 +54,13 @@ Partial Class ContainerImport
         'MainSplitContainer0.Panel1
         '
         Me.MainSplitContainer0.Panel1.BackColor = System.Drawing.SystemColors.Window
-        Me.MainSplitContainer0.Panel1.Controls.Add(Me.MainTreeView)
-        Me.MainSplitContainer0.Panel1.Padding = New System.Windows.Forms.Padding(0, 24, 0, 0)
+        Me.MainSplitContainer0.Panel1.Controls.Add(Me.TreeViewPanel)
         '
         'MainSplitContainer0.Panel2
         '
         Me.MainSplitContainer0.Panel2.Controls.Add(Me.MainListView)
         Me.MainSplitContainer0.Size = New System.Drawing.Size(878, 439)
+        Me.MainSplitContainer0.SpliterHeight = 0
         Me.MainSplitContainer0.SplitterDistance = 220
         Me.MainSplitContainer0.SplitterWidth = 1
         Me.MainSplitContainer0.TabIndex = 6
@@ -74,11 +74,11 @@ Partial Class ContainerImport
         Me.MainTreeView.HideSelection = False
         Me.MainTreeView.HotTracking = True
         Me.MainTreeView.ItemHeight = 22
-        Me.MainTreeView.Location = New System.Drawing.Point(0, 24)
+        Me.MainTreeView.Location = New System.Drawing.Point(0, 0)
         Me.MainTreeView.Margin = New System.Windows.Forms.Padding(0)
         Me.MainTreeView.Name = "MainTreeView"
         Me.MainTreeView.ShowLines = False
-        Me.MainTreeView.Size = New System.Drawing.Size(220, 415)
+        Me.MainTreeView.Size = New System.Drawing.Size(220, 439)
         Me.MainTreeView.TabIndex = 0
         '
         'MainListView
@@ -94,6 +94,7 @@ Partial Class ContainerImport
         Me.MainListView.Cursor = System.Windows.Forms.Cursors.Default
         Me.MainListView.Dock = System.Windows.Forms.DockStyle.Fill
         Me.MainListView.EmptyListMsg = "No Results"
+        Me.MainListView.EmptyListMsgFont = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.MainListView.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.MainListView.FullRowSelect = True
         Me.MainListView.HeaderUsesThemes = True
@@ -142,8 +143,6 @@ Partial Class ContainerImport
         'FooterPl
         '
         Me.FooterPl.BackColor = System.Drawing.SystemColors.Window
-        Me.FooterPl.Controls.Add(Me.MetroProgressSpinner)
-        Me.FooterPl.Controls.Add(Me.ProgressBar)
         Me.FooterPl.Controls.Add(Me.AcceptBt)
         Me.FooterPl.Controls.Add(Me.CancelBn)
         Me.FooterPl.Controls.Add(Me.ImportBn)
@@ -156,31 +155,6 @@ Partial Class ContainerImport
         Me.FooterPl.Size = New System.Drawing.Size(878, 36)
         Me.FooterPl.TabIndex = 10
         '
-        'MetroProgressSpinner
-        '
-        Me.MetroProgressSpinner.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.MetroProgressSpinner.Location = New System.Drawing.Point(645, 10)
-        Me.MetroProgressSpinner.Maximum = 100
-        Me.MetroProgressSpinner.Name = "MetroProgressSpinner"
-        Me.MetroProgressSpinner.Size = New System.Drawing.Size(16, 16)
-        Me.MetroProgressSpinner.Speed = 4.0!
-        Me.MetroProgressSpinner.Style = MetroFramework.MetroColorStyle.Purple
-        Me.MetroProgressSpinner.TabIndex = 10
-        Me.MetroProgressSpinner.UseCustomBackColor = True
-        Me.MetroProgressSpinner.UseSelectable = True
-        Me.MetroProgressSpinner.Value = 30
-        Me.MetroProgressSpinner.Visible = False
-        '
-        'ProgressBar
-        '
-        Me.ProgressBar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.ProgressBar.Location = New System.Drawing.Point(221, 6)
-        Me.ProgressBar.Name = "ProgressBar"
-        Me.ProgressBar.Size = New System.Drawing.Size(394, 21)
-        Me.ProgressBar.Style = MetroFramework.MetroColorStyle.Purple
-        Me.ProgressBar.TabIndex = 9
-        Me.ProgressBar.Visible = False
-        '
         'AcceptBt
         '
         Me.AcceptBt.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -189,7 +163,7 @@ Partial Class ContainerImport
         Me.AcceptBt.Name = "AcceptBt"
         Me.AcceptBt.Size = New System.Drawing.Size(119, 23)
         Me.AcceptBt.TabIndex = 7
-        Me.AcceptBt.Text = "Create Users"
+        Me.AcceptBt.Text = "Start"
         Me.AcceptBt.UseSelectable = True
         '
         'CancelBn
@@ -217,6 +191,15 @@ Partial Class ContainerImport
         Me.ImportBn.TabIndex = 1
         Me.ImportBn.Text = "Import CSV"
         '
+        'TreeViewPanel
+        '
+        Me.TreeViewPanel.Controls.Add(Me.MainTreeView)
+        Me.TreeViewPanel.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TreeViewPanel.Location = New System.Drawing.Point(0, 0)
+        Me.TreeViewPanel.Name = "TreeViewPanel"
+        Me.TreeViewPanel.Size = New System.Drawing.Size(220, 439)
+        Me.TreeViewPanel.TabIndex = 1
+        '
         'ContainerImport
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
@@ -231,15 +214,14 @@ Partial Class ContainerImport
         Me.MainSplitContainer0.ResumeLayout(False)
         CType(Me.MainListView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FooterPl.ResumeLayout(False)
+        Me.TreeViewPanel.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
 
     Friend WithEvents MainSplitContainer0 As SimpleAD.ControlSplitConatiner
     Friend WithEvents CancelBn As MetroFramework.Controls.MetroButton
-    Friend WithEvents ProgressBar As MetroFramework.Controls.MetroProgressBar
     Friend WithEvents AcceptBt As MetroFramework.Controls.MetroButton
-    Friend WithEvents MetroProgressSpinner As MetroFramework.Controls.MetroProgressSpinner
     Friend WithEvents CMStripRowRClick As ContextMenu
     Friend WithEvents FooterPl As ControlFooterPl
     Friend WithEvents MainListView As ControlListView
@@ -249,4 +231,5 @@ Partial Class ContainerImport
     Friend WithEvents MainTreeView As ControlTreeView
     Friend WithEvents StatusColumn As OLVColumn
     Friend WithEvents ImportBn As ControlFlatButton
+    Friend WithEvents TreeViewPanel As Panel
 End Class

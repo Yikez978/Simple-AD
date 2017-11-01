@@ -1,21 +1,19 @@
 ﻿Imports System.DirectoryServices
-Imports System.ComponentModel
 Imports System.Security.AccessControl
 Imports TSUSEREXLib
 Imports System.DirectoryServices.AccountManagement
+Imports SimpleLib
 
 Public Class BulkADWorker
 
     Private _BulkUserContainer As ContainerImport
-    Private _JobClass As JobImport
+    Public _JobClass As JobImport
     Private _ListView As ObjectListView
-    Private _Path
+    Private _Path As String
     Private _NewDomainObjects As List(Of DomainObject)
 
-    Private UIUpdateRequierd As Boolean
-    Private WithEvents UITimer As New Timer
-
-    Private FinishedUserQue As New List(Of DomainObject)
+    Private DomainContext As PrincipalContext
+    Private DirEntry As DirectoryEntry
 
     Public Event JobCompleted()
 
@@ -34,23 +32,18 @@ Public Class BulkADWorker
         _NewDomainObjects = NewDomainObjects
         _ListView = ListView
         _JobClass = JobClass
-        _BulkUserContainer.GetProgressBar.Maximum = _ListView.SelectedObjects.Count
-        _BulkUserContainer.GetProgressBar.Step = 1
+        _JobClass.JobStatus = SimpleADJobStatus.InProgress
+
         _Path = Path
 
-        UITimer.Interval = 1000
-        UITimer.Enabled = True
-        UITimer.Start()
-
         SetupBulkCreationJob()
-
     End Sub
 
-    Private Sub SetupBulkCreationJob()
+    Private Async Sub SetupBulkCreationJob()
         Debug.WriteLine("[Info] BulkADWorkers Class Main Worker Initiated")
 
         Dim strPath As String               ' Binding path.
-        Dim domainContext As PrincipalContext
+
 
         ' Construct the binding string.       
         If String.IsNullOrEmpty(LoginUsernamePrefix) Then
@@ -63,31 +56,38 @@ Public Class BulkADWorker
 
         ' Get AD LDS object.
         Try
-            domainContext = GetPrincipalContext()
-            Debug.WriteLine("[Info] Set up PrincipalContext on " & domainContext.ConnectedServer.ToString)
+            DomainContext = GetPrincipalContext()
+            Debug.WriteLine("[Info] Set up PrincipalContext on " & DomainContext.ConnectedServer.ToString)
         Catch Ex As Exception
             Debug.WriteLine("[Error] Unable to create Domain Context object from PrincipalContext: " & Ex.Message)
             Dim DomainContextError As New FormAlert(DomainContextErrorMessage & Environment.NewLine & Ex.Message, AlertType.ErrorAlert)
             _BulkUserContainer.Invoke(New Action(AddressOf BulkADWorker_Completed))
+            _JobClass.JobStatus = SimpleADJobStatus.Failed
             DomainContextError.ShowDialog()
             Exit Sub
         End Try
 
-        Dim objADAM As New DirectoryEntry(strPath, LoginUsername, LoginPassword, AuthenticationTypes.Secure)
+        DirEntry = New DirectoryEntry(strPath, LoginUsername, LoginPassword, AuthenticationTypes.Secure)
 
-        objADAM.RefreshCache()
+        DirEntry.RefreshCache()
 
-        _BulkUserContainer.ProgressBar.Maximum = _NewDomainObjects.Count
-        _BulkUserContainer.ProgressBar.Step = 1
+        _JobClass.JobStatus = SimpleADJobStatus.InProgress
+
+        Dim CreateUsersTask As New List(Of Task)()
 
         For i As Integer = 0 To _NewDomainObjects.Count - 1
             Dim Iterator As Integer = i
-            Threading.ThreadPool.QueueUserWorkItem(Sub() CreateADObject(_NewDomainObjects(Iterator), objADAM, domainContext))
+            CreateUsersTask.Add(Task.Run(Sub() CreateADObject(_NewDomainObjects(Iterator))))
         Next
+
+        Await Task.WhenAll(CreateUsersTask)
+
+        BulkADWorker_Completed()
 
     End Sub
 
-    Private Sub CreateADObject(ByVal DomainObject As DomainObject, ByVal DirEntry As DirectoryEntry, ByVal DirContext As PrincipalContext)
+    Private Async Sub CreateADObject(ByVal DomainObject As Object)
+
         Try
             If Not DomainObject.Name Is Nothing Then
 
@@ -176,7 +176,7 @@ Public Class BulkADWorker
                     Try
                         If Not UserObject.Password Is Nothing Then
                             Try
-                                Dim UserPr As UserPrincipal = UserPrincipal.FindByIdentity(DirContext, IdentityType.SamAccountName, UserObject.SAMAccountName)
+                                Dim UserPr As UserPrincipal = UserPrincipal.FindByIdentity(DomainContext, IdentityType.SamAccountName, UserObject.SAMAccountName)
                                 UserPr.SetPassword(UserObject.Password)
                                 If _JobClass.EnableAccounts = True Then
                                     UserPr.Enabled = True
@@ -241,7 +241,6 @@ Public Class BulkADWorker
                     UserObject.Status = "Completed"
 
                     objUser.Close()
-                    objUser.Dispose()
 
                 End If
             End If
@@ -263,38 +262,18 @@ Public Class BulkADWorker
                 Debug.WriteLine("[Inner Exception] " & Exc.InnerException.Message)
             End If
         End Try
-        _BulkUserContainer.Invoke(New Action(Of DomainObject)(AddressOf CreateUserFinished), DomainObject)
-    End Sub
 
-    Private Sub UITimer_Tick() Handles UITimer.Tick
-        If UIUpdateRequierd Then
-            UpdateUI()
-            UIUpdateRequierd = False
-        End If
-    End Sub
+        _JobClass.JobProgress = _JobClass.JobProgress + 1
 
-    Private Sub CreateUserFinished(ByVal DomainObject As DomainObject)
-        FinishedUserQue.Add(DomainObject)
-        UIUpdateRequierd = True
-    End Sub
-
-    Private Sub UpdateUI()
-        For Each User As DomainObject In FinishedUserQue
-            _ListView.RefreshObject(User)
-            _BulkUserContainer.ProgressBar.PerformStep()
-        Next
-        FinishedUserQue.Clear()
-        _ListView.UpdateColumnFiltering()
-        If _BulkUserContainer.ProgressBar.Value >= _BulkUserContainer.ProgressBar.Maximum Then
-            BulkADWorker_Completed()
-        End If
+        Await Task.CompletedTask
     End Sub
 
     Private Sub BulkADWorker_Completed()
         RaiseEvent JobCompleted()
-        UITimer.Stop()
-        UITimer.Enabled = False
+        _JobClass.JobStatus = SimpleADJobStatus.Completed
         OngoingBulkJobs.Remove(Me)
+
+        _ListView.RefreshObjects(_NewDomainObjects)
 
         Debug.WriteLine("[Info] All Tasks Completed")
 

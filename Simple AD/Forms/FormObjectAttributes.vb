@@ -2,6 +2,7 @@
 Imports System.DirectoryServices
 Imports System.DirectoryServices.ActiveDirectory
 Imports System.Security.Principal
+Imports SimpleLib
 
 Public Class FormObjectAttributes
 
@@ -36,62 +37,74 @@ Public Class FormObjectAttributes
         Me.Invoke(New Action(Sub() MainListView.BeginUpdate()))
 
         Dim ObjectDirEntry As DirectoryEntry = GetDirEntryFromDomainObject(DomainObject)
-        Dim SchemaCollection As ReadOnlyActiveDirectorySchemaPropertyCollection = GetSchemaPropeterties(ObjectDirEntry.SchemaClassName)
 
-        If Not SchemaCollection Is Nothing Then
+        Try
+            Dim Temp As String = ObjectDirEntry.SchemaClassName
+        Catch ex As Exception
+            Exit Sub
+        End Try
 
-            For i As Integer = 0 To SchemaCollection.Count - 1
+        If ObjectDirEntry.SchemaClassName IsNot Nothing Then
 
-                Dim SchemaProperty As ActiveDirectorySchemaProperty = SchemaCollection.Item(i)
-                Dim Prop As String = SchemaProperty.Name
-                Dim Attr As New SimpleADAttributeFormItem
+            Dim SchemaCollection As ReadOnlyActiveDirectorySchemaPropertyCollection = GetSchemaPropeterties(ObjectDirEntry.SchemaClassName)
 
-                Attr.Name = Prop
-                Attr.FriendlyName = GetFriendlyLDAPName(Prop)
+            If Not SchemaCollection Is Nothing Then
 
-                If Not ObjectDirEntry.Properties(Prop).Value Is Nothing Then
+                For i As Integer = 0 To SchemaCollection.Count - 1
 
-                    Attr.Type = SchemaProperty.Syntax.ToString
-                    Attr.Count = ObjectDirEntry.Properties(Prop).Count
+                    Dim SchemaProperty As ActiveDirectorySchemaProperty = SchemaCollection.Item(i)
+                    Dim Prop As String = SchemaProperty.Name
+                    Dim Attr As New SimpleADAttributeFormItem
 
-                    If Attr.Count > 1 Then
+                    Attr.Name = Prop
+                    'Attr.FriendlyName = GetFriendlyLDAPName(Prop)
 
-                        Dim Builder As New StringBuilder
-                        For j As Integer = 0 To Attr.Count - 1
-                            Builder.AppendLine(ObjectDirEntry.Properties(Prop).Item(j).ToString & ";")
-                        Next
+                    If Not ObjectDirEntry.Properties(Prop).Value Is Nothing Then
 
-                        Attr.Value = Builder.ToString
-                    Else
-                        If ObjectDirEntry.Properties(Prop).Value.GetType() = GetType(Byte()) Then
-                            If DirectCast(ObjectDirEntry.Properties(Prop).Value, Byte()).Length = 16 Then
-                                Dim DecodedByte As Guid = New Guid(DirectCast(ObjectDirEntry.Properties(Prop).Value, Byte()))
-                                Attr.Value = DecodedByte.ToString
-                            End If
-                        ElseIf SchemaProperty.Syntax = ActiveDirectorySyntax.Int64 Then
-                            Attr.Value = ConvertADSLargeIntegerToInt64(ObjectDirEntry.Properties(Prop)(0))
-                        ElseIf SchemaProperty.Syntax = ActiveDirectorySyntax.Sid Then
-                            Attr.Value = New SecurityIdentifier(ObjectDirEntry.Properties(Prop)(0), 0).ToString
-                        ElseIf ObjectDirEntry.Properties(Prop).Value.GetType() = GetType(String) Then
-                            Attr.Value = ObjectDirEntry.Properties(Prop).Value
-                        ElseIf ObjectDirEntry.Properties(Prop).Value.GetType() = GetType(Integer) Then
-                            Attr.Value = ObjectDirEntry.Properties(Prop).Value.ToString
-                        ElseIf ObjectDirEntry.Properties(Prop).Value.GetType() = GetType(DateTime) Then
-                            Attr.Value = ObjectDirEntry.Properties(Prop).Value.ToString
-                        ElseIf ObjectDirEntry.Properties(Prop).Value.GetType() = GetType(Boolean) Then
-                            Attr.Value = ObjectDirEntry.Properties(Prop).Value.ToString
+                        Attr.Type = SchemaProperty.Syntax.ToString
+                        Attr.Count = ObjectDirEntry.Properties(Prop).Count
+
+                        If Attr.Count > 1 Then
+
+                            Dim Builder As New StringBuilder
+                            For j As Integer = 0 To Attr.Count - 1
+                                Builder.AppendLine(ObjectDirEntry.Properties(Prop).Item(j).ToString & ";")
+                            Next
+
+                            Attr.Value = Builder.ToString
                         Else
-                            Attr.Value = "N/A"
+                            If ObjectDirEntry.Properties(Prop).Value.GetType() = GetType(Byte()) Then
+                                If DirectCast(ObjectDirEntry.Properties(Prop).Value, Byte()).Length = 16 Then
+                                    Dim DecodedByte As Guid = New Guid(DirectCast(ObjectDirEntry.Properties(Prop).Value, Byte()))
+                                    Attr.Value = DecodedByte.ToString
+                                End If
+                            ElseIf SchemaProperty.Syntax = ActiveDirectorySyntax.Int64 Then
+                                Attr.Value = ConvertADSLargeIntegerToInt64(ObjectDirEntry.Properties(Prop).Value)
+                            ElseIf SchemaProperty.Syntax = ActiveDirectorySyntax.Sid Then
+                                Attr.Value = New SecurityIdentifier(ObjectDirEntry.Properties(Prop)(0), 0).ToString
+                            ElseIf ObjectDirEntry.Properties(Prop).Value.GetType() = GetType(String) Then
+                                Attr.Value = ObjectDirEntry.Properties(Prop).Value
+                            ElseIf ObjectDirEntry.Properties(Prop).Value.GetType() = GetType(Integer) Then
+                                Attr.Value = ObjectDirEntry.Properties(Prop).Value.ToString
+                            ElseIf ObjectDirEntry.Properties(Prop).Value.GetType() = GetType(DateTime) Then
+                                Attr.Value = ObjectDirEntry.Properties(Prop).Value.ToString
+                            ElseIf ObjectDirEntry.Properties(Prop).Value.GetType() = GetType(Boolean) Then
+                                Attr.Value = ObjectDirEntry.Properties(Prop).Value.ToString
+                            Else
+                                Attr.Value = "N/A"
+                            End If
                         End If
                     End If
-                End If
 
-                If Attr.Name IsNot Nothing Then
-                    AttributesList.Add(Attr)
-                End If
+                    If Attr.Name IsNot Nothing Then
+                        AttributesList.Add(Attr)
+                    End If
 
-            Next
+                Next
+            End If
+
         End If
+
         LoadFinished()
     End Sub
 

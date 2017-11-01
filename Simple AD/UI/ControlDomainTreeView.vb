@@ -1,6 +1,7 @@
 ﻿Imports System.DirectoryServices
 Imports System.DirectoryServices.ActiveDirectory
 Imports System.Runtime.InteropServices
+Imports SimpleLib
 
 Public Class ControlDomainTreeView
     Inherits TreeView
@@ -101,7 +102,7 @@ Public Class ControlDomainTreeView
     End Sub
 
     Public Sub RefreshNodes()
-        SuspendLayout()
+        BeginControlUpdate(Me)
         Nodes.Clear()
         Nodes.Add(BuiltInTreeNode)
         InitialLoad()
@@ -227,7 +228,7 @@ Public Class ControlDomainTreeView
                 Catch ex As Exception
                     Debug.WriteLine("[Error] Error adding completed node to tree: " & ex.Message)
                 Finally
-                    ResumeLayout()
+                    EndControlUpdate(Me)
                 End Try
             End If
         End If
@@ -262,9 +263,9 @@ Public Class ControlDomainTreeView
                     RaiseEvent EveryThingSeleceted()
                 Case Else
                     If Not e.Node.ToolTipText Is Nothing Then
-                        GlobalVariables.SelectedOU = SelectedNode.ToolTipText
+                        SelectedOU = SelectedNode.ToolTipText
                         RaiseEvent SelectedOUChanged(e.Node.ToolTipText)
-                        FormMain.ToolStripStatusLabelStatus.Text = GlobalVariables.SelectedOU
+                        FormMain.ToolStripStatusLabelStatus.Text = SelectedOU
                     End If
             End Select
         End If

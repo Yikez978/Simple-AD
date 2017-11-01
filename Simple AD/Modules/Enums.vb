@@ -19,6 +19,8 @@
         Errors
         Failed
         Completed
+        AccessDenied
+        Canceled
     End Enum
 
     Public Enum ReportType

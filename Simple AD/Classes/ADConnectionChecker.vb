@@ -1,4 +1,5 @@
-﻿Imports System.ComponentModel
+﻿Imports SimpleLib
+Imports System.ComponentModel
 
 Public Class ADConnectionChecker
 
@@ -28,6 +29,7 @@ Public Class ADConnectionChecker
     End Sub
 
     Private Sub BackgroundWorker_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
+
         Dim worker As BackgroundWorker = CType(sender, BackgroundWorker)
 
         If BackgroundWorker.CancellationPending = True Then
@@ -57,11 +59,11 @@ Public Class ADConnectionChecker
         If Not ConnectionState = e.ProgressPercentage Then
 
             If (e.ProgressPercentage = 1) Then
-                FormMain.ConnectionToolStripStatusLabel.Image = New Bitmap(My.Resources.Connection, 26, 26)
+                FormMain.ConnectionToolStripStatusLabel.Image = New Icon(My.Resources.SystemTask, 16, 16).ToBitmap
                 FormMain.ConnectionToolStripStatusLabel.Text = "Connected to " & CStr(GetLocalDomainName())
                 FormMain.ConnectionToolStripStatusLabel.ToolTipText = "Domain: " & GetLocalDomainName() & Environment.NewLine & "FQDN: " & GetFQDN() & Environment.NewLine & "DC Net BIOS: " & GetSingleDomainController()
             Else
-                FormMain.ConnectionToolStripStatusLabel.Image = New Bitmap(My.Resources.Connection, 24, 24)
+                FormMain.ConnectionToolStripStatusLabel.Image = New Icon(My.Resources.SystemTask, 16, 16).ToBitmap
                 FormMain.ConnectionToolStripStatusLabel.Text = "Unable to connect to any valid login server"
             End If
         End If

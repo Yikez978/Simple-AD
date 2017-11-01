@@ -3,18 +3,21 @@ Imports System.Security.AccessControl
 
 Public Module FileSystemHelper
 
-    Public Function FileInUse(ByVal sFile As String) As Boolean
-        Dim thisFileInUse As Boolean = False
-        If System.IO.File.Exists(sFile) Then
-            Try
-                Using f As New IO.FileStream(sFile, FileMode.Open, FileAccess.ReadWrite, FileShare.None)
-                    ' thisFileInUse = False
-                End Using
-            Catch
-                thisFileInUse = True
-            End Try
-        End If
-        Return thisFileInUse
+    Public Function FileInUse(ByVal Path As String) As Boolean
+        Dim Stream As FileStream = Nothing
+        Dim file As FileInfo = New FileInfo(Path)
+
+        Try
+            Stream = file.Open(FileMode.Open, FileAccess.Read, FileShare.None)
+        Catch generatedExceptionName As IOException
+            Return True
+        Finally
+            If Stream IsNot Nothing Then
+                Stream.Close()
+            End If
+        End Try
+
+        Return False
     End Function
 
     Public Function HasWritePermissionOnDir(path As String) As Boolean

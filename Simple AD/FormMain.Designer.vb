@@ -57,6 +57,7 @@ Partial Class FormMain
         Me.ToolStripMenuItemLogin = New System.Windows.Forms.ToolStripMenuItem()
         Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DomainPanelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TaskPanelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.ShowGroupsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ModeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -94,7 +95,8 @@ Partial Class FormMain
         Me.ConnectionToolStripStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.MainSideBarSplitContainer = New SimpleAD.ControlSplitConatiner()
         Me.TaskFlow = New System.Windows.Forms.TableLayoutPanel()
-        Me.SideBarToggle = New MetroFramework.Controls.MetroToggle()
+        Me.TaskHeaderPl = New SimpleAD.ControlHeaderPanel()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.SADMenuStrip.SuspendLayout()
         Me.NodeContextMenu.SuspendLayout()
         Me.ContextMenuStripTrayIcon.SuspendLayout()
@@ -107,6 +109,7 @@ Partial Class FormMain
         Me.MainSideBarSplitContainer.Panel1.SuspendLayout()
         Me.MainSideBarSplitContainer.Panel2.SuspendLayout()
         Me.MainSideBarSplitContainer.SuspendLayout()
+        Me.TaskHeaderPl.SuspendLayout()
         Me.SuspendLayout()
         '
         'SADMenuStrip
@@ -228,7 +231,7 @@ Partial Class FormMain
         '
         'ViewToolStripMenuItem
         '
-        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DomainPanelToolStripMenuItem, Me.ToolStripSeparator2, Me.ShowGroupsToolStripMenuItem, Me.ModeToolStripMenuItem, Me.ToolStripSeparator3, Me.ConsoleToolStripMenuItem, Me.VersionToolStripMenuItem})
+        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DomainPanelToolStripMenuItem, Me.TaskPanelToolStripMenuItem, Me.ToolStripSeparator2, Me.ShowGroupsToolStripMenuItem, Me.ModeToolStripMenuItem, Me.ToolStripSeparator3, Me.ConsoleToolStripMenuItem, Me.VersionToolStripMenuItem})
         Me.ViewToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI Semilight", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ViewToolStripMenuItem.ForeColor = System.Drawing.SystemColors.MenuText
         Me.ViewToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -247,6 +250,18 @@ Partial Class FormMain
         Me.DomainPanelToolStripMenuItem.Name = "DomainPanelToolStripMenuItem"
         Me.DomainPanelToolStripMenuItem.Size = New System.Drawing.Size(156, 22)
         Me.DomainPanelToolStripMenuItem.Text = "Domain Panel..."
+        '
+        'TaskPanelToolStripMenuItem
+        '
+        Me.TaskPanelToolStripMenuItem.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.TaskPanelToolStripMenuItem.Checked = True
+        Me.TaskPanelToolStripMenuItem.CheckOnClick = True
+        Me.TaskPanelToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.TaskPanelToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.TaskPanelToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.TaskPanelToolStripMenuItem.Name = "TaskPanelToolStripMenuItem"
+        Me.TaskPanelToolStripMenuItem.Size = New System.Drawing.Size(156, 22)
+        Me.TaskPanelToolStripMenuItem.Text = "Task Panel"
         '
         'ToolStripSeparator2
         '
@@ -357,7 +372,7 @@ Partial Class FormMain
         Me.MainTabCtrl.Name = "MainTabCtrl"
         Me.MainTabCtrl.Padding = New System.Drawing.Point(48, 0)
         Me.MainTabCtrl.SelectedIndex = 0
-        Me.MainTabCtrl.Size = New System.Drawing.Size(1033, 568)
+        Me.MainTabCtrl.Size = New System.Drawing.Size(1030, 568)
         Me.MainTabCtrl.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight
         Me.MainTabCtrl.TabColor = System.Drawing.SystemColors.Window
         Me.MainTabCtrl.TabIndex = 17
@@ -368,7 +383,7 @@ Partial Class FormMain
         Me.ExplorerTab.Controls.Add(Me.ContainerUserAndComputers)
         Me.ExplorerTab.Location = New System.Drawing.Point(0, 41)
         Me.ExplorerTab.Name = "ExplorerTab"
-        Me.ExplorerTab.Size = New System.Drawing.Size(1033, 527)
+        Me.ExplorerTab.Size = New System.Drawing.Size(1030, 527)
         Me.ExplorerTab.TabIndex = 0
         Me.ExplorerTab.Text = "Users and Computers"
         '
@@ -380,7 +395,7 @@ Partial Class FormMain
         Me.ContainerUserAndComputers.Location = New System.Drawing.Point(0, 0)
         Me.ContainerUserAndComputers.Name = "ContainerUserAndComputers"
         Me.ContainerUserAndComputers.Path = "DC=dataspire,DC=co,DC=uk"
-        Me.ContainerUserAndComputers.Size = New System.Drawing.Size(1033, 527)
+        Me.ContainerUserAndComputers.Size = New System.Drawing.Size(1030, 527)
         Me.ContainerUserAndComputers.TabIndex = 0
         '
         'ImportTab
@@ -389,7 +404,7 @@ Partial Class FormMain
         Me.ImportTab.Controls.Add(Me.ContainerUserImport)
         Me.ImportTab.Location = New System.Drawing.Point(0, 41)
         Me.ImportTab.Name = "ImportTab"
-        Me.ImportTab.Size = New System.Drawing.Size(1030, 527)
+        Me.ImportTab.Size = New System.Drawing.Size(1027, 527)
         Me.ImportTab.TabIndex = 1
         Me.ImportTab.Text = "User Import"
         '
@@ -399,7 +414,7 @@ Partial Class FormMain
         Me.ContainerUserImport.Dock = System.Windows.Forms.DockStyle.Fill
         Me.ContainerUserImport.Location = New System.Drawing.Point(0, 0)
         Me.ContainerUserImport.Name = "ContainerUserImport"
-        Me.ContainerUserImport.Size = New System.Drawing.Size(1030, 527)
+        Me.ContainerUserImport.Size = New System.Drawing.Size(1027, 527)
         Me.ContainerUserImport.TabIndex = 0
         '
         'TemplateTab
@@ -408,7 +423,7 @@ Partial Class FormMain
         Me.TemplateTab.Controls.Add(Me.ContainerTemplate)
         Me.TemplateTab.Location = New System.Drawing.Point(0, 41)
         Me.TemplateTab.Name = "TemplateTab"
-        Me.TemplateTab.Size = New System.Drawing.Size(1030, 527)
+        Me.TemplateTab.Size = New System.Drawing.Size(1027, 527)
         Me.TemplateTab.TabIndex = 2
         Me.TemplateTab.Text = "Template Manager"
         '
@@ -513,51 +528,61 @@ Partial Class FormMain
         'MainSideBarSplitContainer.Panel1
         '
         Me.MainSideBarSplitContainer.Panel1.Controls.Add(Me.MainTabCtrl)
+        Me.MainSideBarSplitContainer.Panel1MinSize = 800
         '
         'MainSideBarSplitContainer.Panel2
         '
-        Me.MainSideBarSplitContainer.Panel2.BackColor = System.Drawing.SystemColors.Control
+        Me.MainSideBarSplitContainer.Panel2.AutoScroll = True
+        Me.MainSideBarSplitContainer.Panel2.BackColor = System.Drawing.SystemColors.Window
         Me.MainSideBarSplitContainer.Panel2.Controls.Add(Me.TaskFlow)
+        Me.MainSideBarSplitContainer.Panel2.Controls.Add(Me.TaskHeaderPl)
         Me.MainSideBarSplitContainer.Size = New System.Drawing.Size(1299, 568)
-        Me.MainSideBarSplitContainer.SplitterDistance = 1033
+        Me.MainSideBarSplitContainer.SpliterHeight = 0
+        Me.MainSideBarSplitContainer.SplitterDistance = 1030
         Me.MainSideBarSplitContainer.SplitterWidth = 1
         Me.MainSideBarSplitContainer.TabIndex = 19
         '
         'TaskFlow
         '
         Me.TaskFlow.AutoScroll = True
-        Me.TaskFlow.BackColor = System.Drawing.SystemColors.Window
+        Me.TaskFlow.AutoSize = True
         Me.TaskFlow.ColumnCount = 1
         Me.TaskFlow.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TaskFlow.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TaskFlow.Location = New System.Drawing.Point(0, 0)
-        Me.TaskFlow.Margin = New System.Windows.Forms.Padding(0)
+        Me.TaskFlow.Location = New System.Drawing.Point(0, 41)
         Me.TaskFlow.Name = "TaskFlow"
         Me.TaskFlow.RowCount = 1
-        Me.TaskFlow.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TaskFlow.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TaskFlow.Size = New System.Drawing.Size(265, 568)
+        Me.TaskFlow.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 68.0!))
+        Me.TaskFlow.Size = New System.Drawing.Size(268, 527)
         Me.TaskFlow.TabIndex = 0
         '
-        'SideBarToggle
+        'TaskHeaderPl
         '
-        Me.SideBarToggle.AutoSize = True
-        Me.SideBarToggle.Checked = True
-        Me.SideBarToggle.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.SideBarToggle.Location = New System.Drawing.Point(721, 4)
-        Me.SideBarToggle.Name = "SideBarToggle"
-        Me.SideBarToggle.Size = New System.Drawing.Size(80, 17)
-        Me.SideBarToggle.Style = MetroFramework.MetroColorStyle.Purple
-        Me.SideBarToggle.TabIndex = 1
-        Me.SideBarToggle.Text = "On"
-        Me.SideBarToggle.UseSelectable = True
+        Me.TaskHeaderPl.BackColor = System.Drawing.SystemColors.Control
+        Me.TaskHeaderPl.Controls.Add(Me.Label1)
+        Me.TaskHeaderPl.Dock = System.Windows.Forms.DockStyle.Top
+        Me.TaskHeaderPl.Location = New System.Drawing.Point(0, 0)
+        Me.TaskHeaderPl.Name = "TaskHeaderPl"
+        Me.TaskHeaderPl.Size = New System.Drawing.Size(268, 41)
+        Me.TaskHeaderPl.TabIndex = 1
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Segoe UI", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.Label1.Location = New System.Drawing.Point(8, 8)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(8)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(63, 30)
+        Me.Label1.TabIndex = 0
+        Me.Label1.Text = "Tasks"
         '
         'FormMain
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(214, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(233, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1299, 614)
-        Me.Controls.Add(Me.SideBarToggle)
         Me.Controls.Add(Me.MainSideBarSplitContainer)
         Me.Controls.Add(Me.StatusStrip)
         Me.Controls.Add(Me.SADMenuStrip)
@@ -581,8 +606,11 @@ Partial Class FormMain
         Me.StatusStrip.PerformLayout()
         Me.MainSideBarSplitContainer.Panel1.ResumeLayout(False)
         Me.MainSideBarSplitContainer.Panel2.ResumeLayout(False)
+        Me.MainSideBarSplitContainer.Panel2.PerformLayout()
         CType(Me.MainSideBarSplitContainer, System.ComponentModel.ISupportInitialize).EndInit()
         Me.MainSideBarSplitContainer.ResumeLayout(False)
+        Me.TaskHeaderPl.ResumeLayout(False)
+        Me.TaskHeaderPl.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -641,6 +669,8 @@ Partial Class FormMain
     Friend WithEvents ContainerUserImport As ContainerImport
     Friend WithEvents ContainerTemplate As ContainerTemplate
     Friend WithEvents MainSideBarSplitContainer As ControlSplitConatiner
-    Friend WithEvents SideBarToggle As Controls.MetroToggle
     Friend WithEvents TaskFlow As TableLayoutPanel
+    Friend WithEvents TaskPanelToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents TaskHeaderPl As ControlHeaderPanel
+    Friend WithEvents Label1 As Label
 End Class

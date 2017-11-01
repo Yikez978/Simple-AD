@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.ApplicationServices
+Imports System.Diagnostics
 
 Namespace My
     ' The following events are available for MyApplication:
@@ -17,7 +18,8 @@ Namespace My
         End Sub
 
         Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
-
+            My.Settings.ImportListViewSettings = Encoding.Default.GetString(GetContainerImport.MainListView.SaveState())
+            My.Settings.ExplorerListViewSettings = Encoding.Default.GetString(GetContainerExplorer.MainListView.SaveState())
         End Sub
 
         Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
