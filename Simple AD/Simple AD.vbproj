@@ -332,7 +332,6 @@
     </Compile>
     <Compile Include="Classes\ActiveDirectoryIcon.vb" />
     <Compile Include="Classes\ADConnectionChecker.vb" />
-    <Compile Include="Classes\ApplicationEvents.vb" />
     <Compile Include="Modules\ArrayHelper.vb" />
     <Compile Include="Classes\BulkADWorker.vb" />
     <Compile Include="Modules\ContextMenuHelper.vb" />
