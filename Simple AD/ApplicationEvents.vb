@@ -11,8 +11,6 @@ Namespace My
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
 
-            Threading.ThreadPool.SetMaxThreads(8, 8)
-
             If My.Settings.Username IsNot Nothing And My.Settings.Password IsNot Nothing Then
                 If My.Settings.ManualLogin = True Then
 

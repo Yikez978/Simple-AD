@@ -11,6 +11,8 @@
 
         InitializeComponent()
 
+        MainListView.SetListStyle()
+
         AddHandler MainListView.SelectionChanged, AddressOf RefreshToolStrip
         AddHandler MainListView.ItemsChanged, AddressOf RefreshToolStrip
 
@@ -40,7 +42,11 @@
         LoadImages()
 
         If Not My.Settings.ExplorerListViewSettings Is Nothing Then
-            MainListView.RestoreState(Encoding.Default.GetBytes(My.Settings.ExplorerListViewSettings))
+            Try
+                MainListView.RestoreState(Encoding.Default.GetBytes(My.Settings.ExplorerListViewSettings))
+            Catch Ex As Exception
+                Debug.WriteLine("[Error] Failed to load user setting for main list: " & Ex.Message)
+            End Try
         End If
 
     End Sub
@@ -141,21 +147,33 @@
     End Sub
 
     Private Sub CopyNameToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CopyNameToolStripMenuItem.Click
-        Dim DomainObject As DomainObject = DirectCast(MainListView.SelectedItem.RowObject, DomainObject)
-        Dim StringToCopy As String = DomainObject.Name
-        My.Computer.Clipboard.SetText(StringToCopy)
+        Try
+            Dim DomainObject As DomainObject = DirectCast(MainListView.SelectedItem.RowObject, DomainObject)
+            Dim StringToCopy As String = DomainObject.Name
+            My.Computer.Clipboard.SetText(StringToCopy)
+        Catch ex As Exception
+            Debug.WriteLine("[Error] Unable to copy the requested attribute to the clipboard: " & ex.Message)
+        End Try
     End Sub
 
     Private Sub CopySamToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CopySamToolStripMenuItem.Click
-        Dim DomainObject As DomainObject = DirectCast(MainListView.SelectedItem.RowObject, DomainObject)
-        Dim StringToCopy As String = DomainObject.SAMAccountName
-        My.Computer.Clipboard.SetText(StringToCopy)
+        Try
+            Dim DomainObject As DomainObject = DirectCast(MainListView.SelectedItem.RowObject, DomainObject)
+            Dim StringToCopy As String = DomainObject.SAMAccountName
+            My.Computer.Clipboard.SetText(StringToCopy)
+        Catch ex As Exception
+            Debug.WriteLine("[Error] Unable to copy the requested attribute to the clipboard: " & ex.Message)
+        End Try
     End Sub
 
     Private Sub CopyDNToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CopyDNToolStripMenuItem.Click
-        Dim DomainObject As DomainObject = DirectCast(MainListView.SelectedItem.RowObject, DomainObject)
-        Dim StringToCopy As String = DomainObject.DistinguishedName
-        My.Computer.Clipboard.SetText(StringToCopy)
+        Try
+            Dim DomainObject As DomainObject = DirectCast(MainListView.SelectedItem.RowObject, DomainObject)
+            Dim StringToCopy As String = DomainObject.DistinguishedName
+            My.Computer.Clipboard.SetText(StringToCopy)
+        Catch ex As Exception
+            Debug.WriteLine("[Error] Unable to copy the requested attribute to the clipboard: " & ex.Message)
+        End Try
     End Sub
 
     'Private Sub MainListView_ItemsChanging(sender As Object, e As ItemsChangingEventArgs) Handles MainListView.ItemsChanging
@@ -187,12 +205,22 @@
 #Region "ListView Context Menu Handlers"
 
     Private Sub RefreshMenuItem_Click(sender As Object, e As EventArgs) Handles RefreshMenuItem.Click
-        Job.Refresh(Nothing)
-        _ControlDomainTreeView.RefreshNodes()
+        If Job IsNot Nothing Then
+            Job.Refresh(Nothing)
+            _ControlDomainTreeView.RefreshNodes()
+        End If
     End Sub
 
     Private Sub RenameMenuItem_Click(sender As Object, e As EventArgs) Handles RenameMenuItem.Click
-        MainListView.EditModel(MainListView.SelectedObject)
+
+        If MainListView.SelectedObject IsNot Nothing Then
+            Try
+                MainListView.EditModel(MainListView.SelectedObject)
+            Catch Ex As Exception
+                Debug.WriteLine("[Error] Unable to begin edit on selected object: " & Ex.Message)
+            End Try
+        End If
+
     End Sub
 
 #End Region

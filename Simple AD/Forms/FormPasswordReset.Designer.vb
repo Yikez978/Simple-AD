@@ -30,8 +30,11 @@ Partial Class FormPasswordReset
         Me.AcceptBn = New MetroFramework.Controls.MetroButton()
         Me.ErrorLb = New System.Windows.Forms.Label()
         Me.ForceResetLb = New System.Windows.Forms.Label()
-        Me.ControlFooterPl1 = New SimpleAD.ControlFooterPl()
         Me.UnlockCb = New System.Windows.Forms.CheckBox()
+        Me.PwdProgressBar = New System.Windows.Forms.ProgressBar()
+        Me.PwdStrLb = New System.Windows.Forms.Label()
+        Me.ScoreLb = New System.Windows.Forms.Label()
+        Me.ControlFooterPl1 = New SimpleAD.ControlFooterPl()
         Me.SuspendLayout()
         '
         'Password0Tb
@@ -54,6 +57,7 @@ Partial Class FormPasswordReset
         Me.Password0Tb.MaxLength = 32767
         Me.Password0Tb.Name = "Password0Tb"
         Me.Password0Tb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(9679)
+        Me.Password0Tb.PromptText = "Type New Password"
         Me.Password0Tb.ScrollBars = System.Windows.Forms.ScrollBars.None
         Me.Password0Tb.SelectedText = ""
         Me.Password0Tb.SelectionLength = 0
@@ -88,6 +92,7 @@ Partial Class FormPasswordReset
         Me.Password1Tb.MaxLength = 32767
         Me.Password1Tb.Name = "Password1Tb"
         Me.Password1Tb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(9679)
+        Me.Password1Tb.PromptText = "Confirm New Password"
         Me.Password1Tb.ScrollBars = System.Windows.Forms.ScrollBars.None
         Me.Password1Tb.SelectedText = ""
         Me.Password1Tb.SelectionLength = 0
@@ -107,7 +112,7 @@ Partial Class FormPasswordReset
         Me.ForceResetToggle.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.ForceResetToggle.AutoSize = True
         Me.ForceResetToggle.BackColor = System.Drawing.SystemColors.Control
-        Me.ForceResetToggle.Location = New System.Drawing.Point(12, 137)
+        Me.ForceResetToggle.Location = New System.Drawing.Point(12, 144)
         Me.ForceResetToggle.Name = "ForceResetToggle"
         Me.ForceResetToggle.Size = New System.Drawing.Size(80, 17)
         Me.ForceResetToggle.Style = MetroFramework.MetroColorStyle.Purple
@@ -120,7 +125,7 @@ Partial Class FormPasswordReset
         '
         Me.CancelBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CancelBn.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.CancelBn.Location = New System.Drawing.Point(341, 131)
+        Me.CancelBn.Location = New System.Drawing.Point(341, 138)
         Me.CancelBn.Name = "CancelBn"
         Me.CancelBn.Size = New System.Drawing.Size(75, 23)
         Me.CancelBn.Style = MetroFramework.MetroColorStyle.Purple
@@ -131,7 +136,7 @@ Partial Class FormPasswordReset
         'AcceptBn
         '
         Me.AcceptBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.AcceptBn.Location = New System.Drawing.Point(260, 131)
+        Me.AcceptBn.Location = New System.Drawing.Point(260, 138)
         Me.AcceptBn.Name = "AcceptBn"
         Me.AcceptBn.Size = New System.Drawing.Size(75, 23)
         Me.AcceptBn.Style = MetroFramework.MetroColorStyle.Purple
@@ -155,30 +160,60 @@ Partial Class FormPasswordReset
         Me.ForceResetLb.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.ForceResetLb.AutoSize = True
         Me.ForceResetLb.BackColor = System.Drawing.SystemColors.Control
-        Me.ForceResetLb.Location = New System.Drawing.Point(98, 138)
+        Me.ForceResetLb.Location = New System.Drawing.Point(98, 145)
         Me.ForceResetLb.Name = "ForceResetLb"
         Me.ForceResetLb.Size = New System.Drawing.Size(114, 13)
         Me.ForceResetLb.TabIndex = 6
         Me.ForceResetLb.Text = "Force Password Reset"
         '
-        'ControlFooterPl1
-        '
-        Me.ControlFooterPl1.BackColor = System.Drawing.SystemColors.Control
-        Me.ControlFooterPl1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.ControlFooterPl1.Location = New System.Drawing.Point(0, 122)
-        Me.ControlFooterPl1.Name = "ControlFooterPl1"
-        Me.ControlFooterPl1.Size = New System.Drawing.Size(428, 44)
-        Me.ControlFooterPl1.TabIndex = 7
-        '
         'UnlockCb
         '
+        Me.UnlockCb.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.UnlockCb.AutoSize = True
-        Me.UnlockCb.Location = New System.Drawing.Point(15, 93)
+        Me.UnlockCb.Location = New System.Drawing.Point(23, 97)
         Me.UnlockCb.Name = "UnlockCb"
         Me.UnlockCb.Size = New System.Drawing.Size(103, 17)
         Me.UnlockCb.TabIndex = 8
         Me.UnlockCb.Text = "Unlock Account"
         Me.UnlockCb.UseVisualStyleBackColor = True
+        '
+        'PwdProgressBar
+        '
+        Me.PwdProgressBar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.PwdProgressBar.Location = New System.Drawing.Point(150, 106)
+        Me.PwdProgressBar.MarqueeAnimationSpeed = 1000
+        Me.PwdProgressBar.Name = "PwdProgressBar"
+        Me.PwdProgressBar.Size = New System.Drawing.Size(246, 10)
+        Me.PwdProgressBar.TabIndex = 9
+        '
+        'PwdStrLb
+        '
+        Me.PwdStrLb.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.PwdStrLb.AutoSize = True
+        Me.PwdStrLb.Location = New System.Drawing.Point(147, 90)
+        Me.PwdStrLb.Name = "PwdStrLb"
+        Me.PwdStrLb.Size = New System.Drawing.Size(96, 13)
+        Me.PwdStrLb.TabIndex = 10
+        Me.PwdStrLb.Text = "Password Strength"
+        '
+        'ScoreLb
+        '
+        Me.ScoreLb.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ScoreLb.AutoSize = True
+        Me.ScoreLb.Location = New System.Drawing.Point(353, 90)
+        Me.ScoreLb.Name = "ScoreLb"
+        Me.ScoreLb.Size = New System.Drawing.Size(34, 13)
+        Me.ScoreLb.TabIndex = 11
+        Me.ScoreLb.Text = "Blank"
+        '
+        'ControlFooterPl1
+        '
+        Me.ControlFooterPl1.BackColor = System.Drawing.SystemColors.Control
+        Me.ControlFooterPl1.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.ControlFooterPl1.Location = New System.Drawing.Point(0, 129)
+        Me.ControlFooterPl1.Name = "ControlFooterPl1"
+        Me.ControlFooterPl1.Size = New System.Drawing.Size(428, 44)
+        Me.ControlFooterPl1.TabIndex = 7
         '
         'FormPasswordReset
         '
@@ -187,7 +222,10 @@ Partial Class FormPasswordReset
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Window
         Me.CancelButton = Me.CancelBn
-        Me.ClientSize = New System.Drawing.Size(428, 166)
+        Me.ClientSize = New System.Drawing.Size(428, 173)
+        Me.Controls.Add(Me.ScoreLb)
+        Me.Controls.Add(Me.PwdStrLb)
+        Me.Controls.Add(Me.PwdProgressBar)
         Me.Controls.Add(Me.UnlockCb)
         Me.Controls.Add(Me.ForceResetLb)
         Me.Controls.Add(Me.ErrorLb)
@@ -219,4 +257,7 @@ Partial Class FormPasswordReset
     Friend WithEvents ForceResetLb As Label
     Friend WithEvents ControlFooterPl1 As ControlFooterPl
     Friend WithEvents UnlockCb As CheckBox
+    Friend WithEvents PwdProgressBar As ProgressBar
+    Friend WithEvents PwdStrLb As Label
+    Friend WithEvents ScoreLb As Label
 End Class

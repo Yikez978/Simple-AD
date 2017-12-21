@@ -23,7 +23,7 @@ Partial Class FormProgressBar
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormProgressBar))
-        Me.MainProgressBar = New MetroFramework.Controls.MetroProgressBar()
+        Me.MainProgressBar = New System.Windows.Forms.ProgressBar()
         Me.MainSpinner = New MetroFramework.Controls.MetroProgressSpinner()
         Me.StatusLb = New System.Windows.Forms.Label()
         Me.SuspendLayout()
@@ -33,7 +33,6 @@ Partial Class FormProgressBar
         Me.MainProgressBar.Location = New System.Drawing.Point(23, 45)
         Me.MainProgressBar.Name = "MainProgressBar"
         Me.MainProgressBar.Size = New System.Drawing.Size(375, 23)
-        Me.MainProgressBar.Style = MetroFramework.MetroColorStyle.Purple
         Me.MainProgressBar.TabIndex = 0
         '
         'MainSpinner
@@ -51,7 +50,7 @@ Partial Class FormProgressBar
         '
         Me.StatusLb.AutoEllipsis = True
         Me.StatusLb.AutoSize = True
-        Me.StatusLb.Location = New System.Drawing.Point(58, 15)
+        Me.StatusLb.Location = New System.Drawing.Point(82, 18)
         Me.StatusLb.Margin = New System.Windows.Forms.Padding(8, 0, 3, 0)
         Me.StatusLb.Name = "StatusLb"
         Me.StatusLb.Size = New System.Drawing.Size(61, 13)
@@ -81,7 +80,7 @@ Partial Class FormProgressBar
 
     End Sub
 
-    Friend WithEvents MainProgressBar As Controls.MetroProgressBar
+    Friend WithEvents MainProgressBar As System.Windows.Forms.ProgressBar
     Friend WithEvents MainSpinner As Controls.MetroProgressSpinner
     Friend WithEvents StatusLb As Label
 End Class

@@ -16,7 +16,7 @@ Public Class ControlListView
         End If
     End Sub
 
-    Public Sub New()
+    Public Sub SetListStyle()
         Font = SystemFonts.DefaultFont
         CellEditUseWholeCell = False
         Cursor = Cursors.Default
@@ -37,6 +37,8 @@ Public Class ControlListView
             HeaderUsesThemes = True
             OwnerDraw = False
             UseHotControls = False
+            UseHotItem = False
+            UseCustomSelectionColors = False
         Else
 
             HeaderMinimumHeight = 32
@@ -112,7 +114,8 @@ Public Class ControlListView
         If Items.Count > 0 Then
             UpdateContextStripText(Items.Count & " Objects")
         Else
-            ClearContext()
+            UpdateContextStripText("Empty")
+            'ClearContext()
         End If
     End Sub
 

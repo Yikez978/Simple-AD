@@ -29,16 +29,26 @@ Public Class FormMain
             Dim RunUpdateCheck As New FormUpdate
         End If
 
-        If Not String.IsNullOrEmpty(GetFQDN()) Then
-            If ValidateActiveDirectoryLogin(LoginUsername, LoginPassword, LoginUsernamePrefix) = True Then
+        If ValidateActiveDirectoryLogin(LoginUsername, LoginPassword, LoginUsernamePrefix) = True Then
 
-                MainDomainTreeViewHandle.RefreshNodes()
+            IsConnected = True
 
-                Dim NewReport As JobExplorer = New JobExplorer(SimpleADReportType.Explorer)
+            MainDomainTreeViewHandle.RefreshNodes()
 
-                UserToolStripMenuItem.Text = GetDisplayName()
+            Dim NewReport As JobExplorer = New JobExplorer(SimpleADReportType.Explorer)
+            UserToolStripMenuItem.Text = GetDisplayName()
 
-            End If
+            ADChecker = New ADConnectionChecker
+            ADChecker.InitiateTimer()
+        Else
+
+            IsConnected = False
+
+            ConnectionToolStripStatusLabel.Image = New Icon(My.Resources.SystemTask, 16, 16).ToBitmap
+            ConnectionToolStripStatusLabel.Text = "Unable to connect to any valid logon server"
+
+            Dim ErrorForm As FormAlert = New FormAlert("Unable to connect to a domain controller!", AlertType.ErrorAlert)
+            ErrorForm.ShowDialog()
         End If
     End Sub
 
@@ -139,9 +149,11 @@ Public Class FormMain
     End Sub
 
     Private Sub FormMain_Shown(sender As Object, e As EventArgs) Handles Me.Shown
-        GetContainerExplorer.DomainTreeView.SelectedNode = GetContainerExplorer.DomainTreeView.RootNode
-        ADChecker = New ADConnectionChecker
-        ADChecker.InitiateTimer()
+        Try
+            GetContainerExplorer.DomainTreeView.SelectedNode = GetContainerExplorer.DomainTreeView.RootNode
+        Catch
+            Exit Sub
+        End Try
     End Sub
 
 #End Region

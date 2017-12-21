@@ -68,8 +68,10 @@
     End Sub
 
     Public Sub ImportCSV_Click(sender As Object, e As EventArgs)
-        Dim ImportForm As FormImport = New FormImport()
-        ImportForm.ShowDialog()
+        If IsConnected Then
+            Dim ImportForm As FormImport = New FormImport()
+            ImportForm.ShowDialog()
+        End If
     End Sub
 
     Public Sub TemplateManager_Click(sender As Object, e As EventArgs)

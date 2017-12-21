@@ -1,4 +1,6 @@
-﻿Public Class FormPasswordReset
+﻿Imports System
+
+Public Class FormPasswordReset
 
     Public Property Password As String
     Public Property UnlockAccount As Boolean
@@ -32,5 +34,31 @@
         If ErrorLb.Visible = True Then
             ErrorLb.Visible = False
         End If
+
+        Dim passwordStrengthScore As PasswordScore = PasswordAdvisor.CheckStrength(Password0Tb.Text)
+
+        Select Case passwordStrengthScore
+            Case PasswordScore.Blank
+                PwdProgressBar.Value = 0
+            Case PasswordScore.TooShort
+                PwdProgressBar.Value = 12
+            Case PasswordScore.RequirementsNotMet
+                PwdProgressBar.Value = 24
+            Case PasswordScore.VeryWeak
+                PwdProgressBar.Value = 32
+            Case PasswordScore.Weak
+                PwdProgressBar.Value = 40
+            Case PasswordScore.Fair
+                PwdProgressBar.Value = 52
+            Case PasswordScore.Medium
+                PwdProgressBar.Value = 64
+            Case PasswordScore.Strong
+                PwdProgressBar.Value = 72
+            Case PasswordScore.VeryStrong
+                PwdProgressBar.Value = 100
+        End Select
+
+        ScoreLb.Text = passwordStrengthScore.ToString
+
     End Sub
 End Class

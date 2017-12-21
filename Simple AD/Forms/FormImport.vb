@@ -18,6 +18,9 @@ Public Class FormImport
     Public Sub New(Optional File As String = Nothing)
         InitializeComponent()
 
+        MainListView.SetListStyle()
+        ResultsListView.SetListStyle()
+
         Debug.WriteLineIf(Not String.IsNullOrEmpty(File), "[Debug] New Form Import created with path: " & File)
 
         ImportJob = New JobImport(File, Me)

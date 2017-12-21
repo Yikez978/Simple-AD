@@ -10,7 +10,7 @@
         MainPb.Image = New Icon(My.Resources.JobMove, New Size(16, 16)).ToBitmap
 
         DomainTree = New ControlDomainTreeView
-        DomainTree.BorderStyle = BorderStyle.None
+        DomainTree.BorderStyle = BorderStyle.FixedSingle
         DomainTree.Dock = DockStyle.Fill
         DomainTree.BringToFront()
         MainPl.Controls.Add(DomainTree)

@@ -53,15 +53,6 @@ Public Class JobExplorer
             End If
         End If
 
-        If Not lastReportType = _Type Then
-            Setcolumns()
-        ElseIf ColumnRebuildRequired = True Then
-            Setcolumns()
-        End If
-
-        ColumnRebuildRequired = False
-        lastReportType = _Type
-
         If My.Settings.UsePaging Then
             Select Case _Type
                 Case SimpleADReportType.Explorer
@@ -72,8 +63,6 @@ Public Class JobExplorer
         Else
             Threading.ThreadPool.QueueUserWorkItem(Sub() GetObjects())
         End If
-
-
 
     End Sub
 
@@ -88,11 +77,7 @@ Public Class JobExplorer
             startingDn = JobPath
         End If
 
-
-
-        '' for returning up to 5 entries in each page
         Dim pageSize As Integer = 100
-        '' for tracking the pages returned by the search request
         Dim pageCount As Integer = 0
 
         Dim Connection As LdapConnection = New LdapConnection(hostOrDomainName)
@@ -120,33 +105,14 @@ Public Class JobExplorer
             End If
         End If
 
-        Debug.WriteLine("[Debug] Attributes to Load: [" & String.Join(", ", Attributes) & "]")
+        Dim SearchRequest As SearchRequest = New SearchRequest(startingDn, ldapSearchFilter, ScopeLvel, Attributes)
+        Dim pageRequest As PageResultRequestControl = New PageResultRequestControl(pageSize)
 
-        '' create a SearchRequest object
-        Dim SearchRequest As SearchRequest =
-            New SearchRequest(startingDn, ldapSearchFilter, ScopeLvel, Attributes)
 
-        '' create the PageResultRequestControl object 
-        '' pass it the size of each page.
-
-        Dim pageRequest As PageResultRequestControl =
-            New PageResultRequestControl(pageSize)
-
-        '' add the PageResultRequestControl object to the
-        '' SearchRequest object's directory control collection 
-        '' to enable a paged search request
         SearchRequest.Controls.Add(pageRequest)
 
-        '' turn off referral chasing so that data from other partitions Is
-        '' Not returned. This Is necessary when scoping a search
-        '' to a single naming context, such as a domain Or the 
-        '' configuration container
-        Dim searchOptions As SearchOptionsControl =
-            New SearchOptionsControl(SearchOption.DomainScope)
+        Dim searchOptions As SearchOptionsControl = New SearchOptionsControl(SearchOption.DomainScope)
 
-        '' add the SearchOptionsControl object to the
-        '' SearchRequest object's directory control collection 
-        '' to disable referral chasing
         SearchRequest.Controls.Add(searchOptions)
 
         Dim NewDomainObjectList As List(Of Object) = New List(Of Object)
@@ -154,57 +120,42 @@ Public Class JobExplorer
 
         While True
 
-            '' increment the pageCount by 1
+
             pageCount = pageCount + 1
 
-            '' cast the directory response into a 
-            '' SearchResponse object
-            Dim SearchResponse As SearchResponse =
-            DirectCast(Connection.SendRequest(SearchRequest), SearchResponse)
+            Try
 
-            '' verify support for this advanced search operation
-            If (Not SearchResponse.Controls.Length = 1 Or (SearchResponse.Controls(0).GetType IsNot GetType(PageResultResponseControl))) Then
+                Dim SearchResponse As SearchResponse = DirectCast(Connection.SendRequest(SearchRequest), SearchResponse)
 
-                Console.WriteLine("[Debug] The server cannot page the result set")
-                Return
-            End If
-
-            '' cast the diretory control into 
-            '' a PageResultResponseControl object.
-            Dim pageResponse As PageResultResponseControl =
-            DirectCast(SearchResponse.Controls(0), PageResultResponseControl)
-
-            '' display the retrieved page number And the number of 
-            '' directory entries in the retrieved page                    
-            Debug.WriteLine("[Debug] Page:{0} contains {1} response entries", pageCount, SearchResponse.Entries.Count)
-
-            '' display the entries within this page
-            For Each entry As SearchResultEntry In SearchResponse.Entries
-
-                Dim NewObject As Object
-
-                NewObject = GetObjectAttributesFromResultEntry(entry, Attributes)
-
-
-                If NewObject IsNot Nothing Then
-                    NewDomainObjectList.Add(DirectCast(NewObject, DomainObject))
+                If (Not SearchResponse.Controls.Length = 1 Or (SearchResponse.Controls(0).GetType IsNot GetType(PageResultResponseControl))) Then
+                    Debug.WriteLine("[Debug] The server cannot page the result set")
+                    Return
                 End If
 
-
-                Debug.WriteLine(String.Format("[Debug] {0}:{1}", SearchResponse.Entries.IndexOf(entry) + 1, entry.DistinguishedName))
-            Next
+                Dim pageResponse As PageResultResponseControl = DirectCast(SearchResponse.Controls(0), PageResultResponseControl)
 
 
-            '' if this Is true, there 
-            '' are no more pages to request
-            If pageResponse.Cookie.Length = 0 Then
+                For Each entry As SearchResultEntry In SearchResponse.Entries
+
+                    Dim NewObject As Object
+                    NewObject = GetObjectAttributesFromResultEntry(entry, Attributes)
+
+                    If NewObject IsNot Nothing Then
+                        NewDomainObjectList.Add(DirectCast(NewObject, DomainObject))
+                    End If
+
+                Next
+
+                If pageResponse.Cookie.Length = 0 Then
+                    Exit While
+                End If
+
+                pageRequest.Cookie = pageResponse.Cookie
+
+            Catch Ex As Exception
+                Debug.WriteLine("[Error] Failed to complete paged LDAP search: " & Ex.Message)
                 Exit While
-            End If
-            '' set the cookie of the pageRequest equal to the cookie 
-            '' of the pageResponse to request the next page of data
-            '' in the send request
-            pageRequest.Cookie = pageResponse.Cookie
-
+            End Try
         End While
 
         MainListView.Invoke(Sub() AfterFindObjects(NewDomainObjectList))
@@ -279,6 +230,15 @@ Public Class JobExplorer
 
         If DomainObjectList IsNot Nothing Then
 
+            If Not lastReportType = _Type Then
+                Setcolumns()
+            ElseIf ColumnRebuildRequired = True Then
+                Setcolumns()
+            End If
+
+            ColumnRebuildRequired = False
+            lastReportType = _Type
+
             MainListView.SetObjects(DomainObjectList)
             JobStatus = SimpleADJobStatus.Completed
 
@@ -290,8 +250,6 @@ Public Class JobExplorer
     End Sub
 
     Public Sub Setcolumns()
-
-        MainListView.SuspendLayout
 
         MainListView.BeginUpdate()
         MainListView.AllColumns.Clear()
@@ -316,27 +274,6 @@ Public Class JobExplorer
             .Text = "Description",
             .IsTileViewColumn = True,
             .Width = 253
-        }
-
-        Dim FillerColStyle As HeaderFormatStyle = New HeaderFormatStyle
-
-        With FillerColStyle
-            .Hot.BackColor = SystemColors.Window
-            .Normal.BackColor = SystemColors.Window
-            .Pressed.BackColor = SystemColors.Window
-
-            .Hot.FrameWidth = 0
-            .Normal.FrameWidth = 0
-            .Pressed.FrameWidth = 0
-        End With
-
-        Dim FillerCol As OLVColumn = New OLVColumn With {
-            .FillsFreeSpace = True,
-            .Text = "",
-            .ShowTextInHeader = False,
-            .Searchable = False,
-            .Sortable = False,
-            .HeaderFormatStyle = FillerColStyle
         }
 
         MainListView.PrimarySortColumn = TypeCol
@@ -369,6 +306,28 @@ Public Class JobExplorer
         End If
 
         If My.Settings.UseNativeWindowsTheme = False Then
+
+            Dim FillerColStyle As HeaderFormatStyle = New HeaderFormatStyle
+
+            With FillerColStyle
+                .Hot.BackColor = SystemColors.Window
+                .Normal.BackColor = SystemColors.Window
+                .Pressed.BackColor = SystemColors.Window
+
+                .Hot.FrameWidth = 0
+                .Normal.FrameWidth = 0
+                .Pressed.FrameWidth = 0
+            End With
+
+            Dim FillerCol As OLVColumn = New OLVColumn With {
+            .FillsFreeSpace = True,
+            .Text = "",
+            .ShowTextInHeader = False,
+            .Searchable = False,
+            .Sortable = False,
+            .HeaderFormatStyle = FillerColStyle
+            }
+
             MainListView.AllColumns.Add(FillerCol)
         End If
 
@@ -381,7 +340,11 @@ Public Class JobExplorer
                 UserReportContainer.Invoke(New Action(Of Exception)(AddressOf ReportError), ErrorMessage)
             Else
                 Debug.WriteLine("[Error] " & ErrorMessage.Message)
-                Debug.WriteLine("[Error] " & ErrorMessage.StackTrace.ToString)
+
+                If ErrorMessage.StackTrace IsNot Nothing Then
+                    Debug.WriteLine("[Error] " & ErrorMessage.StackTrace.ToString)
+                End If
+
             End If
         End If
     End Sub

@@ -5,7 +5,7 @@ Public Class JobMoveBulk
 
     Private TargetDomainObjects As IList
     Private TargetExplorerJob As JobExplorer
-
+    Private ProgressForm As FormProgressBar
     Private TargetOU As String
     Private ObjectErrors As New List(Of DomainObject)
 
@@ -19,6 +19,7 @@ Public Class JobMoveBulk
         TargetExplorerJob = Job
 
         If TargetDomainObjects.Count > 1 Then
+            ProgressForm = New FormProgressBar("Deleting Objects") With {.Maximum = TargetDomainObjects.Count - 1, .BarStep = 1}
             MoveBulk()
         End If
 
@@ -41,6 +42,8 @@ Public Class JobMoveBulk
                 MoveTasks.Add(Task.Run(Sub() MoveObject(ObjectToMove)))
             Next
 
+            ProgressForm.Show()
+
             Await Task.WhenAll(MoveTasks)
 
             MoveBulkFinished()
@@ -53,16 +56,24 @@ Public Class JobMoveBulk
 
     Private Async Sub MoveObject(ByVal DomainObject As DomainObject)
 
+        ProgressForm.SetStatusText(String.Format("Moving {0}...", DomainObject.Name))
+
         If Not MoveADObject(DomainObject, TargetOU) = True Then
             ObjectErrors.Add(DomainObject)
         End If
 
         JobProgress = JobProgress + 1
 
+        If ProgressForm IsNot Nothing Then
+            ProgressForm.PerformStep()
+        End If
+
         Await Task.CompletedTask
     End Sub
 
     Private Sub MoveBulkFinished()
+
+        ProgressForm.Dispose()
 
         If Not ObjectErrors.Count > 0 Then
             JobStatus = SimpleADJobStatus.Completed

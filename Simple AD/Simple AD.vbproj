@@ -200,7 +200,9 @@
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="Classes\HTML.vb" />
+    <Compile Include="Classes\PasswordAdvisor.vb" />
     <Compile Include="Classes\ReportTreeNode.vb" />
+    <Compile Include="Classes\TaskBarProgress.vb" />
     <Compile Include="Forms\FormImport.Designer.vb">
       <DependentUpon>FormImport.vb</DependentUpon>
     </Compile>

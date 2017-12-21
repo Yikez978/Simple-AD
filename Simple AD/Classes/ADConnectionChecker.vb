@@ -2,6 +2,7 @@
 
     Private ConnectionState As Boolean
     Private IsRunning As Boolean
+    Private ErrorForm As FormAlert
 
     Public Sub InitiateTimer()
 
@@ -40,14 +41,21 @@
             Debug.WriteLine("[Debug] Updating Connection state")
 
             If State Then
+
+                Dim DomainName As String = GetLocalDomainName()
+
                 FormMain.ConnectionToolStripStatusLabel.Image = New Icon(My.Resources.SystemTask, 16, 16).ToBitmap
-                FormMain.ConnectionToolStripStatusLabel.Text = "Connected to " & GetLocalDomainName()
-                FormMain.ConnectionToolStripStatusLabel.ToolTipText = "Domain: " & GetLocalDomainName() & Environment.NewLine & "FQDN: " & GetFQDN() & Environment.NewLine & "DC Net BIOS: " & GetSingleDomainController()
+                FormMain.ConnectionToolStripStatusLabel.Text = "Connected to " & DomainName
+                FormMain.ConnectionToolStripStatusLabel.ToolTipText = "Domain: " & DomainName & Environment.NewLine & "FQDN: " & GetFQDN() & Environment.NewLine & "DC Net BIOS: " & GetSingleDomainController()
             Else
                 FormMain.ConnectionToolStripStatusLabel.Image = New Icon(My.Resources.SystemTask, 16, 16).ToBitmap
-                FormMain.ConnectionToolStripStatusLabel.Text = "Unable to connect to any valid login server"
-            End If
+                FormMain.ConnectionToolStripStatusLabel.Text = "Unable to connect to any valid logon server"
 
+                If ErrorForm Is Nothing Then
+                    ErrorForm = New FormAlert("Unable to connect to a domain controller!", AlertType.ErrorAlert)
+                    ErrorForm.ShowDialog()
+                End If
+            End If
         End If
 
         IsRunning = False

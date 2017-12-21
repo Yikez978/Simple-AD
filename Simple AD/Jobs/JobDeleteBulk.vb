@@ -6,7 +6,7 @@ Public Class JobDeleteBulk
 
     Private TargetDomainObjects As IList
     Private TargetExplorerJob As JobExplorer
-
+    Private ProgressForm As FormProgressBar
     Private ObjectErrors As New List(Of DomainObject)
 
     Public Sub New(ByVal DomainObjects As IList, ByVal Job As JobExplorer)
@@ -19,6 +19,7 @@ Public Class JobDeleteBulk
         TargetExplorerJob = Job
 
         If TargetDomainObjects.Count > 1 Then
+            ProgressForm = New FormProgressBar("Deleting Objects") With {.Maximum = TargetDomainObjects.Count - 1, .BarStep = 1}
             DeleteBulk()
         End If
 
@@ -40,6 +41,8 @@ Public Class JobDeleteBulk
                 DeleteTasks.Add(Task.Run(Sub() DeleteObject(ObjectToDelete)))
             Next
 
+            ProgressForm.Show()
+
             Await Task.WhenAll(DeleteTasks)
 
             DeletBulkFinished()
@@ -51,16 +54,24 @@ Public Class JobDeleteBulk
 
     Private Async Sub DeleteObject(ByVal DomainObject As DomainObject)
 
+        ProgressForm.SetStatusText(String.Format("Deleting {0}...", DomainObject.Name))
+
         If Not DeleteADObject(DomainObject) Then
             ObjectErrors.Add(DomainObject)
         End If
 
         JobProgress = JobProgress + 1
 
+        If ProgressForm IsNot Nothing Then
+            ProgressForm.PerformStep()
+        End If
+
         Await Task.CompletedTask
     End Sub
 
     Private Sub DeletBulkFinished()
+
+        ProgressForm.Dispose()
 
         If Not ObjectErrors.Count > 0 Then
             TargetExplorerJob.Refresh()
