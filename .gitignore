@@ -260,6 +260,6 @@ paket-files/
 __pycache__/
 *.pyc
 
-/Output/
-/packages/
-/Test CSVs/
+Output/
+packages/
+Test CSVs/
