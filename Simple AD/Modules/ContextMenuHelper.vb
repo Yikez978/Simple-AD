@@ -1,6 +1,4 @@
-﻿Imports SimpleLib
-
-Public Module ContextMenuHelper
+﻿Public Module ContextMenuHelper
 
     Public Sub GetListViewConextMenu(ListView As ListView, e As EventArgs, ContextMenuStrip As ContextMenu, sender As Object, RowObject As DomainObject)
         If RowObject Is Nothing Then
@@ -21,7 +19,15 @@ Public Module ContextMenuHelper
                 Debug.WriteLine("[INFO] " & RowObject.Type & " Object Selected")
                 Select Case RowObject.Type
                     Case "user"
-                        EnableMenuItems(ContextMenuStrip, SingleUserMenuItems)
+                        Dim User As UserDomainObject = DirectCast(RowObject, UserDomainObject)
+
+                        Dim UserAccountControl As Integer = User.UserAccountControl
+                        If UserAccountControl = 546 Or UserAccountControl = 514 Or UserAccountControl = 66082 Or UserAccountControl = 66050 Then
+                            EnableMenuItems(ContextMenuStrip, SingleUserMenuItemsDisabled)
+                        Else
+                            EnableMenuItems(ContextMenuStrip, SingleUserMenuItemsEnabled)
+                        End If
+
                     Case "computer"
                         EnableMenuItems(ContextMenuStrip, ComputerMenuItems)
                     Case "container"
@@ -35,8 +41,8 @@ Public Module ContextMenuHelper
                             DisableMenuItem("DeleteSingleToolStripMenuItem", ContextMenuStrip)
                             DisableMenuItem("MoveSingleToolStripMenuItem", ContextMenuStrip)
                         End If
-
                 End Select
+
             End If
             ContextMenuStrip.Show(ListView, ListView.PointToClient(Cursor.Position))
         End If
@@ -48,7 +54,7 @@ Public Module ContextMenuHelper
 
     Private Sub EnableMenuItems(ByVal ContextMenuStrip As ContextMenu, MenuItems As String())
         For Each MenuItem As MenuItem In ContextMenuStrip.MenuItems
-            If MenuItems.Contains(MenuItem.Tag) Then
+            If MenuItems.Contains(MenuItem.Tag.ToString) Then
                 MenuItem.Visible = True
             End If
         Next
@@ -56,17 +62,26 @@ Public Module ContextMenuHelper
 
     Private Sub DisableMenuItem(ByVal MenuItemTag As String, ByVal ContextMenuStrip As ContextMenu)
         For Each MenuItem As MenuItem In ContextMenuStrip.MenuItems
-            If MenuItem.Tag = MenuItemTag Then
+            If MenuItem.Tag.ToString = MenuItemTag Then
                 MenuItem.Enabled = False
             End If
         Next
     End Sub
 
-    Private SingleUserMenuItems As String() = {
+    Private SingleUserMenuItemsEnabled As String() = {
         "RenameMenuItem",
         "CopyToClipBoardToolStripMenuItem",
         "ResetSingleToolStripMenuItem",
-        "EnableDisableSingleToolStripMenuItem",
+        "DisableToolStripMenuItem",
+        "MoveSingleToolStripMenuItem",
+        "DeleteSingleToolStripMenuItem",
+        "PropertiesToolStripMenuItem"
+        }
+    Private SingleUserMenuItemsDisabled As String() = {
+        "RenameMenuItem",
+        "CopyToClipBoardToolStripMenuItem",
+        "ResetSingleToolStripMenuItem",
+        "EnableToolStripMenuItem",
         "MoveSingleToolStripMenuItem",
         "DeleteSingleToolStripMenuItem",
         "PropertiesToolStripMenuItem"
@@ -74,7 +89,8 @@ Public Module ContextMenuHelper
     Private BulkUserMenuItems As String() = {
         "BulkModifyToolStripMenuItem",
         "ResetBulkToolStripMenuItem",
-        "EnableDisableBulkToolStripMenuItem",
+        "EnableBulkToolStripMenuItem",
+        "DisableBulkToolStripMenuItem",
         "MoveBulkToolStripMenuItem",
         "DeleteBulkToolStripMenuItem",
         "PropertiesToolStripMenuItem"

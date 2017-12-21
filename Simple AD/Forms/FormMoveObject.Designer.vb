@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FormMoveObject
-    Inherits SimpleAD.FormSimpleAD
+    Inherits Form
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()>
@@ -27,7 +27,7 @@ Partial Class FormMoveObject
         Me.AcceptBn = New MetroFramework.Controls.MetroButton()
         Me.FooterPl = New System.Windows.Forms.Panel()
         Me.OULb = New System.Windows.Forms.Label()
-        Me.MainPl = New System.Windows.Forms.Panel()
+        Me.MainPl = New SimpleAD.ControlFooterPl()
         Me.MainPb = New System.Windows.Forms.PictureBox()
         Me.FooterPl.SuspendLayout()
         CType(Me.MainPb, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -61,6 +61,7 @@ Partial Class FormMoveObject
         Me.FooterPl.Controls.Add(Me.CancelBn)
         Me.FooterPl.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.FooterPl.Location = New System.Drawing.Point(0, 278)
+        Me.FooterPl.Margin = New System.Windows.Forms.Padding(3, 0, 3, 3)
         Me.FooterPl.MaximumSize = New System.Drawing.Size(0, 48)
         Me.FooterPl.MinimumSize = New System.Drawing.Size(0, 48)
         Me.FooterPl.Name = "FooterPl"
@@ -70,11 +71,10 @@ Partial Class FormMoveObject
         'OULb
         '
         Me.OULb.BackColor = System.Drawing.SystemColors.Window
-        Me.OULb.Font = New System.Drawing.Font("Segoe UI Semilight", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.OULb.ForeColor = System.Drawing.SystemColors.ControlText
         Me.OULb.Location = New System.Drawing.Point(53, 9)
         Me.OULb.Name = "OULb"
-        Me.OULb.Size = New System.Drawing.Size(313, 49)
+        Me.OULb.Size = New System.Drawing.Size(313, 32)
         Me.OULb.TabIndex = 3
         Me.OULb.Text = "Please Select a container..."
         '
@@ -83,16 +83,15 @@ Partial Class FormMoveObject
         Me.MainPl.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.MainPl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.MainPl.Location = New System.Drawing.Point(15, 58)
+        Me.MainPl.Location = New System.Drawing.Point(0, 58)
         Me.MainPl.Margin = New System.Windows.Forms.Padding(0)
         Me.MainPl.Name = "MainPl"
-        Me.MainPl.Size = New System.Drawing.Size(352, 203)
+        Me.MainPl.Padding = New System.Windows.Forms.Padding(0, 1, 0, 0)
+        Me.MainPl.Size = New System.Drawing.Size(378, 220)
         Me.MainPl.TabIndex = 1
         '
         'MainPb
         '
-        Me.MainPb.Image = Global.SimpleAD.My.Resources.Resources.Move
         Me.MainPb.Location = New System.Drawing.Point(15, 9)
         Me.MainPb.Name = "MainPb"
         Me.MainPb.Size = New System.Drawing.Size(32, 32)
@@ -126,6 +125,6 @@ Partial Class FormMoveObject
     Friend WithEvents AcceptBn As Controls.MetroButton
     Friend WithEvents FooterPl As Panel
     Friend WithEvents OULb As Label
-    Friend WithEvents MainPl As Panel
+    Friend WithEvents MainPl As ControlFooterPl
     Friend WithEvents MainPb As PictureBox
 End Class

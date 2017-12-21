@@ -43,24 +43,27 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>SimpleAD.xml</DocumentationFile>
-    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>
+    </NoWarn>
     <Prefer32Bit>false</Prefer32Bit>
-    <WarningsAsErrors>
-    </WarningsAsErrors>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
+    <Optimize>true</Optimize>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>SimpleAD.xml</DocumentationFile>
-    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>
+    </NoWarn>
     <Prefer32Bit>false</Prefer32Bit>
-    <WarningsAsErrors>
-    </WarningsAsErrors>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -69,10 +72,10 @@
     <OptionCompare>Binary</OptionCompare>
   </PropertyGroup>
   <PropertyGroup>
-    <OptionStrict>Off</OptionStrict>
+    <OptionStrict>On</OptionStrict>
   </PropertyGroup>
   <PropertyGroup>
-    <OptionInfer>On</OptionInfer>
+    <OptionInfer>Off</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>SimpleADIcon.ico</ApplicationIcon>
@@ -96,15 +99,37 @@
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <Optimize>true</Optimize>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AutoUpdater.NET, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\AutoUpdater.NET\AutoUpdater.NET\bin\Debug\v4.0\AutoUpdater.NET.dll</HintPath>
     </Reference>
-    <Reference Include="Interop.TSUSEREXLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>bin\Debug\Interop.TSUSEREXLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.TSUSEREXLib">
+      <HintPath>..\packages\Interop.TSUSEREXLib.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
       <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.dll</HintPath>
@@ -156,9 +181,6 @@
     <Reference Include="System.Windows.Forms">
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Windows.Forms.Ribbon35">
-      <HintPath>..\packages\System.Windows.Forms.Ribbon35.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
@@ -171,13 +193,32 @@
     <Reference Include="System.Data.DataSetExtensions">
       <Private>False</Private>
     </Reference>
-    <Reference Include="UNOLibs.Net, Version=2.0.0.5, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\UNOLibs.Net.dll</HintPath>
+    <Reference Include="UNOLibs.Net">
+      <HintPath>..\packages\UNOLibs.Net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="Classes\HTML.vb" />
+    <Compile Include="Classes\ReportTreeNode.vb" />
+    <Compile Include="Forms\FormImport.Designer.vb">
+      <DependentUpon>FormImport.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormImport.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormNewUser.Designer.vb">
+      <DependentUpon>FormNewUser.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormNewUser.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormTemplateManager.Designer.vb">
+      <DependentUpon>FormTemplateManager.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormTemplateManager.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\FormNewTemplate.Designer.vb">
       <DependentUpon>FormNewTemplate.vb</DependentUpon>
     </Compile>
@@ -199,12 +240,18 @@
     <Compile Include="Jobs\JobDelete.vb" />
     <Compile Include="Jobs\JobDeleteBulk.vb" />
     <Compile Include="Jobs\JobEnableDisable.vb" />
+    <Compile Include="Jobs\JobEnableDisabledBulk.vb" />
+    <Compile Include="Jobs\JobExplorer.vb" />
+    <Compile Include="Jobs\JobImport.vb" />
     <Compile Include="Jobs\JobMove.vb" />
     <Compile Include="Jobs\JobMoveBulk.vb" />
+    <Compile Include="Jobs\JobNewUser.vb" />
     <Compile Include="Jobs\JobPasswordReset.vb" />
     <Compile Include="Jobs\JobRename.vb" />
+    <Compile Include="Jobs\SimpleADJob.vb" />
     <Compile Include="Modules\ConsoleHandler.vb" />
-    <Compile Include="Modules\EnvironmentHelper.vb" />
+    <Compile Include="Modules\Delegates.vb" />
+    <Compile Include="Modules\ExportHandler.vb" />
     <Compile Include="Modules\FormHelper.vb" />
     <Compile Include="Forms\FormProgressBar.Designer.vb">
       <DependentUpon>FormProgressBar.vb</DependentUpon>
@@ -214,29 +261,23 @@
     </Compile>
     <Compile Include="Modules\ImportHelper.vb" />
     <Compile Include="Modules\StatusStripHandler.vb" />
-    <Compile Include="Modules\TaskManager.vb" />
     <Compile Include="Modules\TemplateImageHandler.vb" />
-    <Compile Include="Modules\XMLHelper.vb" />
     <Compile Include="Classes\WindowsAPI.vb" />
-    <Compile Include="Jobs\SimpleADJob.vb" />
-    <Compile Include="Modules\Enums.vb" />
     <Compile Include="Modules\ErrorMessages.vb" />
     <Compile Include="Modules\GetObject.vb" />
     <Compile Include="Modules\ImageHelper.vb" />
     <Compile Include="Modules\PaintHelper.vb" />
-    <Compile Include="Modules\ProtectedData.vb" />
     <Compile Include="Modules\ErrorHandling.vb" />
+    <Compile Include="Modules\ToolStripHandler.vb" />
+    <Compile Include="Modules\UIHandlers.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Objects\UserTemplate.vb" />
-    <Compile Include="TabContainers\ContainerTemplate.Designer.vb">
-      <DependentUpon>ContainerTemplate.vb</DependentUpon>
-    </Compile>
-    <Compile Include="TabContainers\ContainerTemplate.vb">
-      <SubType>UserControl</SubType>
+    <Compile Include="Settings.vb" />
+    <Compile Include="UI\ControlCustomListView.vb">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\ControlFlatButton.vb">
       <SubType>Component</SubType>
@@ -262,25 +303,22 @@
     <Compile Include="UI\ControlStatusStrip.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\ControlTableLayoutPanel.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI\ControlTreeView.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\CustomTabControlNoHeaders.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\CustomTabControl.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Forms\FormSimpleAD.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Modules\TabDragger.vb">
     </Compile>
     <Compile Include="UI\ControlDomainTreeView.vb">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\FormBulkUserOptions.Designer.vb">
-      <DependentUpon>FormBulkUserOptions.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\FormBulkUserOptions.vb">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\FormConfirmation.Designer.vb">
       <DependentUpon>FormConfirmation.vb</DependentUpon>
@@ -312,12 +350,6 @@
     <Compile Include="Forms\FormUpdate.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormLDAPQuery.Designer.vb">
-      <DependentUpon>FormLDAPQuery.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\FormLDAPQuery.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Forms\FormADObjectSelection.Designer.vb">
       <DependentUpon>FormADObjectSelection.vb</DependentUpon>
     </Compile>
@@ -332,28 +364,17 @@
     </Compile>
     <Compile Include="Classes\ActiveDirectoryIcon.vb" />
     <Compile Include="Classes\ADConnectionChecker.vb" />
-    <Compile Include="Modules\ArrayHelper.vb" />
     <Compile Include="Classes\BulkADWorker.vb" />
     <Compile Include="Modules\ContextMenuHelper.vb" />
     <Compile Include="Modules\ControlHelper.vb" />
-    <Compile Include="Jobs\JobExplorer.vb" />
-    <Compile Include="Jobs\JobImport.vb" />
-    <Compile Include="Modules\FileSystemHelper.vb" />
-    <Compile Include="Modules\GlobalVariables.vb" />
+    <Compile Include="Config\GlobalConfig.vb" />
     <Compile Include="Modules\LocalData.vb" />
     <Compile Include="Modules\MenuStripHelper.vb" />
-    <Compile Include="Modules\StringHelper.vb" />
     <Compile Include="Forms\FormImportValidation.Designer.vb">
       <DependentUpon>FormImportValidation.vb</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormImportValidation.vb">
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TabContainers\ContainerImport.Designer.vb">
-      <DependentUpon>ContainerImport.vb</DependentUpon>
-    </Compile>
-    <Compile Include="TabContainers\ContainerImport.vb">
-      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Classes\GlobalSuppressions.vb" />
     <Compile Include="Forms\FormLogin.Designer.vb">
@@ -390,17 +411,17 @@
     <Compile Include="UserControls\ControlRecentFilesButton.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="TabContainers\ContainerExplorer.Designer.vb">
+    <Compile Include="UserControls\ContainerExplorer.Designer.vb">
       <DependentUpon>ContainerExplorer.vb</DependentUpon>
     </Compile>
-    <Compile Include="TabContainers\ContainerExplorer.vb">
+    <Compile Include="UserControls\ContainerExplorer.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\ControlTaskCard.Designer.vb">
-      <DependentUpon>ControlTaskCard.vb</DependentUpon>
+    <Compile Include="UI\ToolStrip\ControlToolStrip.Designer.vb">
+      <DependentUpon>ControlToolStrip.vb</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\ControlTaskCard.vb">
-      <SubType>UserControl</SubType>
+    <Compile Include="UI\ToolStrip\ControlToolStrip.vb">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="UserControls\ControlUsernameContructorChunk.Designer.vb">
       <DependentUpon>ControlUsernameContructorChunk.vb</DependentUpon>
@@ -414,17 +435,29 @@
     <Compile Include="Forms\FormObjectAttributes.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormLDAPMatrix.Designer.vb">
-      <DependentUpon>FormLDAPMatrix.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\FormLDAPMatrix.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Forms\FormObjectAttributesBulk.Designer.vb">
       <DependentUpon>FormObjectAttributesBulk.vb</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormObjectAttributesBulk.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ToolStrip\ControlToolStripButton.Designer.vb">
+      <DependentUpon>ControlToolStripButton.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ToolStrip\ControlToolStripButton.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ToolStrip\ControlToolStripGroup.Designer.vb">
+      <DependentUpon>ControlToolStripGroup.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ToolStrip\ControlToolStripGroup.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\MenuItemLarge.Designer.vb">
+      <DependentUpon>MenuItemLarge.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MenuItemLarge.vb">
+      <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -433,9 +466,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormBulkUser.resx">
       <DependentUpon>FormBulkUser.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormBulkUserOptions.resx">
-      <DependentUpon>FormBulkUserOptions.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormConfirmation.resx">
       <DependentUpon>FormConfirmation.vb</DependentUpon>
@@ -446,11 +476,11 @@
     <EmbeddedResource Include="Forms\FormAlert.resx">
       <DependentUpon>FormAlert.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormImport.resx">
+      <DependentUpon>FormImport.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormImportValidation.resx">
       <DependentUpon>FormImportValidation.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormLDAPQuery.resx">
-      <DependentUpon>FormLDAPQuery.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormLogin.resx">
       <DependentUpon>FormLogin.vb</DependentUpon>
@@ -458,17 +488,20 @@
     <EmbeddedResource Include="Forms\FormNewTemplate.resx">
       <DependentUpon>FormNewTemplate.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormNewUser.resx">
+      <DependentUpon>FormNewUser.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormPasswordReset.resx">
       <DependentUpon>FormPasswordReset.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormPasswordResetBulk.resx">
       <DependentUpon>FormPasswordResetBulk.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormSimpleAD.resx">
-      <DependentUpon>FormSimpleAD.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormProgressBar.resx">
       <DependentUpon>FormProgressBar.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormTemplateManager.resx">
+      <DependentUpon>FormTemplateManager.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -489,32 +522,32 @@
     <EmbeddedResource Include="Forms\FormObjectAttributes.resx">
       <DependentUpon>FormObjectAttributes.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormLDAPMatrix.resx">
-      <DependentUpon>FormLDAPMatrix.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormObjectAttributesBulk.resx">
       <DependentUpon>FormObjectAttributesBulk.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormOptions.resx">
       <DependentUpon>FormOptions.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TabContainers\ContainerImport.resx">
-      <DependentUpon>ContainerImport.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TabContainers\ContainerTemplate.resx">
-      <DependentUpon>ContainerTemplate.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\ControlRecentFilesButton.resx">
       <DependentUpon>ControlRecentFilesButton.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TabContainers\ContainerExplorer.resx">
+    <EmbeddedResource Include="UserControls\ContainerExplorer.resx">
       <DependentUpon>ContainerExplorer.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\ControlTaskCard.resx">
-      <DependentUpon>ControlTaskCard.vb</DependentUpon>
+    <EmbeddedResource Include="UI\ToolStrip\ControlToolStrip.resx">
+      <DependentUpon>ControlToolStrip.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\ControlUsernameContructorChunk.resx">
       <DependentUpon>ControlUsernameContructorChunk.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ToolStrip\ControlToolStripButton.resx">
+      <DependentUpon>ControlToolStripButton.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ToolStrip\ControlToolStripGroup.resx">
+      <DependentUpon>ControlToolStripGroup.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\MenuItemLarge.resx">
+      <DependentUpon>MenuItemLarge.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -557,77 +590,50 @@
   <ItemGroup>
     <Content Include="Config\LogoIcon.ico" />
     <None Include="Resources\SimpleADIcon.ico" />
-    <None Include="Resources\DisabledUser.Png" />
-    <None Include="Resources\containerFlat.png" />
-    <None Include="Resources\OuFlat.png" />
-    <None Include="Resources\UserError.Png" />
-    <None Include="Resources\UserFailed.Png" />
-    <None Include="Resources\UserFlat.png" />
-    <None Include="Resources\UserCrossFlat.png" />
-    <None Include="Resources\GroupFlat.png" />
-    <None Include="Resources\Computer.png" />
-    <None Include="Resources\Contact.png" />
-    <None Include="Resources\Domain.png" />
-    <None Include="Resources\Group.png" />
-    <None Include="Resources\ImportCSV.png" />
-    <None Include="Resources\UserDisabled.png" />
-    <None Include="Resources\UserTickFlat.png" />
-    <None Include="Resources\User.png" />
-    <None Include="Resources\CheckTick.png" />
-    <None Include="Resources\UnknownFlat.png" />
-    <None Include="Resources\SuccessSmall.png" />
-    <None Include="Resources\FailedSmall.png" />
-    <None Include="Resources\ErrorSmall.png" />
-    <None Include="Resources\Error.png" />
-    <None Include="Resources\Failed.png" />
-    <None Include="Resources\Success.png" />
-    <None Include="Resources\Delete.png" />
-    <None Include="Resources\Move.png" />
-    <None Include="Resources\Search.png" />
-    <None Include="Resources\Connection.png" />
-    <None Include="Resources\UserLarge.png" />
-    <None Include="Resources\ComputerLarge.png" />
-    <None Include="Resources\UserDisabledLarge.png" />
-    <None Include="Resources\GroupLarge.png" />
-    <None Include="Resources\ContactLarge.png" />
-    <None Include="Resources\UnkownLarge.png" />
-    <None Include="Resources\DomainLarge.png" />
-    <None Include="Resources\UserSuccess.png" />
-    <None Include="Resources\UserFailedFlat.png" />
-    <None Include="Resources\OuFlatLarge.png" />
-    <None Include="Resources\Exit.png" />
-    <None Include="Resources\Import.png" />
-    <None Include="Resources\UserPending.png" />
-    <None Include="Resources\ContainerFlatLarge.png" />
-    <None Include="Resources\TemplateLogo.png" />
-    <None Include="Resources\TemplateAdmin.png" />
-    <None Include="Resources\TemplateDirector.png" />
-    <None Include="Resources\TemplateFemale0.png" />
-    <None Include="Resources\TemplateFemale1.png" />
-    <None Include="Resources\TemplateFemale2.png" />
-    <None Include="Resources\TemplateFemale3.png" />
-    <None Include="Resources\TemplateFemaleTalk.png" />
-    <None Include="Resources\TemplateFind.png" />
-    <None Include="Resources\TemplateMale0.png" />
-    <None Include="Resources\TemplateMale1.png" />
-    <None Include="Resources\TemplateMale2.png" />
-    <None Include="Resources\TemplateMale3.png" />
-    <None Include="Resources\TemplateMale4.png" />
-    <None Include="Resources\TemplateMaleInfo.png" />
-    <None Include="Resources\TemplateMaleMenu.png" />
-    <None Include="Resources\TemplateMaleRed.png" />
-    <None Include="Resources\TemplateMaleTalk.png" />
-    <None Include="Resources\TemplatePerson.png" />
-    <None Include="Resources\TemplateRegestration.png" />
-    <None Include="Resources\TemplateWorker.png" />
     <None Include="Resources\JobEnableDisable.ico" />
     <None Include="Resources\JobRename.ico" />
     <None Include="Resources\JobExplorer.ico" />
     <None Include="Resources\JobMove.ico" />
     <None Include="Resources\JobDelete.ico" />
     <None Include="Resources\JobPasswordReset.ico" />
-    <None Include="Resources\SystemTask.ico" />
     <None Include="Resources\JobImport.ico" />
+    <None Include="Resources\CheckUpdates.ico" />
+    <None Include="Resources\Selected.ico" />
+    <None Include="Resources\Contact.ico" />
+    <None Include="Resources\Computer.ico" />
+    <None Include="Resources\Unknown.ico" />
+    <None Include="Resources\UserDisabled.ico" />
+    <None Include="Resources\User.ico" />
+    <None Include="Resources\OUSelecetd.ico" />
+    <None Include="Resources\Group.ico" />
+    <None Include="Resources\Search.ico" />
+    <None Include="Resources\Domain.ico" />
+    <None Include="Resources\Delete.ico" />
+    <None Include="Resources\Exit.ico" />
+    <None Include="Resources\Warning.ico" />
+    <None Include="Resources\Failed.ico" />
+    <None Include="Resources\Success.ico" />
+    <None Include="Resources\Template.ico" />
+    <None Include="Resources\Admin.ico" />
+    <None Include="Resources\OU.ico" />
+    <None Include="Resources\Container.ico" />
+    <None Include="Resources\SystemTask.ico" />
+    <None Include="Resources\UpToDate.ico" />
+    <None Include="Resources\ActiveDirectory.ico" />
+    <None Include="Resources\TextFile.ico" />
+    <None Include="Resources\CSV.ico" />
+    <None Include="Resources\Excel.ico" />
+    <None Include="Resources\CreateUser.ico" />
+    <None Include="Resources\CreateOU.ico" />
+    <None Include="Resources\CreateGroup.ico" />
+    <None Include="Resources\HTML.ico" />
+    <None Include="Resources\Repository.ico" />
+    <None Include="Resources\colorTick.ico" />
+    <None Include="Resources\colorError.ico" />
+    <None Include="Resources\colorFailed.ico" />
+    <None Include="Resources\Wizard.ico" />
+    <None Include="Resources\List.ico" />
+    <None Include="Resources\Forward.ico" />
     <Content Include="SimpleADIcon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -635,21 +641,26 @@
     <Import Include="MetroFramework" />
     <Import Include="Microsoft.VisualBasic" />
     <Import Include="Microsoft.Win32" />
+    <Import Include="SimpleLib" />
     <Import Include="System" />
     <Import Include="System.Collections" />
     <Import Include="System.Collections.Generic" />
     <Import Include="System.Data" />
     <Import Include="System.Diagnostics" />
+    <Import Include="System.DirectoryServices" />
+    <Import Include="System.DirectoryServices.AccountManagement" />
     <Import Include="System.Drawing" />
     <Import Include="System.Linq" />
     <Import Include="System.Text" />
     <Import Include="System.Threading.Tasks" />
     <Import Include="System.Windows.Forms" />
     <Import Include="System.Xml.Linq" />
+    <Import Include="TSUSEREXLib" />
+    <Import Include="UNOLibs.Net" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\SimpleLib\SimpleLib.vbproj">
+    <ProjectReference Include="..\..\..\Lib\SimpleLib\SimpleLib.vbproj">
       <Project>{DB453F34-30D5-4713-A8AC-4786152A71A7}</Project>
       <Name>SimpleLib</Name>
     </ProjectReference>

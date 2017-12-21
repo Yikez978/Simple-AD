@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class FormAlert
-    Inherits SimpleAD.FormSimpleAD
+    Inherits Form
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -25,7 +25,7 @@ Partial Class FormAlert
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormAlert))
         Me.CloseBn = New MetroFramework.Controls.MetroButton()
         Me.MainPb = New System.Windows.Forms.PictureBox()
-        Me.MainLb = New MetroFramework.Controls.MetroLabel()
+        Me.MainLb = New System.Windows.Forms.Label()
         Me.ControlFooterPl1 = New SimpleAD.ControlFooterPl()
         CType(Me.MainPb, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -51,13 +51,11 @@ Partial Class FormAlert
         '
         'MainLb
         '
-        Me.MainLb.FontSize = MetroFramework.MetroLabelSize.Small
-        Me.MainLb.Location = New System.Drawing.Point(82, 12)
+        Me.MainLb.Location = New System.Drawing.Point(82, 31)
         Me.MainLb.Name = "MainLb"
-        Me.MainLb.Size = New System.Drawing.Size(299, 49)
+        Me.MainLb.Size = New System.Drawing.Size(299, 30)
         Me.MainLb.TabIndex = 3
         Me.MainLb.Text = "Alert Text"
-        Me.MainLb.WrapToLine = True
         '
         'ControlFooterPl1
         '
@@ -87,7 +85,7 @@ Partial Class FormAlert
         Me.Name = "FormAlert"
         Me.ShowInTaskbar = False
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Alert"
         CType(Me.MainPb, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -96,6 +94,6 @@ Partial Class FormAlert
 
     Friend WithEvents CloseBn As Controls.MetroButton
     Friend WithEvents MainPb As PictureBox
-    Friend WithEvents MainLb As Controls.MetroLabel
+    Friend WithEvents MainLb As Label
     Friend WithEvents ControlFooterPl1 As ControlFooterPl
 End Class

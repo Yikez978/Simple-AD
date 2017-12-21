@@ -27,7 +27,8 @@ Public Class FormUpdate
     End Sub
 
     Public Shared Sub CheckForUpdates()
-        FormMain.UpdateToolStripStatusLabel.Text = "Checking for Updates..."
+        FormMain.UpdateToolStripStatusLabel.Text = " Checking for Updates...  "
+        FormMain.UpdateToolStripStatusLabel.Image = New Icon(My.Resources.CheckUpdates, 16, 16).ToBitmap
         AutoUpdater.Start(UpdateURI)
     End Sub
 
@@ -52,14 +53,15 @@ Public Class FormUpdate
                 Spinner.Visible = False
                 GetHeaderText(UpdateType.NoUpdates)
                 BodyLb.Text = "There is no update available please try again later"
-                FormMain.UpdateToolStripStatusLabel.Text = "No Updates Available"
+                FormMain.UpdateToolStripStatusLabel.Text = " Up To Date  "
+                FormMain.UpdateToolStripStatusLabel.Image = New Icon(My.Resources.UpToDate, 16, 16).ToBitmap
                 NewVerLb.Text = args.CurrentVersion.ToString
             End If
         Else
             Spinner.Visible = False
             GetHeaderText(UpdateType.UpdateError)
             BodyLb.Text = "Unable to reach update server"
-            FormMain.UpdateToolStripStatusLabel.Text = "Unable to reach update server"
+            FormMain.UpdateToolStripStatusLabel.Text = " Unable to reach update server  "
         End If
         Me.Invalidate()
     End Sub

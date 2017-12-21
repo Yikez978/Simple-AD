@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class FormUpdate
-    Inherits SimpleAD.FormSimpleAD
+    Inherits Form
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -23,38 +23,37 @@ Partial Class FormUpdate
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormUpdate))
-        Me.BodyLb = New MetroFramework.Controls.MetroLabel()
+        Me.BodyLb = New System.Windows.Forms.Label()
         Me.UpdateToggle = New MetroFramework.Controls.MetroToggle()
-        Me.MetroLabel2 = New MetroFramework.Controls.MetroLabel()
+        Me.MetroLabel2 = New System.Windows.Forms.Label()
         Me.UpdateBn = New MetroFramework.Controls.MetroButton()
         Me.CancelBn = New MetroFramework.Controls.MetroButton()
         Me.MetroPanel1 = New MetroFramework.Controls.MetroPanel()
-        Me.OldVerLb = New MetroFramework.Controls.MetroLabel()
-        Me.OldBuildLb = New MetroFramework.Controls.MetroLabel()
+        Me.OldVerLb = New System.Windows.Forms.Label()
+        Me.OldBuildLb = New System.Windows.Forms.Label()
         Me.NewBuildPl = New MetroFramework.Controls.MetroPanel()
-        Me.NewVerLb = New MetroFramework.Controls.MetroLabel()
-        Me.NewBuildLb = New MetroFramework.Controls.MetroLabel()
+        Me.NewVerLb = New System.Windows.Forms.Label()
+        Me.NewBuildLb = New System.Windows.Forms.Label()
         Me.Spinner = New MetroFramework.Controls.MetroProgressSpinner()
+        Me.ControlFooterPl1 = New SimpleAD.ControlFooterPl()
         Me.MetroPanel1.SuspendLayout()
         Me.NewBuildPl.SuspendLayout()
+        Me.ControlFooterPl1.SuspendLayout()
         Me.SuspendLayout()
         '
         'BodyLb
         '
-        Me.BodyLb.Anchor = System.Windows.Forms.AnchorStyles.Bottom
         Me.BodyLb.AutoSize = True
-        Me.BodyLb.Location = New System.Drawing.Point(23, 11)
+        Me.BodyLb.Location = New System.Drawing.Point(20, 21)
         Me.BodyLb.Name = "BodyLb"
-        Me.BodyLb.Size = New System.Drawing.Size(100, 19)
+        Me.BodyLb.Size = New System.Drawing.Size(81, 13)
         Me.BodyLb.TabIndex = 0
         Me.BodyLb.Text = "Main Body Text"
-        Me.BodyLb.UseCustomBackColor = True
         '
         'UpdateToggle
         '
-        Me.UpdateToggle.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.UpdateToggle.AutoSize = True
-        Me.UpdateToggle.Location = New System.Drawing.Point(23, 125)
+        Me.UpdateToggle.Location = New System.Drawing.Point(21, 116)
         Me.UpdateToggle.Name = "UpdateToggle"
         Me.UpdateToggle.Size = New System.Drawing.Size(80, 17)
         Me.UpdateToggle.Style = MetroFramework.MetroColorStyle.Purple
@@ -65,20 +64,18 @@ Partial Class FormUpdate
         '
         'MetroLabel2
         '
-        Me.MetroLabel2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.MetroLabel2.AutoSize = True
-        Me.MetroLabel2.Location = New System.Drawing.Point(109, 123)
+        Me.MetroLabel2.Location = New System.Drawing.Point(107, 118)
         Me.MetroLabel2.Name = "MetroLabel2"
-        Me.MetroLabel2.Size = New System.Drawing.Size(178, 19)
+        Me.MetroLabel2.Size = New System.Drawing.Size(148, 13)
         Me.MetroLabel2.TabIndex = 4
         Me.MetroLabel2.Text = "Check for updates on Launch"
-        Me.MetroLabel2.UseCustomBackColor = True
         '
         'UpdateBn
         '
         Me.UpdateBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.UpdateBn.Enabled = False
-        Me.UpdateBn.Location = New System.Drawing.Point(321, 123)
+        Me.UpdateBn.Location = New System.Drawing.Point(302, 9)
         Me.UpdateBn.Name = "UpdateBn"
         Me.UpdateBn.Size = New System.Drawing.Size(75, 23)
         Me.UpdateBn.TabIndex = 5
@@ -89,7 +86,7 @@ Partial Class FormUpdate
         '
         Me.CancelBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CancelBn.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.CancelBn.Location = New System.Drawing.Point(402, 123)
+        Me.CancelBn.Location = New System.Drawing.Point(383, 9)
         Me.CancelBn.Name = "CancelBn"
         Me.CancelBn.Size = New System.Drawing.Size(75, 23)
         Me.CancelBn.TabIndex = 6
@@ -98,7 +95,6 @@ Partial Class FormUpdate
         '
         'MetroPanel1
         '
-        Me.MetroPanel1.Anchor = System.Windows.Forms.AnchorStyles.Bottom
         Me.MetroPanel1.BackColor = System.Drawing.SystemColors.ControlDark
         Me.MetroPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.MetroPanel1.Controls.Add(Me.OldVerLb)
@@ -121,34 +117,26 @@ Partial Class FormUpdate
         '
         Me.OldVerLb.AutoSize = True
         Me.OldVerLb.Dock = System.Windows.Forms.DockStyle.Left
-        Me.OldVerLb.FontSize = MetroFramework.MetroLabelSize.Tall
-        Me.OldVerLb.FontWeight = MetroFramework.MetroLabelWeight.Regular
-        Me.OldVerLb.ForeColor = System.Drawing.SystemColors.ControlLightLight
-        Me.OldVerLb.Location = New System.Drawing.Point(122, 16)
+        Me.OldVerLb.Font = New System.Drawing.Font("Segoe UI Semilight", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.OldVerLb.Location = New System.Drawing.Point(110, 16)
         Me.OldVerLb.Name = "OldVerLb"
-        Me.OldVerLb.Size = New System.Drawing.Size(64, 25)
+        Me.OldVerLb.Size = New System.Drawing.Size(52, 21)
         Me.OldVerLb.TabIndex = 4
         Me.OldVerLb.Text = "0.0.1.0"
-        Me.OldVerLb.UseCustomBackColor = True
-        Me.OldVerLb.UseCustomForeColor = True
         '
         'OldBuildLb
         '
         Me.OldBuildLb.AutoSize = True
         Me.OldBuildLb.Dock = System.Windows.Forms.DockStyle.Left
-        Me.OldBuildLb.FontSize = MetroFramework.MetroLabelSize.Tall
-        Me.OldBuildLb.ForeColor = System.Drawing.SystemColors.ControlLightLight
+        Me.OldBuildLb.Font = New System.Drawing.Font("Segoe UI Semilight", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.OldBuildLb.Location = New System.Drawing.Point(10, 16)
         Me.OldBuildLb.Name = "OldBuildLb"
-        Me.OldBuildLb.Size = New System.Drawing.Size(112, 25)
+        Me.OldBuildLb.Size = New System.Drawing.Size(100, 21)
         Me.OldBuildLb.TabIndex = 5
         Me.OldBuildLb.Text = "Current Build"
-        Me.OldBuildLb.UseCustomBackColor = True
-        Me.OldBuildLb.UseCustomForeColor = True
         '
         'NewBuildPl
         '
-        Me.NewBuildPl.Anchor = System.Windows.Forms.AnchorStyles.Bottom
         Me.NewBuildPl.BackColor = System.Drawing.SystemColors.ControlDarkDark
         Me.NewBuildPl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.NewBuildPl.Controls.Add(Me.NewVerLb)
@@ -172,35 +160,27 @@ Partial Class FormUpdate
         '
         Me.NewVerLb.AutoSize = True
         Me.NewVerLb.Dock = System.Windows.Forms.DockStyle.Left
-        Me.NewVerLb.FontSize = MetroFramework.MetroLabelSize.Tall
-        Me.NewVerLb.FontWeight = MetroFramework.MetroLabelWeight.Regular
+        Me.NewVerLb.Font = New System.Drawing.Font("Segoe UI Semilight", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.NewVerLb.ForeColor = System.Drawing.SystemColors.ControlLightLight
-        Me.NewVerLb.Location = New System.Drawing.Point(108, 16)
+        Me.NewVerLb.Location = New System.Drawing.Point(10, 16)
         Me.NewVerLb.Name = "NewVerLb"
-        Me.NewVerLb.Size = New System.Drawing.Size(79, 25)
+        Me.NewVerLb.Size = New System.Drawing.Size(69, 21)
         Me.NewVerLb.TabIndex = 3
         Me.NewVerLb.Text = "Fetching"
-        Me.NewVerLb.UseCustomBackColor = True
-        Me.NewVerLb.UseCustomForeColor = True
         '
         'NewBuildLb
         '
         Me.NewBuildLb.AutoSize = True
-        Me.NewBuildLb.Dock = System.Windows.Forms.DockStyle.Left
-        Me.NewBuildLb.FontSize = MetroFramework.MetroLabelSize.Tall
-        Me.NewBuildLb.ForeColor = System.Drawing.SystemColors.ControlLightLight
+        Me.NewBuildLb.Font = New System.Drawing.Font("Segoe UI Semilight", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.NewBuildLb.Location = New System.Drawing.Point(10, 16)
         Me.NewBuildLb.Name = "NewBuildLb"
-        Me.NewBuildLb.Size = New System.Drawing.Size(98, 25)
+        Me.NewBuildLb.Size = New System.Drawing.Size(89, 21)
         Me.NewBuildLb.TabIndex = 4
         Me.NewBuildLb.Text = "Latest Build"
-        Me.NewBuildLb.UseCustomBackColor = True
-        Me.NewBuildLb.UseCustomForeColor = True
         '
         'Spinner
         '
-        Me.Spinner.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-        Me.Spinner.Location = New System.Drawing.Point(423, 12)
+        Me.Spinner.Location = New System.Drawing.Point(414, 114)
         Me.Spinner.Maximum = 100
         Me.Spinner.Name = "Spinner"
         Me.Spinner.Size = New System.Drawing.Size(28, 28)
@@ -210,22 +190,32 @@ Partial Class FormUpdate
         Me.Spinner.UseSelectable = True
         Me.Spinner.Value = 10
         '
+        'ControlFooterPl1
+        '
+        Me.ControlFooterPl1.BackColor = System.Drawing.Color.FromArgb(CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer))
+        Me.ControlFooterPl1.Controls.Add(Me.CancelBn)
+        Me.ControlFooterPl1.Controls.Add(Me.UpdateBn)
+        Me.ControlFooterPl1.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.ControlFooterPl1.Location = New System.Drawing.Point(0, 158)
+        Me.ControlFooterPl1.Name = "ControlFooterPl1"
+        Me.ControlFooterPl1.Size = New System.Drawing.Size(470, 44)
+        Me.ControlFooterPl1.TabIndex = 10
+        '
         'FormUpdate
         '
         Me.AcceptButton = Me.UpdateBn
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer))
+        Me.BackColor = System.Drawing.SystemColors.Window
         Me.CancelButton = Me.CancelBn
-        Me.ClientSize = New System.Drawing.Size(500, 165)
+        Me.ClientSize = New System.Drawing.Size(470, 202)
         Me.Controls.Add(Me.Spinner)
         Me.Controls.Add(Me.NewBuildPl)
         Me.Controls.Add(Me.MetroPanel1)
-        Me.Controls.Add(Me.CancelBn)
-        Me.Controls.Add(Me.UpdateBn)
         Me.Controls.Add(Me.MetroLabel2)
         Me.Controls.Add(Me.UpdateToggle)
         Me.Controls.Add(Me.BodyLb)
+        Me.Controls.Add(Me.ControlFooterPl1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
@@ -239,21 +229,22 @@ Partial Class FormUpdate
         Me.MetroPanel1.PerformLayout()
         Me.NewBuildPl.ResumeLayout(False)
         Me.NewBuildPl.PerformLayout()
+        Me.ControlFooterPl1.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-
-    Friend WithEvents BodyLb As Controls.MetroLabel
     Friend WithEvents UpdateToggle As Controls.MetroToggle
-    Friend WithEvents MetroLabel2 As Controls.MetroLabel
     Friend WithEvents UpdateBn As Controls.MetroButton
     Friend WithEvents CancelBn As Controls.MetroButton
     Friend WithEvents MetroPanel1 As Controls.MetroPanel
     Friend WithEvents NewBuildPl As Controls.MetroPanel
-    Friend WithEvents NewVerLb As Controls.MetroLabel
-    Friend WithEvents OldVerLb As Controls.MetroLabel
-    Friend WithEvents OldBuildLb As Controls.MetroLabel
-    Friend WithEvents NewBuildLb As Controls.MetroLabel
     Friend WithEvents Spinner As Controls.MetroProgressSpinner
+    Friend WithEvents ControlFooterPl1 As ControlFooterPl
+    Friend WithEvents BodyLb As Label
+    Friend WithEvents MetroLabel2 As Label
+    Friend WithEvents NewVerLb As Label
+    Friend WithEvents OldVerLb As Label
+    Friend WithEvents OldBuildLb As Label
+    Friend WithEvents NewBuildLb As Label
 End Class

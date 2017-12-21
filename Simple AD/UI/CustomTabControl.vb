@@ -183,7 +183,7 @@ Public Class CustomTabControl
 
     Private Sub DrawTabBackground(ByVal graphics As Graphics, ByVal id As Integer)
         If id = SelectedIndex Then
-            Dim Brush = New SolidBrush(Me.TabPages(id).BackColor)
+            Dim Brush As SolidBrush = New SolidBrush(Me.TabPages(id).BackColor)
             Dim Pen As Pen = New Pen(_HotTrackTabColor)
             Dim rc As Rectangle = GetTabRect(id)
             rc.Width -= 5
@@ -277,13 +277,13 @@ Public Class CustomTabControl
     End Enum
 
     Private Const WM_NULL As Int32 = &H0
-    Private Const WM_SETFONT = &H30
-    Private Const WM_FONTCHANGE = &H1D
+    Private Const WM_SETFONT As Int32 = &H30
+    Private Const WM_FONTCHANGE As Int32 = &H1D
     Private Const WM_MOUSEDOWN As Int32 = &H201
 
-    Private Const TCM_FIRST = &H1300
-    Private Const TCM_HITTEST = TCM_FIRST + 13
-    Private Const TCM_SETPADDING = TCM_FIRST ' + 43
+    Private Const TCM_FIRST As Int32 = &H1300
+    Private Const TCM_HITTEST As Int32 = TCM_FIRST + 13
+    Private Const TCM_SETPADDING As Int32 = TCM_FIRST ' + 43
 
 #End Region
 

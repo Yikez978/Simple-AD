@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FormLogin
-    Inherits SimpleAD.FormSimpleAD
+    Inherits Form
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()>
@@ -25,11 +25,12 @@ Partial Class FormLogin
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormLogin))
         Me.PwdTb = New MetroFramework.Controls.MetroTextBox()
         Me.UnTb = New MetroFramework.Controls.MetroTextBox()
-        Me.ErLb = New MetroFramework.Controls.MetroLabel()
+        Me.ErLb = New System.Windows.Forms.Label()
         Me.CancelBn = New MetroFramework.Controls.MetroButton()
         Me.OKBn = New MetroFramework.Controls.MetroButton()
         Me.Spinner = New MetroFramework.Controls.MetroProgressSpinner()
         Me.RememberCheckBox = New MetroFramework.Controls.MetroCheckBox()
+        Me.ControlFooterPl1 = New SimpleAD.ControlFooterPl()
         Me.SuspendLayout()
         '
         'PwdTb
@@ -50,7 +51,7 @@ Partial Class FormLogin
         Me.PwdTb.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light
         Me.PwdTb.CustomButton.UseSelectable = True
         Me.PwdTb.CustomButton.Visible = False
-        Me.PwdTb.Icon = Global.SimpleAD.My.Resources.Resources.ErrorSmall
+        Me.PwdTb.Icon = New Icon(My.Resources.Warning, New Size(16, 16)).ToBitmap
         Me.PwdTb.IconRight = True
         Me.PwdTb.Lines = New String(-1) {}
         Me.PwdTb.Location = New System.Drawing.Point(22, 41)
@@ -110,14 +111,12 @@ Partial Class FormLogin
         '
         Me.ErLb.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.ErLb.AutoSize = True
-        Me.ErLb.FontSize = MetroFramework.MetroLabelSize.Small
         Me.ErLb.ForeColor = System.Drawing.Color.IndianRed
-        Me.ErLb.Location = New System.Drawing.Point(12, 92)
+        Me.ErLb.Location = New System.Drawing.Point(22, 89)
         Me.ErLb.Name = "ErLb"
         Me.ErLb.Size = New System.Drawing.Size(180, 15)
         Me.ErLb.TabIndex = 16
         Me.ErLb.Text = "Username or Password is Incorrect"
-        Me.ErLb.UseCustomBackColor = True
         Me.ErLb.Visible = False
         '
         'CancelBn
@@ -125,7 +124,7 @@ Partial Class FormLogin
         Me.CancelBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CancelBn.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.CancelBn.Enabled = False
-        Me.CancelBn.Location = New System.Drawing.Point(338, 88)
+        Me.CancelBn.Location = New System.Drawing.Point(338, 129)
         Me.CancelBn.Name = "CancelBn"
         Me.CancelBn.Size = New System.Drawing.Size(75, 23)
         Me.CancelBn.TabIndex = 13
@@ -135,7 +134,7 @@ Partial Class FormLogin
         'OKBn
         '
         Me.OKBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.OKBn.Location = New System.Drawing.Point(257, 88)
+        Me.OKBn.Location = New System.Drawing.Point(257, 129)
         Me.OKBn.Name = "OKBn"
         Me.OKBn.Size = New System.Drawing.Size(75, 23)
         Me.OKBn.TabIndex = 12
@@ -144,7 +143,8 @@ Partial Class FormLogin
         '
         'Spinner
         '
-        Me.Spinner.Location = New System.Drawing.Point(203, 81)
+        Me.Spinner.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Spinner.Location = New System.Drawing.Point(377, 70)
         Me.Spinner.Maximum = 100
         Me.Spinner.Name = "Spinner"
         Me.Spinner.Size = New System.Drawing.Size(36, 34)
@@ -169,13 +169,22 @@ Partial Class FormLogin
         Me.RememberCheckBox.UseCustomBackColor = True
         Me.RememberCheckBox.UseSelectable = True
         '
+        'ControlFooterPl1
+        '
+        Me.ControlFooterPl1.BackColor = System.Drawing.Color.FromArgb(CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer))
+        Me.ControlFooterPl1.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.ControlFooterPl1.Location = New System.Drawing.Point(0, 121)
+        Me.ControlFooterPl1.Name = "ControlFooterPl1"
+        Me.ControlFooterPl1.Size = New System.Drawing.Size(428, 44)
+        Me.ControlFooterPl1.TabIndex = 21
+        '
         'FormLogin
         '
         Me.AcceptButton = Me.OKBn
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.BackColor = System.Drawing.SystemColors.Window
         Me.CancelButton = Me.CancelBn
-        Me.ClientSize = New System.Drawing.Size(428, 124)
+        Me.ClientSize = New System.Drawing.Size(428, 165)
         Me.Controls.Add(Me.RememberCheckBox)
         Me.Controls.Add(Me.Spinner)
         Me.Controls.Add(Me.PwdTb)
@@ -183,6 +192,7 @@ Partial Class FormLogin
         Me.Controls.Add(Me.ErLb)
         Me.Controls.Add(Me.CancelBn)
         Me.Controls.Add(Me.OKBn)
+        Me.Controls.Add(Me.ControlFooterPl1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
@@ -197,9 +207,10 @@ Partial Class FormLogin
 
     Friend WithEvents PwdTb As MetroFramework.Controls.MetroTextBox
     Friend WithEvents UnTb As MetroFramework.Controls.MetroTextBox
-    Friend WithEvents ErLb As MetroFramework.Controls.MetroLabel
+    Friend WithEvents ErLb As Label
     Friend WithEvents CancelBn As MetroFramework.Controls.MetroButton
     Friend WithEvents OKBn As MetroFramework.Controls.MetroButton
     Friend WithEvents Spinner As MetroFramework.Controls.MetroProgressSpinner
     Friend WithEvents RememberCheckBox As MetroFramework.Controls.MetroCheckBox
+    Friend WithEvents ControlFooterPl1 As ControlFooterPl
 End Class

@@ -2,8 +2,6 @@
 Imports System.Runtime.Serialization
 Imports System.Runtime.Serialization.Formatters.Binary
 
-Imports SimpleLib
-
 Public Class FormNewTemplate
 
     Public Property Template As UserTemplate
@@ -14,7 +12,7 @@ Public Class FormNewTemplate
 
         Me.Template = New UserTemplate(Guid.NewGuid)
         Me.IDTb.Text = Me.Template.TemplateID.ToString
-        Me.AuthorValLb.Text = GetDisplayName()
+        'Me.AuthorValLb.Text = GetDisplayName()
 
         NameColumn.ImageGetter = New ImageGetterDelegate(AddressOf NameImageGetter)
 
@@ -27,17 +25,19 @@ Public Class FormNewTemplate
     Private Sub OKBt_Click(sender As Object, e As EventArgs) Handles OKBt.Click
         If ValidateNewTemplate() Then
 
+            Dim IconObject As IconObject = TryCast(IconListView.SelectedObject, IconObject)
+
             Template.Name = NameTb.Text
             Template.Description = DescriptionTb.Text
             Template.Author = AuthorValLb.Text
-            Template.IconKey = IconListView.SelectedObject.Name
+            Template.IconKey = IconObject.Name
 
             Dim Formatter As IFormatter = New BinaryFormatter()
             Dim Stream As Stream = New FileStream(".\Templates\" & Template.Name & ".stfx", FileMode.Create, FileAccess.Write, FileShare.None)
             Formatter.Serialize(Stream, Template)
             Stream.Close()
 
-            GetContainerTemplate.RefreshTamplates()
+            RefreshTamplates()
 
             Me.Close()
         Else
@@ -64,19 +64,19 @@ Public Class FormNewTemplate
     End Sub
 
     Private Sub LoadImagesTab()
-        Dim runTimeResourceSet As Object
+        Dim runTimeResourceSet As Resources.ResourceSet
         Dim dictEntry As DictionaryEntry
-        Dim IconImageList = New ImageList With {.ColorDepth = ColorDepth.Depth24Bit}
+        Dim IconImageList As ImageList = New ImageList With {.ColorDepth = ColorDepth.Depth24Bit}
         Dim IconObjectsList As New List(Of IconObject)
 
         runTimeResourceSet = My.Resources.ResourceManager.GetResourceSet(Globalization.CultureInfo.CurrentUICulture, False, True)
         For Each dictEntry In runTimeResourceSet
             If dictEntry.Value.GetType() Is GetType(Bitmap) Then
-                Dim image As String = dictEntry.Key
+                Dim image As String = dictEntry.Key.ToString
 
                 If image.Contains("Template") Then
-                    Dim NewIcon = New IconObject With {.Name = dictEntry.Key, .DisplayName = CStr(dictEntry.Key).Substring(8)}
-                    IconImageList.Images.Add(dictEntry.Key, My.Resources.ResourceManager.GetObject(dictEntry.Key))
+                    Dim NewIcon As IconObject = New IconObject With {.Name = dictEntry.Key.ToString, .DisplayName = CStr(dictEntry.Key).Substring(8)}
+                    IconImageList.Images.Add(dictEntry.Key.ToString, TryCast(My.Resources.ResourceManager.GetObject(dictEntry.Key.ToString), Image))
                     IconObjectsList.Add(NewIcon)
                 End If
             End If

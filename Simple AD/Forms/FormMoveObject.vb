@@ -6,8 +6,12 @@
 
     Public Sub New()
         InitializeComponent()
+
+        MainPb.Image = New Icon(My.Resources.JobMove, New Size(16, 16)).ToBitmap
+
         DomainTree = New ControlDomainTreeView
         DomainTree.BorderStyle = BorderStyle.None
+        DomainTree.Dock = DockStyle.Fill
         DomainTree.BringToFront()
         MainPl.Controls.Add(DomainTree)
         DomainTree.InitialLoad()
@@ -24,7 +28,6 @@
 
     Private Sub SelecetdOuChanged(SelecetedOU As String) Handles DomainTree.SelectedOUChanged
         SelecetdOU = SelecetedOU
-        OULb.Text = "Seleceted Path: " & SelecetedOU
     End Sub
 
     Private Sub FooterPl_Paint(sender As Object, e As PaintEventArgs) Handles FooterPl.Paint

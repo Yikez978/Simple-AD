@@ -14,7 +14,7 @@
                 DomainItem = DirectCast(btn.DropDownItems.Item("DomainPanelToolStripMenuItem"), ToolStripMenuItem)
 
                 Try
-                    DomainItem.Checked = Not GetMainSplitContainer0().Panel1Collapsed
+                    DomainItem.Checked = Not GetExplorerSplitContainer.Panel1Collapsed
                     DomainItem.Enabled = True
                 Catch ex As Exception
                     DomainItem.Checked = False
@@ -24,10 +24,8 @@
             End If
 
             If GetMainListView() Is Nothing Then
-                btn.DropDownItems.Item("ModeToolStripMenuItem").Enabled = False
                 btn.DropDownItems.Item("ShowGroupsToolStripMenuItem").Enabled = False
             Else
-                btn.DropDownItems.Item("ModeToolStripMenuItem").Enabled = True
                 btn.DropDownItems.Item("ShowGroupsToolStripMenuItem").Enabled = True
             End If
         End If

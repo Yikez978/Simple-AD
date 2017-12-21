@@ -5,7 +5,7 @@
 
     Private ReadOnly Property HandleColor As Color
         Get
-            If IsWindows7() Then
+            If SimpleLib.IsWindows7() Then
                 Return Color.FromArgb(217, 217, 217)
             Else
                 Return Color.FromArgb(247, 247, 247)
@@ -51,21 +51,27 @@
         Dim s As SplitContainer = Me
         If Not s Is Nothing Then
             Dim Top As Integer
+            Dim Bottom As Integer
 
             If SpliterHeight = Nothing Then
                 Top = 0
+                Bottom = s.Height
             Else
                 Top = SpliterHeight
+                Bottom = s.Height - SpliterHeight
             End If
 
-            Dim Bottom As Integer = s.Height '- 5
             Dim Left As Integer = s.SplitterDistance
             Dim Right As Integer = Left + s.SplitterWidth - 1
 
-            Dim Pen As New Pen(HandleColor)
-            e.Graphics.DrawLine(Pen, Right, Top, Right, Bottom)
+            Dim Pen0 As New Pen(HandleColor)
+            e.Graphics.DrawLine(Pen0, Left, Top, Left, Bottom)
+
         End If
 
     End Sub
 
+    Private Sub ControlSplitConatiner_ClientSizeChanged(sender As Object, e As EventArgs) Handles Me.ClientSizeChanged
+        Me.Refresh()
+    End Sub
 End Class

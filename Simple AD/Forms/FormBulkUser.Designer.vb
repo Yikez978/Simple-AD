@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FormBulkUser
-    Inherits SimpleAD.FormSimpleAD
+    Inherits Form
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()>
@@ -29,17 +29,17 @@ Partial Class FormBulkUser
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.ValidateBn = New MetroFramework.Controls.MetroButton()
         Me.SnTb = New MetroFramework.Controls.MetroTextBox()
         Me.FnTb = New MetroFramework.Controls.MetroTextBox()
         Me.ControlHeaderPanel1 = New SimpleAD.ControlHeaderPanel()
+        Me.ValidateBn = New MetroFramework.Controls.MetroButton()
         Me.UsernameConTab = New System.Windows.Forms.TabPage()
         Me.NumberComboBox = New MetroFramework.Controls.MetroComboBox()
         Me.NumberBn = New MetroFramework.Controls.MetroButton()
         Me.StringDragTb = New MetroFramework.Controls.MetroTextBox()
         Me.StringDragBn = New MetroFramework.Controls.MetroButton()
-        Me.MainUnPreview = New MetroFramework.Controls.MetroLabel()
-        Me.PreviewFlavorLb = New MetroFramework.Controls.MetroLabel()
+        Me.MainUnPreview = New System.Windows.Forms.Label()
+        Me.PreviewFlavorLb = New System.Windows.Forms.Label()
         Me.Sn1DragBn = New MetroFramework.Controls.MetroButton()
         Me.Fn1DragBn = New MetroFramework.Controls.MetroButton()
         Me.SnDragBn = New MetroFramework.Controls.MetroButton()
@@ -48,20 +48,20 @@ Partial Class FormBulkUser
         Me.ControlHeaderPanel2 = New SimpleAD.ControlHeaderPanel()
         Me.PropertiesTab = New System.Windows.Forms.TabPage()
         Me.GroupBn = New MetroFramework.Controls.MetroButton()
-        Me.GroupLb = New MetroFramework.Controls.MetroLabel()
+        Me.GroupLb = New System.Windows.Forms.Label()
         Me.GroupListBox = New System.Windows.Forms.ListBox()
-        Me.MetroLabel1 = New MetroFramework.Controls.MetroLabel()
+        Me.MetroLabel1 = New System.Windows.Forms.Label()
         Me.MetroTextBox2 = New MetroFramework.Controls.MetroTextBox()
-        Me.PagerLb = New MetroFramework.Controls.MetroLabel()
+        Me.PagerLb = New System.Windows.Forms.Label()
         Me.PagerTb = New MetroFramework.Controls.MetroTextBox()
-        Me.DescriptionLb = New MetroFramework.Controls.MetroLabel()
+        Me.DescriptionLb = New System.Windows.Forms.Label()
         Me.MetroTextBox1 = New MetroFramework.Controls.MetroTextBox()
-        Me.LogonScriptLb = New MetroFramework.Controls.MetroLabel()
+        Me.LogonScriptLb = New System.Windows.Forms.Label()
         Me.LogonScriptTb = New MetroFramework.Controls.MetroTextBox()
-        Me.HomeDriveLb = New MetroFramework.Controls.MetroLabel()
+        Me.HomeDriveLb = New System.Windows.Forms.Label()
         Me.HomeDriveCombo = New MetroFramework.Controls.MetroComboBox()
-        Me.ProfilePathLb = New MetroFramework.Controls.MetroLabel()
-        Me.HomeFolderLb = New MetroFramework.Controls.MetroLabel()
+        Me.ProfilePathLb = New System.Windows.Forms.Label()
+        Me.HomeFolderLb = New System.Windows.Forms.Label()
         Me.ProfilePathBn = New MetroFramework.Controls.MetroButton()
         Me.HomeFolderBn = New MetroFramework.Controls.MetroButton()
         Me.ProfilePathTb = New MetroFramework.Controls.MetroTextBox()
@@ -157,15 +157,6 @@ Partial Class FormBulkUser
         Me.Label1.Text = "Paste the names of the users you want to import into the input fiels below. Then " &
     "click Next."
         '
-        'ValidateBn
-        '
-        Me.ValidateBn.Location = New System.Drawing.Point(15, 269)
-        Me.ValidateBn.Name = "ValidateBn"
-        Me.ValidateBn.Size = New System.Drawing.Size(75, 23)
-        Me.ValidateBn.TabIndex = 7
-        Me.ValidateBn.Text = "Validate"
-        Me.ValidateBn.UseSelectable = True
-        '
         'SnTb
         '
         Me.SnTb.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
@@ -247,6 +238,15 @@ Partial Class FormBulkUser
         Me.ControlHeaderPanel1.Name = "ControlHeaderPanel1"
         Me.ControlHeaderPanel1.Size = New System.Drawing.Size(640, 302)
         Me.ControlHeaderPanel1.TabIndex = 12
+        '
+        'ValidateBn
+        '
+        Me.ValidateBn.Location = New System.Drawing.Point(15, 269)
+        Me.ValidateBn.Name = "ValidateBn"
+        Me.ValidateBn.Size = New System.Drawing.Size(75, 23)
+        Me.ValidateBn.TabIndex = 7
+        Me.ValidateBn.Text = "Validate"
+        Me.ValidateBn.UseSelectable = True
         '
         'UsernameConTab
         '
@@ -341,23 +341,22 @@ Partial Class FormBulkUser
         'MainUnPreview
         '
         Me.MainUnPreview.AutoSize = True
-        Me.MainUnPreview.FontSize = MetroFramework.MetroLabelSize.Tall
-        Me.MainUnPreview.FontWeight = MetroFramework.MetroLabelWeight.Regular
+        Me.MainUnPreview.BackColor = System.Drawing.SystemColors.Window
         Me.MainUnPreview.ForeColor = System.Drawing.SystemColors.ControlDarkDark
         Me.MainUnPreview.Location = New System.Drawing.Point(15, 201)
         Me.MainUnPreview.Name = "MainUnPreview"
-        Me.MainUnPreview.Size = New System.Drawing.Size(156, 25)
+        Me.MainUnPreview.Size = New System.Drawing.Size(112, 17)
         Me.MainUnPreview.TabIndex = 8
         Me.MainUnPreview.Text = "Username Preview"
-        Me.MainUnPreview.UseCustomForeColor = True
         '
         'PreviewFlavorLb
         '
         Me.PreviewFlavorLb.AutoSize = True
+        Me.PreviewFlavorLb.BackColor = System.Drawing.SystemColors.Window
         Me.PreviewFlavorLb.ForeColor = System.Drawing.SystemColors.ControlDarkDark
         Me.PreviewFlavorLb.Location = New System.Drawing.Point(15, 173)
         Me.PreviewFlavorLb.Name = "PreviewFlavorLb"
-        Me.PreviewFlavorLb.Size = New System.Drawing.Size(73, 19)
+        Me.PreviewFlavorLb.Size = New System.Drawing.Size(69, 17)
         Me.PreviewFlavorLb.TabIndex = 7
         Me.PreviewFlavorLb.Text = "John Smith"
         '
@@ -405,7 +404,7 @@ Partial Class FormBulkUser
         '
         Me.MainFlow.AllowDrop = True
         Me.MainFlow.AutoScroll = True
-        Me.MainFlow.BackColor = System.Drawing.Color.FromArgb(CType(CType(211, Byte), Integer), CType(CType(191, Byte), Integer), CType(CType(221, Byte), Integer))
+        Me.MainFlow.BackColor = System.Drawing.SystemColors.ButtonHighlight
         Me.MainFlow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.MainFlow.Location = New System.Drawing.Point(16, 38)
         Me.MainFlow.Name = "MainFlow"
@@ -464,9 +463,10 @@ Partial Class FormBulkUser
         'GroupLb
         '
         Me.GroupLb.AutoSize = True
+        Me.GroupLb.BackColor = System.Drawing.SystemColors.Window
         Me.GroupLb.Location = New System.Drawing.Point(17, 111)
         Me.GroupLb.Name = "GroupLb"
-        Me.GroupLb.Size = New System.Drawing.Size(124, 19)
+        Me.GroupLb.Size = New System.Drawing.Size(115, 17)
         Me.GroupLb.TabIndex = 19
         Me.GroupLb.Text = "Group Membership"
         '
@@ -484,9 +484,10 @@ Partial Class FormBulkUser
         'MetroLabel1
         '
         Me.MetroLabel1.AutoSize = True
+        Me.MetroLabel1.BackColor = System.Drawing.SystemColors.Window
         Me.MetroLabel1.Location = New System.Drawing.Point(233, 196)
         Me.MetroLabel1.Name = "MetroLabel1"
-        Me.MetroLabel1.Size = New System.Drawing.Size(104, 19)
+        Me.MetroLabel1.Size = New System.Drawing.Size(99, 17)
         Me.MetroLabel1.TabIndex = 17
         Me.MetroLabel1.Text = "RDS Profile Path"
         '
@@ -524,9 +525,10 @@ Partial Class FormBulkUser
         'PagerLb
         '
         Me.PagerLb.AutoSize = True
+        Me.PagerLb.BackColor = System.Drawing.SystemColors.Window
         Me.PagerLb.Location = New System.Drawing.Point(233, 167)
         Me.PagerLb.Name = "PagerLb"
-        Me.PagerLb.Size = New System.Drawing.Size(43, 19)
+        Me.PagerLb.Size = New System.Drawing.Size(40, 17)
         Me.PagerLb.TabIndex = 15
         Me.PagerLb.Text = "Pager"
         '
@@ -564,9 +566,10 @@ Partial Class FormBulkUser
         'DescriptionLb
         '
         Me.DescriptionLb.AutoSize = True
+        Me.DescriptionLb.BackColor = System.Drawing.SystemColors.Window
         Me.DescriptionLb.Location = New System.Drawing.Point(233, 138)
         Me.DescriptionLb.Name = "DescriptionLb"
-        Me.DescriptionLb.Size = New System.Drawing.Size(74, 19)
+        Me.DescriptionLb.Size = New System.Drawing.Size(70, 17)
         Me.DescriptionLb.TabIndex = 13
         Me.DescriptionLb.Text = "Description"
         '
@@ -604,9 +607,10 @@ Partial Class FormBulkUser
         'LogonScriptLb
         '
         Me.LogonScriptLb.AutoSize = True
+        Me.LogonScriptLb.BackColor = System.Drawing.SystemColors.Window
         Me.LogonScriptLb.Location = New System.Drawing.Point(233, 109)
         Me.LogonScriptLb.Name = "LogonScriptLb"
-        Me.LogonScriptLb.Size = New System.Drawing.Size(83, 19)
+        Me.LogonScriptLb.Size = New System.Drawing.Size(77, 17)
         Me.LogonScriptLb.TabIndex = 11
         Me.LogonScriptLb.Text = "Logon Script"
         '
@@ -644,9 +648,10 @@ Partial Class FormBulkUser
         'HomeDriveLb
         '
         Me.HomeDriveLb.AutoSize = True
+        Me.HomeDriveLb.BackColor = System.Drawing.SystemColors.Window
         Me.HomeDriveLb.Location = New System.Drawing.Point(445, 111)
         Me.HomeDriveLb.Name = "HomeDriveLb"
-        Me.HomeDriveLb.Size = New System.Drawing.Size(79, 19)
+        Me.HomeDriveLb.Size = New System.Drawing.Size(75, 17)
         Me.HomeDriveLb.TabIndex = 9
         Me.HomeDriveLb.Text = "Home Drive"
         '
@@ -668,9 +673,10 @@ Partial Class FormBulkUser
         '
         Me.ProfilePathLb.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ProfilePathLb.AutoSize = True
+        Me.ProfilePathLb.BackColor = System.Drawing.SystemColors.Window
         Me.ProfilePathLb.Location = New System.Drawing.Point(17, 57)
         Me.ProfilePathLb.Name = "ProfilePathLb"
-        Me.ProfilePathLb.Size = New System.Drawing.Size(76, 19)
+        Me.ProfilePathLb.Size = New System.Drawing.Size(72, 17)
         Me.ProfilePathLb.TabIndex = 7
         Me.ProfilePathLb.Text = "Profile Path"
         '
@@ -678,9 +684,10 @@ Partial Class FormBulkUser
         '
         Me.HomeFolderLb.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.HomeFolderLb.AutoSize = True
+        Me.HomeFolderLb.BackColor = System.Drawing.SystemColors.Window
         Me.HomeFolderLb.Location = New System.Drawing.Point(17, 27)
         Me.HomeFolderLb.Name = "HomeFolderLb"
-        Me.HomeFolderLb.Size = New System.Drawing.Size(87, 19)
+        Me.HomeFolderLb.Size = New System.Drawing.Size(80, 17)
         Me.HomeFolderLb.TabIndex = 6
         Me.HomeFolderLb.Text = "Home Folder"
         '
@@ -854,32 +861,22 @@ Partial Class FormBulkUser
     Friend WithEvents SnDragBn As MetroFramework.Controls.MetroButton
     Friend WithEvents FnDragBn As MetroFramework.Controls.MetroButton
     Friend WithEvents MainFlow As FlowLayoutPanel
-    Friend WithEvents MainUnPreview As MetroFramework.Controls.MetroLabel
-    Friend WithEvents PreviewFlavorLb As MetroFramework.Controls.MetroLabel
     Friend WithEvents StringDragTb As MetroFramework.Controls.MetroTextBox
     Friend WithEvents StringDragBn As MetroFramework.Controls.MetroButton
     Friend WithEvents NumberBn As MetroFramework.Controls.MetroButton
     Friend WithEvents ToolTip As MetroFramework.Components.MetroToolTip
     Friend WithEvents NumberComboBox As MetroFramework.Controls.MetroComboBox
-    Friend WithEvents HomeFolderLb As MetroFramework.Controls.MetroLabel
     Friend WithEvents ProfilePathBn As MetroFramework.Controls.MetroButton
     Friend WithEvents HomeFolderBn As MetroFramework.Controls.MetroButton
     Friend WithEvents ProfilePathTb As MetroFramework.Controls.MetroTextBox
     Friend WithEvents HomeFolderTb As MetroFramework.Controls.MetroTextBox
     Friend WithEvents PropertiesTab As TabPage
-    Friend WithEvents ProfilePathLb As MetroFramework.Controls.MetroLabel
-    Friend WithEvents HomeDriveLb As MetroFramework.Controls.MetroLabel
     Friend WithEvents HomeDriveCombo As MetroFramework.Controls.MetroComboBox
-    Friend WithEvents DescriptionLb As MetroFramework.Controls.MetroLabel
     Friend WithEvents MetroTextBox1 As MetroFramework.Controls.MetroTextBox
-    Friend WithEvents LogonScriptLb As MetroFramework.Controls.MetroLabel
     Friend WithEvents LogonScriptTb As MetroFramework.Controls.MetroTextBox
     Friend WithEvents GroupBn As MetroFramework.Controls.MetroButton
-    Friend WithEvents GroupLb As MetroFramework.Controls.MetroLabel
     Friend WithEvents GroupListBox As ListBox
-    Friend WithEvents MetroLabel1 As MetroFramework.Controls.MetroLabel
     Friend WithEvents MetroTextBox2 As MetroFramework.Controls.MetroTextBox
-    Friend WithEvents PagerLb As MetroFramework.Controls.MetroLabel
     Friend WithEvents PagerTb As MetroFramework.Controls.MetroTextBox
     Friend WithEvents FooterPl As Panel
     Friend WithEvents PreviewBn As Controls.MetroButton
@@ -894,4 +891,14 @@ Partial Class FormBulkUser
     Friend WithEvents ControlHeaderPanel1 As ControlHeaderPanel
     Friend WithEvents ControlHeaderPanel2 As ControlHeaderPanel
     Friend WithEvents ControlHeaderPanel3 As ControlHeaderPanel
+    Friend WithEvents MainUnPreview As Label
+    Friend WithEvents PreviewFlavorLb As Label
+    Friend WithEvents HomeFolderLb As Label
+    Friend WithEvents ProfilePathLb As Label
+    Friend WithEvents HomeDriveLb As Label
+    Friend WithEvents DescriptionLb As Label
+    Friend WithEvents LogonScriptLb As Label
+    Friend WithEvents GroupLb As Label
+    Friend WithEvents MetroLabel1 As Label
+    Friend WithEvents PagerLb As Label
 End Class

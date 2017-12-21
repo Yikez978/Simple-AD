@@ -2,12 +2,32 @@
 
     Private Sub OptionsForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        LaCb.Checked = My.Settings.LoadAdvLDAP
+        UpCb.Checked = My.Settings.UsePaging
         ProxyToggle.Checked = My.Settings.UseProxy
         AutoLoginToggle.Checked = My.Settings.AutoLogin
         IconsToggle.Checked = My.Settings.UseSystemIcons
+        WindowsStylingToggle.Checked = My.Settings.UseNativeWindowsTheme
 
-        TabControl1.SelectedTab = TabControl1.TabPages.Item(0)
+        If My.Settings.ManualLogin = False Then
+            ManualRadioBn.Checked = False
+            UsernameTb.Enabled = False
+            PasswordTb.Enabled = False
+        Else
+            ManualRadioBn.Checked = True
+            UsernameTb.Enabled = True
+            PasswordTb.Enabled = True
+        End If
+
+        If LoginUsername IsNot Nothing Then
+            UsernameTb.Text = Unprotect(My.Settings.Username, "Letme1n$")
+        End If
+        If LoginPassword IsNot Nothing Then
+            PasswordTb.Text = LoginPassword
+        End If
+
+        AutoRadioBn.Checked = Not ManualRadioBn.Checked
+
+        MainTabControl.SelectedTab = MainTabControl.TabPages.Item(0)
 
     End Sub
 
@@ -15,7 +35,18 @@
 
         Hide()
 
-        My.Settings.LoadAdvLDAP = LaCb.Checked
+        If ManualRadioBn.Checked = True Then
+            If Not String.IsNullOrEmpty(UsernameTb.Text) And Not String.IsNullOrEmpty(PasswordTb.Text) Then
+
+                My.Settings.Username = Protect(UsernameTb.Text, "Letme1n$")
+                My.Settings.Password = Protect(PasswordTb.Text, "Letme1n$")
+
+                My.Settings.ManualLogin = True
+
+            End If
+        End If
+
+        My.Settings.UsePaging = UpCb.Checked
         My.Settings.Save()
         Close()
 
@@ -40,4 +71,13 @@
         My.Settings.Save()
     End Sub
 
+    Private Sub WindowsStylingToggle_CheckedChanged(sender As Object, e As EventArgs) Handles WindowsStylingToggle.CheckedChanged
+        My.Settings.UseNativeWindowsTheme = WindowsStylingToggle.Checked
+        My.Settings.Save()
+    End Sub
+
+    Private Sub ManualRadioBn_CheckedChanged(sender As Object, e As EventArgs) Handles ManualRadioBn.CheckedChanged
+        UsernameTb.Enabled = Not UsernameTb.Enabled
+        PasswordTb.Enabled = Not PasswordTb.Enabled
+    End Sub
 End Class

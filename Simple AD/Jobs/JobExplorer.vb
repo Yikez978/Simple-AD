@@ -1,36 +1,27 @@
-﻿Imports System.DirectoryServices
-Imports System.Runtime.Serialization
-Imports System.Security.Permissions
-Imports System.Security.Principal
-Imports SimpleLib
+﻿Imports System.DirectoryServices.Protocols
 
-<Serializable()>
 Public Class JobExplorer
     Inherits SimpleADJob
-    Implements ISerializable
 
     Private MainListView As ControlListView
     Private MainTreeView As ControlDomainTreeView
 
     Private UserReportContainer As ContainerExplorer
-    Private FindObjectsThread As Threading.Thread
 
-    Private _Path As String
-    Private _LDAPQuery As String
-    Private _Type As ReportType
+    Private lastReportType As SimpleADReportType
 
-    Public Class Jobparameters
-        Property Type As ReportType
-        Property Filter As String
-        Property Entry As String
-    End Class
+    Public JobPath As String
 
-    Public Sub New(ByVal Type As ReportType, Optional LDAPQuery As String = Nothing)
+    Private _Filter As String
+    Private _Type As SimpleADReportType
+
+    Private DomainObjectList As New List(Of Object)
+
+    Public Sub New(ByVal Type As SimpleADReportType, Optional LDAPQuery As String = Nothing)
         MyBase.New
 
         JobType = SimpleADJobType.Explorer
         JobName = GetProperName(GetDomainNetBiosName())
-        NewTask(Me)
 
         _Type = Type
 
@@ -38,142 +29,237 @@ Public Class JobExplorer
         MainListView = GetContainerExplorer.MainListView
         MainTreeView = GetContainerExplorer.DomainTreeView
 
-        GetMainTabCtrl.SelectTab(GetMainTabCtrl.TabPages("ExplorerTab"))
-
         If LDAPQuery IsNot Nothing Then
-            _LDAPQuery = LDAPQuery
+            _Filter = LDAPQuery
         End If
 
-        Refresh()
     End Sub
 
-    Public Sub Refresh(Optional Path As String = Nothing, Optional JobType As ReportType = Nothing)
+    Public Sub Refresh(Optional Path As String = Nothing, Optional JobReport As SimpleADReportType = Nothing)
 
-        If Not JobType = Nothing Then
-            _Type = JobType
-        End If
-
-        Dim paras As New Jobparameters With {
-        .Type = _Type
-        }
-
-        Select Case paras.Type
-            Case ReportType.AllAdmins
-                paras.Filter = "(memberOf:1.2.840.113556.1.4.1941:=cn=Administrators,cn=Builtin," & GetFQDN() & ")"
-            Case ReportType.DisabledUsers
-                paras.Filter = "(&(objectCategory=person)(objectClass=user)(userAccountControl:1.2.840.113556.1.4.803:=2))"
-            Case ReportType.CustomLDAP
-                paras.Filter = _LDAPQuery
-            Case ReportType.AllObjects
-                paras.Filter = "(objectClass=*)"
-            Case ReportType.Explorer
-                If Not String.IsNullOrEmpty(Path) Then
-                    paras.Entry = Path
-                    _Path = Path
-                Else
-                    paras.Entry = _Path
-                End If
-        End Select
+        Debug.WriteLine("[Info] Get Objects Refreshed")
 
         JobStatus = SimpleADJobStatus.InProgress
-        'MainListView.BeginUpdate()
-        Threading.ThreadPool.QueueUserWorkItem(Sub() GetObjects(paras))
+
+        If (Not JobReport = Nothing) And (Not JobReport = SimpleADReportType.Explorer) Then
+            _Type = JobReport
+            _Filter = GetReport(JobReport).ReportQuery
+            JobPath = Nothing
+        Else
+            _Type = SimpleADReportType.Explorer
+            _Filter = Nothing
+            If Not String.IsNullOrEmpty(Path) Then
+                JobPath = Path
+            End If
+        End If
+
+        If Not lastReportType = _Type Then
+            Setcolumns()
+        ElseIf ColumnRebuildRequired = True Then
+            Setcolumns()
+        End If
+
+        ColumnRebuildRequired = False
+        lastReportType = _Type
+
+        If My.Settings.UsePaging Then
+            Select Case _Type
+                Case SimpleADReportType.Explorer
+                    Threading.ThreadPool.QueueUserWorkItem(Sub() GetObjects())
+                Case Else
+                    Threading.ThreadPool.QueueUserWorkItem(Sub() GetObjectsPaged())
+            End Select
+        Else
+            Threading.ThreadPool.QueueUserWorkItem(Sub() GetObjects())
+        End If
+
+
 
     End Sub
 
-    Private Sub GetObjects(ByVal Param As Jobparameters)
+    Private Sub GetObjectsPaged()
+
+        Dim hostOrDomainName As String = GetDomainNetBiosName()
+
+        Dim startingDn As String
+        If String.IsNullOrEmpty(JobPath) Then
+            startingDn = GetFQDN()
+        Else
+            startingDn = JobPath
+        End If
+
+
+
+        '' for returning up to 5 entries in each page
+        Dim pageSize As Integer = 100
+        '' for tracking the pages returned by the search request
+        Dim pageCount As Integer = 0
+
+        Dim Connection As LdapConnection = New LdapConnection(hostOrDomainName)
+        Debug.WriteLine("[Debug] Performing a paged search ...")
+
+        Dim ldapSearchFilter As String = _Filter
+
+        Dim ScopeLvel As SearchScope
+
+        Select Case _Type
+            Case SimpleADReportType.Explorer
+                ScopeLvel = SearchScope.OneLevel
+            Case Else
+                ScopeLvel = SearchScope.Subtree
+        End Select
+
+        Dim Report As SimpleADReport = GetReport(_Type)
+        Dim Attributes As String() = LDAPPropsShort
+
+        If Report IsNot Nothing Then
+            If Report.AttributesToLoad IsNot Nothing Then
+                If Report.AttributesToLoad.Count > 0 Then
+                    Attributes = Attributes.Union(Report.AttributesToLoad).ToArray
+                End If
+            End If
+        End If
+
+        Debug.WriteLine("[Debug] Attributes to Load: [" & String.Join(", ", Attributes) & "]")
+
+        '' create a SearchRequest object
+        Dim SearchRequest As SearchRequest =
+            New SearchRequest(startingDn, ldapSearchFilter, ScopeLvel, Attributes)
+
+        '' create the PageResultRequestControl object 
+        '' pass it the size of each page.
+
+        Dim pageRequest As PageResultRequestControl =
+            New PageResultRequestControl(pageSize)
+
+        '' add the PageResultRequestControl object to the
+        '' SearchRequest object's directory control collection 
+        '' to enable a paged search request
+        SearchRequest.Controls.Add(pageRequest)
+
+        '' turn off referral chasing so that data from other partitions Is
+        '' Not returned. This Is necessary when scoping a search
+        '' to a single naming context, such as a domain Or the 
+        '' configuration container
+        Dim searchOptions As SearchOptionsControl =
+            New SearchOptionsControl(SearchOption.DomainScope)
+
+        '' add the SearchOptionsControl object to the
+        '' SearchRequest object's directory control collection 
+        '' to disable referral chasing
+        SearchRequest.Controls.Add(searchOptions)
+
+        Dim NewDomainObjectList As List(Of Object) = New List(Of Object)
+        MainListView.SetObjects(NewDomainObjectList)
+
+        While True
+
+            '' increment the pageCount by 1
+            pageCount = pageCount + 1
+
+            '' cast the directory response into a 
+            '' SearchResponse object
+            Dim SearchResponse As SearchResponse =
+            DirectCast(Connection.SendRequest(SearchRequest), SearchResponse)
+
+            '' verify support for this advanced search operation
+            If (Not SearchResponse.Controls.Length = 1 Or (SearchResponse.Controls(0).GetType IsNot GetType(PageResultResponseControl))) Then
+
+                Console.WriteLine("[Debug] The server cannot page the result set")
+                Return
+            End If
+
+            '' cast the diretory control into 
+            '' a PageResultResponseControl object.
+            Dim pageResponse As PageResultResponseControl =
+            DirectCast(SearchResponse.Controls(0), PageResultResponseControl)
+
+            '' display the retrieved page number And the number of 
+            '' directory entries in the retrieved page                    
+            Debug.WriteLine("[Debug] Page:{0} contains {1} response entries", pageCount, SearchResponse.Entries.Count)
+
+            '' display the entries within this page
+            For Each entry As SearchResultEntry In SearchResponse.Entries
+
+                Dim NewObject As Object
+
+                NewObject = GetObjectAttributesFromResultEntry(entry, Attributes)
+
+
+                If NewObject IsNot Nothing Then
+                    NewDomainObjectList.Add(DirectCast(NewObject, DomainObject))
+                End If
+
+
+                Debug.WriteLine(String.Format("[Debug] {0}:{1}", SearchResponse.Entries.IndexOf(entry) + 1, entry.DistinguishedName))
+            Next
+
+
+            '' if this Is true, there 
+            '' are no more pages to request
+            If pageResponse.Cookie.Length = 0 Then
+                Exit While
+            End If
+            '' set the cookie of the pageRequest equal to the cookie 
+            '' of the pageResponse to request the next page of data
+            '' in the send request
+            pageRequest.Cookie = pageResponse.Cookie
+
+        End While
+
+        MainListView.Invoke(Sub() AfterFindObjects(NewDomainObjectList))
+
+    End Sub
+
+    Private Sub GetObjects()
+
+        Dim NewDomainObjectList As List(Of Object) = New List(Of Object)
+
         Try
 
-            Dim Type As ReportType = Param.Type
-            Dim Filter As String = Param.Filter
-            Dim EntryPath As String = Param.Entry
-
-            Dim Entry As DirectoryEntry = GetDirEntry(Param.Entry)
-
+            Dim Entry As DirectoryEntry = GetDirEntry(JobPath)
+            Dim Report As SimpleADReport = GetReport(_Type)
             Dim DirSearcher As DirectorySearcher = New DirectorySearcher(GetDirEntryPath)
 
             With DirSearcher
                 .SearchRoot = Entry
-                .Filter = Param.Filter
-                Select Case Type
-                    Case ReportType.Explorer
-                        .SearchScope = SearchScope.OneLevel
+                .Filter = _Filter
+                Select Case _Type
+                    Case SimpleADReportType.Explorer
+                        .SearchScope = CType(SearchScope.OneLevel, DirectoryServices.SearchScope)
                     Case Else
-                        .SearchScope = SearchScope.Subtree
+                        .SearchScope = CType(SearchScope.Subtree, DirectoryServices.SearchScope)
                 End Select
             End With
 
             DirSearcher.PropertiesToLoad.AddRange(LDAPPropsShort)
 
+            If Report IsNot Nothing Then
+                If Report.AttributesToLoad IsNot Nothing Then
+                    If Report.AttributesToLoad.Count > 0 Then
+                        DirSearcher.PropertiesToLoad.AddRange(Report.AttributesToLoad)
+                    End If
+                End If
+            End If
+
             Dim results As SearchResultCollection = DirSearcher.FindAll()
 
-            Dim DomainObjectList = New List(Of DomainObject)
-
             For Each result As SearchResult In results
-                If result.Properties("name").Count > 0 Then
 
-                    Dim DomainObject As DomainObject
+                Dim NewObject As Object
 
-                    If result.Properties.Item("objectClass").Count > 0 Then
+                If Report IsNot Nothing Then
+                    NewObject = GetObjectAttributesFromResult(result, Report.AttributesToLoad)
+                Else
+                    NewObject = GetObjectAttributesFromResult(result, Nothing)
+                End If
 
-                        Dim ObjectType As String = result.Properties.Item("objectClass").Item(result.Properties.Item("objectClass").Count - 1)
-                        Select Case ObjectType
-                            Case "user"
-                                DomainObject = New UserDomainObject
-                            Case Else
-                                DomainObject = New DomainObject
-                        End Select
-
-                        Dim TypeStringBuilder As New StringBuilder
-
-                        For Each Item As Object In result.Properties.Item("objectClass")
-                            TypeStringBuilder.AppendLine(CStr(Item) & ";")
-                        Next
-                        DomainObject.TypeFull = TypeStringBuilder.ToString
-
-
-                        DomainObject.Type = ObjectType
-                        DomainObject.TypeFriendly = GetFriendlyTypeName(ObjectType)
-
-                        DomainObject.Name = (CStr(result.Properties("name").Item(0)))
-
-                        If result.Properties("sAMAccountName").Count > 0 Then
-                            DomainObject.SAMAccountName = result.Properties("sAMAccountName").Item(0)
-                        Else
-                            DomainObject.SAMAccountName = Nothing
-                        End If
-
-                        If result.Properties("distinguishedName").Count > 0 Then
-                            DomainObject.DistinguishedName = result.Properties("distinguishedName").Item(0)
-                        End If
-
-                        If result.Properties("description").Count > 0 Then
-                            DomainObject.Description = result.Properties.Item("description").Item(0)
-                        End If
-
-                        If result.Properties("userAccountControl").Count > 0 Then
-                            DomainObject.UserAccountControl = result.Properties.Item("userAccountControl").Item(0)
-                        End If
-
-                        If result.Properties("isCriticalSystemObject").Count > 0 Then
-                            DomainObject.IsCriticalSystemObject = result.Properties.Item("isCriticalSystemObject").Item(0)
-                        End If
-
-                        If result.Properties("showInAdvancedViewOnly").Count > 0 Then
-                            DomainObject.ShowInAdvancedViewOnly = result.Properties.Item("showInAdvancedViewOnly").Item(0)
-                        End If
-
-                        If result.Properties.Contains("ObjectSid") Then
-                            DomainObject.ObjectSid = New SecurityIdentifier(result.Properties("ObjectSid")(0), 0)
-                        End If
-
-
-                        DomainObjectList.Add(DomainObject)
-                    End If
+                If NewObject IsNot Nothing Then
+                    NewDomainObjectList.Add(NewObject)
                 End If
             Next
 
-            MainListView.Invoke(New Action(Of List(Of DomainObject))(AddressOf AfterFindObjects), DomainObjectList)
+            Debug.WriteLine("[Info] Get Objects Completed")
 
         Catch ArgEx As ArgumentException
             ReportError(ArgEx)
@@ -182,12 +268,110 @@ Public Class JobExplorer
             Debug.WriteLine("[Error] " & Ex.GetBaseException.ToString & Ex.Message)
             ReportError(Ex)
         End Try
+
+        MainListView.Invoke(Sub() AfterFindObjects(NewDomainObjectList))
+
     End Sub
 
-    Private Sub AfterFindObjects(ByVal DomainObjectList As List(Of DomainObject))
-        MainListView.SetObjects(DomainObjectList)
-        'MainListView.EndUpdate()
-        JobStatus = SimpleADJobStatus.Completed
+    Private Sub AfterFindObjects(Optional DomainObjectList As List(Of Object) = Nothing)
+
+        Debug.WriteLine("[Info] Find Objects After")
+
+        If DomainObjectList IsNot Nothing Then
+
+            MainListView.SetObjects(DomainObjectList)
+            JobStatus = SimpleADJobStatus.Completed
+
+        End If
+
+        MainListView.RebuildColumns()
+        MainListView.EndUpdate()
+
+    End Sub
+
+    Public Sub Setcolumns()
+
+        MainListView.SuspendLayout
+
+        MainListView.BeginUpdate()
+        MainListView.AllColumns.Clear()
+
+        Dim NameCol As New OLVColumn With {
+            .AspectName = "Name",
+            .Text = "Name",
+            .Width = 205,
+            .ImageGetter = New ImageGetterDelegate(AddressOf NameImageGetter),
+            .GroupKeyGetter = New GroupKeyGetterDelegate(AddressOf SortByNameGroupKeyGetter)
+        }
+
+        Dim TypeCol As New OLVColumn With {
+            .AspectName = "TypeFriendly",
+            .Text = "Type",
+            .IsTileViewColumn = True,
+            .Width = 137
+        }
+
+        Dim DescriptionCol As New OLVColumn With {
+            .AspectName = "Description",
+            .Text = "Description",
+            .IsTileViewColumn = True,
+            .Width = 253
+        }
+
+        Dim FillerColStyle As HeaderFormatStyle = New HeaderFormatStyle
+
+        With FillerColStyle
+            .Hot.BackColor = SystemColors.Window
+            .Normal.BackColor = SystemColors.Window
+            .Pressed.BackColor = SystemColors.Window
+
+            .Hot.FrameWidth = 0
+            .Normal.FrameWidth = 0
+            .Pressed.FrameWidth = 0
+        End With
+
+        Dim FillerCol As OLVColumn = New OLVColumn With {
+            .FillsFreeSpace = True,
+            .Text = "",
+            .ShowTextInHeader = False,
+            .Searchable = False,
+            .Sortable = False,
+            .HeaderFormatStyle = FillerColStyle
+        }
+
+        MainListView.PrimarySortColumn = TypeCol
+
+        MainListView.AllColumns.AddRange(New OLVColumn() {NameCol, TypeCol, DescriptionCol})
+
+        Dim Report As SimpleADReport = GetReport(_Type)
+
+
+        If Report IsNot Nothing Then
+
+            If Report.AttributesToLoad IsNot Nothing Then
+                If Report.AttributesToLoad.Count > 0 Then
+
+                    For Each Attribute As String In Report.AttributesToLoad
+
+                        Dim NewColumn As New OLVColumn With {
+                            .AspectName = FirstCharToUpper(Attribute),
+                            .Text = GetProperFromCamelCase(Attribute),
+                            .IsTileViewColumn = True,
+                            .Width = 200
+                        }
+
+                        MainListView.AllColumns.Add(NewColumn)
+
+                    Next
+                End If
+            End If
+
+        End If
+
+        If My.Settings.UseNativeWindowsTheme = False Then
+            MainListView.AllColumns.Add(FillerCol)
+        End If
+
     End Sub
 
     Private Sub ReportError(ByVal ErrorMessage As Exception)
@@ -201,26 +385,5 @@ Public Class JobExplorer
             End If
         End If
     End Sub
-
-#Region "Serialisation"
-    Protected Sub New(info As SerializationInfo, context As StreamingContext)
-        JobName = info.GetString("JobName")
-        JobType = DirectCast([Enum].Parse(GetType(SimpleADJobType), info.GetString("JobType")), SimpleADJobType)
-        JobOwner = info.GetString("JobOwner")
-        JobCreated = info.GetDateTime("JobCreated")
-        JobDescription = info.GetString("JobDescription")
-        JobStatus = DirectCast([Enum].Parse(GetType(SimpleADJobStatus), info.GetString("JobStatus")), SimpleADJobStatus)
-    End Sub
-
-    <SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter:=True)>
-    Public Overrides Sub GetObjectData(info As SerializationInfo, context As StreamingContext) Implements ISerializable.GetObjectData
-        info.AddValue("JobName", JobName)
-        info.AddValue("JobType", JobType.ToString)
-        info.AddValue("JobOwner", JobOwner)
-        info.AddValue("JobCreated", JobCreated)
-        info.AddValue("JobDescription", JobDescription)
-        info.AddValue("JobStatus", JobStatus.ToString)
-    End Sub
-#End Region
 
 End Class

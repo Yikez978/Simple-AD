@@ -19,6 +19,10 @@ Public Class FormObjectAttributes
 
         InitializeComponent()
 
+        If Not My.Settings.UseNativeWindowsTheme Then
+            MainListView.HeaderUsesThemes = False
+        End If
+
         Text = DomainObject.Name
 
         DropDownFilter.SelectedIndex = 0
@@ -28,11 +32,12 @@ Public Class FormObjectAttributes
 
         Show()
 
-        LoadAtrThread = New Threading.Thread(AddressOf LoadAttributes)
-        LoadAtrThread.Start(_DomainObject)
+        Threading.ThreadPool.QueueUserWorkItem(Sub() LoadAttributes(_DomainObject))
     End Sub
 
-    Private Sub LoadAttributes(ByVal DomainObject As DomainObject)
+    Private Sub LoadAttributes(ByVal DomainObjectAsObject As Object)
+
+        Dim DomainObject As DomainObject = DirectCast(DomainObjectAsObject, DomainObject)
 
         Me.Invoke(New Action(Sub() MainListView.BeginUpdate()))
 
@@ -54,9 +59,8 @@ Public Class FormObjectAttributes
 
                     Dim SchemaProperty As ActiveDirectorySchemaProperty = SchemaCollection.Item(i)
                     Dim Prop As String = SchemaProperty.Name
-                    Dim Attr As New SimpleADAttributeFormItem
+                    Dim Attr As New SimpleADAttributeFormItem With {.Name = Prop}
 
-                    Attr.Name = Prop
                     'Attr.FriendlyName = GetFriendlyLDAPName(Prop)
 
                     If Not ObjectDirEntry.Properties(Prop).Value Is Nothing Then
@@ -81,9 +85,9 @@ Public Class FormObjectAttributes
                             ElseIf SchemaProperty.Syntax = ActiveDirectorySyntax.Int64 Then
                                 Attr.Value = ConvertADSLargeIntegerToInt64(ObjectDirEntry.Properties(Prop).Value)
                             ElseIf SchemaProperty.Syntax = ActiveDirectorySyntax.Sid Then
-                                Attr.Value = New SecurityIdentifier(ObjectDirEntry.Properties(Prop)(0), 0).ToString
+                                Attr.Value = New SecurityIdentifier(DirectCast(ObjectDirEntry.Properties(Prop)(0), Byte()), 0).ToString
                             ElseIf ObjectDirEntry.Properties(Prop).Value.GetType() = GetType(String) Then
-                                Attr.Value = ObjectDirEntry.Properties(Prop).Value
+                                Attr.Value = ObjectDirEntry.Properties(Prop).Value.ToString
                             ElseIf ObjectDirEntry.Properties(Prop).Value.GetType() = GetType(Integer) Then
                                 Attr.Value = ObjectDirEntry.Properties(Prop).Value.ToString
                             ElseIf ObjectDirEntry.Properties(Prop).Value.GetType() = GetType(DateTime) Then
@@ -91,7 +95,7 @@ Public Class FormObjectAttributes
                             ElseIf ObjectDirEntry.Properties(Prop).Value.GetType() = GetType(Boolean) Then
                                 Attr.Value = ObjectDirEntry.Properties(Prop).Value.ToString
                             Else
-                                Attr.Value = "N/A"
+                                Attr.Value = Nothing
                             End If
                         End If
                     End If
@@ -109,12 +113,18 @@ Public Class FormObjectAttributes
     End Sub
 
     Private Sub LoadFinished()
-        If Me.InvokeRequired Then
-            Me.Invoke(New Action(AddressOf LoadFinished))
-        Else
-            MainListView.SetObjects(AttributesList)
-            MainListView.EndUpdate()
+
+        If Not Me.IsDisposed Then
+
+            If Me.InvokeRequired Then
+                Me.Invoke(New Action(AddressOf LoadFinished))
+            Else
+                MainListView.SetObjects(AttributesList)
+                MainListView.EndUpdate()
+            End If
+
         End If
+
     End Sub
 
     Private Sub SearchBoxTb_TextChanged(sender As Object, e As EventArgs) Handles SearchBoxTb.TextChanged
@@ -130,13 +140,13 @@ Public Class FormObjectAttributes
         Select Case DropDownFilter.Text
             Case "All"
                 MainListView.ModelFilter = Nothing
-            Case "Only Attributes That Have Values"
+            Case Else
                 MainListView.ModelFilter = New OnlyPropertiesthatHaveValuesFilter()
         End Select
     End Sub
 
     Private Sub FormObjectAttributes_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        LoadAtrThread.Abort()
+
     End Sub
 
     Private Sub CancelBn_Click(sender As Object, e As EventArgs) Handles CancelBn.Click
@@ -148,7 +158,7 @@ End Class
 Public Class SimpleADAttributeFormItem
     Public Property Name As String
     Public Property FriendlyName As String
-    Public Property Value As String
+    Public Property Value As Object
     Public Property Type As String
     Public Property Count As Integer
     Public Property IsWritable As Boolean
@@ -158,6 +168,6 @@ Public Class OnlyPropertiesthatHaveValuesFilter
     Implements IModelFilter
 
     Public Function Filter(modelObject As Object) As Boolean Implements IModelFilter.Filter
-        Return Not String.IsNullOrEmpty(DirectCast(modelObject, SimpleADAttributeFormItem).Value)
+        Return Not DirectCast(modelObject, SimpleADAttributeFormItem).Value Is Nothing
     End Function
 End Class

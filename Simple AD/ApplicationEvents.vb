@@ -1,5 +1,4 @@
 ﻿Imports Microsoft.VisualBasic.ApplicationServices
-Imports System.Diagnostics
 
 Namespace My
     ' The following events are available for MyApplication:
@@ -10,23 +9,69 @@ Namespace My
     ' NetworkAvailabilityChanged: Raised when the network connection is connected or disconnected.
     Partial Friend Class MyApplication
 
-        Public DebugStreamHandler As ConsoleHandler
-
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
-            DebugStreamHandler = New ConsoleHandler()
+
             Threading.ThreadPool.SetMaxThreads(8, 8)
+
+            If My.Settings.Username IsNot Nothing And My.Settings.Password IsNot Nothing Then
+                If My.Settings.ManualLogin = True Then
+
+                    Dim Username As String = Unprotect(My.Settings.Username, "Letme1n$")
+
+                    If Username.Contains("\") Then
+                        Dim UsernameArray As String() = Username.Split(New Char() {"\"c})
+                        LoginUsernamePrefix = UsernameArray(0)
+                        LoginUsername = UsernameArray(1)
+                    Else
+                        LoginUsernamePrefix = Nothing
+                        LoginUsername = Username
+                    End If
+
+                    LoginPassword = Unprotect(My.Settings.Password, "Letme1n$")
+                End If
+            End If
+
+            FormMain.WindowState = DirectCast(My.Settings.FormWindowState, FormWindowState)
+
+            If Not FormMain.WindowState = FormWindowState.Maximized Then
+
+                Dim FormLocation As Point = My.Settings.FormLocation
+
+                If (FormLocation.X = -1) And (FormLocation.Y = -1) Then
+                    Return
+                End If
+
+                Dim FormLocationVisible As Boolean = False
+                For Each S As Screen In Screen.AllScreens
+                    If S.Bounds.Contains(FormLocation) Then
+                        FormLocationVisible = True
+                        Exit For
+                    End If
+                Next
+
+                If Not FormLocationVisible = True Then
+                    Return
+                End If
+
+                FormMain.StartPosition = FormStartPosition.Manual
+                FormMain.Location = FormLocation
+                FormMain.Size = My.Settings.FormSize
+
+            End If
+
         End Sub
 
         Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
-            My.Settings.ImportListViewSettings = Encoding.Default.GetString(GetContainerImport.MainListView.SaveState())
-            My.Settings.ExplorerListViewSettings = Encoding.Default.GetString(GetContainerExplorer.MainListView.SaveState())
+            Settings.ExplorerListViewSettings = Encoding.Default.GetString(GetContainerExplorer.MainListView.SaveState())
         End Sub
 
         Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
             If e.ExitApplication Then
-                Dim o As Object = e.Exception.Message
-                Debug.WriteLine("[Error] " & o.ToString)
-                MessageBox.Show(o.ToString, "Simple AD has encountered an unexpected Error", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error) ' use EventLog instead
+                Dim o As String = e.Exception.Message
+                Dim s As String = e.Exception.StackTrace
+
+                Debug.WriteLine("[Error] " & o)
+                MessageBox.Show(o + vbNewLine + s, "Simple AD has encountered an unexpected Error", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error) ' use EventLog instead
             End If
         End Sub
     End Class

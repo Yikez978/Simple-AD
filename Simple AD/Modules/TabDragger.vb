@@ -127,7 +127,7 @@ Friend Class TabDragger
 End Class
 
 Friend Class TabForm
-    Inherits SimpleAD.FormSimpleAD
+    Inherits Form
 
     Public Sub New(ByVal tabPage As TabPage)
         MyBase.New()

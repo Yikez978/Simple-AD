@@ -26,15 +26,15 @@ Partial Class FormNewTemplate
         Me.Setup = New MetroFramework.Controls.MetroTabControl()
         Me.BasicTabPage = New MetroFramework.Controls.MetroTabPage()
         Me.DetailsGPl = New System.Windows.Forms.GroupBox()
-        Me.AuthorValLb = New MetroFramework.Controls.MetroLabel()
-        Me.AuthorLb = New MetroFramework.Controls.MetroLabel()
-        Me.IDLb = New MetroFramework.Controls.MetroLabel()
+        Me.AuthorValLb = New System.Windows.Forms.Label()
+        Me.AuthorLb = New System.Windows.Forms.Label()
+        Me.IDLb = New System.Windows.Forms.Label()
         Me.IDTb = New MetroFramework.Controls.MetroTextBox()
         Me.LogoPb = New System.Windows.Forms.PictureBox()
         Me.DescriptionTb = New MetroFramework.Controls.MetroTextBox()
         Me.NameTb = New MetroFramework.Controls.MetroTextBox()
-        Me.DescriptionLb = New MetroFramework.Controls.MetroLabel()
-        Me.NameLb = New MetroFramework.Controls.MetroLabel()
+        Me.DescriptionLb = New System.Windows.Forms.Label()
+        Me.NameLb = New System.Windows.Forms.Label()
         Me.IconTabPage = New System.Windows.Forms.TabPage()
         Me.IconListView = New SimpleAD.ControlListView()
         Me.NameColumn = CType(New BrightIdeasSoftware.OLVColumn(), BrightIdeasSoftware.OLVColumn)
@@ -113,20 +113,16 @@ Partial Class FormNewTemplate
         Me.AuthorValLb.Size = New System.Drawing.Size(97, 19)
         Me.AuthorValLb.TabIndex = 8
         Me.AuthorValLb.Text = "Author's Name"
-        Me.AuthorValLb.UseCustomForeColor = True
         '
         'AuthorLb
         '
         Me.AuthorLb.AutoSize = True
-        Me.AuthorLb.FontSize = MetroFramework.MetroLabelSize.Small
-        Me.AuthorLb.FontWeight = MetroFramework.MetroLabelWeight.Bold
         Me.AuthorLb.ForeColor = System.Drawing.SystemColors.ControlDarkDark
         Me.AuthorLb.Location = New System.Drawing.Point(452, 138)
         Me.AuthorLb.Name = "AuthorLb"
         Me.AuthorLb.Size = New System.Drawing.Size(46, 15)
         Me.AuthorLb.TabIndex = 7
         Me.AuthorLb.Text = "Author"
-        Me.AuthorLb.UseCustomForeColor = True
         '
         'IDLb
         '
@@ -175,7 +171,7 @@ Partial Class FormNewTemplate
         '
         'LogoPb
         '
-        Me.LogoPb.Image = Global.SimpleAD.My.Resources.Resources.TemplateLogo
+        Me.LogoPb.Image = New Icon(My.Resources.Template, New Size(16, 16)).ToBitmap
         Me.LogoPb.Location = New System.Drawing.Point(452, 30)
         Me.LogoPb.Name = "LogoPb"
         Me.LogoPb.Size = New System.Drawing.Size(96, 96)
@@ -413,14 +409,14 @@ Partial Class FormNewTemplate
     Friend WithEvents LogoPb As PictureBox
     Friend WithEvents DescriptionTb As Controls.MetroTextBox
     Friend WithEvents NameTb As Controls.MetroTextBox
-    Friend WithEvents DescriptionLb As Controls.MetroLabel
-    Friend WithEvents NameLb As Controls.MetroLabel
+    Friend WithEvents DescriptionLb As Label
+    Friend WithEvents NameLb As Label
     Friend WithEvents CnBt As Controls.MetroButton
     Friend WithEvents OKBt As Controls.MetroButton
-    Friend WithEvents IDLb As Controls.MetroLabel
+    Friend WithEvents IDLb As Label
     Friend WithEvents IDTb As Controls.MetroTextBox
-    Friend WithEvents AuthorValLb As Controls.MetroLabel
-    Friend WithEvents AuthorLb As Controls.MetroLabel
+    Friend WithEvents AuthorValLb As Label
+    Friend WithEvents AuthorLb As Label
     Friend WithEvents IconTabPage As TabPage
     Friend WithEvents IconListView As ControlListView
     Friend WithEvents NameColumn As OLVColumn

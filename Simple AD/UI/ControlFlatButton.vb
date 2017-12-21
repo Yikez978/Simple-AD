@@ -131,9 +131,9 @@ Public Class ControlFlatButton
 
     Private Sub DrawIcon(ByVal Graphics As Graphics)
 
-        Dim ImageToDraw As Image = New Bitmap(My.Resources.Import, 24, 24)
+        Dim ImageToDraw As Image = New Icon(My.Resources.JobImport, New Size(16, 16)).ToBitmap
 
-        Dim ImageY As Integer = ((Me.Height / 2) - (ImageToDraw.Height / 2))
+        Dim ImageY As Integer = ((Convert.ToInt32(Me.Height / 2)) - (Convert.ToInt32(ImageToDraw.Height / 2)))
 
         Dim Location As New Point(8, ImageY)
 

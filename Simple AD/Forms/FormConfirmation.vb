@@ -9,11 +9,14 @@
 
         Select Case Type
             Case ConfirmationType.Delete
-                MainPb.Image = My.Resources.Delete
+                MainPb.Image = New Icon(My.Resources.Delete, New Size(48, 48)).ToBitmap
                 AcceptBn.Text = "Delete"
             Case ConfirmationType.Close
-                MainPb.Image = My.Resources.ExitForm
+                MainPb.Image = New Icon(My.Resources._Exit, New Size(48, 48)).ToBitmap
                 AcceptBn.Text = "Exit"
+            Case ConfirmationType.Warning
+                MainPb.Image = New Icon(My.Resources.Warning, New Size(48, 48)).ToBitmap
+                AcceptBn.Text = "Accept"
         End Select
     End Sub
 

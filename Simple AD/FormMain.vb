@@ -1,12 +1,15 @@
-﻿Imports SimpleLib
-Imports System.ComponentModel
+﻿Imports System.ComponentModel
 
 Public Class FormMain
+
+    Public ADChecker As ADConnectionChecker
 
     Public Sub New()
         InitializeComponent()
 
-        TaskFlowHandle = TaskFlow
+        AddHandler ImportCSVToolStripMenuItem.Click, AddressOf ImportCSV_Click
+        AddHandler TemplateManagerToolStripMenuItem.Click, AddressOf TemplateManager_Click
+        AddHandler OpenActiveDirectoryToolStripMenuItem.Click, AddressOf OpenActiveDirectory_Click
 
         For Each control As ToolStripMenuItem In MainMenuStrip.Items
             AddHandler control.DropDownOpening, AddressOf SubMenuClickHandler
@@ -16,25 +19,27 @@ Public Class FormMain
     Private Sub FormMain_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         PopulateRecentFileList()
         MainFormStart()
-
-        GetTaskFlow.Width = MainSideBarSplitContainer.Panel2.Width
-
     End Sub
 
     Public Sub MainFormStart()
 
-        UserToolStripMenuItem.Text = GetDisplayName()
+        ControlToolStrip.LoadToolStrip()
 
         If My.Settings.CheckForUpdatesOnStart = True Then
             Dim RunUpdateCheck As New FormUpdate
         End If
 
-        Dim ADC = New ADConnectionChecker
-        ADC.Start()
+        If Not String.IsNullOrEmpty(GetFQDN()) Then
+            If ValidateActiveDirectoryLogin(LoginUsername, LoginPassword, LoginUsernamePrefix) = True Then
 
-        Dim NewReport As JobExplorer = New JobExplorer(ReportType.Explorer)
-        GetContainerExplorer.DomainTreeView.SelectedNode = GetContainerExplorer.DomainTreeView.TopNode
+                MainDomainTreeViewHandle.RefreshNodes()
 
+                Dim NewReport As JobExplorer = New JobExplorer(SimpleADReportType.Explorer)
+
+                UserToolStripMenuItem.Text = GetDisplayName()
+
+            End If
+        End If
     End Sub
 
 #Region "Event Handlers"
@@ -47,10 +52,6 @@ Public Class FormMain
         Application.Exit()
     End Sub
 
-    Private Sub ImportCSVToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImportCSVToolStripMenuItem.Click
-        UserImport()
-    End Sub
-
     Private Sub ExitToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
         Application.Exit()
     End Sub
@@ -60,46 +61,21 @@ Public Class FormMain
     End Sub
 
     Private Sub ToolStripMenuItemLogin_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItemLogin.Click
-        Dim Login = New FormLogin
+        Dim Login As FormLogin = New FormLogin
         Login.ShowDialog()
     End Sub
 
     Private Sub DomainPanelToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DomainPanelToolStripMenuItem.Click
-        GetMainSplitContainer0.Panel1Collapsed = Not GetMainSplitContainer0.Panel1Collapsed
+        GetExplorerSplitContainer.Panel1Collapsed = Not GetExplorerSplitContainer.Panel1Collapsed
     End Sub
 
-    Private Sub TaskPanelToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TaskPanelToolStripMenuItem.Click
+    Private Sub TaskPanelToolStripMenuItem_Click(sender As Object, e As EventArgs)
         MainSideBarSplitContainer.Panel2Collapsed = Not MainSideBarSplitContainer.Panel2Collapsed
     End Sub
 
     Private Sub BulkUserWizardToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BulkUserWizardToolStripMenuItem.Click
-        Dim BulkUser = New FormBulkUser()
+        Dim BulkUser As FormBulkUser = New FormBulkUser()
         BulkUser.ShowDialog()
-    End Sub
-
-    Private Sub MainTabCtrl_MouseClick(ByVal sender As Object, ByVal e As MouseEventArgs) Handles MainTabCtrl.Click
-        If e.Button = MouseButtons.Right Then
-            For index As Integer = 0 To Me.MainTabCtrl.TabCount - 1 Step 1
-                If Me.MainTabCtrl.GetTabRect(index).Contains(e.Location) Then
-                    RightClickedTab = MainTabCtrl.TabPages(index)
-                    Exit For
-                End If
-            Next index
-        End If
-    End Sub
-
-    Private Sub OpenActiveDirectoryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenActiveDirectoryToolStripMenuItem.Click
-        Try
-            Dim procInfo As New ProcessStartInfo() With {
-            .UseShellExecute = True,
-            .FileName = (Environment.SystemDirectory & "\dsa.msc"),
-            .WorkingDirectory = "",
-            .Verb = "runas"}
-
-            Process.Start(procInfo)
-        Catch ex As Exception
-            Debug.WriteLine("[Error] " & ex.Message)
-        End Try
     End Sub
 
     Private Sub CheckForUpdatesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CheckForUpdatesToolStripMenuItem.Click
@@ -110,33 +86,20 @@ Public Class FormMain
         FormConsole.Show()
     End Sub
 
-    Private Sub DetailsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DetailsToolStripMenuItem.Click
-        GetMainListView().View = View.Details
-    End Sub
-
-    Private Sub ListToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ListToolStripMenuItem.Click
-        GetMainListView().View = View.List
-    End Sub
-
-    Private Sub LargeIconsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LargeIconsToolStripMenuItem.Click
-        GetMainListView().View = View.LargeIcon
-    End Sub
-
-    Private Sub SmallIconsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SmallIconsToolStripMenuItem.Click
-        GetMainListView().View = View.SmallIcon
-    End Sub
-
-    Private Sub TileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TileToolStripMenuItem.Click
-        GetMainListView().View = View.Tile
-    End Sub
-
     Private Sub ShowGroupsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowGroupsToolStripMenuItem.Click
-        GetMainListView().ShowGroups = True
+        GetMainListView().ShowGroups = ShowGroupsToolStripMenuItem.Checked
     End Sub
 
     Private Sub FormMain_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         If GetMainListView() IsNot Nothing Then
             My.Settings.ExplorerListViewSettings = Encoding.Default.GetString(GetMainListView.SaveState)
+
+            My.Settings.FormWindowState = WindowState
+            If Not WindowState = FormWindowState.Maximized Then
+                My.Settings.FormSize = Me.Size
+                My.Settings.FormLocation = Me.Location
+            End If
+
             My.Settings.Save()
         End If
     End Sub
@@ -156,14 +119,15 @@ Public Class FormMain
     Private Sub FormMain_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         If OngoingBulkJobs.Count > 0 Then
 
-            Dim ClosePromptForm = New FormConfirmation("Are you sure you wish to close Simple AD? This will Cancel ongoing Jobs.", ConfirmationType.Close)
-            ClosePromptForm.StartPosition = FormStartPosition.CenterScreen
+            Dim ClosePromptForm As FormConfirmation = New FormConfirmation("Are you sure you wish to close Simple AD? This will Cancel ongoing Jobs.", ConfirmationType.Close) With {
+                .StartPosition = FormStartPosition.CenterScreen
+            }
             ClosePromptForm.ShowDialog()
 
             If ClosePromptForm.DialogResult = DialogResult.Yes Then
 
                 For Each ImportJob As BulkADWorker In OngoingBulkJobs
-                    ImportJob._JobClass.JobStatus = SimpleADJobStatus.Canceled
+                    ImportJob.HostJob.JobStatus = SimpleADJobStatus.Canceled
                 Next
 
                 OngoingBulkJobs.Clear()
@@ -172,6 +136,12 @@ Public Class FormMain
                 e.Cancel = True
             End If
         End If
+    End Sub
+
+    Private Sub FormMain_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        GetContainerExplorer.DomainTreeView.SelectedNode = GetContainerExplorer.DomainTreeView.RootNode
+        ADChecker = New ADConnectionChecker
+        ADChecker.InitiateTimer()
     End Sub
 
 #End Region

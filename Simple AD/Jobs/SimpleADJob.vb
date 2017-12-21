@@ -1,10 +1,6 @@
-﻿Imports SimpleLib
-Imports System.Runtime.Serialization
-Imports System.Security.Permissions
+﻿
 
-<Serializable()>
 Public MustInherit Class SimpleADJob
-    Implements ISerializable
 
 #Region "Properties"
     Public Property JobName As String
@@ -13,6 +9,7 @@ Public MustInherit Class SimpleADJob
     Public Property JobCreated As DateTime
     Public Property JobDescription As String
     Public Property JobProgressMax As Integer
+    Public Property JobErrors As List(Of String)
 
     Private JobStatusValue As SimpleADJobStatus
     Public Property JobStatus As SimpleADJobStatus
@@ -36,7 +33,6 @@ Public MustInherit Class SimpleADJob
         End Get
     End Property
 
-    Public Property TaskView As ControlTaskCard
 #End Region
 
     Public Event StatusChanged(ByVal StatusChangedArgs As SimpleADJobStatus)
@@ -48,29 +44,17 @@ Public MustInherit Class SimpleADJob
         JobStatus = SimpleADJobStatus.Idle
     End Sub
 
-#Region "Serialisation"
-    Protected Sub New(info As SerializationInfo, context As StreamingContext)
-        JobName = info.GetString("JobName")
-        JobType = DirectCast([Enum].Parse(GetType(SimpleADJobType), info.GetString("JobType")), SimpleADJobType)
-        JobOwner = info.GetString("JobOwner")
-        JobCreated = info.GetDateTime("JobCreated")
-        JobDescription = info.GetString("JobDescription")
-        JobStatus = DirectCast([Enum].Parse(GetType(SimpleADJobStatus), info.GetString("JobStatus")), SimpleADJobStatus)
-        JobProgress = info.GetInt32("JobProgress")
-        JobProgressMax = info.GetInt32("JobProgressMax")
+    Public Overridable Sub Cancel()
+        JobStatus = SimpleADJobStatus.Canceled
     End Sub
 
-    <SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter:=True)>
-    Public Overridable Sub GetObjectData(info As SerializationInfo, context As StreamingContext) Implements ISerializable.GetObjectData
-        info.AddValue("JobName", JobName)
-        info.AddValue("JobType", JobType.ToString)
-        info.AddValue("JobOwner", JobOwner)
-        info.AddValue("JobCreated", JobCreated)
-        info.AddValue("JobDescription", JobDescription)
-        info.AddValue("JobStatus", JobStatus)
-        info.AddValue("JobProgress", JobProgress)
-        info.AddValue("JobProgressMax", JobProgressMax)
+
+End Class
+
+Public Class ProgressChangedEventArgs
+
+    Public Sub New(ByVal S As String, ByVal DT As DateTime)
+        MyBase.New()
     End Sub
-#End Region
 
 End Class

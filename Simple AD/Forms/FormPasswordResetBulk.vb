@@ -58,8 +58,6 @@ Public Class FormPasswordResetBulk
 
         Me.Enabled = False
 
-
-
         Dim Tasks(_SelectedUsers.Count) As Task
         _ProgressForm.Maximum = _SelectedUsers.Count
         _ProgressForm.BarStep = 1
@@ -184,6 +182,14 @@ Public Class FormPasswordResetBulk
             For Each Item As Control In SpecifyPl.Controls
                 Item.Enabled = False
             Next
+        End If
+    End Sub
+
+    Private Sub FooterPl_Paint(sender As Object, e As PaintEventArgs) Handles FooterPl.Paint
+        Dim s As Panel = FooterPl
+        If Not s Is Nothing Then
+            Dim Pen As New Pen(Color.FromArgb(217, 217, 217))
+            e.Graphics.DrawLine(Pen, 0, 0, s.Width, 0)
         End If
     End Sub
 #End Region

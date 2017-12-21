@@ -15,7 +15,7 @@ Option Explicit On
 Namespace My
     
     <Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.3.0.0"),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.5.0.0"),  _
      Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
     Partial Friend NotInheritable Class MySettings
         Inherits Global.System.Configuration.ApplicationSettingsBase
@@ -207,6 +207,90 @@ Namespace My
             End Get
             Set
                 Me("ImportListViewSettings") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property ManualLogin() As Boolean
+            Get
+                Return CType(Me("ManualLogin"),Boolean)
+            End Get
+            Set
+                Me("ManualLogin") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property FormWindowState() As Integer
+            Get
+                Return CType(Me("FormWindowState"),Integer)
+            End Get
+            Set
+                Me("FormWindowState") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1280, 720")>  _
+        Public Property FormSize() As Global.System.Drawing.Size
+            Get
+                Return CType(Me("FormSize"),Global.System.Drawing.Size)
+            End Get
+            Set
+                Me("FormSize") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property UseNativeWindowsTheme() As Boolean
+            Get
+                Return CType(Me("UseNativeWindowsTheme"),Boolean)
+            End Get
+            Set
+                Me("UseNativeWindowsTheme") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0, 0")>  _
+        Public Property FormLocation() As Global.System.Drawing.Point
+            Get
+                Return CType(Me("FormLocation"),Global.System.Drawing.Point)
+            End Get
+            Set
+                Me("FormLocation") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property OpenExports() As Boolean
+            Get
+                Return CType(Me("OpenExports"),Boolean)
+            End Get
+            Set
+                Me("OpenExports") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property UsePaging() As Boolean
+            Get
+                Return CType(Me("UsePaging"),Boolean)
+            End Get
+            Set
+                Me("UsePaging") = value
             End Set
         End Property
     End Class

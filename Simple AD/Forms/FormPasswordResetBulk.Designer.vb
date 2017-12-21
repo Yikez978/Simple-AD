@@ -23,7 +23,7 @@ Partial Class FormPasswordResetBulk
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormPasswordResetBulk))
-        Me.ForceResetLb = New MetroFramework.Controls.MetroLabel()
+        Me.ForceResetLb = New System.Windows.Forms.Label()
         Me.ErrorLb = New System.Windows.Forms.Label()
         Me.AcceptBn = New MetroFramework.Controls.MetroButton()
         Me.CancelBn = New MetroFramework.Controls.MetroButton()
@@ -41,6 +41,7 @@ Partial Class FormPasswordResetBulk
         Me.UseSymbolsCheckBox = New System.Windows.Forms.CheckBox()
         Me.UseNumbersCheckBox = New System.Windows.Forms.CheckBox()
         Me.UseUpperCheckBox = New System.Windows.Forms.CheckBox()
+        Me.FooterPl = New System.Windows.Forms.Panel()
         Me.SpecifyPl.SuspendLayout()
         Me.GeneratePl.SuspendLayout()
         Me.SuspendLayout()
@@ -48,14 +49,11 @@ Partial Class FormPasswordResetBulk
         'ForceResetLb
         '
         Me.ForceResetLb.AutoSize = True
-        Me.ForceResetLb.FontSize = MetroFramework.MetroLabelSize.Small
-        Me.ForceResetLb.FontWeight = MetroFramework.MetroLabelWeight.Regular
         Me.ForceResetLb.Location = New System.Drawing.Point(98, 333)
         Me.ForceResetLb.Name = "ForceResetLb"
-        Me.ForceResetLb.Size = New System.Drawing.Size(120, 15)
+        Me.ForceResetLb.Size = New System.Drawing.Size(114, 13)
         Me.ForceResetLb.TabIndex = 13
         Me.ForceResetLb.Text = "Force Password Reset"
-        Me.ForceResetLb.UseCustomBackColor = True
         '
         'ErrorLb
         '
@@ -225,7 +223,7 @@ Partial Class FormPasswordResetBulk
         Me.GeneratePl.Location = New System.Drawing.Point(-2, 174)
         Me.GeneratePl.Margin = New System.Windows.Forms.Padding(0)
         Me.GeneratePl.Name = "GeneratePl"
-        Me.GeneratePl.Size = New System.Drawing.Size(430, 146)
+        Me.GeneratePl.Size = New System.Drawing.Size(430, 140)
         Me.GeneratePl.TabIndex = 19
         '
         'Label3
@@ -314,6 +312,17 @@ Partial Class FormPasswordResetBulk
         Me.UseUpperCheckBox.Text = "Use UpperCase Charaters"
         Me.UseUpperCheckBox.UseVisualStyleBackColor = True
         '
+        'FooterPl
+        '
+        Me.FooterPl.BackColor = System.Drawing.SystemColors.Control
+        Me.FooterPl.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.FooterPl.Location = New System.Drawing.Point(0, 317)
+        Me.FooterPl.MaximumSize = New System.Drawing.Size(0, 44)
+        Me.FooterPl.MinimumSize = New System.Drawing.Size(0, 44)
+        Me.FooterPl.Name = "FooterPl"
+        Me.FooterPl.Size = New System.Drawing.Size(428, 44)
+        Me.FooterPl.TabIndex = 20
+        '
         'FormPasswordResetBulk
         '
         Me.AcceptButton = Me.AcceptBn
@@ -330,6 +339,7 @@ Partial Class FormPasswordResetBulk
         Me.Controls.Add(Me.AcceptBn)
         Me.Controls.Add(Me.CancelBn)
         Me.Controls.Add(Me.ForceResetToggle)
+        Me.Controls.Add(Me.FooterPl)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
@@ -346,7 +356,7 @@ Partial Class FormPasswordResetBulk
 
     End Sub
 
-    Friend WithEvents ForceResetLb As Controls.MetroLabel
+    Friend WithEvents ForceResetLb As Label
     Friend WithEvents ErrorLb As Label
     Friend WithEvents AcceptBn As Controls.MetroButton
     Friend WithEvents CancelBn As Controls.MetroButton
@@ -364,4 +374,5 @@ Partial Class FormPasswordResetBulk
     Friend WithEvents UseSymbolsCheckBox As CheckBox
     Friend WithEvents UseNumbersCheckBox As CheckBox
     Friend WithEvents UseUpperCheckBox As CheckBox
+    Friend WithEvents FooterPl As Panel
 End Class

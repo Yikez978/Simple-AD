@@ -53,7 +53,7 @@ Public Class FormObjectAttributesBulk
     End Sub
 
     Private Sub FilterDataGrid(ByVal Query As String)
-        Dim FilteredDataView = New DataView(DataTableSource, "Attribute LIKE '*" & Query & "*' OR Value LIKE '*" & Query & "*' OR AttributeFull LIKE '*" & Query & "*'", "Attribute Desc", DataViewRowState.CurrentRows)
+        Dim FilteredDataView As DataView = New DataView(DataTableSource, "Attribute LIKE '*" & Query & "*' OR Value LIKE '*" & Query & "*' OR AttributeFull LIKE '*" & Query & "*'", "Attribute Desc", DataViewRowState.CurrentRows)
         MainDataGrid.DataSource = FilteredDataView
     End Sub
 
@@ -109,11 +109,12 @@ Public Class FormObjectAttributesBulk
         For Each Item As BrightIdeasSoftware.OLVListItem In _Users
             Dim PropertyToModify As String = Row.Cells("AttributeFull").Value.ToString
             Dim NewValue As String = Row.Cells("Value").Value.ToString
+            Dim DomainObject As DomainObject = DirectCast(Item.RowObject, DomainObject)
 
-            If SetADProperty(GetDirEntryFromDomainObject(Item.RowObject), PropertyToModify, NewValue) = True Then
+            If SetADProperty(GetDirEntryFromDomainObject(DomainObject), PropertyToModify, NewValue) = True Then
                 IsBatchSuccessfull = True
             Else
-                Dim ErrorMsg = New FormAlert("Falied to modify the attribute: " & Row.Cells("AttributeFull").Value.ToString & " for user: " & Item.RowObject.SAMAccountName, AlertType.ErrorAlert)
+                Dim ErrorMsg As FormAlert = New FormAlert("Falied to modify the attribute: " & Row.Cells("AttributeFull").Value.ToString & " for user: " & DomainObject.SAMAccountName, AlertType.ErrorAlert)
             End If
         Next
 

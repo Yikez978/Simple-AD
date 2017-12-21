@@ -56,7 +56,7 @@ Public Module LocalData
                 Dim Line As String = RecntFileStreamReader.ReadLine
                 If Not recentFilesList.Contains(Line) AndAlso Not String.IsNullOrEmpty(Line) Then
                     If File.Exists(Line) Then
-                        Dim RecentFileItem As ToolStripMenuItem = FormMain.RecentFilesToolStripMenuItem.DropDownItems.Add(Line)
+                        Dim RecentFileItem As ToolStripItem = FormMain.RecentFilesToolStripMenuItem.DropDownItems.Add(Line)
                         AddHandler RecentFileItem.Click, Sub(Sender, e) RecentFileMenuIte_CLick(Line)
 
                         Try
@@ -73,7 +73,8 @@ Public Module LocalData
     End Sub
 
     Private Sub RecentFileMenuIte_CLick(ByVal ImportFile As String)
-        Dim RecentImportFile = New JobImport(ImportFile)
+        Dim RecentImportForm As FormImport = New FormImport(ImportFile)
+        RecentImportForm.ShowDialog()
     End Sub
 
 End Module

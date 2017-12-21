@@ -66,7 +66,9 @@ Public Class FormLogin
         LoginThread.Start(creds)
     End Sub
 
-    Private Sub Login(ByVal Credentials As LoginCredentials)
+    Private Sub Login(ByVal CredentialsObject As Object)
+
+        Dim Credentials As LoginCredentials = DirectCast(CredentialsObject, LoginCredentials)
 
         Dim TempUsername As String
         Dim TempPassword As String
@@ -82,7 +84,7 @@ Public Class FormLogin
 
         TempPassword = Credentials.Password
 
-        If ValidateActiveDirectoryLogin(GetFQDN, TempUsername, TempPassword, TempLoginPrefix) Then
+        If ValidateActiveDirectoryLogin(TempUsername, TempPassword, TempLoginPrefix) Then
 
             LoginUsername = TempUsername
             LoginPassword = TempPassword
@@ -93,11 +95,11 @@ Public Class FormLogin
 
             If RememberCheckBox.Checked Then
                 If Not String.IsNullOrEmpty(TempLoginPrefix) Then
-                    My.Settings.Username = DataProtection.Protect(TempLoginPrefix & "\" & TempUsername)
+                    My.Settings.Username = DataProtection.Protect(TempLoginPrefix & "\" & TempUsername, "Letme1n$")
                 Else
-                    My.Settings.Username = DataProtection.Protect(TempUsername)
+                    My.Settings.Username = DataProtection.Protect(TempUsername, "Letme1n$")
                 End If
-                My.Settings.Password = DataProtection.Protect(TempPassword)
+                My.Settings.Password = DataProtection.Protect(TempPassword, "Letme1n$")
             End If
 
             LoginSuccess()

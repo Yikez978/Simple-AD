@@ -5,11 +5,16 @@ Public Class ConsoleHandler
     Private MyWriter As TextWriterTraceListener
     Private ConsoleHandle As IntPtr
 
-    Sub New()
-        Dim ObjStream As New FileStream(appData & "\AppConsoleTrace.Log", FileMode.OpenOrCreate)
+    Public ObjStream As FileStream
 
-        MyWriter = New TextWriterTraceListener(ObjStream)
-        Debug.Listeners.Add(MyWriter)
+    Sub New()
+        'ObjStream = New FileStream(appData & "\AppConsoleTrace.Log", FileMode.OpenOrCreate)
+
+        'MyWriter = New TextWriterTraceListener(ObjStream)
+        'Debug.Listeners.Add(MyWriter)
+
+        'ObjStream.Close()
+        'MyWriter.Close()
     End Sub
 
 End Class

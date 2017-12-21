@@ -1,12 +1,8 @@
-﻿Imports SimpleLib
-Imports System.Runtime.Serialization
-Imports System.Security.Permissions
-Imports System.Threading
+﻿
 
-<Serializable()>
 Public Class JobDeleteBulk
     Inherits SimpleADJob
-    Implements ISerializable
+
 
     Private TargetDomainObjects As IList
     Private TargetExplorerJob As JobExplorer
@@ -17,7 +13,7 @@ Public Class JobDeleteBulk
         JobType = SimpleADJobType.BulkDelete
         JobName = "Bulk Delete"
         JobProgressMax = DomainObjects.Count
-        NewTask(Me)
+        
 
         TargetDomainObjects = DomainObjects
         TargetExplorerJob = Job
@@ -30,7 +26,7 @@ Public Class JobDeleteBulk
 
     Private Async Sub DeleteBulk()
 
-        Dim DeleteForm = New FormConfirmation("Are you sure you wish to delete " & TargetDomainObjects.Count & " objects?", ConfirmationType.Delete)
+        Dim DeleteForm As FormConfirmation = New FormConfirmation("Are you sure you wish to delete " & TargetDomainObjects.Count & " objects?", ConfirmationType.Delete)
         DeleteForm.Location = GetDialogLocation(DeleteForm)
         DeleteForm.ShowDialog()
         If DeleteForm.DialogResult = DialogResult.Yes Then
@@ -70,7 +66,7 @@ Public Class JobDeleteBulk
             TargetExplorerJob.Refresh()
             JobStatus = SimpleADJobStatus.Completed
 
-            Dim ResultForm = New FormAlert("Deleted the selected objects", AlertType.Success) With {.Location = GetDialogLocation(FormMain)}
+            Dim ResultForm As FormAlert = New FormAlert("Deleted the selected objects", AlertType.Success) With {.Location = GetDialogLocation(FormMain)}
             ResultForm.StartPosition = FormStartPosition.CenterScreen
             ResultForm.ShowDialog()
 
@@ -83,35 +79,10 @@ Public Class JobDeleteBulk
                 JobStatus = SimpleADJobStatus.Errors
             End If
 
-            Dim ResultForm = New FormAlert("Failed to Delete " & ObjectErrors.Count & " Objects", AlertType.ErrorAlert) With {.Location = GetDialogLocation(FormMain)}
+            Dim ResultForm As FormAlert = New FormAlert("Failed to Delete " & ObjectErrors.Count & " Objects", AlertType.ErrorAlert) With {.Location = GetDialogLocation(FormMain)}
             ResultForm.ShowDialog()
         End If
 
     End Sub
-
-#Region "Serialisation"
-    Protected Sub New(info As SerializationInfo, context As StreamingContext)
-        JobName = info.GetString("JobName")
-        JobType = DirectCast([Enum].Parse(GetType(SimpleADJobType), info.GetString("JobType")), SimpleADJobType)
-        JobOwner = info.GetString("JobOwner")
-        JobCreated = info.GetDateTime("JobCreated")
-        JobDescription = info.GetString("JobDescription")
-        JobStatus = DirectCast([Enum].Parse(GetType(SimpleADJobStatus), info.GetString("JobStatus")), SimpleADJobStatus)
-        JobProgress = info.GetInt32("JobProgress")
-        JobProgressMax = info.GetInt32("JobProgressMax")
-    End Sub
-
-    <SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter:=True)>
-    Public Overrides Sub GetObjectData(info As SerializationInfo, context As StreamingContext) Implements ISerializable.GetObjectData
-        info.AddValue("JobName", JobName)
-        info.AddValue("JobType", JobType.ToString)
-        info.AddValue("JobOwner", JobOwner)
-        info.AddValue("JobCreated", JobCreated)
-        info.AddValue("JobDescription", JobDescription)
-        info.AddValue("JobStatus", JobStatus)
-        info.AddValue("JobProgress", JobProgress)
-        info.AddValue("JobProgressMax", JobProgressMax)
-    End Sub
-#End Region
 
 End Class

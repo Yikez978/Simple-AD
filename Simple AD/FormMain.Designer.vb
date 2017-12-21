@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FormMain
-    Inherits SimpleAD.FormSimpleAD
+    Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()>
@@ -42,8 +42,8 @@ Partial Class FormMain
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormMain))
         Me.SADMenuStrip = New SimpleAD.ControlMenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.BrowseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ImportCSVToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TemplateManagerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BulkUserWizardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RecentFilesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CheckForUpdatesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -60,12 +60,6 @@ Partial Class FormMain
         Me.TaskPanelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.ShowGroupsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ModeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SmallIconsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.LargeIconsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ListToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DetailsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.TileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.ConsoleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.VersionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -75,13 +69,6 @@ Partial Class FormMain
         Me.ToolStripMenuItemExit = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExportCSVDialog = New System.Windows.Forms.SaveFileDialog()
         Me.ConnectionStatusToolTip = New System.Windows.Forms.ToolTip(Me.components)
-        Me.MainTabCtrl = New SimpleAD.CustomTabControl()
-        Me.ExplorerTab = New System.Windows.Forms.TabPage()
-        Me.ContainerUserAndComputers = New SimpleAD.ContainerExplorer()
-        Me.ImportTab = New System.Windows.Forms.TabPage()
-        Me.ContainerUserImport = New SimpleAD.ContainerImport()
-        Me.TemplateTab = New System.Windows.Forms.TabPage()
-        Me.ContainerTemplate = New SimpleAD.ContainerTemplate()
         Me.BottomToolStripPanel = New System.Windows.Forms.ToolStripPanel()
         Me.TopToolStripPanel = New System.Windows.Forms.ToolStripPanel()
         Me.RightToolStripPanel = New System.Windows.Forms.ToolStripPanel()
@@ -90,26 +77,27 @@ Partial Class FormMain
         Me.StatusStrip = New SimpleAD.ControlStatusStrip()
         Me.ToolStripStatusLabelContext = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabelStatus = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.ContainerToolStripStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.Filler = New System.Windows.Forms.ToolStripStatusLabel()
         Me.UpdateToolStripStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ConnectionToolStripStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.MainSideBarSplitContainer = New SimpleAD.ControlSplitConatiner()
-        Me.TaskFlow = New System.Windows.Forms.TableLayoutPanel()
+        Me.ContainerUserAndComputers = New SimpleAD.ContainerExplorer()
+        Me.TaskFlow = New SimpleAD.ControlTableLayoutPanel()
         Me.TaskHeaderPl = New SimpleAD.ControlHeaderPanel()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.BackgroundPanel = New System.Windows.Forms.Panel()
+        Me.ControlToolStrip = New SimpleAD.ControlToolStrip()
         Me.SADMenuStrip.SuspendLayout()
         Me.NodeContextMenu.SuspendLayout()
         Me.ContextMenuStripTrayIcon.SuspendLayout()
-        Me.MainTabCtrl.SuspendLayout()
-        Me.ExplorerTab.SuspendLayout()
-        Me.ImportTab.SuspendLayout()
-        Me.TemplateTab.SuspendLayout()
         Me.StatusStrip.SuspendLayout()
         CType(Me.MainSideBarSplitContainer, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MainSideBarSplitContainer.Panel1.SuspendLayout()
         Me.MainSideBarSplitContainer.Panel2.SuspendLayout()
         Me.MainSideBarSplitContainer.SuspendLayout()
         Me.TaskHeaderPl.SuspendLayout()
+        Me.BackgroundPanel.SuspendLayout()
         Me.SuspendLayout()
         '
         'SADMenuStrip
@@ -126,7 +114,7 @@ Partial Class FormMain
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BrowseToolStripMenuItem, Me.ImportCSVToolStripMenuItem, Me.BulkUserWizardToolStripMenuItem, Me.RecentFilesToolStripMenuItem, Me.CheckForUpdatesToolStripMenuItem, Me.ToolStripSeparator1, Me.ExitToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ImportCSVToolStripMenuItem, Me.TemplateManagerToolStripMenuItem, Me.BulkUserWizardToolStripMenuItem, Me.RecentFilesToolStripMenuItem, Me.CheckForUpdatesToolStripMenuItem, Me.ToolStripSeparator1, Me.ExitToolStripMenuItem})
         Me.FileToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI Semilight", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FileToolStripMenuItem.ForeColor = System.Drawing.SystemColors.MenuText
         Me.FileToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
@@ -134,18 +122,18 @@ Partial Class FormMain
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
         Me.FileToolStripMenuItem.Text = "File"
         '
-        'BrowseToolStripMenuItem
-        '
-        Me.BrowseToolStripMenuItem.Name = "BrowseToolStripMenuItem"
-        Me.BrowseToolStripMenuItem.Size = New System.Drawing.Size(178, 22)
-        Me.BrowseToolStripMenuItem.Text = "Browse"
-        '
         'ImportCSVToolStripMenuItem
         '
         Me.ImportCSVToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.ImportCSVToolStripMenuItem.Name = "ImportCSVToolStripMenuItem"
         Me.ImportCSVToolStripMenuItem.Size = New System.Drawing.Size(178, 22)
         Me.ImportCSVToolStripMenuItem.Text = "Import CSV..."
+        '
+        'TemplateManagerToolStripMenuItem
+        '
+        Me.TemplateManagerToolStripMenuItem.Name = "TemplateManagerToolStripMenuItem"
+        Me.TemplateManagerToolStripMenuItem.Size = New System.Drawing.Size(178, 22)
+        Me.TemplateManagerToolStripMenuItem.Text = "Template Manager"
         '
         'BulkUserWizardToolStripMenuItem
         '
@@ -231,7 +219,7 @@ Partial Class FormMain
         '
         'ViewToolStripMenuItem
         '
-        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DomainPanelToolStripMenuItem, Me.TaskPanelToolStripMenuItem, Me.ToolStripSeparator2, Me.ShowGroupsToolStripMenuItem, Me.ModeToolStripMenuItem, Me.ToolStripSeparator3, Me.ConsoleToolStripMenuItem, Me.VersionToolStripMenuItem})
+        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DomainPanelToolStripMenuItem, Me.TaskPanelToolStripMenuItem, Me.ToolStripSeparator2, Me.ShowGroupsToolStripMenuItem, Me.ToolStripSeparator3, Me.ConsoleToolStripMenuItem, Me.VersionToolStripMenuItem})
         Me.ViewToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI Semilight", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ViewToolStripMenuItem.ForeColor = System.Drawing.SystemColors.MenuText
         Me.ViewToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -270,46 +258,14 @@ Partial Class FormMain
         '
         'ShowGroupsToolStripMenuItem
         '
+        Me.ShowGroupsToolStripMenuItem.Checked = True
+        Me.ShowGroupsToolStripMenuItem.CheckOnClick = True
+        Me.ShowGroupsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.ShowGroupsToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ShowGroupsToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.ShowGroupsToolStripMenuItem.Name = "ShowGroupsToolStripMenuItem"
         Me.ShowGroupsToolStripMenuItem.Size = New System.Drawing.Size(156, 22)
         Me.ShowGroupsToolStripMenuItem.Text = "Show Groups"
-        '
-        'ModeToolStripMenuItem
-        '
-        Me.ModeToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SmallIconsToolStripMenuItem, Me.LargeIconsToolStripMenuItem, Me.ListToolStripMenuItem, Me.DetailsToolStripMenuItem, Me.TileToolStripMenuItem})
-        Me.ModeToolStripMenuItem.Name = "ModeToolStripMenuItem"
-        Me.ModeToolStripMenuItem.Size = New System.Drawing.Size(156, 22)
-        Me.ModeToolStripMenuItem.Text = "Mode"
-        '
-        'SmallIconsToolStripMenuItem
-        '
-        Me.SmallIconsToolStripMenuItem.Name = "SmallIconsToolStripMenuItem"
-        Me.SmallIconsToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
-        Me.SmallIconsToolStripMenuItem.Text = "Small Icons"
-        '
-        'LargeIconsToolStripMenuItem
-        '
-        Me.LargeIconsToolStripMenuItem.Name = "LargeIconsToolStripMenuItem"
-        Me.LargeIconsToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
-        Me.LargeIconsToolStripMenuItem.Text = "Large Icons"
-        '
-        'ListToolStripMenuItem
-        '
-        Me.ListToolStripMenuItem.Name = "ListToolStripMenuItem"
-        Me.ListToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
-        Me.ListToolStripMenuItem.Text = "List"
-        '
-        'DetailsToolStripMenuItem
-        '
-        Me.DetailsToolStripMenuItem.Name = "DetailsToolStripMenuItem"
-        Me.DetailsToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
-        Me.DetailsToolStripMenuItem.Text = "Details"
-        '
-        'TileToolStripMenuItem
-        '
-        Me.TileToolStripMenuItem.Name = "TileToolStripMenuItem"
-        Me.TileToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
-        Me.TileToolStripMenuItem.Text = "Tile"
         '
         'ToolStripSeparator3
         '
@@ -355,87 +311,6 @@ Partial Class FormMain
         Me.ToolStripMenuItemExit.Text = "Exit Application"
         Me.ToolStripMenuItemExit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'MainTabCtrl
-        '
-        Me.MainTabCtrl.BackColor = System.Drawing.Color.FromArgb(CType(CType(241, Byte), Integer), CType(CType(235, Byte), Integer), CType(CType(244, Byte), Integer))
-        Me.MainTabCtrl.Controls.Add(Me.ExplorerTab)
-        Me.MainTabCtrl.Controls.Add(Me.ImportTab)
-        Me.MainTabCtrl.Controls.Add(Me.TemplateTab)
-        Me.MainTabCtrl.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.MainTabCtrl.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed
-        Me.MainTabCtrl.Font = New System.Drawing.Font("Segoe UI Semilight", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.MainTabCtrl.HotTrack = True
-        Me.MainTabCtrl.HotTrackTabColor = System.Drawing.Color.FromArgb(CType(CType(211, Byte), Integer), CType(CType(191, Byte), Integer), CType(CType(221, Byte), Integer))
-        Me.MainTabCtrl.ItemSize = New System.Drawing.Size(0, 38)
-        Me.MainTabCtrl.Location = New System.Drawing.Point(0, 0)
-        Me.MainTabCtrl.Margin = New System.Windows.Forms.Padding(0)
-        Me.MainTabCtrl.Name = "MainTabCtrl"
-        Me.MainTabCtrl.Padding = New System.Drawing.Point(48, 0)
-        Me.MainTabCtrl.SelectedIndex = 0
-        Me.MainTabCtrl.Size = New System.Drawing.Size(1030, 568)
-        Me.MainTabCtrl.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight
-        Me.MainTabCtrl.TabColor = System.Drawing.SystemColors.Window
-        Me.MainTabCtrl.TabIndex = 17
-        '
-        'ExplorerTab
-        '
-        Me.ExplorerTab.BackColor = System.Drawing.Color.FromArgb(CType(CType(124, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(153, Byte), Integer))
-        Me.ExplorerTab.Controls.Add(Me.ContainerUserAndComputers)
-        Me.ExplorerTab.Location = New System.Drawing.Point(0, 41)
-        Me.ExplorerTab.Name = "ExplorerTab"
-        Me.ExplorerTab.Size = New System.Drawing.Size(1030, 527)
-        Me.ExplorerTab.TabIndex = 0
-        Me.ExplorerTab.Text = "Users and Computers"
-        '
-        'ContainerUserAndComputers
-        '
-        Me.ContainerUserAndComputers.BackColor = System.Drawing.SystemColors.Window
-        Me.ContainerUserAndComputers.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ContainerUserAndComputers.Job = Nothing
-        Me.ContainerUserAndComputers.Location = New System.Drawing.Point(0, 0)
-        Me.ContainerUserAndComputers.Name = "ContainerUserAndComputers"
-        Me.ContainerUserAndComputers.Path = "DC=dataspire,DC=co,DC=uk"
-        Me.ContainerUserAndComputers.Size = New System.Drawing.Size(1030, 527)
-        Me.ContainerUserAndComputers.TabIndex = 0
-        '
-        'ImportTab
-        '
-        Me.ImportTab.BackColor = System.Drawing.Color.FromArgb(CType(CType(124, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(153, Byte), Integer))
-        Me.ImportTab.Controls.Add(Me.ContainerUserImport)
-        Me.ImportTab.Location = New System.Drawing.Point(0, 41)
-        Me.ImportTab.Name = "ImportTab"
-        Me.ImportTab.Size = New System.Drawing.Size(1027, 527)
-        Me.ImportTab.TabIndex = 1
-        Me.ImportTab.Text = "User Import"
-        '
-        'ContainerUserImport
-        '
-        Me.ContainerUserImport.BackColor = System.Drawing.SystemColors.Window
-        Me.ContainerUserImport.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ContainerUserImport.Location = New System.Drawing.Point(0, 0)
-        Me.ContainerUserImport.Name = "ContainerUserImport"
-        Me.ContainerUserImport.Size = New System.Drawing.Size(1027, 527)
-        Me.ContainerUserImport.TabIndex = 0
-        '
-        'TemplateTab
-        '
-        Me.TemplateTab.BackColor = System.Drawing.Color.FromArgb(CType(CType(124, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(153, Byte), Integer))
-        Me.TemplateTab.Controls.Add(Me.ContainerTemplate)
-        Me.TemplateTab.Location = New System.Drawing.Point(0, 41)
-        Me.TemplateTab.Name = "TemplateTab"
-        Me.TemplateTab.Size = New System.Drawing.Size(1027, 527)
-        Me.TemplateTab.TabIndex = 2
-        Me.TemplateTab.Text = "Template Manager"
-        '
-        'ContainerTemplate
-        '
-        Me.ContainerTemplate.BackColor = System.Drawing.SystemColors.Window
-        Me.ContainerTemplate.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ContainerTemplate.Location = New System.Drawing.Point(0, 0)
-        Me.ContainerTemplate.Name = "ContainerTemplate"
-        Me.ContainerTemplate.Size = New System.Drawing.Size(1299, 527)
-        Me.ContainerTemplate.TabIndex = 0
-        '
         'BottomToolStripPanel
         '
         Me.BottomToolStripPanel.Dock = System.Windows.Forms.DockStyle.Bottom
@@ -478,8 +353,8 @@ Partial Class FormMain
         '
         'StatusStrip
         '
-        Me.StatusStrip.BackColor = System.Drawing.Color.FromArgb(CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer))
-        Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabelContext, Me.ToolStripStatusLabelStatus, Me.Filler, Me.UpdateToolStripStatusLabel, Me.ConnectionToolStripStatusLabel})
+        Me.StatusStrip.BackColor = System.Drawing.Color.FromArgb(CType(CType(124, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(153, Byte), Integer))
+        Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabelContext, Me.ToolStripStatusLabelStatus, Me.ContainerToolStripStatusLabel, Me.Filler, Me.UpdateToolStripStatusLabel, Me.ConnectionToolStripStatusLabel})
         Me.StatusStrip.Location = New System.Drawing.Point(0, 592)
         Me.StatusStrip.Name = "StatusStrip"
         Me.StatusStrip.ShowItemToolTips = True
@@ -490,70 +365,95 @@ Partial Class FormMain
         '
         'ToolStripStatusLabelContext
         '
+        Me.ToolStripStatusLabelContext.ForeColor = System.Drawing.SystemColors.Window
         Me.ToolStripStatusLabelContext.Name = "ToolStripStatusLabelContext"
         Me.ToolStripStatusLabelContext.Size = New System.Drawing.Size(0, 17)
         '
         'ToolStripStatusLabelStatus
         '
+        Me.ToolStripStatusLabelStatus.ForeColor = System.Drawing.SystemColors.Window
         Me.ToolStripStatusLabelStatus.Name = "ToolStripStatusLabelStatus"
         Me.ToolStripStatusLabelStatus.Size = New System.Drawing.Size(0, 17)
         '
+        'ContainerToolStripStatusLabel
+        '
+        Me.ContainerToolStripStatusLabel.ForeColor = System.Drawing.SystemColors.Window
+        Me.ContainerToolStripStatusLabel.Name = "ContainerToolStripStatusLabel"
+        Me.ContainerToolStripStatusLabel.Padding = New System.Windows.Forms.Padding(24, 0, 0, 0)
+        Me.ContainerToolStripStatusLabel.Size = New System.Drawing.Size(24, 17)
+        '
         'Filler
         '
-        Me.Filler.ForeColor = System.Drawing.Color.FromArgb(CType(CType(81, Byte), Integer), CType(CType(80, Byte), Integer), CType(CType(80, Byte), Integer))
+        Me.Filler.Enabled = False
+        Me.Filler.ForeColor = System.Drawing.SystemColors.Window
         Me.Filler.Name = "Filler"
-        Me.Filler.Size = New System.Drawing.Size(1284, 17)
+        Me.Filler.Size = New System.Drawing.Size(1260, 17)
         Me.Filler.Spring = True
         '
         'UpdateToolStripStatusLabel
         '
+        Me.UpdateToolStripStatusLabel.ForeColor = System.Drawing.SystemColors.Window
         Me.UpdateToolStripStatusLabel.Name = "UpdateToolStripStatusLabel"
         Me.UpdateToolStripStatusLabel.Size = New System.Drawing.Size(0, 17)
         '
         'ConnectionToolStripStatusLabel
         '
+        Me.ConnectionToolStripStatusLabel.ForeColor = System.Drawing.SystemColors.Window
         Me.ConnectionToolStripStatusLabel.Name = "ConnectionToolStripStatusLabel"
         Me.ConnectionToolStripStatusLabel.Size = New System.Drawing.Size(0, 17)
         '
         'MainSideBarSplitContainer
         '
-        Me.MainSideBarSplitContainer.BackColor = System.Drawing.SystemColors.Window
+        Me.MainSideBarSplitContainer.BackColor = System.Drawing.Color.FromArgb(CType(CType(217, Byte), Integer), CType(CType(217, Byte), Integer), CType(CType(217, Byte), Integer))
         Me.MainSideBarSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill
         Me.MainSideBarSplitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2
-        Me.MainSideBarSplitContainer.IsSplitterFixed = True
-        Me.MainSideBarSplitContainer.Location = New System.Drawing.Point(0, 24)
+        Me.MainSideBarSplitContainer.Location = New System.Drawing.Point(0, 100)
         Me.MainSideBarSplitContainer.Margin = New System.Windows.Forms.Padding(0)
         Me.MainSideBarSplitContainer.Name = "MainSideBarSplitContainer"
         '
         'MainSideBarSplitContainer.Panel1
         '
-        Me.MainSideBarSplitContainer.Panel1.Controls.Add(Me.MainTabCtrl)
-        Me.MainSideBarSplitContainer.Panel1MinSize = 800
+        Me.MainSideBarSplitContainer.Panel1.Controls.Add(Me.ContainerUserAndComputers)
+        Me.MainSideBarSplitContainer.Panel1.Padding = New System.Windows.Forms.Padding(0, 0, 0, 1)
+        Me.MainSideBarSplitContainer.Panel1MinSize = 0
         '
         'MainSideBarSplitContainer.Panel2
         '
         Me.MainSideBarSplitContainer.Panel2.AutoScroll = True
-        Me.MainSideBarSplitContainer.Panel2.BackColor = System.Drawing.SystemColors.Window
+        Me.MainSideBarSplitContainer.Panel2.BackColor = System.Drawing.Color.FromArgb(CType(CType(217, Byte), Integer), CType(CType(217, Byte), Integer), CType(CType(217, Byte), Integer))
         Me.MainSideBarSplitContainer.Panel2.Controls.Add(Me.TaskFlow)
         Me.MainSideBarSplitContainer.Panel2.Controls.Add(Me.TaskHeaderPl)
-        Me.MainSideBarSplitContainer.Size = New System.Drawing.Size(1299, 568)
+        Me.MainSideBarSplitContainer.Panel2.Padding = New System.Windows.Forms.Padding(0, 0, 0, 1)
+        Me.MainSideBarSplitContainer.Panel2Collapsed = True
+        Me.MainSideBarSplitContainer.Size = New System.Drawing.Size(1299, 462)
         Me.MainSideBarSplitContainer.SpliterHeight = 0
-        Me.MainSideBarSplitContainer.SplitterDistance = 1030
+        Me.MainSideBarSplitContainer.SplitterDistance = 1069
         Me.MainSideBarSplitContainer.SplitterWidth = 1
         Me.MainSideBarSplitContainer.TabIndex = 19
+        '
+        'ContainerUserAndComputers
+        '
+        Me.ContainerUserAndComputers.BackColor = System.Drawing.SystemColors.Window
+        Me.ContainerUserAndComputers.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ContainerUserAndComputers.Job = Nothing
+        Me.ContainerUserAndComputers.Location = New System.Drawing.Point(0, 0)
+        Me.ContainerUserAndComputers.Name = "ContainerUserAndComputers"
+        Me.ContainerUserAndComputers.Path = "DC=dataspire,DC=co,DC=uk"
+        Me.ContainerUserAndComputers.Size = New System.Drawing.Size(1299, 461)
+        Me.ContainerUserAndComputers.TabIndex = 1
         '
         'TaskFlow
         '
         Me.TaskFlow.AutoScroll = True
-        Me.TaskFlow.AutoSize = True
+        Me.TaskFlow.BackColor = System.Drawing.SystemColors.Window
         Me.TaskFlow.ColumnCount = 1
         Me.TaskFlow.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TaskFlow.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TaskFlow.Location = New System.Drawing.Point(0, 41)
         Me.TaskFlow.Name = "TaskFlow"
         Me.TaskFlow.RowCount = 1
-        Me.TaskFlow.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 68.0!))
-        Me.TaskFlow.Size = New System.Drawing.Size(268, 527)
+        Me.TaskFlow.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44.0!))
+        Me.TaskFlow.Size = New System.Drawing.Size(96, 58)
         Me.TaskFlow.TabIndex = 0
         '
         'TaskHeaderPl
@@ -563,7 +463,7 @@ Partial Class FormMain
         Me.TaskHeaderPl.Dock = System.Windows.Forms.DockStyle.Top
         Me.TaskHeaderPl.Location = New System.Drawing.Point(0, 0)
         Me.TaskHeaderPl.Name = "TaskHeaderPl"
-        Me.TaskHeaderPl.Size = New System.Drawing.Size(268, 41)
+        Me.TaskHeaderPl.Size = New System.Drawing.Size(96, 41)
         Me.TaskHeaderPl.TabIndex = 1
         '
         'Label1
@@ -574,18 +474,39 @@ Partial Class FormMain
         Me.Label1.Location = New System.Drawing.Point(8, 8)
         Me.Label1.Margin = New System.Windows.Forms.Padding(8)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(63, 30)
+        Me.Label1.Size = New System.Drawing.Size(61, 30)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Tasks"
+        '
+        'BackgroundPanel
+        '
+        Me.BackgroundPanel.BackColor = System.Drawing.SystemColors.Control
+        Me.BackgroundPanel.Controls.Add(Me.MainSideBarSplitContainer)
+        Me.BackgroundPanel.Controls.Add(Me.ControlToolStrip)
+        Me.BackgroundPanel.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.BackgroundPanel.Location = New System.Drawing.Point(0, 24)
+        Me.BackgroundPanel.Name = "BackgroundPanel"
+        Me.BackgroundPanel.Padding = New System.Windows.Forms.Padding(0, 0, 0, 6)
+        Me.BackgroundPanel.Size = New System.Drawing.Size(1299, 568)
+        Me.BackgroundPanel.TabIndex = 20
+        '
+        'ControlToolStrip
+        '
+        Me.ControlToolStrip.BackColor = System.Drawing.Color.FromArgb(CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer))
+        Me.ControlToolStrip.Dock = System.Windows.Forms.DockStyle.Top
+        Me.ControlToolStrip.Location = New System.Drawing.Point(0, 0)
+        Me.ControlToolStrip.Name = "ControlToolStrip"
+        Me.ControlToolStrip.Size = New System.Drawing.Size(1299, 100)
+        Me.ControlToolStrip.TabIndex = 20
         '
         'FormMain
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(214, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(233, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1299, 614)
-        Me.Controls.Add(Me.MainSideBarSplitContainer)
-        Me.Controls.Add(Me.StatusStrip)
+        Me.Controls.Add(Me.BackgroundPanel)
         Me.Controls.Add(Me.SADMenuStrip)
+        Me.Controls.Add(Me.StatusStrip)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Corbel", 8.25!)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -598,19 +519,15 @@ Partial Class FormMain
         Me.SADMenuStrip.PerformLayout()
         Me.NodeContextMenu.ResumeLayout(False)
         Me.ContextMenuStripTrayIcon.ResumeLayout(False)
-        Me.MainTabCtrl.ResumeLayout(False)
-        Me.ExplorerTab.ResumeLayout(False)
-        Me.ImportTab.ResumeLayout(False)
-        Me.TemplateTab.ResumeLayout(False)
         Me.StatusStrip.ResumeLayout(False)
         Me.StatusStrip.PerformLayout()
         Me.MainSideBarSplitContainer.Panel1.ResumeLayout(False)
         Me.MainSideBarSplitContainer.Panel2.ResumeLayout(False)
-        Me.MainSideBarSplitContainer.Panel2.PerformLayout()
         CType(Me.MainSideBarSplitContainer, System.ComponentModel.ISupportInitialize).EndInit()
         Me.MainSideBarSplitContainer.ResumeLayout(False)
         Me.TaskHeaderPl.ResumeLayout(False)
         Me.TaskHeaderPl.PerformLayout()
+        Me.BackgroundPanel.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -637,17 +554,9 @@ Partial Class FormMain
     Friend WithEvents BulkUserWizardToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents OpenActiveDirectoryToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
-    Friend WithEvents MainTabCtrl As CustomTabControl
     Friend WithEvents CheckForUpdatesToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ConsoleToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
-    Friend WithEvents BrowseToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ModeToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents SmallIconsToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents LargeIconsToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ListToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents DetailsToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents TileToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ShowGroupsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SADMenuStrip As SimpleAD.ControlMenuStrip
     Friend WithEvents VersionToolStripMenuItem As ToolStripMenuItem
@@ -662,15 +571,14 @@ Partial Class FormMain
     Friend WithEvents RightToolStripPanel As ToolStripPanel
     Friend WithEvents LeftToolStripPanel As ToolStripPanel
     Friend WithEvents ContentPanel As ToolStripContentPanel
-    Friend WithEvents ExplorerTab As TabPage
-    Friend WithEvents ImportTab As TabPage
-    Friend WithEvents TemplateTab As TabPage
-    Friend WithEvents ContainerUserAndComputers As ContainerExplorer
-    Friend WithEvents ContainerUserImport As ContainerImport
-    Friend WithEvents ContainerTemplate As ContainerTemplate
     Friend WithEvents MainSideBarSplitContainer As ControlSplitConatiner
-    Friend WithEvents TaskFlow As TableLayoutPanel
+    Friend WithEvents TaskFlow As ControlTableLayoutPanel
     Friend WithEvents TaskPanelToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents TaskHeaderPl As ControlHeaderPanel
     Friend WithEvents Label1 As Label
+    Friend WithEvents TemplateManagerToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents BackgroundPanel As Panel
+    Friend WithEvents ContainerUserAndComputers As ContainerExplorer
+    Friend WithEvents ControlToolStrip As ControlToolStrip
+    Friend WithEvents ContainerToolStripStatusLabel As ToolStripStatusLabel
 End Class

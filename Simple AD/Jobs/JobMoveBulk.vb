@@ -1,11 +1,7 @@
-﻿Imports System.Runtime.Serialization
-Imports System.Security.Permissions
-Imports SimpleLib
+﻿
 
-<Serializable()>
 Public Class JobMoveBulk
     Inherits SimpleADJob
-    Implements ISerializable
 
     Private TargetDomainObjects As IList
     Private TargetExplorerJob As JobExplorer
@@ -17,7 +13,7 @@ Public Class JobMoveBulk
         JobType = SimpleADJobType.BulkMove
         JobName = "Bulk Delete"
         JobProgressMax = DomainObjects.Count
-        NewTask(Me)
+        
 
         TargetDomainObjects = DomainObjects
         TargetExplorerJob = Job
@@ -30,7 +26,7 @@ Public Class JobMoveBulk
 
     Private Async Sub MoveBulk()
 
-        Dim MoveForm = New FormMoveObject
+        Dim MoveForm As FormMoveObject = New FormMoveObject
         MoveForm.Location = GetDialogLocation(MoveForm)
         MoveForm.ShowDialog(FormMain)
         If MoveForm.DialogResult = DialogResult.Yes Then
@@ -71,7 +67,7 @@ Public Class JobMoveBulk
         If Not ObjectErrors.Count > 0 Then
             JobStatus = SimpleADJobStatus.Completed
             TargetExplorerJob.Refresh()
-            Dim ResultForm = New FormAlert("Moved Selected Objects to:" & Environment.NewLine & TargetOU, AlertType.Success)
+            Dim ResultForm As FormAlert = New FormAlert("Moved Selected Objects to:" & Environment.NewLine & TargetOU, AlertType.Success)
             ResultForm.StartPosition = FormStartPosition.CenterScreen
             ResultForm.ShowDialog()
         Else
@@ -83,36 +79,11 @@ Public Class JobMoveBulk
             End If
 
             TargetExplorerJob.Refresh()
-            Dim ResultForm = New FormAlert("An Error occured while trying to move objects to:" & Environment.NewLine & TargetOU, AlertType.ErrorAlert)
+            Dim ResultForm As FormAlert = New FormAlert("An Error occured while trying to move objects to:" & Environment.NewLine & TargetOU, AlertType.ErrorAlert)
             ResultForm.StartPosition = FormStartPosition.CenterScreen
             ResultForm.ShowDialog()
         End If
 
     End Sub
-
-#Region "Serialisation"
-    Protected Sub New(info As SerializationInfo, context As StreamingContext)
-        JobName = info.GetString("JobName")
-        JobType = DirectCast([Enum].Parse(GetType(SimpleADJobType), info.GetString("JobType")), SimpleADJobType)
-        JobOwner = info.GetString("JobOwner")
-        JobCreated = info.GetDateTime("JobCreated")
-        JobDescription = info.GetString("JobDescription")
-        JobStatus = DirectCast([Enum].Parse(GetType(SimpleADJobStatus), info.GetString("JobStatus")), SimpleADJobStatus)
-        JobProgress = info.GetInt32("JobProgress")
-        JobProgressMax = info.GetInt32("JobProgressMax")
-    End Sub
-
-    <SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter:=True)>
-    Public Overrides Sub GetObjectData(info As SerializationInfo, context As StreamingContext) Implements ISerializable.GetObjectData
-        info.AddValue("JobName", JobName)
-        info.AddValue("JobType", JobType.ToString)
-        info.AddValue("JobOwner", JobOwner)
-        info.AddValue("JobCreated", JobCreated)
-        info.AddValue("JobDescription", JobDescription)
-        info.AddValue("JobStatus", JobStatus)
-        info.AddValue("JobProgress", JobProgress)
-        info.AddValue("JobProgressMax", JobProgressMax)
-    End Sub
-#End Region
 
 End Class

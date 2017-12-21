@@ -50,7 +50,7 @@ Public Class FormBulkUser
         Dim FNNewText As New StringBuilder
         Dim SNNewText As New StringBuilder
 
-        Dim FirstNamecon = New StringBuilder
+        Dim FirstNamecon As StringBuilder = New StringBuilder
 
         Try
 
@@ -122,16 +122,16 @@ Public Class FormBulkUser
     Private Function GetUsernameFromCon(ByVal fn As String, ByVal sn As String, ByVal Pattern As String) As String
         Dim Username As String = ""
 
-        Dim Firstname = fn
-        Dim Surname = sn
-        Dim Firstname1 = Firstname.Substring(0, 1)
-        Dim Surname1 = Surname.Substring(0, 1)
+        Dim Firstname As String = fn
+        Dim Surname As String = sn
+        Dim Firstname1 As String = Firstname.Substring(0, 1)
+        Dim Surname1 As String = Surname.Substring(0, 1)
 
 
-        Dim PatternArray = Pattern.Split(New Char() {"\"})
+        Dim PatternArray As String() = Pattern.Split(New Char() {"\"c})
         Dim UsernameBuilder As New StringBuilder
 
-        For Each item In PatternArray
+        For Each item As String In PatternArray
             If item = "FirstName" Then
                 UsernameBuilder.Append(Firstname)
             ElseIf item = "Surname" Then
@@ -157,7 +157,9 @@ Public Class FormBulkUser
 
     Private Sub DraggableTB_MouseMove(sender As Object, e As MouseEventArgs) Handles FnDragBn.MouseMove, Fn1DragBn.MouseMove, SnDragBn.MouseMove, Sn1DragBn.MouseMove, StringDragBn.MouseMove, NumberBn.MouseMove
         If MouseIsDown Then
-            sender.DoDragDrop(sender.Text, DragDropEffects.Copy)
+            Dim SenderObject As ControlUsernameContructorChunk = DirectCast(sender, ControlUsernameContructorChunk)
+
+            SenderObject.DoDragDrop(SenderObject.Text, DragDropEffects.Copy)
         End If
         MouseIsDown = False
     End Sub
@@ -171,7 +173,7 @@ Public Class FormBulkUser
     End Sub
 
     Private Sub TextBox2_DragDrop(ByVal sender As Object, ByVal e As DragEventArgs) Handles MainFlow.DragDrop
-        Dim NewConstructor = New ControlUsernameContructorChunk(e.Data.GetData(DataFormats.Text))
+        Dim NewConstructor As ControlUsernameContructorChunk = New ControlUsernameContructorChunk(e.Data.GetData(DataFormats.Text).ToString)
 
         MainFlow.Controls.Add(NewConstructor)
     End Sub
@@ -183,7 +185,7 @@ Public Class FormBulkUser
             PatternBuilder.Append("\" & button.GetText)
         Next
 
-        Dim Pattern = PatternBuilder.ToString
+        Dim Pattern As String = PatternBuilder.ToString
 
         MainUnPreview.Text = GetUsernameFromCon("John", "Smith", Pattern)
     End Sub

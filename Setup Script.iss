@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Simple AD"
-#define MyAppVersion "0.2.1.44"
+#define MyAppVersion "0.3.2.48"
 #define MyAppPublisher "Joel Crosby"
 #define MyAppURL "https://simple-ad.appspot.com/"
 #define MyAppExeName "SimpleAD.exe"
@@ -19,12 +19,15 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
+ArchitecturesAllowed=x64
 DefaultDirName={pf}\{#MyAppName}
 DisableProgramGroupPage=yes
 OutputBaseFilename=Simple AD Setup
-SetupIconFile=C:\Users\jcrosby\OneDrive\Projects\Simple AD\Simple AD\Resources\SimpleADIcon.ico
+SetupIconFile=E:\Projects\VB.Net\Bin\Simple AD\Simple AD\SimpleADIcon.ico
 Compression=lzma
 SolidCompression=yes
+WizardSmallImageFile=E:\Projects\VB.Net\Bin\Simple AD\Simple AD\SimpleADIconSmall.bmp
+WizardImageFile=E:\Projects\VB.Net\Bin\Simple AD\Simple AD\SimpleADBannerSmall.bmp
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -33,18 +36,18 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Users\jcrosby\OneDrive\Projects\Simple AD\Simple AD\bin\Debug\SimpleAD.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\jcrosby\OneDrive\Projects\Simple AD\Simple AD\bin\Debug\AutoUpdater.NET.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\jcrosby\OneDrive\Projects\Simple AD\Simple AD\bin\Debug\Interop.TSUSEREXLib.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\jcrosby\OneDrive\Projects\Simple AD\Simple AD\bin\Debug\LDAPAtrSheet.csv"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\jcrosby\OneDrive\Projects\Simple AD\Simple AD\bin\Debug\MetroFramework.Design.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\jcrosby\OneDrive\Projects\Simple AD\Simple AD\bin\Debug\MetroFramework.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\jcrosby\OneDrive\Projects\Simple AD\Simple AD\bin\Debug\MetroFramework.Fonts.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\jcrosby\OneDrive\Projects\Simple AD\Simple AD\bin\Debug\Microsoft.WindowsAPICodePack.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\jcrosby\OneDrive\Projects\Simple AD\Simple AD\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\jcrosby\OneDrive\Projects\Simple AD\Simple AD\bin\Debug\System.Management.Automation.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\jcrosby\OneDrive\Projects\Simple AD\Simple AD\bin\Debug\UNOLibs.Net.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\jcrosby\OneDrive\Projects\Simple AD\Simple AD\bin\Debug\ObjectListView.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\Projects\VB.Net\Bin\Simple AD\Simple AD\bin\x64\Release\SimpleAD.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\Projects\VB.Net\Bin\Simple AD\Simple AD\bin\x64\Release\SimpleLib.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\Projects\VB.Net\Bin\Simple AD\Simple AD\bin\x64\Release\AutoUpdater.NET.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\Projects\VB.Net\Bin\Simple AD\packages\Interop.TSUSEREXLib.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\Projects\VB.Net\Bin\Simple AD\Simple AD\bin\x64\Release\MetroFramework.Design.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\Projects\VB.Net\Bin\Simple AD\Simple AD\bin\x64\Release\MetroFramework.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\Projects\VB.Net\Bin\Simple AD\Simple AD\bin\x64\Release\MetroFramework.Fonts.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\Projects\VB.Net\Bin\Simple AD\Simple AD\bin\x64\Release\Microsoft.WindowsAPICodePack.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\Projects\VB.Net\Bin\Simple AD\Simple AD\bin\x64\Release\Microsoft.WindowsAPICodePack.Shell.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\Projects\VB.Net\Bin\Simple AD\Simple AD\bin\x64\Release\System.Management.Automation.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\Projects\VB.Net\Bin\Simple AD\Simple AD\bin\x64\Release\UNOLibs.Net.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\Projects\VB.Net\Bin\Simple AD\Simple AD\bin\x64\Release\ObjectListView.dll"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

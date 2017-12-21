@@ -73,13 +73,13 @@ Public Class FormADObjectSelection
         Dim results As SearchResultCollection = DirSearcher.FindAll()
         For Each result As SearchResult In results
             Dim type As GroupType
-            Dim resultType = result.GetDirectoryEntry().Properties("sAMAccountType").Value
+            Dim resultType As String = result.GetDirectoryEntry().Properties("sAMAccountType").Value.ToString
             If resultType = "268435457" Then
-                type = 1
+                type = GroupType.Distribution
             Else
-                type = 0
+                type = GroupType.Security
             End If
-            AddGroupToGrid(result.GetDirectoryEntry().Properties("cn").Value, type, result.GetDirectoryEntry().Properties("description").Value)
+            AddGroupToGrid(result.GetDirectoryEntry().Properties("cn").Value.ToString, type, result.GetDirectoryEntry().Properties("description").Value.ToString)
         Next
 
         SearchFinished()

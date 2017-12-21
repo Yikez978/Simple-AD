@@ -1,82 +1,57 @@
-﻿Imports SimpleLib
-Imports System.ComponentModel
+﻿Public Class ADConnectionChecker
 
-Public Class ADConnectionChecker
+    Private ConnectionState As Boolean
+    Private IsRunning As Boolean
 
-    Private BackgroundWorker As BackgroundWorker = New BackgroundWorker
+    Public Sub InitiateTimer()
 
-    Private ConnectionState As Integer
+        Dim ConnectionTimmer As Windows.Forms.Timer = New Windows.Forms.Timer With {
+            .Interval = 10000,
+            .Enabled = True
+        }
 
-    Public Sub Start()
+        AddHandler ConnectionTimmer.Tick, AddressOf ConnectionTimmerTick
 
-        ConnectionState = 2
+        ConnectionTimmer.Start()
+        ConnectionTimmerTick(Me, Nothing)
 
-        BackgroundWorker.WorkerReportsProgress = True
-        BackgroundWorker.WorkerSupportsCancellation = True
-
-        AddHandler BackgroundWorker.DoWork, AddressOf BackgroundWorker_DoWork
-        AddHandler BackgroundWorker.ProgressChanged, AddressOf BackgroundWorker_ProgressChanged
-        AddHandler BackgroundWorker.RunWorkerCompleted, AddressOf BackgroundWorker_RunWorkerCompleted
-
-        If Not BackgroundWorker.IsBusy = True Then
-            BackgroundWorker.RunWorkerAsync()
-        End If
-
-        If BackgroundWorker.WorkerSupportsCancellation = True Then
-            BackgroundWorker.CancelAsync()
-        End If
+        Debug.WriteLine("[Debug] Network Check Thread Started")
 
     End Sub
 
-    Private Sub BackgroundWorker_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
+    Private Sub ConnectionTimmerTick(sender As Object, e As EventArgs)
 
-        Dim worker As BackgroundWorker = CType(sender, BackgroundWorker)
+        Debug.WriteLine("[Debug] AD Connection Checker Tick")
 
-        If BackgroundWorker.CancellationPending = True Then
-            e.Cancel = True
+        If Not IsRunning Then
+            IsRunning = True
+            UpdateUI(ValidateActiveDirectoryLogin(LoginUsername, LoginPassword, LoginUsernamePrefix))
+        End If
+    End Sub
+
+    Private Sub UpdateUI(ByVal State As Boolean)
+
+        Debug.WriteLine("[Debug] Network Connection state: " & State)
+
+        If FormMain.StatusStrip.InvokeRequired Then
+            FormMain.StatusStrip.Invoke(New Action(Of Boolean)(AddressOf UpdateUI), State)
         Else
-            Dim connectionStatus As Boolean = ValidateActiveDirectoryLogin(GetFQDN, LoginUsername, LoginPassword, LoginUsernamePrefix)
 
-            If connectionStatus Then
-                BackgroundWorker.ReportProgress(1)
-            Else
-                BackgroundWorker.ReportProgress(0)
-            End If
+            Debug.WriteLine("[Debug] Updating Connection state")
 
-            System.Threading.Thread.Sleep(5000)
-        End If
-    End Sub
-
-    Private Sub BackgroundWorker_RunWorkerCompleted(ByVal sender As Object, ByVal e As RunWorkerCompletedEventArgs)
-
-        If Not BackgroundWorker.IsBusy = True Then
-            BackgroundWorker.RunWorkerAsync()
-        End If
-    End Sub
-
-    Private Sub BackgroundWorker_ProgressChanged(ByVal sender As Object, ByVal e As ProgressChangedEventArgs)
-
-        If Not ConnectionState = e.ProgressPercentage Then
-
-            If (e.ProgressPercentage = 1) Then
+            If State Then
                 FormMain.ConnectionToolStripStatusLabel.Image = New Icon(My.Resources.SystemTask, 16, 16).ToBitmap
-                FormMain.ConnectionToolStripStatusLabel.Text = "Connected to " & CStr(GetLocalDomainName())
+                FormMain.ConnectionToolStripStatusLabel.Text = "Connected to " & GetLocalDomainName()
                 FormMain.ConnectionToolStripStatusLabel.ToolTipText = "Domain: " & GetLocalDomainName() & Environment.NewLine & "FQDN: " & GetFQDN() & Environment.NewLine & "DC Net BIOS: " & GetSingleDomainController()
             Else
                 FormMain.ConnectionToolStripStatusLabel.Image = New Icon(My.Resources.SystemTask, 16, 16).ToBitmap
                 FormMain.ConnectionToolStripStatusLabel.Text = "Unable to connect to any valid login server"
             End If
+
         End If
 
-        ConnectionState = e.ProgressPercentage
+        IsRunning = False
 
     End Sub
-
-    Public Sub StopChecker()
-        If BackgroundWorker.WorkerSupportsCancellation Then
-            BackgroundWorker.CancelAsync()
-        End If
-    End Sub
-
 
 End Class

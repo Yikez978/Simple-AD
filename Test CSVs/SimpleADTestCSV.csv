@@ -1,0 +1,5 @@
+givenName,sn,displayName,sAMAccountName,scriptPath,homeDrive,homeDirectory,pager,description,tsProfilePath,password
+Test1,User1,Test1 User1,TUser1,logon.bat,Z:,C:\Home\TUser1,123456789,Test Student ,\\AD1\Home$\Profiles\TUser1,Password1
+Test2,User2,Test2 User2,TUser2,logon.bat,Z:,C:\Home\TUser2,123456789,Test Student ,\\AD1\Home$\Profiles\TUser2,Password1
+Test3,User3,Test3 User3,TUser3,logon.bat,Z:,C:\Home\TUser3,123456789,Test Student ,\\AD1\Home$\Profiles\TUser3,Password1
+Test4,User4,Test4 User4,TUser4,logon.bat,Z:,C:\Home\TUser4,123456789,Test Student ,\\AD1\Home$\Profiles\TUser4,Password1

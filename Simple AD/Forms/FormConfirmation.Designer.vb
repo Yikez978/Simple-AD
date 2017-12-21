@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class FormConfirmation
-    Inherits SimpleAD.FormSimpleAD
+    Inherits Form
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -25,7 +25,7 @@ Partial Class FormConfirmation
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormConfirmation))
         Me.CancelBn = New MetroFramework.Controls.MetroButton()
         Me.AcceptBn = New MetroFramework.Controls.MetroButton()
-        Me.MainLb = New MetroFramework.Controls.MetroLabel()
+        Me.MainLb = New System.Windows.Forms.Label()
         Me.MainPb = New System.Windows.Forms.PictureBox()
         Me.ControlFooterPl1 = New SimpleAD.ControlFooterPl()
         CType(Me.MainPb, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -55,14 +55,12 @@ Partial Class FormConfirmation
         '
         'MainLb
         '
-        Me.MainLb.Location = New System.Drawing.Point(82, 12)
+        Me.MainLb.Location = New System.Drawing.Point(82, 26)
         Me.MainLb.MaximumSize = New System.Drawing.Size(277, 49)
         Me.MainLb.Name = "MainLb"
-        Me.MainLb.Size = New System.Drawing.Size(277, 46)
+        Me.MainLb.Size = New System.Drawing.Size(277, 32)
         Me.MainLb.TabIndex = 2
         Me.MainLb.Text = "Are you sure you wish to delete"
-        Me.MainLb.UseCustomBackColor = True
-        Me.MainLb.WrapToLine = True
         '
         'MainPb
         '
@@ -101,7 +99,7 @@ Partial Class FormConfirmation
         Me.Name = "FormConfirmation"
         Me.ShowInTaskbar = False
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Confirm"
         CType(Me.MainPb, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ControlFooterPl1.ResumeLayout(False)
@@ -111,7 +109,7 @@ Partial Class FormConfirmation
 
     Friend WithEvents CancelBn As Controls.MetroButton
     Friend WithEvents AcceptBn As Controls.MetroButton
-    Friend WithEvents MainLb As Controls.MetroLabel
+    Friend WithEvents MainLb As Label
     Friend WithEvents MainPb As PictureBox
     Friend WithEvents ControlFooterPl1 As ControlFooterPl
 End Class

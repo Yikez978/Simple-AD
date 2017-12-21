@@ -10,14 +10,14 @@
 
         Me.FileTitleLb.Text = _Path
 
-        Dim FileNameShortArray = _Path.Split(New Char() {"\"c})
+        Dim FileNameShortArray As String() = _Path.Split(New Char() {"\"c})
 
 
         Me.FileNameLb.Text = FileNameShortArray(FileNameShortArray.Length - 1)
         Me.DateModifedLb.Text = "Modified: " & FileDateTime(_Path)
         Me.BringToFront()
 
-        Dim ico As Icon = Drawing.Icon.ExtractAssociatedIcon(Path)
+        Dim ico As Icon = Icon.ExtractAssociatedIcon(Path)
 
         Me.PictureBox.Image = ico.ToBitmap
 
@@ -38,7 +38,6 @@
     End Sub
 
     Private Sub RecentFilesButton_MouseEnter(sender As Object, e As EventArgs)
-        Me.BackColor = ButtonHoverColor
         Me.FileNameLb.ForeColor = SystemColors.ControlLightLight
         Me.FileTitleLb.ForeColor = SystemColors.ControlLightLight
     End Sub
@@ -50,7 +49,8 @@
     End Sub
 
     Private Sub RecentFilesButton_Click(sender As Object, e As EventArgs) Handles MyBase.MouseDown
-        Dim RecentImportFile = New JobImport(_Path)
+        Dim RecentImportForm As FormImport = New FormImport(_Path)
+        RecentImportForm.ShowDialog()
     End Sub
 
     Private Function GetMouseoverControl() As Boolean

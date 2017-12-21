@@ -1,7 +1,5 @@
-﻿Imports System.DirectoryServices
-Imports System.DirectoryServices.ActiveDirectory
+﻿Imports System.DirectoryServices.ActiveDirectory
 Imports System.Runtime.InteropServices
-Imports SimpleLib
 
 Public Class ControlDomainTreeView
     Inherits TreeView
@@ -10,15 +8,10 @@ Public Class ControlDomainTreeView
     Private _DomainController As String
     Private _SelectedOU As String
 
-    Public Event SelectedOUChanged(ByVal Path As String)
-    Public Event EveryThingSeleceted()
-    Public Event DisabledUsersSeleceted()
-    Public Event AllAdminsSeleceted()
+    Public RootNode As TreeNode
 
-    Public EverythingTreeNode As TreeNode = New TreeNode("Everything", 3, 3)
-    Public DisabledUsersTreeNode As TreeNode = New TreeNode("Disabled Users", 4, 4)
-    Public AllAdminsTreeNode As TreeNode = New TreeNode("All Admins", 5, 5)
-    Public BuiltInTreeNode As TreeNode = New TreeNode("Built In Views", 2, 2, New TreeNode() {EverythingTreeNode, DisabledUsersTreeNode, AllAdminsTreeNode})
+    Public Event SelectedOUChanged(ByVal Path As String)
+    Public Event ReportRequested(ByVal ReportType As SimpleADReportType)
 
 #Region "Properties"
 
@@ -50,6 +43,14 @@ Public Class ControlDomainTreeView
         End Get
     End Property
 
+    Protected Overrides ReadOnly Property CreateParams() As CreateParams
+        Get
+            Dim cp As CreateParams = MyBase.CreateParams
+            cp.Style = cp.Style Or &H8000
+            Return cp
+        End Get
+    End Property
+
 #End Region
 
 #Region "Double Buffer"
@@ -74,26 +75,28 @@ Public Class ControlDomainTreeView
         Me.HotTracking = True
         Me.ShowLines = False
         Me.ItemHeight = 22
-        Me.Dock = DockStyle.Fill
         Me.FullRowSelect = True
         Me.Font = SystemFonts.DefaultFont
         Me.HideSelection = False
         Me.Nodes.Clear()
-        Me.BuiltInTreeNode.Expand()
 
         WindowsApi.SetWindowTheme(Me.Handle, "explorer", Nothing)
 
         Try
             Dim AdImages As New ImageList()
 
-            AdImages.Images.Add("OuImage", IconOU)
-            AdImages.Images.Add("DomainImage", IconDomian)
-            AdImages.Images.Add("ContainerImage", IconContainer)
-            AdImages.Images.Add("EveryThingImage", IconSearch)
-            AdImages.Images.Add("DisabledUsers", IconDisabledUSer)
-            AdImages.Images.Add("Users", IconUser)
-            AdImages.ColorDepth = ColorDepth.Depth24Bit
-            AdImages.ImageSize = New Size(16, 16)
+            AdImages.Images.Add("OuImage", New Icon(My.Resources.Container, New Size(16, 16)).ToBitmap)
+            AdImages.Images.Add("DomainImage", New Icon(My.Resources.Domain, New Size(16, 16)).ToBitmap)
+            AdImages.Images.Add("ContainerImage", New Icon(My.Resources.Container, New Size(16, 16)).ToBitmap)
+            AdImages.Images.Add("Everything", New Icon(My.Resources.Search, New Size(16, 16)).ToBitmap)
+            AdImages.Images.Add("AllDisabledUsers", New Icon(My.Resources.UserDisabled, New Size(16, 16)).ToBitmap)
+            AdImages.Images.Add("AllAdmins", New Icon(My.Resources.Admin, New Size(16, 16)).ToBitmap)
+            AdImages.Images.Add("AllDeletedUsers", New Icon(My.Resources.Delete, New Size(16, 16)).ToBitmap)
+            AdImages.Images.Add("AllComputers", New Icon(My.Resources.Computer, New Size(16, 16)).ToBitmap)
+            AdImages.Images.Add("Import", New Icon(My.Resources.JobImport, New Size(16, 16)).ToBitmap)
+            AdImages.Images.Add("AllUsers", New Icon(My.Resources.Group, New Size(16, 16)).ToBitmap)
+            AdImages.Images.Add("AllGroups", New Icon(My.Resources.Group, New Size(16, 16)).ToBitmap)
+            AdImages.ColorDepth = ColorDepth.Depth32Bit
 
             Me.ImageList = AdImages
         Catch ex As Exception
@@ -102,11 +105,33 @@ Public Class ControlDomainTreeView
     End Sub
 
     Public Sub RefreshNodes()
+
+        Debug.WriteLine("[Info] Refreshing Domain TreeView")
+
         BeginControlUpdate(Me)
         Nodes.Clear()
-        Nodes.Add(BuiltInTreeNode)
+
+        Dim ReportsNode As TreeNode = GetReportNodes()
+        Nodes.Add(GetReportNodes)
+        GetReportNodes.Expand()
+
         InitialLoad()
     End Sub
+
+    Private Function GetReportNodes() As TreeNode
+
+        Dim BuiltInTreeNode As TreeNode = New TreeNode("Built In Views", 2, 2)
+
+        For Each Report As SimpleADReport In GetReports()
+            Dim ReportNode As ReportTreeNode = New ReportTreeNode(Report.ReportName, Report.ImageKey, Report.SelecetdImageKey, Report)
+            Dim ReportNodeCast As TreeNode = DirectCast(ReportNode, TreeNode)
+
+            ReportNodeCast.Tag = ADNodeType.Report
+            BuiltInTreeNode.Nodes.Add(ReportNodeCast)
+        Next
+
+        Return BuiltInTreeNode
+    End Function
 
     Public Sub InitialLoad()
         Try
@@ -117,7 +142,7 @@ Public Class ControlDomainTreeView
                 _DomainController = GetSingleDomainController()
             End If
 
-            Dim RootNode = New TreeNode
+            RootNode = New TreeNode
             Dim DomainObject As Domain = Domain.GetDomain(GetDomainContext)
 
             Using RootDirectoryEntry As DirectoryEntry = DomainObject.GetDirectoryEntry
@@ -171,9 +196,9 @@ Public Class ControlDomainTreeView
                         If ChildObjectType = "organizationalUnit" OrElse ChildObjectType = "container" Then
 
                             Dim ChildNode As New TreeNode
-                            Dim NodeName As String = CStr(ChildObject.Properties("name").Value)
+                            Dim NodeName As String = ChildObject.Properties("name").Value.ToString
                             ChildNode.Text = NodeName
-                            ChildNode.Name = ChildObject.Properties("distinguishedName").Value
+                            ChildNode.Name = ChildObject.Properties("distinguishedName").Value.ToString
                             If ChildObjectType = "organizationalUnit" Then
                                 ChildNode.Tag = ADNodeType.OU
                                 ChildNode.ImageKey = "OuImage"
@@ -205,7 +230,7 @@ Public Class ControlDomainTreeView
                     End Try
                 Next
             End Using
-            LoadFinished(True, Nothing, RootNodeObject, Children)
+            LoadFinished(True, Nothing, RootNode, Children)
         Catch Ex As Exception
 
         End Try
@@ -228,6 +253,7 @@ Public Class ControlDomainTreeView
                 Catch ex As Exception
                     Debug.WriteLine("[Error] Error adding completed node to tree: " & ex.Message)
                 Finally
+                    Me.TopNode.Expand()
                     EndControlUpdate(Me)
                 End Try
             End If
@@ -241,8 +267,7 @@ Public Class ControlDomainTreeView
             If Not ExpandedNode.Tag Is Nothing Then
                 If ExpandedNode.Tag.GetType = GetType(ADNodeType) Then
                     If ExpandedNode.Nodes.Count > 0 Then
-                        Dim bgThread As New Threading.Thread(AddressOf LoadAdNodes)
-                        bgThread.Start(ExpandedNode)
+                        Threading.ThreadPool.QueueUserWorkItem(Sub() LoadAdNodes(ExpandedNode))
                     End If
                 End If
             End If
@@ -252,23 +277,25 @@ Public Class ControlDomainTreeView
     End Sub
 
     Private Sub ControlDomainTreeView_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles Me.AfterSelect
+
         If Not e.Node Is Nothing Then
-            Select Case SelectedNode.Text
-                Case "Built In Views"
-                Case "All Admins"
-                    RaiseEvent AllAdminsSeleceted()
-                Case "Disabled Users"
-                    RaiseEvent DisabledUsersSeleceted()
-                Case "Everything"
-                    RaiseEvent EveryThingSeleceted()
-                Case Else
-                    If Not e.Node.ToolTipText Is Nothing Then
-                        SelectedOU = SelectedNode.ToolTipText
-                        RaiseEvent SelectedOUChanged(e.Node.ToolTipText)
-                        FormMain.ToolStripStatusLabelStatus.Text = SelectedOU
-                    End If
-            End Select
+            If Not e.Node.Tag Is Nothing Then
+
+                If Not CInt(e.Node.Tag) = 0 Then
+                    SelectedOU = SelectedNode.ToolTipText
+                    Exit Sub
+                Else
+                    Try
+                        Dim ReportNode As ReportTreeNode = DirectCast(e.Node, ReportTreeNode)
+                        Debug.WriteLine("[Info] ReportRequested (" & e.Node.Text & ")")
+                        RaiseEvent ReportRequested(DirectCast([Enum].Parse(GetType(SimpleADReportType), ReportNode.SimpleADReport.ImageKey), SimpleADReportType))
+                    Catch Ex As Exception
+                        Debug.WriteLine("[Error] Failed to cast (" & e.Node.Text & ") to Type SimpleADReportType: " & Ex.Message)
+                    End Try
+                End If
+            End If
         End If
+
     End Sub
 
 End Class
