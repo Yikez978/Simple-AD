@@ -8,7 +8,7 @@ This project is being developed as part of a personal venture into learning .Net
 
 Simple AD is currently built against .Net 4.6.2
 
-## Dependancies
+## Dependencies
 
 [Simple Lib](https://github.com/JoelCrosby/Simple-Lib) Simple AD Helper Library
 > For Reference, most of Simple AD's Active Directory functionailty is contained in this Library
