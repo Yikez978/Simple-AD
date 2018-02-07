@@ -1,10 +1,21 @@
 # Simple-AD
 
-Simple AD is an open source Active Directory management tool designed to provide more tools to help administer active diretcory domains. Its Main features are:
+## Overview
 
-Abiltiy to Import New Users via .csv file
-Create New User tempates for easilly setting up new users
-Reset user passwords in bulk and even generate them on the fly
-A neutrel native windows design language that blends in with the server OS
+Simple AD is an open source Active Directory management tool-set designed to provide more options for administering active directory domains. Its key goal is to make bulk operations within active directory allot more accessible for those shy of Powershell.
 
-Simple AD is an open source project that is being developed as part of a personal venture into learning VB.Net and object-oriented programming.
+This project is being developed as part of a personal venture into learning .Net and object-oriented programming. As such the source is highly volatile and may be subject to drastic changes as I become more compliant in structuring the code base.
+
+Simple AD is currently built against .Net 4.6.2
+
+## Dependancies
+
+[Simple Lib](https://github.com/JoelCrosby/Simple-Lib) Simple AD Helper Library
+> For Reference, most of Simple AD's Active Directory functionailty is contained in this Library
+
+
+[Object ListView](http://objectlistview.sourceforge.net/cs/index.html) by Phillip Piper
+
+[AutoUpdater.Net](https://github.com/ravibpatel/AutoUpdater.NET) by ravibpatel
+
+[Nini Edit](http://nini.sourceforge.net/index.php) by Brent R. Matzelle
