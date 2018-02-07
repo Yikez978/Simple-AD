@@ -11,9 +11,11 @@ Public Class TaskPing
 
     Private _TargetComputer As ComputerDomainObject
 
-    Private _PingForm As FormPing
+    Private WithEvents _PingForm As FormPing
+
     Private _PingTask As Task
     Private _PingSender As Ping
+    Private _FormClosed As Boolean
 
     Private _CancellationSource As CancellationTokenSource
 
@@ -52,6 +54,8 @@ Public Class TaskPing
         PingCountMax = 4
 
         _PingForm = New FormPing(Me, ComputerObject)
+
+        AddHandler _PingForm.FormClosed, AddressOf PingFormClosed
 
         With _PingForm
             .StartPosition = FormStartPosition.CenterScreen
@@ -98,7 +102,7 @@ Public Class TaskPing
 
     Private Sub PingCompletedCallback(Sender As Object, e As PingCompletedEventArgs)
 
-        If Not IsFormAttached() Then
+        If _FormClosed Then
             Exit Sub
         End If
 
@@ -123,7 +127,7 @@ Public Class TaskPing
 
         End If
 
-        If e.Reply Is Nothing AndAlso IsFormAttached() Then
+        If e.Reply Is Nothing Then
 
             PingCount = PingCountMax
             _PingForm.Invoke(New Delegate_PingComputer(AddressOf PingComputerFinished))
@@ -131,7 +135,7 @@ Public Class TaskPing
             Exit Sub
         End If
 
-        If Not e.Reply.Status = IPStatus.Success AndAlso IsFormAttached() Then
+        If Not e.Reply.Status = IPStatus.Success Then
             OutList(PingMessageType.Err, e.Reply.Status.ToString)
 
             PingCount = PingCountMax
@@ -176,13 +180,17 @@ Public Class TaskPing
 
     Private Sub PingComputerFinished()
 
+        If _FormClosed Then
+            Exit Sub
+        End If
+
         If _PingForm.InvokeRequired Then
             _PingForm.Invoke(New Action(AddressOf PingComputerFinished))
         Else
 
             IsRunning = False
 
-            If (Not IsFormAttached()) Or IsCanceled Then
+            If IsCanceled Then
                 Exit Sub
             End If
 
@@ -220,33 +228,36 @@ Public Class TaskPing
         End If
     End Sub
 
+    Private Sub PingFormClosed()
+
+        _FormClosed = True
+
+        Cancel()
+
+        _PingForm.Dispose()
+
+    End Sub
+
     Public Overrides Sub Cancel()
         MyBase.Cancel()
 
         _PingSender.SendAsyncCancel()
         _CancellationSource.Cancel()
 
-
-
         TaskStatus = TaskStatus.Canceled
     End Sub
 
     Private Sub OutList(ByVal Item As PingListItem)
-        If IsFormAttached() And Not IsCanceled Then
+        If Not IsCanceled Then
             _PingForm.WritetoList(Item)
         End If
     End Sub
 
     Private Sub OutList(ByVal Type As PingMessageType, ByVal message As String)
-        If IsFormAttached() And Not IsCanceled Then
+        If Not IsCanceled Then
             _PingForm.WritetoList(Type, message)
         End If
     End Sub
-
-    Private Function IsFormAttached() As Boolean
-        Return (_PingForm IsNot Nothing) AndAlso (Not _PingForm.IsClosing) AndAlso (_PingForm.IsHandleCreated) AndAlso
-            (Not _PingForm.IsDisposed OrElse _PingForm.Disposing)
-    End Function
 
 End Class
 

@@ -30,7 +30,7 @@ Public Class TaskExplorer
     Private Delegate Sub Delegate_AfterFindObjects(ByVal DomainObjectList As List(Of Object))
 
     '' Defines columns that should use the Date GroupGetter delegate
-    Private DateAttributes As String() = {"whenCreated", "whenChanged", "pwdLastSet", "lastLogon", "lastLogonTimestamp"}
+    Private _DateAttributes As String() = {"whenCreated", "whenChanged", "pwdLastSet", "lastLogon", "lastLogonTimestamp"}
 
     Public Sub New(ByVal Type As SimpleADReportType, Optional LDAPQuery As String = Nothing)
         MyBase.New
@@ -425,7 +425,7 @@ Public Class TaskExplorer
                             .Width = 200
                         }
 
-                        If DateAttributes.Contains(Attribute) Then
+                        If _DateAttributes.Contains(Attribute) Then
                             NewColumn.GroupKeyGetter = Function(rowObject As Object) SortByDateGroupKeyGetter(rowObject, Attribute)
                             NewColumn.GroupKeyToTitleConverter = Function(groupKey As Object) If(Not DirectCast(groupKey, DateTime).Year = 1694, DirectCast(groupKey, DateTime).ToString("MMMM yyyy"), "N/A")
                         Else

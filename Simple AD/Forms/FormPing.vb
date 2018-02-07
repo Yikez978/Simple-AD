@@ -9,7 +9,7 @@ Public Class FormPing
     Public Property PingTask As TaskPing
     Public Property Computer As ComputerDomainObject
 
-    Public Property IsClosing As Boolean
+    Public Event FormClosed()
 
     Public Sub New(Task As TaskPing, ComputerObject As ComputerDomainObject)
         InitializeComponent()
@@ -71,8 +71,6 @@ Public Class FormPing
         End If
 
     End Sub
-
-
 
     Private Sub LoadImages()
 
@@ -151,9 +149,11 @@ Public Class FormPing
 
     Private Sub FormPing_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
 
-        If PingTask IsNot Nothing Then
-            PingTask.IsCanceled = True
+        If PingTask Is Nothing Then
+            Exit Sub
         End If
+
+        e.Cancel = True
 
         TitleLb.Text = "Cancelling Ping Request..."
 
@@ -161,6 +161,8 @@ Public Class FormPing
         SendBn.Enabled = False
         CountBox.Enabled = False
         IntervalBox.Enabled = False
+
+        RaiseEvent FormClosed()
 
     End Sub
 
