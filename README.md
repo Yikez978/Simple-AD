@@ -19,3 +19,6 @@ Simple AD is currently built against .Net 4.6.2
 [AutoUpdater.Net](https://github.com/ravibpatel/AutoUpdater.NET) by ravibpatel
 
 [Nini Edit](http://nini.sourceforge.net/index.php) by Brent R. Matzelle
+
+[WindowsFormsAero](https://github.com/LorenzCK/WindowsFormsAero) by LorenzCK
+
