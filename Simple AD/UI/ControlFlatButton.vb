@@ -1,4 +1,6 @@
 ﻿Imports System.ComponentModel
+Imports System.Drawing
+Imports System.Windows.Forms
 
 Public Class ControlFlatButton
     Inherits Panel
@@ -106,7 +108,7 @@ Public Class ControlFlatButton
     Private Sub ControlFlatButton_Click(sender As Object, e As EventArgs) Handles MyBase.Click
         Me.OnClicked = True
         Me.BackColor = Me.OnClickColor
-        Me.Forecolor = Color.White
+        Me.ForeColor = Color.White
         Me.Refresh()
     End Sub
 

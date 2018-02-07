@@ -1,4 +1,7 @@
-﻿Imports SimpleLib
+﻿Imports System.Drawing
+Imports System.Windows.Forms
+Imports BrightIdeasSoftware
+Imports SimpleLib
 
 Public Class FormObjectAttributesBulk
 
@@ -9,16 +12,15 @@ Public Class FormObjectAttributesBulk
     Private DisplCol As New DataColumn("Attribute")
     Private ReadyCol As New DataColumn("Ready")
 
-    Private _Users As New List(Of OLVListItem)
-    Private _Job As JobExplorer
+    Private _Job As TaskExplorer
 
     Private IsWorking As Boolean
 
-    Public Sub New(ByVal Users As List(Of OLVListItem), ByVal Job As JobExplorer)
+    Public Sub New(ByVal Users As IList, ByVal Job As TaskExplorer)
 
         InitializeComponent()
 
-        _Users = Users
+
         _Job = Job
 
         DropDownFilter.SelectedIndex = 0
@@ -86,7 +88,7 @@ Public Class FormObjectAttributesBulk
         If Not IsWorking Then
             Me.Close()
         Else
-            MsgBox("Cannot close form while a job is in progress")
+            MessageBox.Show("Cannot close form while a job is in progress")
         End If
     End Sub
 
@@ -106,17 +108,17 @@ Public Class FormObjectAttributesBulk
     Private Function BulkModifyAbstract(ByVal Row As DataGridViewRow) As Boolean
         Dim IsBatchSuccessfull As Boolean = False
 
-        For Each Item As BrightIdeasSoftware.OLVListItem In _Users
-            Dim PropertyToModify As String = Row.Cells("AttributeFull").Value.ToString
-            Dim NewValue As String = Row.Cells("Value").Value.ToString
-            Dim DomainObject As DomainObject = DirectCast(Item.RowObject, DomainObject)
+        'For Each Item As BrightIdeasSoftware.OLVListItem In _Users
+        '    Dim PropertyToModify As String = Row.Cells("AttributeFull").Value.ToString
+        '    Dim NewValue As String = Row.Cells("Value").Value.ToString
+        '    Dim DomainObject As DomainObject = DirectCast(Item.RowObject, DomainObject)
 
-            If SetADProperty(GetDirEntryFromDomainObject(DomainObject), PropertyToModify, NewValue) = True Then
-                IsBatchSuccessfull = True
-            Else
-                Dim ErrorMsg As FormAlert = New FormAlert("Falied to modify the attribute: " & Row.Cells("AttributeFull").Value.ToString & " for user: " & DomainObject.SAMAccountName, AlertType.ErrorAlert)
-            End If
-        Next
+        '    If SetADProperty(GetDirEntryFromDomainObject(DomainObject), PropertyToModify, NewValue) = True Then
+        '        IsBatchSuccessfull = True
+        '    Else
+        '        Dim ErrorMsg As FormAlert = New FormAlert("Falied to modify the attribute: " & Row.Cells("AttributeFull").Value.ToString & " for user: " & DomainObject.SAMAccountName, AlertType.ErrorAlert)
+        '    End If
+        'Next
 
         If IsBatchSuccessfull = True Then
             Return True

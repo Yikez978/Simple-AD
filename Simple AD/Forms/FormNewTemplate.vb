@@ -1,6 +1,10 @@
-﻿Imports System.IO
+﻿Imports System.Drawing
+Imports System.IO
 Imports System.Runtime.Serialization
 Imports System.Runtime.Serialization.Formatters.Binary
+Imports System.Windows.Forms
+Imports BrightIdeasSoftware
+Imports SimpleLib
 
 Public Class FormNewTemplate
 
@@ -30,7 +34,13 @@ Public Class FormNewTemplate
             Template.Name = NameTb.Text
             Template.Description = DescriptionTb.Text
             Template.Author = AuthorValLb.Text
-            Template.IconKey = IconObject.Name
+
+            If IconObject IsNot Nothing Then
+                Template.IconKey = IconObject.Name
+            Else
+                Template.IconKey = String.Empty
+            End If
+
 
             Dim Formatter As IFormatter = New BinaryFormatter()
             Dim Stream As Stream = New FileStream(".\Templates\" & Template.Name & ".stfx", FileMode.Create, FileAccess.Write, FileShare.None)
@@ -66,7 +76,7 @@ Public Class FormNewTemplate
     Private Sub LoadImagesTab()
         Dim runTimeResourceSet As Resources.ResourceSet
         Dim dictEntry As DictionaryEntry
-        Dim IconImageList As ImageList = New ImageList With {.ColorDepth = ColorDepth.Depth24Bit}
+        Dim IconImageList As ImageList = New ImageList With {.ColorDepth = ColorDepth.Depth32Bit}
         Dim IconObjectsList As New List(Of IconObject)
 
         runTimeResourceSet = My.Resources.ResourceManager.GetResourceSet(Globalization.CultureInfo.CurrentUICulture, False, True)

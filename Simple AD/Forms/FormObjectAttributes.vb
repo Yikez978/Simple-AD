@@ -1,46 +1,63 @@
-﻿Imports System.ComponentModel
-Imports System.DirectoryServices
+﻿Imports System.DirectoryServices
 Imports System.DirectoryServices.ActiveDirectory
+Imports System.Drawing
 Imports System.Security.Principal
+Imports System.Text
+Imports System.Threading
+Imports System.Threading.Tasks
+Imports System.Windows.Forms
+
 Imports SimpleLib
 
 Public Class FormObjectAttributes
 
     Private _DomainObject As DomainObject
-    Private _Job As JobExplorer
+    Private _Job As TaskExplorer
 
     Private AttributesList As New List(Of SimpleADAttributeFormItem)
     Private TextMatchFilter As TextMatchFilter
     Private MainDataGrid As DataGridView
 
-    Private LoadAtrThread As Threading.Thread
+    Private _CancelSource As CancellationTokenSource
 
-    Public Sub New(DomainObject As DomainObject, ByVal Job As JobExplorer)
+    Private Delegate Sub LoadFinished_Delegate()
+
+    Public Sub New(DomainObject As DomainObject, ByVal Job As TaskExplorer)
 
         InitializeComponent()
-
-        If Not My.Settings.UseNativeWindowsTheme Then
-            MainListView.HeaderUsesThemes = False
-        End If
-
-        Text = DomainObject.Name
-
-        DropDownFilter.SelectedIndex = 0
 
         _Job = Job
         _DomainObject = DomainObject
 
+        MainListView.SetListStyle()
+        MainListView.BeginUpdate()
+
+        Text = DomainObject.Name
+        AttrTab.Tag = "Property Inspector"
+        TitleLb.Text = MainTabControl.SelectedTab.Tag.ToString
+        DropDownFilter.SelectedIndex = 1
+
+        _CancelSource = New CancellationTokenSource()
+
         Show()
 
-        Threading.ThreadPool.QueueUserWorkItem(Sub() LoadAttributes(_DomainObject))
+        Try
+            Task.Run(Sub() LoadAttributes(_DomainObject, _CancelSource.Token))
+        Catch CanceledEx As OperationCanceledException
+            'Nothing to do here
+        Catch Ex As Exception
+            Debug.WriteLine("[Error] Attribute form paniced: " & Ex.Message)
+        End Try
+
     End Sub
 
-    Private Sub LoadAttributes(ByVal DomainObjectAsObject As Object)
+    Private Sub LoadAttributes(ByVal DomainObjectAsObject As Object, ByVal CancelToken As CancellationToken)
+
+        If CancelToken.IsCancellationRequested Then
+            CancelToken.ThrowIfCancellationRequested()
+        End If
 
         Dim DomainObject As DomainObject = DirectCast(DomainObjectAsObject, DomainObject)
-
-        Me.Invoke(New Action(Sub() MainListView.BeginUpdate()))
-
         Dim ObjectDirEntry As DirectoryEntry = GetDirEntryFromDomainObject(DomainObject)
 
         Try
@@ -72,11 +89,12 @@ Public Class FormObjectAttributes
 
                             Dim Builder As New StringBuilder
                             For j As Integer = 0 To Attr.Count - 1
-                                Builder.AppendLine(ObjectDirEntry.Properties(Prop).Item(j).ToString & ";")
+                                Builder.AppendLine(ObjectDirEntry.Properties(Prop).Item(j).ToString & " | ")
                             Next
 
                             Attr.Value = Builder.ToString
                         Else
+
                             If ObjectDirEntry.Properties(Prop).Value.GetType() = GetType(Byte()) Then
                                 If DirectCast(ObjectDirEntry.Properties(Prop).Value, Byte()).Length = 16 Then
                                     Dim DecodedByte As Guid = New Guid(DirectCast(ObjectDirEntry.Properties(Prop).Value, Byte()))
@@ -86,6 +104,11 @@ Public Class FormObjectAttributes
                                 Attr.Value = ConvertADSLargeIntegerToInt64(ObjectDirEntry.Properties(Prop).Value)
                             ElseIf SchemaProperty.Syntax = ActiveDirectorySyntax.Sid Then
                                 Attr.Value = New SecurityIdentifier(DirectCast(ObjectDirEntry.Properties(Prop)(0), Byte()), 0).ToString
+                            ElseIf SchemaProperty.Syntax = ActiveDirectorySyntax.GeneralizedTime Then
+                                Attr.Value = If(Not DateTime.Parse(
+                                    ObjectDirEntry.Properties(Prop).Value.ToString).Year = 1601,
+                                    ObjectDirEntry.Properties(Prop).Value.ToString,
+                                    "(Not Set)")
                             ElseIf ObjectDirEntry.Properties(Prop).Value.GetType() = GetType(String) Then
                                 Attr.Value = ObjectDirEntry.Properties(Prop).Value.ToString
                             ElseIf ObjectDirEntry.Properties(Prop).Value.GetType() = GetType(Integer) Then
@@ -95,7 +118,7 @@ Public Class FormObjectAttributes
                             ElseIf ObjectDirEntry.Properties(Prop).Value.GetType() = GetType(Boolean) Then
                                 Attr.Value = ObjectDirEntry.Properties(Prop).Value.ToString
                             Else
-                                Attr.Value = Nothing
+                                Attr.Value = "[TODO] Attribute Parsing failed, unable to decode value"
                             End If
                         End If
                     End If
@@ -107,23 +130,25 @@ Public Class FormObjectAttributes
                 Next
             End If
 
+        Else
+            Dim AlertForm As FormAlert = New FormAlert("Simple AD was unbale to determin the schema class of the selected object", AlertType.Warning)
+            AlertForm.ShowDialog()
         End If
 
-        LoadFinished()
+        If Not CancelToken.IsCancellationRequested Then
+
+            If Not Me.IsDisposed Then
+                Me.Invoke(New LoadFinished_Delegate(AddressOf LoadFinished))
+            End If
+
+        End If
+
     End Sub
 
     Private Sub LoadFinished()
 
-        If Not Me.IsDisposed Then
-
-            If Me.InvokeRequired Then
-                Me.Invoke(New Action(AddressOf LoadFinished))
-            Else
-                MainListView.SetObjects(AttributesList)
-                MainListView.EndUpdate()
-            End If
-
-        End If
+        MainListView.SetObjects(AttributesList)
+        MainListView.EndUpdate()
 
     End Sub
 
@@ -145,14 +170,25 @@ Public Class FormObjectAttributes
         End Select
     End Sub
 
-    Private Sub FormObjectAttributes_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-
+    Private Sub CancelBn_Click(sender As Object, e As EventArgs)
+        _CancelSource.Cancel()
+        Close()
     End Sub
 
-    Private Sub CancelBn_Click(sender As Object, e As EventArgs) Handles CancelBn.Click
-        Me.Close()
-    End Sub
+    Private Sub ImagePl_Paint(sender As Object, e As PaintEventArgs) Handles ImagePl.Paint
 
+        Dim s As Panel = ImagePl
+
+        If s IsNot Nothing Then
+
+            Dim Pen As New Pen(Color.FromArgb(217, 217, 217))
+            e.Graphics.DrawLine(Pen, 0, s.Height - 1, s.Width, s.Height - 1)
+
+            Pen.Dispose()
+
+        End If
+
+    End Sub
 End Class
 
 Public Class SimpleADAttributeFormItem

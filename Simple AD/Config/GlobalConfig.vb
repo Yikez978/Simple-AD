@@ -1,8 +1,4 @@
-﻿Imports System.Environment
-
-Public Module GlobalConfig
-
-    Public appData As String = GetFolderPath(SpecialFolder.ApplicationData) & "\Simple AD"
+﻿Public Module GlobalConfig
 
     Public UpdateURI As String = "http://storage.googleapis.com/simple-ad.appspot.com/SimpleAD/versioninfo.xml"
 

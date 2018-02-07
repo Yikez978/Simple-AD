@@ -2,9 +2,9 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Simple AD"
-#define MyAppVersion "0.3.2.48"
+#define MyAppVersion "0.3.9.26"
 #define MyAppPublisher "Joel Crosby"
-#define MyAppURL "https://simple-ad.appspot.com/"
+#define MyAppURL "https://www.SimpleAD.co.uk/"
 #define MyAppExeName "SimpleAD.exe"
 
 [Setup]
@@ -20,6 +20,7 @@ AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 ArchitecturesAllowed=x64
+ArchitecturesInstallIn64BitMode=x64
 DefaultDirName={pf}\{#MyAppName}
 DisableProgramGroupPage=yes
 OutputBaseFilename=Simple AD Setup
@@ -40,6 +41,7 @@ Source: "E:\Projects\VB.Net\Bin\Simple AD\Simple AD\bin\x64\Release\SimpleAD.exe
 Source: "E:\Projects\VB.Net\Bin\Simple AD\Simple AD\bin\x64\Release\SimpleLib.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\Projects\VB.Net\Bin\Simple AD\Simple AD\bin\x64\Release\AutoUpdater.NET.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\Projects\VB.Net\Bin\Simple AD\packages\Interop.TSUSEREXLib.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\Projects\VB.Net\packages\Windows-Forms-Aero.3.0.1\lib\net461\WindowsFormsAero.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\Projects\VB.Net\Bin\Simple AD\Simple AD\bin\x64\Release\MetroFramework.Design.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\Projects\VB.Net\Bin\Simple AD\Simple AD\bin\x64\Release\MetroFramework.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\Projects\VB.Net\Bin\Simple AD\Simple AD\bin\x64\Release\MetroFramework.Fonts.dll"; DestDir: "{app}"; Flags: ignoreversion

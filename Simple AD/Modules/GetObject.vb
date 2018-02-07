@@ -1,4 +1,6 @@
-﻿Public Module GetObject
+﻿Imports System.Windows.Forms
+
+Public Module GetObject
 
     Public Function GetStatusStrip() As StatusStrip
         Try
@@ -14,8 +16,8 @@
         Return ExplorerSplitContainerHandle
     End Function
 
-    Public MainListViewHandle As ControlListView
-    Public Function GetMainListView() As ControlListView
+    Public MainListViewHandle As ControlDomainListView
+    Public Function GetMainListView() As ControlDomainListView
         Return MainListViewHandle
     End Function
 

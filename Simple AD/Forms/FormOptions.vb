@@ -1,12 +1,12 @@
-﻿Public Class FormOptions
+﻿Imports SimpleLib.SystemHelper
+
+Public Class FormOptions
 
     Private Sub OptionsForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         UpCb.Checked = My.Settings.UsePaging
         ProxyToggle.Checked = My.Settings.UseProxy
         AutoLoginToggle.Checked = My.Settings.AutoLogin
-        IconsToggle.Checked = My.Settings.UseSystemIcons
-        WindowsStylingToggle.Checked = My.Settings.UseNativeWindowsTheme
 
         If My.Settings.ManualLogin = False Then
             ManualRadioBn.Checked = False
@@ -18,11 +18,11 @@
             PasswordTb.Enabled = True
         End If
 
-        If LoginUsername IsNot Nothing Then
-            UsernameTb.Text = Unprotect(My.Settings.Username, "Letme1n$")
+        If SimpleLib.LoginUsername IsNot Nothing Then
+            UsernameTb.Text = DataProtection.Unprotect(My.Settings.Username, "Letme1n$")
         End If
-        If LoginPassword IsNot Nothing Then
-            PasswordTb.Text = LoginPassword
+        If SimpleLib.LoginPassword IsNot Nothing Then
+            PasswordTb.Text = SimpleLib.LoginPassword
         End If
 
         AutoRadioBn.Checked = Not ManualRadioBn.Checked
@@ -38,8 +38,8 @@
         If ManualRadioBn.Checked = True Then
             If Not String.IsNullOrEmpty(UsernameTb.Text) And Not String.IsNullOrEmpty(PasswordTb.Text) Then
 
-                My.Settings.Username = Protect(UsernameTb.Text, "Letme1n$")
-                My.Settings.Password = Protect(PasswordTb.Text, "Letme1n$")
+                My.Settings.Username = DataProtection.Protect(UsernameTb.Text, "Letme1n$")
+                My.Settings.Password = DataProtection.Protect(PasswordTb.Text, "Letme1n$")
 
                 My.Settings.ManualLogin = True
 
@@ -63,16 +63,6 @@
 
     Private Sub AutoLoginToggle_CheckedChanged(sender As Object, e As EventArgs) Handles AutoLoginToggle.CheckedChanged
         My.Settings.AutoLogin = AutoLoginToggle.Checked
-        My.Settings.Save()
-    End Sub
-
-    Private Sub IconsToggle_CheckedChanged(sender As Object, e As EventArgs) Handles IconsToggle.CheckedChanged
-        My.Settings.UseSystemIcons = IconsToggle.Checked
-        My.Settings.Save()
-    End Sub
-
-    Private Sub WindowsStylingToggle_CheckedChanged(sender As Object, e As EventArgs) Handles WindowsStylingToggle.CheckedChanged
-        My.Settings.UseNativeWindowsTheme = WindowsStylingToggle.Checked
         My.Settings.Save()
     End Sub
 

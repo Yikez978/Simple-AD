@@ -1,4 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+﻿Imports System.Windows.Forms
+Imports BrightIdeasSoftware
+Imports MetroFramework
+Imports SimpleLib
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FormImport
     Inherits System.Windows.Forms.Form
 
@@ -25,8 +30,14 @@ Partial Class FormImport
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormImport))
         Me.ImagePl = New System.Windows.Forms.Panel()
+        Me.TitleLb = New System.Windows.Forms.Label()
         Me.UsernameCol = CType(New BrightIdeasSoftware.OLVColumn(), BrightIdeasSoftware.OLVColumn)
         Me.PasswordCol = CType(New BrightIdeasSoftware.OLVColumn(), BrightIdeasSoftware.OLVColumn)
+        Me.ControlFooterPl = New System.Windows.Forms.Panel()
+        Me.ExportBn = New System.Windows.Forms.Button()
+        Me.BackBn = New System.Windows.Forms.Button()
+        Me.AcceptBn = New System.Windows.Forms.Button()
+        Me.CancelBn = New System.Windows.Forms.Button()
         Me.ControlSplitConatiner = New SimpleAD.ControlSplitConatiner()
         Me.ProgressLink = New System.Windows.Forms.LinkLabel()
         Me.PreferencesLink = New System.Windows.Forms.LinkLabel()
@@ -37,7 +48,7 @@ Partial Class FormImport
         Me.MenuFlow = New SimpleAD.ControlFlowLayoutPanel()
         Me.PreviewTab = New System.Windows.Forms.TabPage()
         Me.ContentPl = New System.Windows.Forms.Panel()
-        Me.SearchTb = New MetroFramework.Controls.MetroTextBox()
+        Me.SearchTb = New SimpleAD.ControlTextBox()
         Me.MainListView = New SimpleAD.ControlCustomListView()
         Me.NameCol = CType(New BrightIdeasSoftware.OLVColumn(), BrightIdeasSoftware.OLVColumn)
         Me.DescCol = CType(New BrightIdeasSoftware.OLVColumn(), BrightIdeasSoftware.OLVColumn)
@@ -52,25 +63,19 @@ Partial Class FormImport
         Me.FpwdTg = New MetroFramework.Controls.MetroToggle()
         Me.FpwdLb = New System.Windows.Forms.Label()
         Me.ProgressTab = New System.Windows.Forms.TabPage()
-        Me.OutputLb = New System.Windows.Forms.Label()
-        Me.ConsolePl = New System.Windows.Forms.Panel()
-        Me.ConsoleTb = New System.Windows.Forms.RichTextBox()
         Me.MainProgressLb = New System.Windows.Forms.Label()
         Me.MainProgresBar = New System.Windows.Forms.ProgressBar()
         Me.ResultsTab = New System.Windows.Forms.TabPage()
-        Me.DropDownFilter = New MetroFramework.Controls.MetroComboBox()
-        Me.FilterTb = New MetroFramework.Controls.MetroTextBox()
+        Me.DropDownFilter = New System.Windows.Forms.ComboBox()
+        Me.FilterTb = New SimpleAD.ControlTextBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.InfoBox = New System.Windows.Forms.RichTextBox()
         Me.ResultsListView = New SimpleAD.ControlCustomListView()
         Me.ResNameCol = CType(New BrightIdeasSoftware.OLVColumn(), BrightIdeasSoftware.OLVColumn)
         Me.ResStatusCol = CType(New BrightIdeasSoftware.OLVColumn(), BrightIdeasSoftware.OLVColumn)
         Me.ResInfoCol = CType(New BrightIdeasSoftware.OLVColumn(), BrightIdeasSoftware.OLVColumn)
-        Me.ControlFooterPl = New SimpleAD.ControlFooterPl()
-        Me.ExportBn = New MetroFramework.Controls.MetroButton()
-        Me.BackBn = New MetroFramework.Controls.MetroButton()
-        Me.AcceptBn = New MetroFramework.Controls.MetroButton()
-        Me.CancelBn = New MetroFramework.Controls.MetroButton()
+        Me.ImagePl.SuspendLayout()
+        Me.ControlFooterPl.SuspendLayout()
         CType(Me.ControlSplitConatiner, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ControlSplitConatiner.Panel1.SuspendLayout()
         Me.ControlSplitConatiner.Panel2.SuspendLayout()
@@ -83,22 +88,32 @@ Partial Class FormImport
         Me.DomainTab.SuspendLayout()
         Me.OptionsTab.SuspendLayout()
         Me.ProgressTab.SuspendLayout()
-        Me.ConsolePl.SuspendLayout()
         Me.ResultsTab.SuspendLayout()
         Me.Panel1.SuspendLayout()
         CType(Me.ResultsListView, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.ControlFooterPl.SuspendLayout()
         Me.SuspendLayout()
         '
         'ImagePl
         '
+        Me.ImagePl.BackColor = System.Drawing.SystemColors.Window
+        Me.ImagePl.Controls.Add(Me.TitleLb)
         Me.ImagePl.Dock = System.Windows.Forms.DockStyle.Top
         Me.ImagePl.Location = New System.Drawing.Point(0, 0)
         Me.ImagePl.MaximumSize = New System.Drawing.Size(0, 56)
-        Me.ImagePl.MinimumSize = New System.Drawing.Size(0, 44)
+        Me.ImagePl.MinimumSize = New System.Drawing.Size(0, 56)
         Me.ImagePl.Name = "ImagePl"
         Me.ImagePl.Size = New System.Drawing.Size(658, 56)
         Me.ImagePl.TabIndex = 7
+        '
+        'TitleLb
+        '
+        Me.TitleLb.AutoSize = True
+        Me.TitleLb.Font = New System.Drawing.Font("Segoe UI Light", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TitleLb.Location = New System.Drawing.Point(24, 8)
+        Me.TitleLb.Name = "TitleLb"
+        Me.TitleLb.Size = New System.Drawing.Size(49, 30)
+        Me.TitleLb.TabIndex = 9
+        Me.TitleLb.Text = "Title"
         '
         'UsernameCol
         '
@@ -113,9 +128,63 @@ Partial Class FormImport
         Me.PasswordCol.Searchable = False
         Me.PasswordCol.Text = "Password"
         '
+        'ControlFooterPl
+        '
+        Me.ControlFooterPl.BackColor = System.Drawing.Color.FromArgb(CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer))
+        Me.ControlFooterPl.Controls.Add(Me.ExportBn)
+        Me.ControlFooterPl.Controls.Add(Me.BackBn)
+        Me.ControlFooterPl.Controls.Add(Me.AcceptBn)
+        Me.ControlFooterPl.Controls.Add(Me.CancelBn)
+        Me.ControlFooterPl.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.ControlFooterPl.Location = New System.Drawing.Point(0, 403)
+        Me.ControlFooterPl.MaximumSize = New System.Drawing.Size(0, 44)
+        Me.ControlFooterPl.MinimumSize = New System.Drawing.Size(0, 44)
+        Me.ControlFooterPl.Name = "ControlFooterPl"
+        Me.ControlFooterPl.Size = New System.Drawing.Size(658, 44)
+        Me.ControlFooterPl.TabIndex = 2
+        '
+        'ExportBn
+        '
+        Me.ExportBn.Location = New System.Drawing.Point(12, 9)
+        Me.ExportBn.Name = "ExportBn"
+        Me.ExportBn.Size = New System.Drawing.Size(101, 23)
+        Me.ExportBn.TabIndex = 3
+        Me.ExportBn.Text = "Export Results"
+        Me.ExportBn.UseVisualStyleBackColor = True
+        Me.ExportBn.Visible = False
+        '
+        'BackBn
+        '
+        Me.BackBn.Location = New System.Drawing.Point(383, 9)
+        Me.BackBn.Name = "BackBn"
+        Me.BackBn.Size = New System.Drawing.Size(75, 23)
+        Me.BackBn.TabIndex = 2
+        Me.BackBn.Text = "Previous"
+        Me.BackBn.UseVisualStyleBackColor = True
+        Me.BackBn.Visible = False
+        '
+        'AcceptBn
+        '
+        Me.AcceptBn.Location = New System.Drawing.Point(464, 9)
+        Me.AcceptBn.Name = "AcceptBn"
+        Me.AcceptBn.Size = New System.Drawing.Size(75, 23)
+        Me.AcceptBn.TabIndex = 1
+        Me.AcceptBn.Text = "Next"
+        Me.AcceptBn.UseVisualStyleBackColor = True
+        Me.AcceptBn.Visible = False
+        '
+        'CancelBn
+        '
+        Me.CancelBn.Location = New System.Drawing.Point(571, 9)
+        Me.CancelBn.Name = "CancelBn"
+        Me.CancelBn.Size = New System.Drawing.Size(75, 23)
+        Me.CancelBn.TabIndex = 0
+        Me.CancelBn.Text = "Cancel"
+        Me.CancelBn.UseVisualStyleBackColor = True
+        '
         'ControlSplitConatiner
         '
-        Me.ControlSplitConatiner.BackColor = System.Drawing.SystemColors.Window
+        Me.ControlSplitConatiner.BackColor = System.Drawing.SystemColors.Control
         Me.ControlSplitConatiner.FixedPanel = System.Windows.Forms.FixedPanel.Panel1
         Me.ControlSplitConatiner.Location = New System.Drawing.Point(0, 57)
         Me.ControlSplitConatiner.Margin = New System.Windows.Forms.Padding(1)
@@ -123,7 +192,7 @@ Partial Class FormImport
         '
         'ControlSplitConatiner.Panel1
         '
-        Me.ControlSplitConatiner.Panel1.BackColor = System.Drawing.SystemColors.Window
+        Me.ControlSplitConatiner.Panel1.BackColor = System.Drawing.SystemColors.Control
         Me.ControlSplitConatiner.Panel1.Controls.Add(Me.ProgressLink)
         Me.ControlSplitConatiner.Panel1.Controls.Add(Me.PreferencesLink)
         Me.ControlSplitConatiner.Panel1.Controls.Add(Me.LocationLink)
@@ -134,7 +203,7 @@ Partial Class FormImport
         Me.ControlSplitConatiner.Panel2.Controls.Add(Me.MainTabControl)
         Me.ControlSplitConatiner.Size = New System.Drawing.Size(658, 345)
         Me.ControlSplitConatiner.SpliterHeight = 32
-        Me.ControlSplitConatiner.SplitterDistance = 160
+        Me.ControlSplitConatiner.SplitterDistance = 132
         Me.ControlSplitConatiner.TabIndex = 8
         '
         'ProgressLink
@@ -199,7 +268,7 @@ Partial Class FormImport
         '
         'MainTabControl
         '
-        Me.MainTabControl.BackColor = System.Drawing.SystemColors.Window
+        Me.MainTabControl.BackColor = System.Drawing.SystemColors.Control
         Me.MainTabControl.Controls.Add(Me.WelcomeTab)
         Me.MainTabControl.Controls.Add(Me.PreviewTab)
         Me.MainTabControl.Controls.Add(Me.DomainTab)
@@ -209,12 +278,13 @@ Partial Class FormImport
         Me.MainTabControl.Dock = System.Windows.Forms.DockStyle.Fill
         Me.MainTabControl.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed
         Me.MainTabControl.HotTrackTabColor = System.Drawing.SystemColors.ActiveCaption
+        Me.MainTabControl.ItemSize = New System.Drawing.Size(62, 12)
         Me.MainTabControl.Location = New System.Drawing.Point(0, 0)
         Me.MainTabControl.Name = "MainTabControl"
         Me.MainTabControl.Padding = New System.Drawing.Point(0, 0)
         Me.MainTabControl.SelectedIndex = 0
         Me.MainTabControl.SelectedTabColor = System.Drawing.SystemColors.ButtonShadow
-        Me.MainTabControl.Size = New System.Drawing.Size(494, 345)
+        Me.MainTabControl.Size = New System.Drawing.Size(522, 345)
         Me.MainTabControl.TabColor = System.Drawing.SystemColors.ControlLight
         Me.MainTabControl.TabIndex = 3
         Me.MainTabControl.Tag = "Select an Option..."
@@ -222,10 +292,10 @@ Partial Class FormImport
         'WelcomeTab
         '
         Me.WelcomeTab.Controls.Add(Me.MenuFlow)
-        Me.WelcomeTab.Location = New System.Drawing.Point(0, 21)
+        Me.WelcomeTab.Location = New System.Drawing.Point(0, 15)
         Me.WelcomeTab.Name = "WelcomeTab"
         Me.WelcomeTab.Padding = New System.Windows.Forms.Padding(3)
-        Me.WelcomeTab.Size = New System.Drawing.Size(494, 324)
+        Me.WelcomeTab.Size = New System.Drawing.Size(522, 330)
         Me.WelcomeTab.TabIndex = 5
         Me.WelcomeTab.Tag = "Select an Option"
         Me.WelcomeTab.Text = "Welcome Tab"
@@ -241,55 +311,31 @@ Partial Class FormImport
         'PreviewTab
         '
         Me.PreviewTab.Controls.Add(Me.ContentPl)
-        Me.PreviewTab.Location = New System.Drawing.Point(0, 21)
+        Me.PreviewTab.Location = New System.Drawing.Point(0, 15)
         Me.PreviewTab.Name = "PreviewTab"
-        Me.PreviewTab.Size = New System.Drawing.Size(494, 324)
+        Me.PreviewTab.Size = New System.Drawing.Size(522, 330)
         Me.PreviewTab.TabIndex = 0
         Me.PreviewTab.Text = "PreviewTab"
         Me.PreviewTab.UseVisualStyleBackColor = True
         '
         'ContentPl
         '
+        Me.ContentPl.BackColor = System.Drawing.SystemColors.Control
         Me.ContentPl.Controls.Add(Me.SearchTb)
         Me.ContentPl.Controls.Add(Me.MainListView)
         Me.ContentPl.Dock = System.Windows.Forms.DockStyle.Fill
         Me.ContentPl.Location = New System.Drawing.Point(0, 0)
         Me.ContentPl.Name = "ContentPl"
-        Me.ContentPl.Size = New System.Drawing.Size(494, 321)
+        Me.ContentPl.Size = New System.Drawing.Size(522, 330)
         Me.ContentPl.TabIndex = 4
         '
         'SearchTb
         '
-        '
-        '
-        '
-        Me.SearchTb.CustomButton.Image = Nothing
-        Me.SearchTb.CustomButton.Location = New System.Drawing.Point(446, 1)
-        Me.SearchTb.CustomButton.Name = ""
-        Me.SearchTb.CustomButton.Size = New System.Drawing.Size(23, 23)
-        Me.SearchTb.CustomButton.Style = MetroFramework.MetroColorStyle.Blue
-        Me.SearchTb.CustomButton.TabIndex = 1
-        Me.SearchTb.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light
-        Me.SearchTb.CustomButton.UseSelectable = True
-        Me.SearchTb.CustomButton.Visible = False
-        Me.SearchTb.FontSize = MetroFramework.MetroTextBoxSize.Medium
-        Me.SearchTb.Lines = New String(-1) {}
         Me.SearchTb.Location = New System.Drawing.Point(12, 8)
-        Me.SearchTb.MaxLength = 32767
         Me.SearchTb.Name = "SearchTb"
-        Me.SearchTb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
-        Me.SearchTb.ScrollBars = System.Windows.Forms.ScrollBars.None
-        Me.SearchTb.SelectedText = ""
-        Me.SearchTb.SelectionLength = 0
-        Me.SearchTb.SelectionStart = 0
-        Me.SearchTb.ShortcutsEnabled = True
-        Me.SearchTb.Size = New System.Drawing.Size(470, 25)
-        Me.SearchTb.Style = MetroFramework.MetroColorStyle.Purple
+        Me.SearchTb.PromptText = "Search"
+        Me.SearchTb.Size = New System.Drawing.Size(470, 20)
         Me.SearchTb.TabIndex = 4
-        Me.SearchTb.UseSelectable = True
-        Me.SearchTb.WaterMark = "Search"
-        Me.SearchTb.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
-        Me.SearchTb.WaterMarkFont = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         '
         'MainListView
         '
@@ -299,19 +345,17 @@ Partial Class FormImport
         Me.MainListView.CellEditUseWholeCell = False
         Me.MainListView.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.NameCol, Me.DescCol, Me.DisplayNameCol})
         Me.MainListView.Cursor = System.Windows.Forms.Cursors.Default
+        Me.MainListView.EmptyListMsg = "Empty"
         Me.MainListView.EmptyListMsgFont = New System.Drawing.Font("Segoe UI Semilight", 14.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.MainListView.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.MainListView.FullRowSelect = True
-        Me.MainListView.HeaderFont = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.MainListView.HeaderFont = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.MainListView.HideSelection = False
         Me.MainListView.IncludeColumnHeadersInCopy = True
         Me.MainListView.Location = New System.Drawing.Point(12, 40)
         Me.MainListView.Name = "MainListView"
         Me.MainListView.RowHeight = 21
-        Me.MainListView.SelectedBackColor = System.Drawing.Color.FromArgb(CType(CType(100, Byte), Integer), CType(CType(18, Byte), Integer), CType(CType(99, Byte), Integer))
-        Me.MainListView.SelectedForeColor = System.Drawing.Color.White
         Me.MainListView.ShowGroups = False
-        Me.MainListView.Size = New System.Drawing.Size(470, 270)
+        Me.MainListView.Size = New System.Drawing.Size(470, 288)
         Me.MainListView.TabIndex = 3
         Me.MainListView.UseCompatibleStateImageBehavior = False
         Me.MainListView.UseFiltering = True
@@ -340,16 +384,17 @@ Partial Class FormImport
         '
         'DomainTab
         '
-        Me.DomainTab.BackColor = System.Drawing.SystemColors.Window
+        Me.DomainTab.BackColor = System.Drawing.SystemColors.Control
         Me.DomainTab.Controls.Add(Me.DomainTreeView)
-        Me.DomainTab.Location = New System.Drawing.Point(0, 21)
+        Me.DomainTab.Location = New System.Drawing.Point(0, 15)
         Me.DomainTab.Name = "DomainTab"
-        Me.DomainTab.Size = New System.Drawing.Size(494, 324)
+        Me.DomainTab.Size = New System.Drawing.Size(522, 330)
         Me.DomainTab.TabIndex = 1
         Me.DomainTab.Text = "DomainTab"
         '
         'DomainTreeView
         '
+        Me.DomainTreeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.DomainTreeView.DomainController = Nothing
         Me.DomainTreeView.DomainName = Nothing
         Me.DomainTreeView.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -358,39 +403,40 @@ Partial Class FormImport
         Me.DomainTreeView.HotTracking = True
         Me.DomainTreeView.ImageIndex = 0
         Me.DomainTreeView.ItemHeight = 22
+        Me.DomainTreeView.LabelEdit = True
         Me.DomainTreeView.Location = New System.Drawing.Point(12, 40)
         Me.DomainTreeView.Margin = New System.Windows.Forms.Padding(0)
         Me.DomainTreeView.Name = "DomainTreeView"
         Me.DomainTreeView.SelectedImageIndex = 0
         Me.DomainTreeView.SelectedOU = Nothing
         Me.DomainTreeView.ShowLines = False
-        Me.DomainTreeView.Size = New System.Drawing.Size(470, 270)
+        Me.DomainTreeView.Size = New System.Drawing.Size(470, 288)
         Me.DomainTreeView.TabIndex = 7
         '
         'OptionsTab
         '
+        Me.OptionsTab.BackColor = System.Drawing.SystemColors.Control
         Me.OptionsTab.Controls.Add(Me.EnAcTg)
         Me.OptionsTab.Controls.Add(Me.EnAcLb)
         Me.OptionsTab.Controls.Add(Me.CrHfldrLb)
         Me.OptionsTab.Controls.Add(Me.CrHfldrTg)
         Me.OptionsTab.Controls.Add(Me.FpwdTg)
         Me.OptionsTab.Controls.Add(Me.FpwdLb)
-        Me.OptionsTab.Location = New System.Drawing.Point(0, 21)
+        Me.OptionsTab.Location = New System.Drawing.Point(0, 15)
         Me.OptionsTab.Name = "OptionsTab"
         Me.OptionsTab.Padding = New System.Windows.Forms.Padding(3)
-        Me.OptionsTab.Size = New System.Drawing.Size(494, 324)
+        Me.OptionsTab.Size = New System.Drawing.Size(522, 330)
         Me.OptionsTab.TabIndex = 2
         Me.OptionsTab.Text = "OptionsTab"
-        Me.OptionsTab.UseVisualStyleBackColor = True
         '
         'EnAcTg
         '
         Me.EnAcTg.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.EnAcTg.AutoSize = True
-        Me.EnAcTg.BackColor = System.Drawing.SystemColors.Window
+        Me.EnAcTg.BackColor = System.Drawing.SystemColors.Control
         Me.EnAcTg.Checked = True
         Me.EnAcTg.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.EnAcTg.Location = New System.Drawing.Point(37, 104)
+        Me.EnAcTg.Location = New System.Drawing.Point(65, 104)
         Me.EnAcTg.Name = "EnAcTg"
         Me.EnAcTg.Size = New System.Drawing.Size(80, 17)
         Me.EnAcTg.Style = MetroFramework.MetroColorStyle.Purple
@@ -403,8 +449,8 @@ Partial Class FormImport
         '
         Me.EnAcLb.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.EnAcLb.AutoSize = True
-        Me.EnAcLb.BackColor = System.Drawing.SystemColors.Window
-        Me.EnAcLb.Location = New System.Drawing.Point(123, 106)
+        Me.EnAcLb.BackColor = System.Drawing.SystemColors.Control
+        Me.EnAcLb.Location = New System.Drawing.Point(151, 106)
         Me.EnAcLb.Name = "EnAcLb"
         Me.EnAcLb.Size = New System.Drawing.Size(145, 13)
         Me.EnAcLb.TabIndex = 20
@@ -414,8 +460,8 @@ Partial Class FormImport
         '
         Me.CrHfldrLb.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CrHfldrLb.AutoSize = True
-        Me.CrHfldrLb.BackColor = System.Drawing.SystemColors.Window
-        Me.CrHfldrLb.Location = New System.Drawing.Point(123, 79)
+        Me.CrHfldrLb.BackColor = System.Drawing.SystemColors.Control
+        Me.CrHfldrLb.Location = New System.Drawing.Point(151, 79)
         Me.CrHfldrLb.Name = "CrHfldrLb"
         Me.CrHfldrLb.Size = New System.Drawing.Size(106, 13)
         Me.CrHfldrLb.TabIndex = 18
@@ -425,10 +471,10 @@ Partial Class FormImport
         '
         Me.CrHfldrTg.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CrHfldrTg.AutoSize = True
-        Me.CrHfldrTg.BackColor = System.Drawing.SystemColors.Window
+        Me.CrHfldrTg.BackColor = System.Drawing.SystemColors.Control
         Me.CrHfldrTg.Checked = True
         Me.CrHfldrTg.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CrHfldrTg.Location = New System.Drawing.Point(37, 77)
+        Me.CrHfldrTg.Location = New System.Drawing.Point(65, 77)
         Me.CrHfldrTg.Name = "CrHfldrTg"
         Me.CrHfldrTg.Size = New System.Drawing.Size(80, 17)
         Me.CrHfldrTg.Style = MetroFramework.MetroColorStyle.Purple
@@ -441,10 +487,10 @@ Partial Class FormImport
         '
         Me.FpwdTg.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.FpwdTg.AutoSize = True
-        Me.FpwdTg.BackColor = System.Drawing.SystemColors.Window
+        Me.FpwdTg.BackColor = System.Drawing.SystemColors.Control
         Me.FpwdTg.Checked = True
         Me.FpwdTg.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.FpwdTg.Location = New System.Drawing.Point(37, 52)
+        Me.FpwdTg.Location = New System.Drawing.Point(65, 52)
         Me.FpwdTg.Name = "FpwdTg"
         Me.FpwdTg.Size = New System.Drawing.Size(80, 17)
         Me.FpwdTg.Style = MetroFramework.MetroColorStyle.Purple
@@ -457,8 +503,8 @@ Partial Class FormImport
         '
         Me.FpwdLb.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.FpwdLb.AutoSize = True
-        Me.FpwdLb.BackColor = System.Drawing.SystemColors.Window
-        Me.FpwdLb.Location = New System.Drawing.Point(123, 52)
+        Me.FpwdLb.BackColor = System.Drawing.SystemColors.Control
+        Me.FpwdLb.Location = New System.Drawing.Point(151, 52)
         Me.FpwdLb.Name = "FpwdLb"
         Me.FpwdLb.Size = New System.Drawing.Size(180, 13)
         Me.FpwdLb.TabIndex = 16
@@ -466,46 +512,15 @@ Partial Class FormImport
         '
         'ProgressTab
         '
-        Me.ProgressTab.Controls.Add(Me.OutputLb)
-        Me.ProgressTab.Controls.Add(Me.ConsolePl)
+        Me.ProgressTab.BackColor = System.Drawing.SystemColors.Control
         Me.ProgressTab.Controls.Add(Me.MainProgressLb)
         Me.ProgressTab.Controls.Add(Me.MainProgresBar)
-        Me.ProgressTab.Location = New System.Drawing.Point(0, 21)
+        Me.ProgressTab.Location = New System.Drawing.Point(0, 15)
         Me.ProgressTab.Name = "ProgressTab"
         Me.ProgressTab.Padding = New System.Windows.Forms.Padding(3)
-        Me.ProgressTab.Size = New System.Drawing.Size(494, 324)
+        Me.ProgressTab.Size = New System.Drawing.Size(522, 330)
         Me.ProgressTab.TabIndex = 3
         Me.ProgressTab.Text = "ProgressTab"
-        Me.ProgressTab.UseVisualStyleBackColor = True
-        '
-        'OutputLb
-        '
-        Me.OutputLb.AutoSize = True
-        Me.OutputLb.Location = New System.Drawing.Point(13, 21)
-        Me.OutputLb.Name = "OutputLb"
-        Me.OutputLb.Size = New System.Drawing.Size(39, 13)
-        Me.OutputLb.TabIndex = 4
-        Me.OutputLb.Text = "Output"
-        '
-        'ConsolePl
-        '
-        Me.ConsolePl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.ConsolePl.Controls.Add(Me.ConsoleTb)
-        Me.ConsolePl.Location = New System.Drawing.Point(12, 40)
-        Me.ConsolePl.Name = "ConsolePl"
-        Me.ConsolePl.Size = New System.Drawing.Size(470, 224)
-        Me.ConsolePl.TabIndex = 3
-        '
-        'ConsoleTb
-        '
-        Me.ConsoleTb.BackColor = System.Drawing.SystemColors.InactiveBorder
-        Me.ConsoleTb.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.ConsoleTb.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ConsoleTb.Location = New System.Drawing.Point(0, 0)
-        Me.ConsoleTb.Name = "ConsoleTb"
-        Me.ConsoleTb.Size = New System.Drawing.Size(468, 222)
-        Me.ConsoleTb.TabIndex = 0
-        Me.ConsoleTb.Text = ""
         '
         'MainProgressLb
         '
@@ -525,85 +540,59 @@ Partial Class FormImport
         '
         'ResultsTab
         '
+        Me.ResultsTab.BackColor = System.Drawing.SystemColors.Control
         Me.ResultsTab.Controls.Add(Me.DropDownFilter)
         Me.ResultsTab.Controls.Add(Me.FilterTb)
         Me.ResultsTab.Controls.Add(Me.Panel1)
         Me.ResultsTab.Controls.Add(Me.ResultsListView)
-        Me.ResultsTab.Location = New System.Drawing.Point(0, 21)
+        Me.ResultsTab.Location = New System.Drawing.Point(0, 15)
         Me.ResultsTab.Name = "ResultsTab"
-        Me.ResultsTab.Padding = New System.Windows.Forms.Padding(3)
-        Me.ResultsTab.Size = New System.Drawing.Size(494, 324)
+        Me.ResultsTab.Padding = New System.Windows.Forms.Padding(3, 3, 3, 0)
+        Me.ResultsTab.Size = New System.Drawing.Size(522, 330)
         Me.ResultsTab.TabIndex = 4
         Me.ResultsTab.Text = "Results Tab"
-        Me.ResultsTab.UseVisualStyleBackColor = True
         '
         'DropDownFilter
         '
-        Me.DropDownFilter.FontSize = MetroFramework.MetroComboBoxSize.Small
+        Me.DropDownFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.DropDownFilter.FormattingEnabled = True
-        Me.DropDownFilter.ItemHeight = 19
+        Me.DropDownFilter.ItemHeight = 13
         Me.DropDownFilter.Items.AddRange(New Object() {"All", "Completed", "With Errors", "Failed"})
         Me.DropDownFilter.Location = New System.Drawing.Point(332, 8)
         Me.DropDownFilter.Name = "DropDownFilter"
-        Me.DropDownFilter.Size = New System.Drawing.Size(149, 25)
-        Me.DropDownFilter.Style = MetroFramework.MetroColorStyle.Purple
+        Me.DropDownFilter.Size = New System.Drawing.Size(149, 21)
         Me.DropDownFilter.TabIndex = 4
-        Me.DropDownFilter.UseSelectable = True
         '
         'FilterTb
         '
-        '
-        '
-        '
-        Me.FilterTb.CustomButton.Image = Nothing
-        Me.FilterTb.CustomButton.Location = New System.Drawing.Point(290, 1)
-        Me.FilterTb.CustomButton.Name = ""
-        Me.FilterTb.CustomButton.Size = New System.Drawing.Size(23, 23)
-        Me.FilterTb.CustomButton.Style = MetroFramework.MetroColorStyle.Blue
-        Me.FilterTb.CustomButton.TabIndex = 1
-        Me.FilterTb.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light
-        Me.FilterTb.CustomButton.UseSelectable = True
-        Me.FilterTb.CustomButton.Visible = False
-        Me.FilterTb.FontSize = MetroFramework.MetroTextBoxSize.Medium
-        Me.FilterTb.Lines = New String(-1) {}
         Me.FilterTb.Location = New System.Drawing.Point(12, 8)
-        Me.FilterTb.MaxLength = 32767
         Me.FilterTb.Name = "FilterTb"
-        Me.FilterTb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
-        Me.FilterTb.ScrollBars = System.Windows.Forms.ScrollBars.None
-        Me.FilterTb.SelectedText = ""
-        Me.FilterTb.SelectionLength = 0
-        Me.FilterTb.SelectionStart = 0
-        Me.FilterTb.ShortcutsEnabled = True
-        Me.FilterTb.Size = New System.Drawing.Size(314, 25)
-        Me.FilterTb.Style = MetroFramework.MetroColorStyle.Purple
+        Me.FilterTb.PromptText = "Search"
+        Me.FilterTb.Size = New System.Drawing.Size(314, 20)
         Me.FilterTb.TabIndex = 3
-        Me.FilterTb.UseSelectable = True
-        Me.FilterTb.WaterMark = "Search"
-        Me.FilterTb.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
-        Me.FilterTb.WaterMarkFont = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         '
         'Panel1
         '
         Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel1.Controls.Add(Me.InfoBox)
-        Me.Panel1.Location = New System.Drawing.Point(12, 261)
+        Me.Panel1.Location = New System.Drawing.Point(12, 282)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(470, 56)
+        Me.Panel1.Size = New System.Drawing.Size(470, 48)
         Me.Panel1.TabIndex = 2
         '
         'InfoBox
         '
-        Me.InfoBox.BackColor = System.Drawing.SystemColors.InactiveBorder
+        Me.InfoBox.BackColor = System.Drawing.SystemColors.ControlLightLight
         Me.InfoBox.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.InfoBox.Cursor = System.Windows.Forms.Cursors.Default
         Me.InfoBox.Dock = System.Windows.Forms.DockStyle.Fill
         Me.InfoBox.HideSelection = False
         Me.InfoBox.Location = New System.Drawing.Point(0, 0)
+        Me.InfoBox.Margin = New System.Windows.Forms.Padding(3, 3, 3, 0)
         Me.InfoBox.Name = "InfoBox"
         Me.InfoBox.ReadOnly = True
         Me.InfoBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Horizontal
-        Me.InfoBox.Size = New System.Drawing.Size(468, 54)
+        Me.InfoBox.Size = New System.Drawing.Size(468, 46)
         Me.InfoBox.TabIndex = 1
         Me.InfoBox.Text = ""
         '
@@ -618,7 +607,7 @@ Partial Class FormImport
         Me.ResultsListView.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ResNameCol, Me.ResStatusCol, Me.ResInfoCol})
         Me.ResultsListView.Cursor = System.Windows.Forms.Cursors.Default
         Me.ResultsListView.FullRowSelect = True
-        Me.ResultsListView.HeaderFont = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ResultsListView.HeaderFont = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ResultsListView.HideSelection = False
         Me.ResultsListView.Location = New System.Drawing.Point(12, 40)
         Me.ResultsListView.MultiSelect = False
@@ -628,7 +617,7 @@ Partial Class FormImport
         Me.ResultsListView.SelectedForeColor = System.Drawing.Color.White
         Me.ResultsListView.ShowGroups = False
         Me.ResultsListView.ShowHeaderInAllViews = False
-        Me.ResultsListView.Size = New System.Drawing.Size(470, 214)
+        Me.ResultsListView.Size = New System.Drawing.Size(470, 236)
         Me.ResultsListView.TabIndex = 0
         Me.ResultsListView.UseCompatibleStateImageBehavior = False
         Me.ResultsListView.UseFiltering = True
@@ -643,7 +632,7 @@ Partial Class FormImport
         '
         'ResStatusCol
         '
-        Me.ResStatusCol.AspectName = "Status"
+        Me.ResStatusCol.AspectName = "Meta"
         Me.ResStatusCol.Text = "Status"
         Me.ResStatusCol.Width = 111
         '
@@ -653,60 +642,6 @@ Partial Class FormImport
         Me.ResInfoCol.FillsFreeSpace = True
         Me.ResInfoCol.Text = "Info"
         Me.ResInfoCol.Width = 167
-        '
-        'ControlFooterPl
-        '
-        Me.ControlFooterPl.BackColor = System.Drawing.Color.FromArgb(CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer))
-        Me.ControlFooterPl.Controls.Add(Me.ExportBn)
-        Me.ControlFooterPl.Controls.Add(Me.BackBn)
-        Me.ControlFooterPl.Controls.Add(Me.AcceptBn)
-        Me.ControlFooterPl.Controls.Add(Me.CancelBn)
-        Me.ControlFooterPl.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.ControlFooterPl.Location = New System.Drawing.Point(0, 403)
-        Me.ControlFooterPl.MaximumSize = New System.Drawing.Size(0, 44)
-        Me.ControlFooterPl.MinimumSize = New System.Drawing.Size(0, 44)
-        Me.ControlFooterPl.Name = "ControlFooterPl"
-        Me.ControlFooterPl.Size = New System.Drawing.Size(658, 44)
-        Me.ControlFooterPl.TabIndex = 2
-        '
-        'ExportBn
-        '
-        Me.ExportBn.Location = New System.Drawing.Point(12, 9)
-        Me.ExportBn.Name = "ExportBn"
-        Me.ExportBn.Size = New System.Drawing.Size(101, 23)
-        Me.ExportBn.TabIndex = 3
-        Me.ExportBn.Text = "Export Results"
-        Me.ExportBn.UseSelectable = True
-        Me.ExportBn.Visible = False
-        '
-        'BackBn
-        '
-        Me.BackBn.Location = New System.Drawing.Point(383, 9)
-        Me.BackBn.Name = "BackBn"
-        Me.BackBn.Size = New System.Drawing.Size(75, 23)
-        Me.BackBn.TabIndex = 2
-        Me.BackBn.Text = "Previous"
-        Me.BackBn.UseSelectable = True
-        Me.BackBn.Visible = False
-        '
-        'AcceptBn
-        '
-        Me.AcceptBn.Location = New System.Drawing.Point(464, 9)
-        Me.AcceptBn.Name = "AcceptBn"
-        Me.AcceptBn.Size = New System.Drawing.Size(75, 23)
-        Me.AcceptBn.TabIndex = 1
-        Me.AcceptBn.Text = "Next"
-        Me.AcceptBn.UseSelectable = True
-        Me.AcceptBn.Visible = False
-        '
-        'CancelBn
-        '
-        Me.CancelBn.Location = New System.Drawing.Point(571, 9)
-        Me.CancelBn.Name = "CancelBn"
-        Me.CancelBn.Size = New System.Drawing.Size(75, 23)
-        Me.CancelBn.TabIndex = 0
-        Me.CancelBn.Text = "Cancel"
-        Me.CancelBn.UseSelectable = True
         '
         'FormImport
         '
@@ -723,7 +658,10 @@ Partial Class FormImport
         Me.MaximizeBox = False
         Me.Name = "FormImport"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Bulk User Import Wizard"
+        Me.Text = "User Import Wizard"
+        Me.ImagePl.ResumeLayout(False)
+        Me.ImagePl.PerformLayout()
+        Me.ControlFooterPl.ResumeLayout(False)
         Me.ControlSplitConatiner.Panel1.ResumeLayout(False)
         Me.ControlSplitConatiner.Panel1.PerformLayout()
         Me.ControlSplitConatiner.Panel2.ResumeLayout(False)
@@ -739,22 +677,20 @@ Partial Class FormImport
         Me.OptionsTab.PerformLayout()
         Me.ProgressTab.ResumeLayout(False)
         Me.ProgressTab.PerformLayout()
-        Me.ConsolePl.ResumeLayout(False)
         Me.ResultsTab.ResumeLayout(False)
         Me.Panel1.ResumeLayout(False)
         CType(Me.ResultsListView, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ControlFooterPl.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents ControlFooterPl As ControlFooterPl
+    Friend WithEvents ControlFooterPl As Panel
     Friend WithEvents MainTabControl As CustomTabControlNoHeaders
     Friend WithEvents DomainTab As TabPage
     Friend WithEvents PreviewTab As TabPage
     Friend WithEvents ContentPl As Panel
-    Friend WithEvents AcceptBn As Controls.MetroButton
-    Friend WithEvents CancelBn As Controls.MetroButton
-    Friend WithEvents BackBn As Controls.MetroButton
+    Friend WithEvents AcceptBn As Button
+    Friend WithEvents CancelBn As Button
+    Friend WithEvents BackBn As Button
     Friend WithEvents MainListView As ControlCustomListView
     Friend WithEvents NameCol As OLVColumn
     Friend WithEvents DescCol As OLVColumn
@@ -783,15 +719,13 @@ Partial Class FormImport
     Friend WithEvents InfoBox As RichTextBox
     Friend WithEvents ResInfoCol As OLVColumn
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents FilterTb As Controls.MetroTextBox
-    Friend WithEvents DropDownFilter As Controls.MetroComboBox
-    Friend WithEvents ConsolePl As Panel
-    Friend WithEvents ConsoleTb As RichTextBox
-    Friend WithEvents OutputLb As Label
-    Friend WithEvents SearchTb As Controls.MetroTextBox
+    Friend WithEvents FilterTb As SimpleAD.ControlTextBox
+    Friend WithEvents DropDownFilter As ComboBox
+    Friend WithEvents SearchTb As SimpleAD.ControlTextBox
     Friend WithEvents UsernameCol As OLVColumn
     Friend WithEvents PasswordCol As OLVColumn
-    Friend WithEvents ExportBn As Controls.MetroButton
+    Friend WithEvents ExportBn As Button
     Friend WithEvents WelcomeTab As TabPage
     Friend WithEvents MenuFlow As ControlFlowLayoutPanel
+    Friend WithEvents TitleLb As Label
 End Class

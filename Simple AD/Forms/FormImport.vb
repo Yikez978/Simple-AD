@@ -1,4 +1,13 @@
-﻿Imports BrightIdeasSoftware.OLVExporter
+﻿Imports System.ComponentModel
+Imports System.Drawing
+Imports System.Text
+Imports System.Windows.Forms
+Imports BrightIdeasSoftware
+Imports BrightIdeasSoftware.OLVExporter
+
+Imports SimpleAD.LocalData
+
+Imports SimpleLib
 
 Public Class FormImport
 
@@ -10,20 +19,23 @@ Public Class FormImport
 
     Public Event BeginImport()
 
-    Public WithEvents ImportJob As JobImport
+    Public WithEvents ImportTask As TaskBulkImport = Nothing
 
     Private TextMatchFilter As TextMatchFilter
     Private ResultsTextMatchFilter As TextMatchFilter
+
+    Public Property IsClosing As Boolean
 
     Public Sub New(Optional File As String = Nothing)
         InitializeComponent()
 
         MainListView.SetListStyle()
         ResultsListView.SetListStyle()
+        MainTabControl.InitializeTabControl()
 
         Debug.WriteLineIf(Not String.IsNullOrEmpty(File), "[Debug] New Form Import created with path: " & File)
 
-        ImportJob = New JobImport(File, Me)
+        ImportTask = New TaskBulkImport(File, Me)
         Path = File
 
         If Not String.IsNullOrEmpty(File) Then
@@ -33,7 +45,7 @@ Public Class FormImport
     End Sub
 
     Public Sub SetObjects()
-        MainListView.SetObjects(ImportJob.Users)
+        MainListView.SetObjects(ImportTask.Users)
         MainTabControl.SelectedTab = PreviewTab
     End Sub
 
@@ -41,19 +53,13 @@ Public Class FormImport
 
         If Not String.IsNullOrEmpty(Path) Then
             Debug.WriteLine("[Debug] Import Path: " & Path)
-            ImportJob.BeginImport()
+            ImportTask.BeginImport()
         End If
 
-        If ImportJob IsNot Nothing Then
-            If (ImportJob.Users IsNot Nothing) And (ImportJob.Users.Count > 0) Then
+        If ImportTask IsNot Nothing Then
+            If (ImportTask.Users IsNot Nothing) And (ImportTask.Users.Count > 0) Then
                 SetObjects()
             End If
-        End If
-
-        If DesignMode Then
-            MainTabControl.ItemSize = New Size(62, 20)
-        Else
-            MainTabControl.ItemSize = New Size(62, 0)
         End If
 
         WelcomeTab.Tag = "Select an Option..."
@@ -62,6 +68,8 @@ Public Class FormImport
         OptionsTab.Tag = "Import Configuration"
         ProgressTab.Tag = "Running Import..."
         ResultsTab.Tag = "Import Summary"
+
+        TitleLb.Text = MainTabControl.SelectedTab.Tag.ToString
 
         LoadImages()
 
@@ -80,6 +88,7 @@ Public Class FormImport
         ResNameCol.GroupKeyGetter = New GroupKeyGetterDelegate(AddressOf SortByNameGroupKeyGetter)
 
         ResInfoCol.AspectToStringConverter = New AspectToStringConverterDelegate(AddressOf UserImportErrorAspectToString)
+        ResStatusCol.AspectToStringConverter = New AspectToStringConverterDelegate(AddressOf ResultsListStatusColAspectToString)
 
         MainListView.PrimarySortColumn = NameCol
         DropDownFilter.SelectedIndex = 0
@@ -107,6 +116,7 @@ Public Class FormImport
             .Images.Add("Completed", New Icon(My.Resources.colorTick, New Size(16, 16)).ToBitmap)
             .Images.Add("Errors", New Icon(My.Resources.colorError, New Size(16, 16)).ToBitmap)
             .Images.Add("Failed", New Icon(My.Resources.colorFailed, New Size(16, 16)).ToBitmap)
+            .Images.Add("Canceled", New Icon(My.Resources.Unavailable, New Size(16, 16)).ToBitmap)
             .ColorDepth = ColorDepth.Depth32Bit
         End With
         ResultsListView.SmallImageList = ResultsImagesSmall
@@ -114,7 +124,7 @@ Public Class FormImport
     End Sub
 
     Private Sub CSV_Import_ClicK(sender As Object, e As EventArgs)
-        ImportJob.BeginImport()
+        ImportTask.BeginImport()
     End Sub
 
     Private Sub Wizard_Import_ClicK(sender As Object, e As EventArgs)
@@ -164,19 +174,20 @@ Public Class FormImport
             EnableAccounts = EnAcTg.Checked
 
             MainProgresBar.Step = 1
-            MainProgresBar.Maximum = ImportJob.Users.Count
+            MainProgresBar.Maximum = ImportTask.Users.Count
+
+            TaskBarProgress.SetState(Me.Handle, TaskbarStates.Normal)
 
             RaiseEvent BeginImport()
             Return True
         End If
 
         If CurrentTabIndex = MainTabControl.TabPages.IndexOf(ProgressTab) Then
-            If ImportJob.JobStatus = SimpleADJobStatus.Completed Then
+            If ImportTask.TaskStatus = ActiveTaskStatus.Completed Then
                 Return True
             Else
                 Return False
             End If
-
         End If
 
         Return False
@@ -226,7 +237,8 @@ Public Class FormImport
             BackBn.Visible = False
         End If
 
-        ImagePl.Refresh()
+        TitleLb.Text = MainTabControl.SelectedTab.Tag.ToString()
+        TitleLb.Refresh()
     End Sub
 
     Private Sub ImagePl_Paint(sender As Object, e As PaintEventArgs) Handles ImagePl.Paint
@@ -234,14 +246,6 @@ Public Class FormImport
         Dim s As Panel = Me.ImagePl
 
         If s IsNot Nothing Then
-
-            Dim g As Graphics = e.Graphics
-            Dim p1 As Point = s.ClientRectangle.Location
-            Dim p2 As Point = New Point(s.ClientRectangle.Right, s.ClientRectangle.Bottom)
-
-            Using brsGradient As New Drawing2D.LinearGradientBrush(p1, p2, Color.FromArgb(104, 18, 101), Color.FromArgb(49, 12, 66))
-                g.FillRectangle(brsGradient, e.ClipRectangle)
-            End Using
 
             Dim TitleFont As Font = New Font("Segoe UI Light", 16.0!, FontStyle.Regular, GraphicsUnit.Point, CType(0, Byte))
 
@@ -252,19 +256,55 @@ Public Class FormImport
                 StringToDraw = TabString
             End If
 
-            DrawString(e.Graphics, MainTabControl.SelectedTab.Tag.ToString, TitleFont, Color.White, 24, 8)
+            DrawString(e.Graphics, StringToDraw, TitleFont, SystemColors.ControlText, 24, 8)
 
-            End If
+            Dim Pen As New Pen(Color.FromArgb(217, 217, 217))
+            e.Graphics.DrawLine(Pen, 0, s.Height - 1, s.Width, s.Height - 1)
+
+        End If
 
     End Sub
 
     Private Sub CancelBn_Click(sender As Object, e As EventArgs) Handles CancelBn.Click
 
-        If ImportJob IsNot Nothing Then
-            ImportJob.Cancel()
+        If MainTabControl.SelectedIndex = MainTabControl.TabPages.IndexOf(ProgressTab) Then
+
+            TitleLb.Text = "Cancelling Import..."
+            MainProgressLb.Text = "Canceling Task..."
+
+            If ImportTask IsNot Nothing Then
+                ImportTask.Cancel()
+            End If
+
+            TaskBarProgress.SetState(Me.Handle, TaskbarStates.NoProgress)
+        Else
+            Me.Close()
         End If
 
-        Me.Close()
+    End Sub
+
+    Private Sub FormImport_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+
+        IsClosing = True
+
+        If MainTabControl.SelectedIndex = MainTabControl.TabPages.IndexOf(ProgressTab) Then
+
+            If ImportTask IsNot Nothing Then
+
+                TitleLb.Text = "Cancelling Import..."
+
+                CancelBn.Enabled = False
+                AcceptBn.Enabled = False
+                BackBn.Enabled = False
+                ExportBn.Enabled = False
+
+                ImportTask.Cancel()
+            End If
+
+            TaskBarProgress.SetState(Me.Handle, TaskbarStates.NoProgress)
+
+        End If
+
     End Sub
 
     Private Sub FormImport_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
@@ -275,17 +315,23 @@ Public Class FormImport
         End If
     End Sub
 
-    Private Sub ProgressChanged() Handles ImportJob.ProgressChanged
+    Private Sub ProgressChanged() Handles ImportTask.ProgressChanged
         If Me.InvokeRequired Then
             Me.Invoke(New Action(AddressOf ProgressChanged))
         Else
+            TaskBarProgress.SetValue(Me.Handle, MainProgresBar.Value, MainProgresBar.Maximum)
             MainProgresBar.PerformStep()
         End If
     End Sub
 
-    Private Sub JobCompleted() Handles ImportJob.ImportCompleted
-        ResultsListView.SetObjects(ImportJob.Users)
-        MainTabControl.SelectedTab = ResultsTab
+    Private Sub JobCompleted() Handles ImportTask.ImportCompleted
+
+        If Not IsClosing Then
+            TaskBarProgress.SetState(Me.Handle, TaskbarStates.NoProgress)
+            ResultsListView.SetObjects(ImportTask.Users)
+            MainTabControl.SelectedTab = ResultsTab
+        End If
+
     End Sub
 
     Private Sub PreviewLink_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles PreviewLink.LinkClicked
@@ -320,8 +366,6 @@ Public Class FormImport
 
                     InfoBox.Text = ErrorList.ToString
 
-                    Console.WriteLine(ErrorList.ToString)
-
                 End If
             End If
 
@@ -332,11 +376,6 @@ Public Class FormImport
         If Not String.IsNullOrEmpty(SearchTb.Text) Then
             TextMatchFilter = TextMatchFilter.Contains(MainListView, SearchTb.Text)
             MainListView.ModelFilter = TextMatchFilter
-            MainListView.DefaultRenderer = New HighlightTextRenderer(TextMatchFilter) With {
-                .FillBrush = New SolidBrush(Color.FromArgb(210, 206, 225)),
-                .CornerRoundness = Nothing,
-                .FramePen = Nothing
-                }
         Else
             MainListView.ModelFilter = Nothing
         End If
@@ -346,11 +385,6 @@ Public Class FormImport
         If Not String.IsNullOrEmpty(FilterTb.Text) Then
             ResultsTextMatchFilter = TextMatchFilter.Contains(ResultsListView, FilterTb.Text)
             ResultsListView.ModelFilter = ResultsTextMatchFilter
-            ResultsListView.DefaultRenderer = New HighlightTextRenderer(ResultsTextMatchFilter) With {
-                .FillBrush = New SolidBrush(Color.FromArgb(210, 206, 225)),
-                .CornerRoundness = CType(0, Single),
-                .FramePen = Nothing
-                }
         Else
             ResultsListView.ModelFilter = Nothing
         End If
@@ -401,7 +435,7 @@ Public Class FormImport
                 End Select
 
                 If Not String.IsNullOrEmpty(ExportedData) Then
-                    Threading.ThreadPool.QueueUserWorkItem(Sub() ExportData(ExportedData, SaveDialog.FileName))
+                    Threading.ThreadPool.QueueUserWorkItem(Sub() ExportHandler.ExportData(ExportedData, SaveDialog.FileName))
                 End If
             End If
 
@@ -412,13 +446,14 @@ Public Class FormImport
     Private Sub MenuFlow_ControlAdded(sender As Object, e As ControlEventArgs) Handles MenuFlow.ControlAdded
         e.Control.Size = New Size(MenuFlow.Width - 16, 76)
     End Sub
+
 End Class
 
 Friend Class FailedResultsListFileter
     Implements IModelFilter
 
     Public Function Filter(modelObject As Object) As Boolean Implements IModelFilter.Filter
-        Return DirectCast(modelObject, SimpleADBulkUserDomainObject).Status = "Failed"
+        Return DirectCast(modelObject, SimpleADBulkUserDomainObject).Meta.Status = ActiveTaskStatus.Failed
     End Function
 End Class
 
@@ -426,7 +461,7 @@ Friend Class CompletedResultsListFileter
     Implements IModelFilter
 
     Public Function Filter(modelObject As Object) As Boolean Implements IModelFilter.Filter
-        Return DirectCast(modelObject, SimpleADBulkUserDomainObject).Status = "Completed"
+        Return DirectCast(modelObject, SimpleADBulkUserDomainObject).Meta.Status = ActiveTaskStatus.Completed
     End Function
 End Class
 
@@ -434,6 +469,6 @@ Friend Class ErrorsResultsListFileter
     Implements IModelFilter
 
     Public Function Filter(modelObject As Object) As Boolean Implements IModelFilter.Filter
-        Return DirectCast(modelObject, SimpleADBulkUserDomainObject).Status = "Errors"
+        Return DirectCast(modelObject, SimpleADBulkUserDomainObject).Meta.Status = ActiveTaskStatus.Errors
     End Function
 End Class

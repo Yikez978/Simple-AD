@@ -1,4 +1,8 @@
-﻿Public Class FormMoveObject
+﻿Imports System.Drawing
+Imports System.Windows.Forms
+Imports SimpleLib
+
+Public Class FormMoveObject
 
     Public Property SelecetdOU As String
 
@@ -6,8 +10,6 @@
 
     Public Sub New()
         InitializeComponent()
-
-        MainPb.Image = New Icon(My.Resources.JobMove, New Size(16, 16)).ToBitmap
 
         DomainTree = New ControlDomainTreeView
         DomainTree.BorderStyle = BorderStyle.FixedSingle
@@ -30,11 +32,4 @@
         SelecetdOU = SelecetedOU
     End Sub
 
-    Private Sub FooterPl_Paint(sender As Object, e As PaintEventArgs) Handles FooterPl.Paint
-        Dim s As Panel = FooterPl
-        If Not s Is Nothing Then
-            Dim Pen As New Pen(Color.FromArgb(217, 217, 217))
-            e.Graphics.DrawLine(Pen, 0, 0, s.Width, 0)
-        End If
-    End Sub
 End Class

@@ -8,9 +8,6 @@
     <Setting Name="Password" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="LoadAdvLDAP" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="OfficeURI" Type="System.String" Scope="User">
       <Value Profile="(Default)">https://ps.outlook.com/PowerShell-LiveID?PSVersion=2.0</Value>
     </Setting>
@@ -26,32 +23,17 @@
     <Setting Name="AutoLogin" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="UseSystemIcons" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="ExplorerListViewSettings" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="BulkUserThreadCount" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">100</Value>
-    </Setting>
     <Setting Name="ForceLogin" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="ImportListViewSettings" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="ManualLogin" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="FormWindowState" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="FormSize" Type="System.Drawing.Size" Scope="User">
       <Value Profile="(Default)">1280, 720</Value>
-    </Setting>
-    <Setting Name="UseNativeWindowsTheme" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="FormLocation" Type="System.Drawing.Point" Scope="User">
       <Value Profile="(Default)">0, 0</Value>

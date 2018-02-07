@@ -1,4 +1,11 @@
 ﻿Imports Microsoft.VisualBasic.ApplicationServices
+Imports System.Drawing
+Imports System.Text
+Imports System.Windows.Forms
+
+Imports SimpleLib
+Imports SimpleLib.SystemHelper
+Imports WindowsFormsAero.TaskDialog
 
 Namespace My
     ' The following events are available for MyApplication:
@@ -14,7 +21,7 @@ Namespace My
             If My.Settings.Username IsNot Nothing And My.Settings.Password IsNot Nothing Then
                 If My.Settings.ManualLogin = True Then
 
-                    Dim Username As String = Unprotect(My.Settings.Username, "Letme1n$")
+                    Dim Username As String = DataProtection.Unprotect(My.Settings.Username, "Letme1n$")
 
                     If Username.Contains("\") Then
                         Dim UsernameArray As String() = Username.Split(New Char() {"\"c})
@@ -25,7 +32,7 @@ Namespace My
                         LoginUsername = Username
                     End If
 
-                    LoginPassword = Unprotect(My.Settings.Password, "Letme1n$")
+                    LoginPassword = DataProtection.Unprotect(My.Settings.Password, "Letme1n$")
                 End If
             End If
 
@@ -59,17 +66,32 @@ Namespace My
 
         End Sub
 
-        Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
-            Settings.ExplorerListViewSettings = Encoding.Default.GetString(GetContainerExplorer.MainListView.SaveState())
-        End Sub
-
         Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
             If e.ExitApplication Then
                 Dim o As String = e.Exception.Message
                 Dim s As String = e.Exception.StackTrace
 
-                Debug.WriteLine("[Error] " & o)
-                MessageBox.Show(o + vbNewLine + s, "Simple AD has encountered an unexpected Error", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error) ' use EventLog instead
+                Dim ErrorDialog As TaskDialog = New TaskDialog("Unhandled Exception", "Simple AD Error", "Simple AD has encountered an unexpected Error" & vbNewLine & vbNewLine & o, CommonButton.Cancel, CommonIcon.Stop)
+
+                ErrorDialog.ExpandedInformation = s
+                ErrorDialog.CollapsedControlText = "Show Stack Trace"
+                ErrorDialog.ExpandedControlText = "Hide Stack Trace"
+                ErrorDialog.IsExpanded = False
+                ErrorDialog.ShowExpandedInfoInFooter = False
+
+                ErrorDialog.CustomButtons = New CustomButton() {
+                    New CustomButton(100, "Copy To Clipboard")
+                }
+
+                Dim Results As TaskDialogResult = ErrorDialog.Show(FormMain.Handle)
+
+                If Results.ButtonID = 100 Then
+                    My.Computer.Clipboard.SetText(o & vbNewLine & vbNewLine & s)
+                End If
+
+
+                'Debug.WriteLine("[Error] " & o)
+                'MessageBox.Show(o + vbNewLine + s, "Simple AD has encountered an unexpected Error", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error) ' use EventLog instead
             End If
         End Sub
     End Class

@@ -1,4 +1,6 @@
-﻿Public Module ErrorHandling
+﻿Imports System.Windows.Forms
+
+Public Module ErrorHandling
 
     Public Sub SafeInvoke(uiElement As Control, updater As Action, forceSynchronous As Boolean)
         If uiElement Is Nothing Then

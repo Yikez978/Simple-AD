@@ -1,4 +1,8 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿Imports System.Windows.Forms
+Imports MetroFramework
+Imports SimpleLib
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FormConfirmation
     Inherits Form
 
@@ -23,8 +27,8 @@ Partial Class FormConfirmation
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormConfirmation))
-        Me.CancelBn = New MetroFramework.Controls.MetroButton()
-        Me.AcceptBn = New MetroFramework.Controls.MetroButton()
+        Me.CancelBn = New System.Windows.Forms.Button()
+        Me.AcceptBn = New System.Windows.Forms.Button()
         Me.MainLb = New System.Windows.Forms.Label()
         Me.MainPb = New System.Windows.Forms.PictureBox()
         Me.ControlFooterPl1 = New SimpleAD.ControlFooterPl()
@@ -41,7 +45,7 @@ Partial Class FormConfirmation
         Me.CancelBn.Size = New System.Drawing.Size(75, 23)
         Me.CancelBn.TabIndex = 0
         Me.CancelBn.Text = "Cancel"
-        Me.CancelBn.UseSelectable = True
+        Me.CancelBn.UseVisualStyleBackColor = True
         '
         'AcceptBn
         '
@@ -51,7 +55,7 @@ Partial Class FormConfirmation
         Me.AcceptBn.Size = New System.Drawing.Size(75, 23)
         Me.AcceptBn.TabIndex = 1
         Me.AcceptBn.Text = "Delete"
-        Me.AcceptBn.UseSelectable = True
+        Me.AcceptBn.UseVisualStyleBackColor = True
         '
         'MainLb
         '
@@ -107,8 +111,8 @@ Partial Class FormConfirmation
 
     End Sub
 
-    Friend WithEvents CancelBn As Controls.MetroButton
-    Friend WithEvents AcceptBn As Controls.MetroButton
+    Friend WithEvents CancelBn As Button
+    Friend WithEvents AcceptBn As Button
     Friend WithEvents MainLb As Label
     Friend WithEvents MainPb As PictureBox
     Friend WithEvents ControlFooterPl1 As ControlFooterPl

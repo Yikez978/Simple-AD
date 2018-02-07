@@ -47,19 +47,27 @@ Public Module TaskBarProgress
     Private Class TaskbarInstanceObject
     End Class
 
-    Private taskbarInstance As ITaskbarList3 = CType(New TaskbarInstanceObject(), ITaskbarList3)
+    Private _TaskbarInstance As ITaskbarList3 = CType(New TaskbarInstanceObject(), ITaskbarList3)
 
-    Private taskbarSupported As Boolean = Environment.OSVersion.Version >= New Version(6, 1)
+    Private _TaskbarSupported As Boolean = Environment.OSVersion.Version >= New Version(6, 1)
 
-    Sub SetState(ByVal windowHandle As IntPtr, ByVal taskbarState As TaskbarStates)
-        If taskbarSupported Then
-            taskbarInstance.SetProgressState(windowHandle, taskbarState)
+    Sub SetState(ByVal WindowHandle As IntPtr, ByVal TaskbarState As TaskbarStates)
+        If _TaskbarSupported Then
+            Try
+                _TaskbarInstance.SetProgressState(WindowHandle, TaskbarState)
+            Catch
+                Dim TaskBarAlert =
+                    New FormAlert("SimpleAD detected that the current environment supports task bar progress indicators, 
+                    but threw an exception when trying to invoke the system interface!",
+                                  SimpleLib.Enums.AlertType.ErrorAlert)
+                TaskBarAlert.ShowDialog()
+            End Try
         End If
     End Sub
 
-    Sub SetValue(ByVal windowHandle As IntPtr, ByVal progressValue As Double, ByVal progressMax As Double)
-        If taskbarSupported Then
-            taskbarInstance.SetProgressValue(windowHandle, CULng(progressValue), CULng(progressMax))
+    Sub SetValue(ByVal WindowHandle As IntPtr, ByVal ProgressValue As Double, ByVal ProgressMax As Double)
+        If _TaskbarSupported Then
+            _TaskbarInstance.SetProgressValue(WindowHandle, CULng(ProgressValue), CULng(ProgressMax))
         End If
     End Sub
 End Module

@@ -1,4 +1,8 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿Imports System.Windows.Forms
+Imports BrightIdeasSoftware
+Imports SimpleLib
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FormImportValidation
     Inherits Form
 
@@ -24,13 +28,13 @@ Partial Class FormImportValidation
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormImportValidation))
         Me.HeaderLb = New System.Windows.Forms.Label()
-        Me.CancelBtn = New MetroFramework.Controls.MetroButton()
-        Me.ImportBtn = New MetroFramework.Controls.MetroButton()
+        Me.ImportBtn = New System.Windows.Forms.Button()
         Me.SplitterBottom = New System.Windows.Forms.Splitter()
         Me.SplitterTop = New System.Windows.Forms.Splitter()
-        Me.ErrorListView = New SimpleAD.ControlListView()
+        Me.ErrorListView = New SimpleAD.ControlDomainListView()
         Me.ErrorNameCol = CType(New BrightIdeasSoftware.OLVColumn(), BrightIdeasSoftware.OLVColumn)
         Me.ErrorMessageCol = CType(New BrightIdeasSoftware.OLVColumn(), BrightIdeasSoftware.OLVColumn)
+        Me.CancelBn = New System.Windows.Forms.Button()
         CType(Me.ErrorListView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -44,17 +48,6 @@ Partial Class FormImportValidation
         Me.HeaderLb.TabIndex = 0
         Me.HeaderLb.Text = "Simple AD has detected the following Errors in the imported file"
         '
-        'CancelBtn
-        '
-        Me.CancelBtn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.CancelBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.CancelBtn.Location = New System.Drawing.Point(413, 231)
-        Me.CancelBtn.Name = "CancelBtn"
-        Me.CancelBtn.Size = New System.Drawing.Size(75, 23)
-        Me.CancelBtn.TabIndex = 2
-        Me.CancelBtn.Text = "Ignore"
-        Me.CancelBtn.UseSelectable = True
-        '
         'ImportBtn
         '
         Me.ImportBtn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -63,7 +56,7 @@ Partial Class FormImportValidation
         Me.ImportBtn.Size = New System.Drawing.Size(147, 23)
         Me.ImportBtn.TabIndex = 3
         Me.ImportBtn.Text = "Import a Different File..."
-        Me.ImportBtn.UseSelectable = True
+        Me.ImportBtn.UseVisualStyleBackColor = True
         '
         'SplitterBottom
         '
@@ -129,17 +122,25 @@ Partial Class FormImportValidation
         Me.ErrorMessageCol.FillsFreeSpace = True
         Me.ErrorMessageCol.Text = "Details"
         '
+        'CancelBn
+        '
+        Me.CancelBn.Location = New System.Drawing.Point(413, 231)
+        Me.CancelBn.Name = "CancelBn"
+        Me.CancelBn.Size = New System.Drawing.Size(75, 23)
+        Me.CancelBn.TabIndex = 8
+        Me.CancelBn.Text = "Ignore"
+        Me.CancelBn.UseVisualStyleBackColor = True
+        '
         'FormImportValidation
         '
         Me.BackColor = System.Drawing.SystemColors.Window
-        Me.CancelButton = Me.CancelBtn
         Me.ClientSize = New System.Drawing.Size(500, 266)
+        Me.Controls.Add(Me.CancelBn)
         Me.Controls.Add(Me.ErrorListView)
-        Me.Controls.Add(Me.ImportBtn)
-        Me.Controls.Add(Me.CancelBtn)
         Me.Controls.Add(Me.HeaderLb)
-        Me.Controls.Add(Me.SplitterBottom)
         Me.Controls.Add(Me.SplitterTop)
+        Me.Controls.Add(Me.ImportBtn)
+        Me.Controls.Add(Me.SplitterBottom)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "FormImportValidation"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
@@ -153,9 +154,9 @@ Partial Class FormImportValidation
     Friend WithEvents HeaderLb As Label
     Friend WithEvents SplitterBottom As Splitter
     Friend WithEvents SplitterTop As Splitter
-    Friend WithEvents CancelBtn As MetroFramework.Controls.MetroButton
-    Friend WithEvents ImportBtn As MetroFramework.Controls.MetroButton
-    Friend WithEvents ErrorListView As ControlListView
+    Friend WithEvents ImportBtn As System.Windows.Forms.Button
+    Friend WithEvents ErrorListView As ControlDomainListView
     Friend WithEvents ErrorNameCol As OLVColumn
     Friend WithEvents ErrorMessageCol As OLVColumn
+    Friend WithEvents CancelBn As Button
 End Class

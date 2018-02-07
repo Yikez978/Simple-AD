@@ -4,6 +4,10 @@ Public Class FormProgressBar
 
     Private _Status As String
 
+    Public Sub New()
+        InitializeComponent()
+    End Sub
+
     Public Property Maximum As Integer
         Set(value As Integer)
             Me.MainProgressBar.Maximum = value
@@ -50,15 +54,16 @@ Public Class FormProgressBar
         Else
             MainProgressBar.PerformStep()
             TaskBarProgress.SetValue(Me.Handle, MainProgressBar.Value, Maximum)
+
+            If MainProgressBar.Value > (Maximum - 1) Then
+                TaskBarProgress.SetState(FormMain.Handle, TaskbarStates.NoProgress)
+            End If
+
         End If
     End Sub
 
     Private Sub FormProgressBar_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Me.MainSpinner.Spinning = True
         TaskBarProgress.SetState(Me.Handle, TaskbarStates.Normal)
     End Sub
 
-    Private Sub FormProgressBar_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        TaskBarProgress.SetState(Me.Handle, TaskbarStates.NoProgress)
-    End Sub
 End Class

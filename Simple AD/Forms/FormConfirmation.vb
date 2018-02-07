@@ -1,4 +1,7 @@
-﻿Public Class FormConfirmation
+﻿Imports System.Drawing
+Imports SimpleLib.Enums
+
+Public Class FormConfirmation
 
     Public Sub New(ByVal Message As String, ByVal Type As ConfirmationType)
 

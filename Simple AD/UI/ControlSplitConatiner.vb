@@ -1,11 +1,16 @@
-﻿Public Class ControlSplitConatiner
+﻿Imports System.Drawing
+Imports System.Windows.Forms
+
+Imports SimpleLib.SystemHelper
+
+Public Class ControlSplitConatiner
     Inherits SplitContainer
 
     Public Property SpliterHeight As Integer
 
     Private ReadOnly Property HandleColor As Color
         Get
-            If SimpleLib.IsWindows7() Then
+            If EnvironmentHelper.IsWindows7() Then
                 Return Color.FromArgb(217, 217, 217)
             Else
                 Return Color.FromArgb(247, 247, 247)
@@ -14,7 +19,7 @@
     End Property
 
 
-    Private Sub sSplitCont_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
+    Private Sub SplitCont_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
         DirectCast(sender, SplitContainer).IsSplitterFixed = True
     End Sub
 

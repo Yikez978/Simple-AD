@@ -1,8 +1,16 @@
-﻿Public Module ContextMenuHelper
+﻿Imports System.Linq
+Imports System.Windows.Forms
+Imports SimpleLib
+
+Public Module ContextMenuHelper
 
     Public Sub GetListViewConextMenu(ListView As ListView, e As EventArgs, ContextMenuStrip As ContextMenu, sender As Object, RowObject As DomainObject)
         If RowObject Is Nothing Then
-            ContextMenuStrip.Show(ListView, ListView.PointToClient(Cursor.Position))
+
+            If ContextMenuStrip IsNot Nothing Then
+                ContextMenuStrip.Show(ListView, ListView.PointToClient(Cursor.Position))
+            End If
+
         Else
 
             For Each Item As MenuItem In ContextMenuStrip.MenuItems
@@ -48,42 +56,60 @@
         End If
     End Sub
 
+    Public Sub GetDomianConextMenu(ByVal Node As TreeNode, ByVal ContextMenuStrip As ContextMenu)
+        If Node.Name IsNot Nothing Then
+            ContextMenuStrip.Show(Node.TreeView, Node.TreeView.PointToClient(Cursor.Position))
+        End If
+    End Sub
+
     Public Sub GetTemplateManConextMenu(ListView As ListView, e As EventArgs, ContextMenuStrip As ContextMenu, sender As Object, RowObject As DomainObject)
         ContextMenuStrip.Show(ListView, ListView.PointToClient(Cursor.Position))
     End Sub
 
     Private Sub EnableMenuItems(ByVal ContextMenuStrip As ContextMenu, MenuItems As String())
         For Each MenuItem As MenuItem In ContextMenuStrip.MenuItems
-            If MenuItems.Contains(MenuItem.Tag.ToString) Then
-                MenuItem.Visible = True
+
+            If MenuItem.Tag IsNot Nothing Then
+                If MenuItems.Contains(MenuItem.Tag.ToString) Then
+                    MenuItem.Visible = True
+                End If
             End If
+
         Next
     End Sub
 
     Private Sub DisableMenuItem(ByVal MenuItemTag As String, ByVal ContextMenuStrip As ContextMenu)
         For Each MenuItem As MenuItem In ContextMenuStrip.MenuItems
-            If MenuItem.Tag.ToString = MenuItemTag Then
-                MenuItem.Enabled = False
+
+            If MenuItem.Tag IsNot Nothing Then
+                If MenuItem.Tag.ToString = MenuItemTag Then
+                    MenuItem.Enabled = False
+                End If
             End If
+
         Next
     End Sub
 
     Private SingleUserMenuItemsEnabled As String() = {
-        "RenameMenuItem",
         "CopyToClipBoardToolStripMenuItem",
+        "Seperator1",
+        "RenameMenuItem",
         "ResetSingleToolStripMenuItem",
         "DisableToolStripMenuItem",
         "MoveSingleToolStripMenuItem",
         "DeleteSingleToolStripMenuItem",
+        "Seperator3",
         "PropertiesToolStripMenuItem"
         }
     Private SingleUserMenuItemsDisabled As String() = {
-        "RenameMenuItem",
         "CopyToClipBoardToolStripMenuItem",
+        "Seperator1",
+        "RenameMenuItem",
         "ResetSingleToolStripMenuItem",
         "EnableToolStripMenuItem",
         "MoveSingleToolStripMenuItem",
         "DeleteSingleToolStripMenuItem",
+        "Seperator3",
         "PropertiesToolStripMenuItem"
         }
     Private BulkUserMenuItems As String() = {
@@ -93,23 +119,28 @@
         "DisableBulkToolStripMenuItem",
         "MoveBulkToolStripMenuItem",
         "DeleteBulkToolStripMenuItem",
+        "Seperator3",
         "PropertiesToolStripMenuItem"
         }
     Private BulkDefaultMenuItems As String() = {
         "MoveBulkToolStripMenuItem",
         "DeleteBulkToolStripMenuItem",
+        "Seperator3",
         "PropertiesToolStripMenuItem"
         }
     Private ComputerMenuItems As String() = {
         "RenameMenuItem",
         "CopyToClipBoardToolStripMenuItem",
+        "PingMachineToolStripMenuItem",
         "MoveSingleToolStripMenuItem",
         "DeleteSingleToolStripMenuItem",
+        "Seperator3",
         "PropertiesToolStripMenuItem"
         }
     Private ContainerMenuItems As String() = {
         "CopyToClipBoardToolStripMenuItem",
         "DeleteSingleToolStripMenuItem",
+        "Seperator3",
         "PropertiesToolStripMenuItem"
         }
     Private OrganizationalUnitMenuItems As String() = {
@@ -117,13 +148,13 @@
         "CopyToClipBoardToolStripMenuItem",
         "MoveSingleToolStripMenuItem",
         "DeleteSingleToolStripMenuItem",
+        "Seperator3",
         "PropertiesToolStripMenuItem"
         }
     Private DefaultMenuItems As String() = {
-        "RenameMenuItem",
         "CopyToClipBoardToolStripMenuItem",
-        "MoveSingleToolStripMenuItem",
-        "DeleteSingleToolStripMenuItem",
+        "Seperator3",
         "PropertiesToolStripMenuItem"
         }
+
 End Module

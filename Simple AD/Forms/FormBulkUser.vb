@@ -1,4 +1,8 @@
-﻿Imports Microsoft.WindowsAPICodePack.Dialogs
+﻿Imports System.Drawing
+Imports System.Linq
+Imports System.Text
+Imports System.Windows.Forms
+Imports Microsoft.WindowsAPICodePack.Dialogs
 
 Public Class FormBulkUser
 
@@ -15,8 +19,12 @@ Public Class FormBulkUser
 
         InitializeComponent()
 
-        FnTb.WaterMark = FNDefualtText
-        SnTb.WaterMark = SNDefaultText
+        FnTb.PromptText = FNDefualtText
+        SnTb.PromptText = SNDefaultText
+
+        InputTab.Tag = "Data Input"
+        UsernameConTab.Tag = "Configure Usernames"
+        PropertiesTab.Tag = "Configure USer Properties"
 
         MainTabControl.SelectedTab = MainTabControl.TabPages.Item(0)
 
@@ -230,6 +238,35 @@ Public Class FormBulkUser
 
     Private Sub GroupBn_Click(sender As Object, e As EventArgs) Handles GroupBn.Click
         FormADObjectSelection.ShowDialog()
+    End Sub
+
+    Private Sub ImagePl_Paint(sender As Object, e As PaintEventArgs) Handles ImagePl.Paint
+
+        Dim s As Panel = Me.ImagePl
+
+        If s IsNot Nothing Then
+
+            Dim g As Graphics = e.Graphics
+            Dim p1 As Point = s.ClientRectangle.Location
+            Dim p2 As Point = New Point(s.ClientRectangle.Right, s.ClientRectangle.Bottom)
+
+            Using brsGradient As New Drawing2D.LinearGradientBrush(p1, p2, Color.FromArgb(104, 18, 101), Color.FromArgb(49, 12, 66))
+                g.FillRectangle(brsGradient, e.ClipRectangle)
+            End Using
+
+            Dim TitleFont As Font = New Font("Segoe UI Light", 16.0!, FontStyle.Regular, GraphicsUnit.Point, CType(0, Byte))
+
+            Dim StringToDraw As String = "Title Required"
+            Dim TabString As String = MainTabControl.SelectedTab.Tag.ToString
+
+            If Not String.IsNullOrEmpty(TabString) Then
+                StringToDraw = TabString
+            End If
+
+            DrawString(e.Graphics, MainTabControl.SelectedTab.Tag.ToString, TitleFont, Color.White, 24, 8)
+
+        End If
+
     End Sub
 
 #End Region

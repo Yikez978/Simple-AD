@@ -1,5 +1,7 @@
 ﻿Imports System.ComponentModel
+Imports System.Drawing
 Imports System.Runtime.InteropServices
+Imports System.Windows.Forms
 
 Public Class CustomTabControl
     Inherits TabControl

@@ -127,7 +127,7 @@
   <data name="JobEnableDisable" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\JobEnableDisable.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="JobExplorer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="TaskExplorer" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\JobExplorer.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="JobMove" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -205,9 +205,6 @@
   <data name="Container" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Container.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="OU" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\OU.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="ActiveDirectory" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ActiveDirectory.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -252,5 +249,56 @@
   </data>
   <data name="List" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\List.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="report" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\report.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Builtin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Builtin.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ContainerSelected" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OUSelecetd1.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DataProtection" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DataProtection.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LostAndFound" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LostAndFound.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="OU" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Container1.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Quota" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Quota.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SecurityLock" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SecurityLock.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Message" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Message.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Unavailable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Unavailable.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Lock" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Lock.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Attention" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Attention.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Info" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Info.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Responce" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Responce.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Client" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Client.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LogonTime" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LogonTime.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Server" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Server.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -7,6 +7,8 @@ Public Class FormPasswordReset
 
     Public Sub New()
         InitializeComponent()
+
+        Password0Tb.Select()
     End Sub
 
     Private Sub AcceptBn_Click(sender As Object, e As EventArgs) Handles AcceptBn.Click

@@ -1,4 +1,7 @@
-﻿Imports MetroFramework.Controls
+﻿Imports System.Drawing
+Imports System.Windows.Forms
+Imports MetroFramework.Controls
+Imports SimpleLib
 
 Public Class FormNewUser
 
@@ -21,11 +24,13 @@ Public Class FormNewUser
         MainPb.Image = New Icon(My.Resources.CreateUser, New Size(96, 96)).ToBitmap
         ContainerPb.Image = New Icon(My.Resources.Container, New Size(16, 16)).ToBitmap
 
+        MainTabControl.SelectedTab = MainTabControl.TabPages(0)
+
         AddHandler FnTb.TextChanged, AddressOf NameInputChanged
         AddHandler SnTb.TextChanged, AddressOf NameInputChanged
 
         For Each Control As Control In Controls
-            If Control.GetType = GetType(MetroTextBox) Then
+            If Control.GetType = GetType(ControlTextBox) Then
                 AddHandler Control.TextChanged, AddressOf InputChanged
             End If
         Next
@@ -65,8 +70,8 @@ Public Class FormNewUser
         Dim IsValidated As Boolean = True
 
         For Each Control As Control In Controls
-            If Control.GetType = GetType(MetroTextBox) Then
-                Dim ControlTb As MetroTextBox = DirectCast(Control, MetroTextBox)
+            If Control.GetType = GetType(ControlTextBox) Then
+                Dim ControlTb As ControlTextBox = DirectCast(Control, ControlTextBox)
 
                 If String.IsNullOrEmpty(ControlTb.Text) Then
                     IsValidated = False
@@ -101,5 +106,15 @@ Public Class FormNewUser
         Return Result
     End Function
 
+    Private Sub ContainerLb_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles ContainerLb.LinkClicked
 
+        Dim MoveForm As FormMoveObject = New FormMoveObject
+        MoveForm.StartPosition = FormStartPosition.CenterScreen
+        MoveForm.ShowDialog()
+
+        If MoveForm.DialogResult = DialogResult.Yes Then
+            ContainerPath = MoveForm.SelecetdOU
+        End If
+
+    End Sub
 End Class

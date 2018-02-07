@@ -1,10 +1,15 @@
 ﻿Imports System.DirectoryServices.AccountManagement
+Imports System.Drawing
+Imports System.Text
+Imports System.Threading.Tasks
+Imports System.Windows.Forms
+Imports BrightIdeasSoftware
 Imports SimpleLib
 
 Public Class FormPasswordResetBulk
 
     Private _Password As String
-    Private _SelectedUsers As List(Of OLVListItem)
+    Private _SelectedUsers As IList
     Private _ProgressForm As FormProgressBar = New FormProgressBar("Reseting Passwords...")
 
     Private _UseUpper As Boolean
@@ -24,7 +29,7 @@ Public Class FormPasswordResetBulk
         End Get
     End Property
 
-    Public Sub New(ByVal SelectedUsers As List(Of OLVListItem))
+    Public Sub New(ByVal SelectedUsers As IList)
         InitializeComponent()
 
         _SelectedUsers = SelectedUsers
@@ -69,7 +74,7 @@ Public Class FormPasswordResetBulk
         For i As Integer = 0 To _SelectedUsers.Count - 1
 
             Dim Iterator As Integer = i
-            Dim User As UserDomainObject = CType(_SelectedUsers(i).RowObject, UserDomainObject)
+            Dim User As UserDomainObject = CType(_SelectedUsers(i), UserDomainObject)
 
             Try
                 Select Case SpecifyRadioBn.Checked
@@ -192,6 +197,7 @@ Public Class FormPasswordResetBulk
             e.Graphics.DrawLine(Pen, 0, 0, s.Width, 0)
         End If
     End Sub
+
 #End Region
 
 End Class

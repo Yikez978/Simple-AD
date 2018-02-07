@@ -1,4 +1,6 @@
-﻿Public Module MenuStripHelper
+﻿Imports System.Windows.Forms
+
+Public Module MenuStripHelper
 
     Public Sub SubMenuClickHandler(ByVal sender As Object, ByVal e As EventArgs)
         Dim btn As ToolStripMenuItem = DirectCast(sender, ToolStripMenuItem)

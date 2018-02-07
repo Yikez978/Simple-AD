@@ -1,8 +1,12 @@
-﻿Imports System.DirectoryServices.ActiveDirectory
+﻿Imports System.DirectoryServices
+Imports System.DirectoryServices.ActiveDirectory
+Imports System.Drawing
 Imports System.Runtime.InteropServices
+Imports System.Windows.Forms
+Imports SimpleLib
 
 Public Class ControlDomainTreeView
-    Inherits TreeView
+    Inherits WindowsFormsAero.TreeView
 
     Private _DomainName As String
     Private _DomainController As String
@@ -12,6 +16,7 @@ Public Class ControlDomainTreeView
 
     Public Event SelectedOUChanged(ByVal Path As String)
     Public Event ReportRequested(ByVal ReportType As SimpleADReportType)
+    Public Event NodeClicked(sender As Object, e As TreeNodeMouseClickEventArgs)
 
 #Region "Properties"
 
@@ -53,16 +58,24 @@ Public Class ControlDomainTreeView
 
 #End Region
 
-#Region "Double Buffer"
+#Region "Native"
 
     Protected Overrides Sub OnHandleCreated(e As EventArgs)
+
+        'Double Buffer
         SendMessage(Me.Handle, TVM_SETEXTENDEDSTYLE, New IntPtr(TVS_EX_DOUBLEBUFFER), New IntPtr(TVS_EX_DOUBLEBUFFER))
+
+        'Fade Effects
+        'SendMessage(Me.Handle, TVM_SETEXTENDEDSTYLE, New IntPtr(TVS_EX_FADEINOUTEXPANDOS), New IntPtr(TVS_EX_FADEINOUTEXPANDOS))
+
         MyBase.OnHandleCreated(e)
     End Sub
-    ' Pinvoke:
+
     Private Const TVM_SETEXTENDEDSTYLE As Integer = &H1100 + 44
     Private Const TVM_GETEXTENDEDSTYLE As Integer = &H1100 + 45
+    Private Const TVS_EX_FADEINOUTEXPANDOS As Integer = &H40
     Private Const TVS_EX_DOUBLEBUFFER As Integer = &H4
+
     <DllImport("user32.dll")>
     Private Shared Function SendMessage(hWnd As IntPtr, msg As Integer, wp As IntPtr, lp As IntPtr) As IntPtr
     End Function
@@ -79,23 +92,37 @@ Public Class ControlDomainTreeView
         Me.Font = SystemFonts.DefaultFont
         Me.HideSelection = False
         Me.Nodes.Clear()
+        Me.LabelEdit = True
+        Me.BorderStyle = BorderStyle.None
 
-        WindowsApi.SetWindowTheme(Me.Handle, "explorer", Nothing)
+        NativeWinAPI.SetWindowTheme(Me.Handle, "explorer", Nothing)
 
         Try
             Dim AdImages As New ImageList()
 
-            AdImages.Images.Add("OuImage", New Icon(My.Resources.Container, New Size(16, 16)).ToBitmap)
+            AdImages.Images.Add("Search", New Icon(My.Resources.Search, New Size(16, 16)).ToBitmap)
+            AdImages.Images.Add("OuImage", New Icon(My.Resources.OU, New Size(16, 16)).ToBitmap)
+            AdImages.Images.Add("OuSelected", New Icon(My.Resources.OUSelecetd, New Size(16, 16)).ToBitmap)
             AdImages.Images.Add("DomainImage", New Icon(My.Resources.Domain, New Size(16, 16)).ToBitmap)
             AdImages.Images.Add("ContainerImage", New Icon(My.Resources.Container, New Size(16, 16)).ToBitmap)
+            AdImages.Images.Add("ContainerSelected", New Icon(My.Resources.ContainerSelected, New Size(16, 16)).ToBitmap)
             AdImages.Images.Add("Everything", New Icon(My.Resources.Search, New Size(16, 16)).ToBitmap)
             AdImages.Images.Add("AllDisabledUsers", New Icon(My.Resources.UserDisabled, New Size(16, 16)).ToBitmap)
+            AdImages.Images.Add("AllEnabledUsers", New Icon(My.Resources.User, New Size(16, 16)).ToBitmap)
             AdImages.Images.Add("AllAdmins", New Icon(My.Resources.Admin, New Size(16, 16)).ToBitmap)
-            AdImages.Images.Add("AllDeletedUsers", New Icon(My.Resources.Delete, New Size(16, 16)).ToBitmap)
+            AdImages.Images.Add("AllDeletedObjects", New Icon(My.Resources.Delete, New Size(16, 16)).ToBitmap)
             AdImages.Images.Add("AllComputers", New Icon(My.Resources.Computer, New Size(16, 16)).ToBitmap)
+            AdImages.Images.Add("AllServers", New Icon(My.Resources.Server, New Size(16, 16)).ToBitmap)
+            AdImages.Images.Add("AllClients", New Icon(My.Resources.Client, New Size(16, 16)).ToBitmap)
+            AdImages.Images.Add("AllUsersNotLoggedOn", New Icon(My.Resources.LogonTime, New Size(16, 16)).ToBitmap)
             AdImages.Images.Add("Import", New Icon(My.Resources.JobImport, New Size(16, 16)).ToBitmap)
             AdImages.Images.Add("AllUsers", New Icon(My.Resources.Group, New Size(16, 16)).ToBitmap)
             AdImages.Images.Add("AllGroups", New Icon(My.Resources.Group, New Size(16, 16)).ToBitmap)
+            AdImages.Images.Add("Builtin", New Icon(My.Resources.Builtin, New Size(16, 16)).ToBitmap)
+            AdImages.Images.Add("LostAndFound", New Icon(My.Resources.LostAndFound, New Size(16, 16)).ToBitmap)
+            AdImages.Images.Add("Quota", New Icon(My.Resources.Quota, New Size(16, 16)).ToBitmap)
+            AdImages.Images.Add("TPMImage", New Icon(My.Resources.SecurityLock, New Size(16, 16)).ToBitmap)
+            AdImages.Images.Add("ExchSystemObject", New Icon(My.Resources.Message, New Size(16, 16)).ToBitmap)
             AdImages.ColorDepth = ColorDepth.Depth32Bit
 
             Me.ImageList = AdImages
@@ -108,7 +135,7 @@ Public Class ControlDomainTreeView
 
         Debug.WriteLine("[Info] Refreshing Domain TreeView")
 
-        BeginControlUpdate(Me)
+        ControlHelper.BeginControlUpdate(Me)
         Nodes.Clear()
 
         Dim ReportsNode As TreeNode = GetReportNodes()
@@ -120,14 +147,27 @@ Public Class ControlDomainTreeView
 
     Private Function GetReportNodes() As TreeNode
 
-        Dim BuiltInTreeNode As TreeNode = New TreeNode("Built In Views", 2, 2)
+        Dim BuiltInTreeNode As ReportTreeNode = New ReportTreeNode("Built In Views", "DomainImage", "DomainImage", Nothing)
 
         For Each Report As SimpleADReport In GetReports()
             Dim ReportNode As ReportTreeNode = New ReportTreeNode(Report.ReportName, Report.ImageKey, Report.SelecetdImageKey, Report)
             Dim ReportNodeCast As TreeNode = DirectCast(ReportNode, TreeNode)
 
+            Report.Node = ReportNodeCast
+
             ReportNodeCast.Tag = ADNodeType.Report
             BuiltInTreeNode.Nodes.Add(ReportNodeCast)
+        Next
+
+        For Each ChildReport As SimpleADReport In GetChildReports()
+            Dim ChildReportNode As ReportTreeNode = New ReportTreeNode(ChildReport.ReportName, ChildReport.ImageKey, ChildReport.SelecetdImageKey, ChildReport)
+
+            ChildReportNode.Tag = ADNodeType.Report
+
+            If ChildReport.ParentReportNode IsNot Nothing Then
+                ChildReport.ParentReportNode.Nodes.Add(ChildReportNode)
+            End If
+
         Next
 
         Return BuiltInTreeNode
@@ -147,9 +187,9 @@ Public Class ControlDomainTreeView
 
             Using RootDirectoryEntry As DirectoryEntry = DomainObject.GetDirectoryEntry
                 RootNode.ToolTipText = CStr(RootDirectoryEntry.Properties("distinguishedName").Value).Replace("/", "\/")
+                RootNode.Name = RootNode.ToolTipText
             End Using
             RootNode.Text = DomainName
-            RootNode.Name = DomainName
             RootNode.Tag = ADNodeType.Domain
             RootNode.ImageKey = "DomainImage"
             RootNode.SelectedImageKey = "DomainImage"
@@ -186,6 +226,8 @@ Public Class ControlDomainTreeView
 
             Dim RootDirectoryEntry As New DirectoryEntry(GetDirEntryPath() & ":389/" & RootNode.ToolTipText, LoginUsername, LoginPassword, AuthenticationTypes.Secure)
 
+            RootDirectoryEntry.UsePropertyCache = True
+
             Using RootDirectoryEntry
 
                 For Each ChildObject As DirectoryEntry In RootDirectoryEntry.Children
@@ -193,7 +235,10 @@ Public Class ControlDomainTreeView
 
                         Dim ChildObjectType As String = ChildObject.SchemaClassName
 
-                        If ChildObjectType = "organizationalUnit" OrElse ChildObjectType = "container" Then
+                        'Debug.WriteLine(String.Format("[Schema Info] {0} - {1}", ChildObject.Name, ChildObject.SchemaClassName))
+
+                        If (ChildObjectType = "organizationalUnit" OrElse ChildObjectType = "container" OrElse ChildObjectType = "builtinDomain" OrElse ChildObjectType = "lostAndFound" _
+                                                        OrElse ChildObjectType = "msDS-QuotaContainer" OrElse ChildObjectType = "msTPM-InformationObjectsContainer" OrElse ChildObjectType = "msExchSystemObjectsContainer") Then
 
                             Dim ChildNode As New TreeNode
                             Dim NodeName As String = ChildObject.Properties("name").Value.ToString
@@ -202,11 +247,31 @@ Public Class ControlDomainTreeView
                             If ChildObjectType = "organizationalUnit" Then
                                 ChildNode.Tag = ADNodeType.OU
                                 ChildNode.ImageKey = "OuImage"
-                                ChildNode.SelectedImageKey = "OuImage"
+                                ChildNode.SelectedImageKey = "OuSelected"
                             ElseIf ChildObjectType = "container" Then
                                 ChildNode.Tag = ADNodeType.Container
                                 ChildNode.ImageKey = "ContainerImage"
-                                ChildNode.SelectedImageKey = "ContainerImage"
+                                ChildNode.SelectedImageKey = "ContainerSelected"
+                            ElseIf ChildObjectType = "builtinDomain" Then
+                                ChildNode.Tag = ADNodeType.Container
+                                ChildNode.ImageKey = "Builtin"
+                                ChildNode.SelectedImageKey = "Builtin"
+                            ElseIf ChildObjectType = "lostAndFound" Then
+                                ChildNode.Tag = ADNodeType.Container
+                                ChildNode.ImageKey = "LostAndFound"
+                                ChildNode.SelectedImageKey = "LostAndFound"
+                            ElseIf ChildObjectType = "msDS-QuotaContainer" Then
+                                ChildNode.Tag = ADNodeType.Container
+                                ChildNode.ImageKey = "Quota"
+                                ChildNode.SelectedImageKey = "Quota"
+                            ElseIf ChildObjectType = "msTPM-InformationObjectsContainer" Then
+                                ChildNode.Tag = ADNodeType.Container
+                                ChildNode.ImageKey = "TPMImage"
+                                ChildNode.SelectedImageKey = "TPMImage"
+                            ElseIf ChildObjectType = "msExchSystemObjectsContainer" Then
+                                ChildNode.Tag = ADNodeType.Container
+                                ChildNode.ImageKey = "ExchSystemObject"
+                                ChildNode.SelectedImageKey = "ExchSystemObject"
                             Else
                                 ChildNode.Tag = ADNodeType.Unknown
                             End If
@@ -254,7 +319,7 @@ Public Class ControlDomainTreeView
                     Debug.WriteLine("[Error] Error adding completed node to tree: " & ex.Message)
                 Finally
                     Me.TopNode.Expand()
-                    EndControlUpdate(Me)
+                    ControlHelper.EndControlUpdate(Me)
                 End Try
             End If
         End If
@@ -265,8 +330,9 @@ Public Class ControlDomainTreeView
             Dim ExpandedNode As TreeNode = e.Node
 
             If Not ExpandedNode.Tag Is Nothing Then
-                If ExpandedNode.Tag.GetType = GetType(ADNodeType) Then
+                If CInt(ExpandedNode.Tag) <> ADNodeType.Report Then
                     If ExpandedNode.Nodes.Count > 0 Then
+                        ControlHelper.BeginControlUpdate(Me)
                         Threading.ThreadPool.QueueUserWorkItem(Sub() LoadAdNodes(ExpandedNode))
                     End If
                 End If
@@ -277,25 +343,34 @@ Public Class ControlDomainTreeView
     End Sub
 
     Private Sub ControlDomainTreeView_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles Me.AfterSelect
+        Try
+            If Not CInt(e.Node.Tag) = 0 Then
 
-        If Not e.Node Is Nothing Then
-            If Not e.Node.Tag Is Nothing Then
+                SelectedOU = SelectedNode.ToolTipText
+                Exit Sub
 
-                If Not CInt(e.Node.Tag) = 0 Then
-                    SelectedOU = SelectedNode.ToolTipText
-                    Exit Sub
-                Else
-                    Try
-                        Dim ReportNode As ReportTreeNode = DirectCast(e.Node, ReportTreeNode)
+            Else
+
+                Try
+
+                    Dim ReportNode As ReportTreeNode = DirectCast(e.Node, ReportTreeNode)
+
+                    If ReportNode.SimpleADReport IsNot Nothing Then
+
                         Debug.WriteLine("[Info] ReportRequested (" & e.Node.Text & ")")
                         RaiseEvent ReportRequested(DirectCast([Enum].Parse(GetType(SimpleADReportType), ReportNode.SimpleADReport.ImageKey), SimpleADReportType))
-                    Catch Ex As Exception
-                        Debug.WriteLine("[Error] Failed to cast (" & e.Node.Text & ") to Type SimpleADReportType: " & Ex.Message)
-                    End Try
-                End If
-            End If
-        End If
 
+                    End If
+
+                Catch Ex As Exception
+                    Debug.WriteLine("[Error] Failed to cast (" & e.Node.Text & ") to Type SimpleADReportType: " & Ex.Message)
+                End Try
+
+            End If
+
+        Catch Ex As Exception
+            Debug.WriteLine("[Error] :" & Ex.Message)
+        End Try
     End Sub
 
 End Class

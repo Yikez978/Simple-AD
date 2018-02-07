@@ -1,4 +1,7 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+﻿Imports System.Windows.Forms
+Imports MetroFramework
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FormADObjectSelection
     Inherits Form
 
@@ -26,8 +29,8 @@ Partial Class FormADObjectSelection
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormADObjectSelection))
-        Me.SearchBn = New MetroFramework.Controls.MetroButton()
-        Me.SelectGroupTb = New MetroFramework.Controls.MetroTextBox()
+        Me.SearchBn = New System.Windows.Forms.Button()
+        Me.SelectGroupTb = New SimpleAD.ControlTextBox()
         Me.MainGrid = New MetroFramework.Controls.MetroGrid()
         Me.TypeColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DescriptionColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -45,7 +48,6 @@ Partial Class FormADObjectSelection
         Me.SearchBn.Size = New System.Drawing.Size(76, 23)
         Me.SearchBn.TabIndex = 7
         Me.SearchBn.Text = "Find"
-        Me.SearchBn.UseSelectable = True
         '
         'SelectGroupTb
         '
@@ -54,15 +56,6 @@ Partial Class FormADObjectSelection
         '
         '
         '
-        Me.SelectGroupTb.CustomButton.Image = Nothing
-        Me.SelectGroupTb.CustomButton.Location = New System.Drawing.Point(553, 1)
-        Me.SelectGroupTb.CustomButton.Name = ""
-        Me.SelectGroupTb.CustomButton.Size = New System.Drawing.Size(21, 21)
-        Me.SelectGroupTb.CustomButton.Style = MetroFramework.MetroColorStyle.Blue
-        Me.SelectGroupTb.CustomButton.TabIndex = 1
-        Me.SelectGroupTb.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light
-        Me.SelectGroupTb.CustomButton.UseSelectable = True
-        Me.SelectGroupTb.CustomButton.Visible = False
         Me.SelectGroupTb.Lines = New String(-1) {}
         Me.SelectGroupTb.Location = New System.Drawing.Point(17, 6)
         Me.SelectGroupTb.MaxLength = 32767
@@ -74,12 +67,7 @@ Partial Class FormADObjectSelection
         Me.SelectGroupTb.SelectionStart = 0
         Me.SelectGroupTb.ShortcutsEnabled = True
         Me.SelectGroupTb.Size = New System.Drawing.Size(575, 23)
-        Me.SelectGroupTb.Style = MetroFramework.MetroColorStyle.Purple
         Me.SelectGroupTb.TabIndex = 6
-        Me.SelectGroupTb.UseSelectable = True
-        Me.SelectGroupTb.WaterMark = "Filter Groups.."
-        Me.SelectGroupTb.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
-        Me.SelectGroupTb.WaterMarkFont = New System.Drawing.Font("Segoe UI Light", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         '
         'MainGrid
         '
@@ -195,8 +183,8 @@ Partial Class FormADObjectSelection
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents SearchBn As Controls.MetroButton
-    Friend WithEvents SelectGroupTb As Controls.MetroTextBox
+    Friend WithEvents SearchBn As Button
+    Friend WithEvents SelectGroupTb As SimpleAD.ControlTextBox
     Friend WithEvents MainGrid As Controls.MetroGrid
     Friend WithEvents TypeColumn As DataGridViewTextBoxColumn
     Friend WithEvents DescriptionColumn As DataGridViewTextBoxColumn

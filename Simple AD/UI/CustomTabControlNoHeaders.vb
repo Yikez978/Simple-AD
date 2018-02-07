@@ -1,5 +1,7 @@
 ﻿Imports System.ComponentModel
+Imports System.Drawing
 Imports System.Runtime.InteropServices
+Imports System.Windows.Forms
 
 Public Class CustomTabControlNoHeaders
     Inherits TabControl
@@ -12,6 +14,15 @@ Public Class CustomTabControlNoHeaders
     Public Sub New()
         MyBase.New()
         Me.SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.ResizeRedraw Or ControlStyles.UserPaint, True)
+
+    End Sub
+
+    Public Sub InitializeTabControl()
+        If DesignMode Then
+            ItemSize = New Size(62, 20)
+        Else
+            ItemSize = New Size(62, 0)
+        End If
     End Sub
 
 #Region " Properties "

@@ -1,6 +1,10 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿Imports System.Windows.Forms
+Imports BrightIdeasSoftware
+Imports SimpleLib
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FormTemplateManager
-    Inherits System.Windows.Forms.Form
+    Inherits Form
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -22,7 +26,7 @@ Partial Class FormTemplateManager
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.MainListView = New SimpleAD.ControlListView()
+        Me.MainListView = New SimpleAD.ControlDomainListView()
         Me.NameCol = CType(New BrightIdeasSoftware.OLVColumn(), BrightIdeasSoftware.OLVColumn)
         Me.DescCol = CType(New BrightIdeasSoftware.OLVColumn(), BrightIdeasSoftware.OLVColumn)
         Me.Authcol = CType(New BrightIdeasSoftware.OLVColumn(), BrightIdeasSoftware.OLVColumn)
@@ -32,7 +36,10 @@ Partial Class FormTemplateManager
         Me.RightClickMenu = New System.Windows.Forms.ContextMenu()
         Me.AddMenuItem = New System.Windows.Forms.MenuItem()
         Me.RefreshMenuItem = New System.Windows.Forms.MenuItem()
+        Me.ControlFooterPl1 = New SimpleAD.ControlFooterPl()
+        Me.CancelBn = New System.Windows.Forms.Button()
         CType(Me.MainListView, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ControlFooterPl1.SuspendLayout()
         Me.SuspendLayout()
         '
         'MainListView
@@ -42,11 +49,13 @@ Partial Class FormTemplateManager
         Me.MainListView.AllColumns.Add(Me.NameCol)
         Me.MainListView.AllColumns.Add(Me.DescCol)
         Me.MainListView.AllColumns.Add(Me.Authcol)
-        Me.MainListView.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.MainListView.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.MainListView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.MainListView.CellEditUseWholeCell = False
         Me.MainListView.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.NameCol, Me.DescCol, Me.Authcol})
         Me.MainListView.Cursor = System.Windows.Forms.Cursors.Default
-        Me.MainListView.Dock = System.Windows.Forms.DockStyle.Fill
         Me.MainListView.EmptyListMsg = "No Results"
         Me.MainListView.EmptyListMsgFont = New System.Drawing.Font("Segoe UI Semilight", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.MainListView.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -54,15 +63,15 @@ Partial Class FormTemplateManager
         Me.MainListView.HeaderUsesThemes = True
         Me.MainListView.HideSelection = False
         Me.MainListView.IncludeColumnHeadersInCopy = True
-        Me.MainListView.Location = New System.Drawing.Point(0, 0)
-        Me.MainListView.Margin = New System.Windows.Forms.Padding(0)
+        Me.MainListView.Location = New System.Drawing.Point(17, 17)
+        Me.MainListView.Margin = New System.Windows.Forms.Padding(8)
         Me.MainListView.Name = "MainListView"
         Me.MainListView.OwnerDraw = False
         Me.MainListView.RowHeight = 32
         Me.MainListView.ShowGroups = False
         Me.MainListView.ShowHeaderInAllViews = False
         Me.MainListView.ShowItemCountOnGroups = True
-        Me.MainListView.Size = New System.Drawing.Size(762, 339)
+        Me.MainListView.Size = New System.Drawing.Size(728, 267)
         Me.MainListView.Sorting = System.Windows.Forms.SortOrder.Ascending
         Me.MainListView.TabIndex = 14
         Me.MainListView.TileSize = New System.Drawing.Size(256, 64)
@@ -119,20 +128,44 @@ Partial Class FormTemplateManager
         Me.RefreshMenuItem.Index = 1
         Me.RefreshMenuItem.Text = "Refresh"
         '
+        'ControlFooterPl1
+        '
+        Me.ControlFooterPl1.BackColor = System.Drawing.SystemColors.Control
+        Me.ControlFooterPl1.Controls.Add(Me.CancelBn)
+        Me.ControlFooterPl1.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.ControlFooterPl1.Location = New System.Drawing.Point(0, 295)
+        Me.ControlFooterPl1.Name = "ControlFooterPl1"
+        Me.ControlFooterPl1.Size = New System.Drawing.Size(762, 44)
+        Me.ControlFooterPl1.TabIndex = 15
+        '
+        'CancelBn
+        '
+        Me.CancelBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.CancelBn.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.CancelBn.Enabled = False
+        Me.CancelBn.Location = New System.Drawing.Point(675, 9)
+        Me.CancelBn.Name = "CancelBn"
+        Me.CancelBn.Size = New System.Drawing.Size(75, 23)
+        Me.CancelBn.TabIndex = 1
+        Me.CancelBn.Text = "Close"
+        '
         'FormTemplateManager
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.SystemColors.Window
         Me.ClientSize = New System.Drawing.Size(762, 339)
+        Me.Controls.Add(Me.ControlFooterPl1)
         Me.Controls.Add(Me.MainListView)
         Me.Name = "FormTemplateManager"
         Me.Text = "FormTemplateManager"
         CType(Me.MainListView, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ControlFooterPl1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
 
-    Friend WithEvents MainListView As ControlListView
+    Friend WithEvents MainListView As ControlDomainListView
     Friend WithEvents NameCol As OLVColumn
     Friend WithEvents DescCol As OLVColumn
     Friend WithEvents Authcol As OLVColumn
@@ -142,4 +175,6 @@ Partial Class FormTemplateManager
     Friend WithEvents RightClickMenu As ContextMenu
     Friend WithEvents AddMenuItem As MenuItem
     Friend WithEvents RefreshMenuItem As MenuItem
+    Friend WithEvents ControlFooterPl1 As ControlFooterPl
+    Friend WithEvents CancelBn As Button
 End Class

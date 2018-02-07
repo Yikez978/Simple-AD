@@ -80,18 +80,6 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property LoadAdvLDAP() As Boolean
-            Get
-                Return CType(Me("LoadAdvLDAP"),Boolean)
-            End Get
-            Set
-                Me("LoadAdvLDAP") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("https://ps.outlook.com/PowerShell-LiveID?PSVersion=2.0")>  _
         Public Property OfficeURI() As String
             Get
@@ -153,60 +141,12 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property UseSystemIcons() As Boolean
-            Get
-                Return CType(Me("UseSystemIcons"),Boolean)
-            End Get
-            Set
-                Me("UseSystemIcons") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property ExplorerListViewSettings() As String
-            Get
-                Return CType(Me("ExplorerListViewSettings"),String)
-            End Get
-            Set
-                Me("ExplorerListViewSettings") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("100")>  _
-        Public Property BulkUserThreadCount() As Integer
-            Get
-                Return CType(Me("BulkUserThreadCount"),Integer)
-            End Get
-            Set
-                Me("BulkUserThreadCount") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
         Public Property ForceLogin() As Boolean
             Get
                 Return CType(Me("ForceLogin"),Boolean)
             End Get
             Set
                 Me("ForceLogin") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property ImportListViewSettings() As String
-            Get
-                Return CType(Me("ImportListViewSettings"),String)
-            End Get
-            Set
-                Me("ImportListViewSettings") = value
             End Set
         End Property
         
@@ -224,7 +164,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("2")>  _
         Public Property FormWindowState() As Integer
             Get
                 Return CType(Me("FormWindowState"),Integer)
@@ -243,18 +183,6 @@ Namespace My
             End Get
             Set
                 Me("FormSize") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property UseNativeWindowsTheme() As Boolean
-            Get
-                Return CType(Me("UseNativeWindowsTheme"),Boolean)
-            End Get
-            Set
-                Me("UseNativeWindowsTheme") = value
             End Set
         End Property
         

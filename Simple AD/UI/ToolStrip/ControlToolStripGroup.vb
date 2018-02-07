@@ -1,9 +1,14 @@
-﻿Public Class ControlToolStripGroup
+﻿Imports System.Drawing
+Imports System.Windows.Forms
+
+Public Class ControlToolStripGroup
 
     Public Property DisplayText As String
 
     Public Sub New()
         InitializeComponent()
+
+        BackColor = Color.FromArgb(245, 246, 247)
 
         Width = 12
     End Sub

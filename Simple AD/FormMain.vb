@@ -1,4 +1,9 @@
 ﻿Imports System.ComponentModel
+Imports System.Drawing
+Imports System.Windows.Forms
+
+Imports SimpleLib
+Imports SimpleAD.LocalData
 
 Public Class FormMain
 
@@ -7,23 +12,25 @@ Public Class FormMain
     Public Sub New()
         InitializeComponent()
 
-        AddHandler ImportCSVToolStripMenuItem.Click, AddressOf ImportCSV_Click
-        AddHandler TemplateManagerToolStripMenuItem.Click, AddressOf TemplateManager_Click
-        AddHandler OpenActiveDirectoryToolStripMenuItem.Click, AddressOf OpenActiveDirectory_Click
-
         For Each control As ToolStripMenuItem In MainMenuStrip.Items
             AddHandler control.DropDownOpening, AddressOf SubMenuClickHandler
         Next
     End Sub
 
-    Private Sub FormMain_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        PopulateRecentFileList()
+    Private Sub FormMain_Load(ByVal sender As System.Object, ByVal e As EventArgs) Handles MyBase.Load
+
+#If DEBUG Then
+        ThowExxceptionToolStripMenuItem.Visible = True
+#End If
+
+        InitiateJobPool()
+        RecentFiles.PopulateRecentFileList()
         MainFormStart()
+        BuildUIHandlers()
+
     End Sub
 
     Public Sub MainFormStart()
-
-        ControlToolStrip.LoadToolStrip()
 
         If My.Settings.CheckForUpdatesOnStart = True Then
             Dim RunUpdateCheck As New FormUpdate
@@ -31,18 +38,14 @@ Public Class FormMain
 
         If ValidateActiveDirectoryLogin(LoginUsername, LoginPassword, LoginUsernamePrefix) = True Then
 
-            IsConnected = True
-
             MainDomainTreeViewHandle.RefreshNodes()
 
-            Dim NewReport As JobExplorer = New JobExplorer(SimpleADReportType.Explorer)
-            UserToolStripMenuItem.Text = GetDisplayName()
+            Dim NewReport As TaskExplorer = New TaskExplorer(SimpleADReportType.Explorer)
+            UserToolStripMenuItem.Text = GetDisplayName(True)
 
             ADChecker = New ADConnectionChecker
-            ADChecker.InitiateTimer()
+            ADChecker.RunCheck()
         Else
-
-            IsConnected = False
 
             ConnectionToolStripStatusLabel.Image = New Icon(My.Resources.SystemTask, 16, 16).ToBitmap
             ConnectionToolStripStatusLabel.Text = "Unable to connect to any valid logon server"
@@ -50,6 +53,18 @@ Public Class FormMain
             Dim ErrorForm As FormAlert = New FormAlert("Unable to connect to a domain controller!", AlertType.ErrorAlert)
             ErrorForm.ShowDialog()
         End If
+    End Sub
+
+    Private Sub BuildUIHandlers()
+
+        Dim _ToolStripHandler As UIHandler = New UIHandler(GetMainListView, GetContainerExplorer)
+
+        AddHandler ImportCSVToolStripMenuItem.Click, AddressOf _ToolStripHandler.ImportCSV_Click
+        AddHandler TemplateManagerToolStripMenuItem.Click, AddressOf _ToolStripHandler.TemplateManager_Click
+        AddHandler OpenActiveDirectoryToolStripMenuItem.Click, AddressOf _ToolStripHandler.OpenActiveDirectory_Click
+
+        ControlToolStrip.LoadToolStrip(_ToolStripHandler)
+
     End Sub
 
 #Region "Event Handlers"
@@ -67,7 +82,7 @@ Public Class FormMain
     End Sub
 
     Public Sub FileToolStripMenuItem_DropDownOpening(sender As Object, e As EventArgs) Handles FileToolStripMenuItem.DropDownOpening
-        PopulateRecentFileList()
+        RecentFiles.PopulateRecentFileList()
     End Sub
 
     Private Sub ToolStripMenuItemLogin_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItemLogin.Click
@@ -79,10 +94,6 @@ Public Class FormMain
         GetExplorerSplitContainer.Panel1Collapsed = Not GetExplorerSplitContainer.Panel1Collapsed
     End Sub
 
-    Private Sub TaskPanelToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        MainSideBarSplitContainer.Panel2Collapsed = Not MainSideBarSplitContainer.Panel2Collapsed
-    End Sub
-
     Private Sub BulkUserWizardToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BulkUserWizardToolStripMenuItem.Click
         Dim BulkUser As FormBulkUser = New FormBulkUser()
         BulkUser.ShowDialog()
@@ -92,17 +103,12 @@ Public Class FormMain
         FormUpdate.Show()
     End Sub
 
-    Private Sub ConsoleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConsoleToolStripMenuItem.Click
-        FormConsole.Show()
-    End Sub
-
     Private Sub ShowGroupsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowGroupsToolStripMenuItem.Click
         GetMainListView().ShowGroups = ShowGroupsToolStripMenuItem.Checked
     End Sub
 
     Private Sub FormMain_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         If GetMainListView() IsNot Nothing Then
-            My.Settings.ExplorerListViewSettings = Encoding.Default.GetString(GetMainListView.SaveState)
 
             My.Settings.FormWindowState = WindowState
             If Not WindowState = FormWindowState.Maximized Then
@@ -114,16 +120,18 @@ Public Class FormMain
         End If
     End Sub
 
-    Private Sub ViewToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ViewToolStripMenuItem.DropDownOpening
-        VersionToolStripMenuItem.Text = "Version: " & Application.ProductVersion
-    End Sub
-
     Private Sub SADMenuStrip_Paint(sender As Object, e As PaintEventArgs) Handles SADMenuStrip.Paint
         Dim s As MenuStrip = SADMenuStrip
-        If Not s Is Nothing Then
-            Dim Pen As New Pen(Color.FromArgb(217, 217, 217))
-            e.Graphics.DrawLine(Pen, 0, s.Height - 1, s.Width, s.Height - 1)
+
+        If ControlToolStrip IsNot Nothing Then
+            If ControlToolStrip.Visible Then
+                If Not s Is Nothing Then
+                    Dim Pen As New Pen(Color.FromArgb(217, 217, 217))
+                    e.Graphics.DrawLine(Pen, 0, s.Height - 1, s.Width, s.Height - 1)
+                End If
+            End If
         End If
+
     End Sub
 
     Private Sub FormMain_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
@@ -137,7 +145,7 @@ Public Class FormMain
             If ClosePromptForm.DialogResult = DialogResult.Yes Then
 
                 For Each ImportJob As BulkADWorker In OngoingBulkJobs
-                    ImportJob.HostJob.JobStatus = SimpleADJobStatus.Canceled
+                    ImportJob.TaskHost.TaskStatus = ActiveTaskStatus.Canceled
                 Next
 
                 OngoingBulkJobs.Clear()
@@ -154,6 +162,23 @@ Public Class FormMain
         Catch
             Exit Sub
         End Try
+    End Sub
+
+    Private Sub ContainerExplorer_Paint(sender As Object, e As PaintEventArgs) Handles ContainerExplorer.Paint
+        Dim s As ContainerExplorer = ContainerExplorer
+        If Not s Is Nothing Then
+            Dim Pen As New Pen(Color.FromArgb(217, 217, 217))
+            e.Graphics.DrawLine(Pen, 0, s.Height - 1, s.Width, s.Height - 1)
+        End If
+    End Sub
+
+    Private Sub RibbonToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RibbonToolStripMenuItem.Click
+        ControlToolStrip.Visible = Not ControlToolStrip.Visible
+        SADMenuStrip.Invalidate()
+    End Sub
+
+    Private Sub ThowExxceptionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ThowExxceptionToolStripMenuItem.Click
+        Throw New Exception
     End Sub
 
 #End Region

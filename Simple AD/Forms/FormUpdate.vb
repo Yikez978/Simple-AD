@@ -1,4 +1,5 @@
-﻿Imports AutoUpdaterDotNET
+﻿Imports System.Drawing
+Imports AutoUpdaterDotNET
 
 Public Class FormUpdate
 
@@ -11,7 +12,6 @@ Public Class FormUpdate
     Public Sub New()
 
         InitializeComponent()
-        NewBuildPl.BackColor = SystemColors.ControlDarkDark
         AddHandler AutoUpdater.CheckForUpdateEvent, AddressOf AutoUpdaterOnCheckForUpdateEvent
         AutoUpdater.UseSystemProxy = My.Settings.UseProxy
         UpdateToggle.Checked = My.Settings.CheckForUpdatesOnStart
@@ -40,7 +40,6 @@ Public Class FormUpdate
                 End If
                 FormMain.UpdateToolStripStatusLabel.Text = ""
                 Spinner.Visible = False
-                NewBuildPl.BackColor = Color.FromArgb(124, 65, 153)
                 BodyLb.Text = "New Version available. Click Update to upgrade"
                 GetHeaderText(UpdateType.Available)
 

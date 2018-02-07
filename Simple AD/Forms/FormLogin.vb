@@ -1,5 +1,6 @@
 ﻿Imports System.Threading
 Imports SimpleLib
+Imports SimpleLib.SystemHelper
 
 Public Class FormLogin
 
@@ -137,12 +138,10 @@ Public Class FormLogin
             OKBn.Enabled = True
 
             ErLb.Show()
-            PwdTb.DisplayIcon = True
         End If
     End Sub
 
     Private Sub UnTb_TextChanged(sender As Object, e As EventArgs) Handles UnTb.TextChanged, PwdTb.TextChanged
-        PwdTb.DisplayIcon = False
         ErLb.Hide()
 
         If (UnTb.Text IsNot Nothing) Then

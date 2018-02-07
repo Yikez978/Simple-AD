@@ -1,4 +1,7 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+﻿Imports System.Windows.Forms
+Imports MetroFramework
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FormMoveObject
     Inherits Form
 
@@ -23,108 +26,95 @@ Partial Class FormMoveObject
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormMoveObject))
-        Me.CancelBn = New MetroFramework.Controls.MetroButton()
-        Me.AcceptBn = New MetroFramework.Controls.MetroButton()
-        Me.FooterPl = New System.Windows.Forms.Panel()
-        Me.OULb = New System.Windows.Forms.Label()
-        Me.MainPl = New SimpleAD.ControlFooterPl()
-        Me.MainPb = New System.Windows.Forms.PictureBox()
-        Me.FooterPl.SuspendLayout()
-        CType(Me.MainPb, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.MainPl = New System.Windows.Forms.Panel()
+        Me.CancelBn = New System.Windows.Forms.Button()
+        Me.AcceptBn = New System.Windows.Forms.Button()
+        Me.ImagePl = New SimpleAD.ControlHeaderPanel()
+        Me.TitleLb = New System.Windows.Forms.Label()
+        Me.ImagePl.SuspendLayout()
         Me.SuspendLayout()
-        '
-        'CancelBn
-        '
-        Me.CancelBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.CancelBn.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.CancelBn.Location = New System.Drawing.Point(291, 13)
-        Me.CancelBn.Name = "CancelBn"
-        Me.CancelBn.Size = New System.Drawing.Size(75, 23)
-        Me.CancelBn.TabIndex = 1
-        Me.CancelBn.Text = "cancel"
-        Me.CancelBn.UseSelectable = True
-        '
-        'AcceptBn
-        '
-        Me.AcceptBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.AcceptBn.Location = New System.Drawing.Point(210, 13)
-        Me.AcceptBn.Name = "AcceptBn"
-        Me.AcceptBn.Size = New System.Drawing.Size(75, 23)
-        Me.AcceptBn.TabIndex = 2
-        Me.AcceptBn.Text = "Accept"
-        Me.AcceptBn.UseSelectable = True
-        '
-        'FooterPl
-        '
-        Me.FooterPl.BackColor = System.Drawing.Color.FromArgb(CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(241, Byte), Integer))
-        Me.FooterPl.Controls.Add(Me.AcceptBn)
-        Me.FooterPl.Controls.Add(Me.CancelBn)
-        Me.FooterPl.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.FooterPl.Location = New System.Drawing.Point(0, 278)
-        Me.FooterPl.Margin = New System.Windows.Forms.Padding(3, 0, 3, 3)
-        Me.FooterPl.MaximumSize = New System.Drawing.Size(0, 48)
-        Me.FooterPl.MinimumSize = New System.Drawing.Size(0, 48)
-        Me.FooterPl.Name = "FooterPl"
-        Me.FooterPl.Size = New System.Drawing.Size(378, 48)
-        Me.FooterPl.TabIndex = 0
-        '
-        'OULb
-        '
-        Me.OULb.BackColor = System.Drawing.SystemColors.Window
-        Me.OULb.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.OULb.Location = New System.Drawing.Point(53, 9)
-        Me.OULb.Name = "OULb"
-        Me.OULb.Size = New System.Drawing.Size(313, 32)
-        Me.OULb.TabIndex = 3
-        Me.OULb.Text = "Please Select a container..."
         '
         'MainPl
         '
         Me.MainPl.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.MainPl.Location = New System.Drawing.Point(0, 58)
-        Me.MainPl.Margin = New System.Windows.Forms.Padding(0)
+        Me.MainPl.BackColor = System.Drawing.SystemColors.Window
+        Me.MainPl.Location = New System.Drawing.Point(17, 67)
+        Me.MainPl.Margin = New System.Windows.Forms.Padding(8)
         Me.MainPl.Name = "MainPl"
         Me.MainPl.Padding = New System.Windows.Forms.Padding(0, 1, 0, 0)
-        Me.MainPl.Size = New System.Drawing.Size(378, 220)
+        Me.MainPl.Size = New System.Drawing.Size(450, 213)
         Me.MainPl.TabIndex = 1
         '
-        'MainPb
+        'CancelBn
         '
-        Me.MainPb.Location = New System.Drawing.Point(15, 9)
-        Me.MainPb.Name = "MainPb"
-        Me.MainPb.Size = New System.Drawing.Size(32, 32)
-        Me.MainPb.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.MainPb.TabIndex = 4
-        Me.MainPb.TabStop = False
+        Me.CancelBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.CancelBn.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.CancelBn.Location = New System.Drawing.Point(397, 301)
+        Me.CancelBn.Name = "CancelBn"
+        Me.CancelBn.Size = New System.Drawing.Size(75, 23)
+        Me.CancelBn.TabIndex = 1
+        Me.CancelBn.Text = "cancel"
+        Me.CancelBn.UseVisualStyleBackColor = True
+        '
+        'AcceptBn
+        '
+        Me.AcceptBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.AcceptBn.Location = New System.Drawing.Point(316, 301)
+        Me.AcceptBn.Name = "AcceptBn"
+        Me.AcceptBn.Size = New System.Drawing.Size(75, 23)
+        Me.AcceptBn.TabIndex = 2
+        Me.AcceptBn.Text = "Accept"
+        Me.AcceptBn.UseVisualStyleBackColor = True
+        '
+        'ImagePl
+        '
+        Me.ImagePl.BackColor = System.Drawing.SystemColors.Window
+        Me.ImagePl.Controls.Add(Me.TitleLb)
+        Me.ImagePl.Dock = System.Windows.Forms.DockStyle.Top
+        Me.ImagePl.Location = New System.Drawing.Point(0, 0)
+        Me.ImagePl.MaximumSize = New System.Drawing.Size(0, 56)
+        Me.ImagePl.MinimumSize = New System.Drawing.Size(0, 56)
+        Me.ImagePl.Name = "ImagePl"
+        Me.ImagePl.Size = New System.Drawing.Size(484, 56)
+        Me.ImagePl.TabIndex = 8
+        '
+        'TitleLb
+        '
+        Me.TitleLb.AutoSize = True
+        Me.TitleLb.Font = New System.Drawing.Font("Segoe UI Light", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TitleLb.Location = New System.Drawing.Point(24, 8)
+        Me.TitleLb.Name = "TitleLb"
+        Me.TitleLb.Size = New System.Drawing.Size(155, 30)
+        Me.TitleLb.TabIndex = 9
+        Me.TitleLb.Text = "Select Container"
         '
         'FormMoveObject
         '
         Me.AcceptButton = Me.AcceptBn
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
-        Me.BackColor = System.Drawing.SystemColors.Window
         Me.CancelButton = Me.CancelBn
-        Me.ClientSize = New System.Drawing.Size(378, 326)
-        Me.Controls.Add(Me.OULb)
-        Me.Controls.Add(Me.MainPb)
+        Me.ClientSize = New System.Drawing.Size(484, 336)
+        Me.Controls.Add(Me.AcceptBn)
+        Me.Controls.Add(Me.CancelBn)
         Me.Controls.Add(Me.MainPl)
-        Me.Controls.Add(Me.FooterPl)
+        Me.Controls.Add(Me.ImagePl)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
+        Me.MinimumSize = New System.Drawing.Size(500, 300)
         Me.Name = "FormMoveObject"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.Text = "Move Object"
-        Me.FooterPl.ResumeLayout(False)
-        CType(Me.MainPb, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ImagePl.ResumeLayout(False)
+        Me.ImagePl.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents CancelBn As Controls.MetroButton
-    Friend WithEvents AcceptBn As Controls.MetroButton
-    Friend WithEvents FooterPl As Panel
-    Friend WithEvents OULb As Label
-    Friend WithEvents MainPl As ControlFooterPl
-    Friend WithEvents MainPb As PictureBox
+    Friend WithEvents MainPl As Panel
+    Friend WithEvents CancelBn As Button
+    Friend WithEvents AcceptBn As Button
+    Friend WithEvents ImagePl As SimpleAD.ControlHeaderPanel
+    Friend WithEvents TitleLb As Label
 End Class

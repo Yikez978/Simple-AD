@@ -11,7 +11,7 @@
     <AssemblyName>SimpleAD</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile>
@@ -75,7 +75,7 @@
     <OptionStrict>On</OptionStrict>
   </PropertyGroup>
   <PropertyGroup>
-    <OptionInfer>Off</OptionInfer>
+    <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>SimpleADIcon.ico</ApplicationIcon>
@@ -109,6 +109,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
@@ -118,11 +119,11 @@
     <PlatformTarget>x64</PlatformTarget>
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoUpdater.NET, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\AutoUpdater.NET\AutoUpdater.NET\bin\Debug\v4.0\AutoUpdater.NET.dll</HintPath>
+    <Reference Include="AutoUpdater.NET">
+      <HintPath>..\packages\AutoUpdater.NET.dll</HintPath>
     </Reference>
     <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -146,8 +147,8 @@
     <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\WindowsAPICodePack-Shell.1.1.1\lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
     </Reference>
-    <Reference Include="ObjectListView, Version=2.9.1.1072, Culture=neutral, PublicKeyToken=b1c5bf581481bcd4, processorArchitecture=MSIL">
-      <HintPath>..\packages\ObjectListView.Official.2.9.1\lib\net20\ObjectListView.dll</HintPath>
+    <Reference Include="Nini">
+      <HintPath>..\packages\Nini.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Private>False</Private>
@@ -196,12 +197,36 @@
     <Reference Include="UNOLibs.Net">
       <HintPath>..\packages\UNOLibs.Net.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsFormsAero, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Windows-Forms-Aero.3.0.1\lib\net461\WindowsFormsAero.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="Classes\BulkADWorker.vb" />
     <Compile Include="Classes\HTML.vb" />
+    <Compile Include="Forms\FormPing.Designer.vb">
+      <DependentUpon>FormPing.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormPing.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LocalData\Config.vb" />
+    <Compile Include="Forms\FormNewOu.Designer.vb">
+      <DependentUpon>FormNewOu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormNewOu.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormSearch.Designer.vb">
+      <DependentUpon>FormSearch.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormSearch.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LocalData\Paths.vb" />
+    <Compile Include="LocalData\RecentFiles.vb" />
     <Compile Include="Classes\PasswordAdvisor.vb" />
-    <Compile Include="Classes\ReportTreeNode.vb" />
     <Compile Include="Classes\TaskBarProgress.vb" />
     <Compile Include="Forms\FormImport.Designer.vb">
       <DependentUpon>FormImport.vb</DependentUpon>
@@ -213,6 +238,12 @@
       <DependentUpon>FormNewUser.vb</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormNewUser.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormReport.Designer.vb">
+      <DependentUpon>FormReport.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormReport.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\FormTemplateManager.Designer.vb">
@@ -239,21 +270,8 @@
     <Compile Include="Forms\FormPasswordResetBulk.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Jobs\JobDelete.vb" />
-    <Compile Include="Jobs\JobDeleteBulk.vb" />
-    <Compile Include="Jobs\JobEnableDisable.vb" />
-    <Compile Include="Jobs\JobEnableDisabledBulk.vb" />
-    <Compile Include="Jobs\JobExplorer.vb" />
-    <Compile Include="Jobs\JobImport.vb" />
-    <Compile Include="Jobs\JobMove.vb" />
-    <Compile Include="Jobs\JobMoveBulk.vb" />
-    <Compile Include="Jobs\JobNewUser.vb" />
-    <Compile Include="Jobs\JobPasswordReset.vb" />
-    <Compile Include="Jobs\JobRename.vb" />
-    <Compile Include="Jobs\SimpleADJob.vb" />
-    <Compile Include="Modules\ConsoleHandler.vb" />
     <Compile Include="Modules\Delegates.vb" />
-    <Compile Include="Modules\ExportHandler.vb" />
+    <Compile Include="LocalData\ExportHandler.vb" />
     <Compile Include="Modules\FormHelper.vb" />
     <Compile Include="Forms\FormProgressBar.Designer.vb">
       <DependentUpon>FormProgressBar.vb</DependentUpon>
@@ -261,77 +279,25 @@
     <Compile Include="Forms\FormProgressBar.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modules\ImportHelper.vb" />
     <Compile Include="Modules\StatusStripHandler.vb" />
-    <Compile Include="Modules\TemplateImageHandler.vb" />
-    <Compile Include="Classes\WindowsAPI.vb" />
-    <Compile Include="Modules\ErrorMessages.vb" />
     <Compile Include="Modules\GetObject.vb" />
     <Compile Include="Modules\ImageHelper.vb" />
     <Compile Include="Modules\PaintHelper.vb" />
     <Compile Include="Modules\ErrorHandling.vb" />
     <Compile Include="Modules\ToolStripHandler.vb" />
-    <Compile Include="Modules\UIHandlers.vb" />
+    <Compile Include="Tasks\TaskReport.vb" />
+    <Compile Include="Tasks\TaskPing.vb" />
+    <Compile Include="UserControls\UIHandler.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Settings.vb" />
-    <Compile Include="UI\ControlCustomListView.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\ControlFlatButton.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\ControlFlowLayoutPanel.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\ControlFooterPl.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\ControlHeaderPanel.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\ControlListView.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\ControlMenuStrip.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\ControlSplitConatiner.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\ControlStatusStrip.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\ControlTableLayoutPanel.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\ControlTreeView.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\CustomTabControlNoHeaders.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\CustomTabControl.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Modules\TabDragger.vb">
-    </Compile>
-    <Compile Include="UI\ControlDomainTreeView.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Forms\FormConfirmation.Designer.vb">
       <DependentUpon>FormConfirmation.vb</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormConfirmation.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\FormConsole.Designer.vb">
-      <DependentUpon>FormConsole.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\FormConsole.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\FormAlert.Designer.vb">
@@ -364,13 +330,9 @@
     <Compile Include="Forms\FormBulkUser.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Classes\ActiveDirectoryIcon.vb" />
     <Compile Include="Classes\ADConnectionChecker.vb" />
-    <Compile Include="Classes\BulkADWorker.vb" />
     <Compile Include="Modules\ContextMenuHelper.vb" />
-    <Compile Include="Modules\ControlHelper.vb" />
     <Compile Include="Config\GlobalConfig.vb" />
-    <Compile Include="Modules\LocalData.vb" />
     <Compile Include="Modules\MenuStripHelper.vb" />
     <Compile Include="Forms\FormImportValidation.Designer.vb">
       <DependentUpon>FormImportValidation.vb</DependentUpon>
@@ -407,6 +369,95 @@
     <Compile Include="Forms\FormOptions.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Tasks\ActiveTask.vb" />
+    <Compile Include="Tasks\TaskBulkDelete.vb" />
+    <Compile Include="Tasks\TaskBulkEnableDisabled.vb" />
+    <Compile Include="Tasks\TaskBulkImport.vb" />
+    <Compile Include="Tasks\TaskBulkMove.vb" />
+    <Compile Include="Tasks\TaskDelete.vb" />
+    <Compile Include="Tasks\TaskEnableDisable.vb" />
+    <Compile Include="Tasks\TaskExplorer.vb" />
+    <Compile Include="Tasks\TaskMove.vb" />
+    <Compile Include="Tasks\TaskNewOu.vb" />
+    <Compile Include="Tasks\TaskNewUser.vb" />
+    <Compile Include="Tasks\TaskPasswordReset.vb" />
+    <Compile Include="Tasks\TaskPool.vb" />
+    <Compile Include="Tasks\TaskRename.vb" />
+    <Compile Include="Tasks\TaskSearch.vb" />
+    <Compile Include="Templates\TemplateManager.vb" />
+    <Compile Include="UI\ControlCustomListView.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ControlDomainTreeView.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ControlFastListView.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ControlFlatButton.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ControlFlowLayoutPanel.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ControlFooterPl.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ControlHeaderPanel.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ControlDomainListView.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ControlMenuStrip.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ControlSplitConatiner.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ControlStatusStrip.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ControlTableLayoutPanel.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ControlTextBox.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ControlTreeView.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\CustomTabControl.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\CustomTabControlNoHeaders.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\MenuItemLarge.Designer.vb">
+      <DependentUpon>MenuItemLarge.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MenuItemLarge.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ReportTreeNode.vb" />
+    <Compile Include="UI\ToolStrip\ControlToolStrip.Designer.vb">
+      <DependentUpon>ControlToolStrip.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ToolStrip\ControlToolStrip.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ToolStrip\ControlToolStripButton.Designer.vb">
+      <DependentUpon>ControlToolStripButton.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ToolStrip\ControlToolStripButton.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ToolStrip\ControlToolStripGroup.Designer.vb">
+      <DependentUpon>ControlToolStripGroup.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ToolStrip\ControlToolStripGroup.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UserControls\ControlRecentFilesButton.Designer.vb">
       <DependentUpon>ControlRecentFilesButton.vb</DependentUpon>
     </Compile>
@@ -418,12 +469,6 @@
     </Compile>
     <Compile Include="UserControls\ContainerExplorer.vb">
       <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\ToolStrip\ControlToolStrip.Designer.vb">
-      <DependentUpon>ControlToolStrip.vb</DependentUpon>
-    </Compile>
-    <Compile Include="UI\ToolStrip\ControlToolStrip.vb">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="UserControls\ControlUsernameContructorChunk.Designer.vb">
       <DependentUpon>ControlUsernameContructorChunk.vb</DependentUpon>
@@ -443,24 +488,6 @@
     <Compile Include="Forms\FormObjectAttributesBulk.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\ToolStrip\ControlToolStripButton.Designer.vb">
-      <DependentUpon>ControlToolStripButton.vb</DependentUpon>
-    </Compile>
-    <Compile Include="UI\ToolStrip\ControlToolStripButton.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\ToolStrip\ControlToolStripGroup.Designer.vb">
-      <DependentUpon>ControlToolStripGroup.vb</DependentUpon>
-    </Compile>
-    <Compile Include="UI\ToolStrip\ControlToolStripGroup.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\MenuItemLarge.Designer.vb">
-      <DependentUpon>MenuItemLarge.vb</DependentUpon>
-    </Compile>
-    <Compile Include="UI\MenuItemLarge.vb">
-      <SubType>Component</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\FormADObjectSelection.resx">
@@ -471,9 +498,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormConfirmation.resx">
       <DependentUpon>FormConfirmation.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormConsole.resx">
-      <DependentUpon>FormConsole.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormAlert.resx">
       <DependentUpon>FormAlert.vb</DependentUpon>
@@ -487,6 +511,9 @@
     <EmbeddedResource Include="Forms\FormLogin.resx">
       <DependentUpon>FormLogin.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormNewOu.resx">
+      <DependentUpon>FormNewOu.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormNewTemplate.resx">
       <DependentUpon>FormNewTemplate.vb</DependentUpon>
     </EmbeddedResource>
@@ -499,8 +526,17 @@
     <EmbeddedResource Include="Forms\FormPasswordResetBulk.resx">
       <DependentUpon>FormPasswordResetBulk.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormPing.resx">
+      <DependentUpon>FormPing.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormProgressBar.resx">
       <DependentUpon>FormProgressBar.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormReport.resx">
+      <DependentUpon>FormReport.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormSearch.resx">
+      <DependentUpon>FormSearch.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormTemplateManager.resx">
       <DependentUpon>FormTemplateManager.vb</DependentUpon>
@@ -530,17 +566,11 @@
     <EmbeddedResource Include="Forms\FormOptions.resx">
       <DependentUpon>FormOptions.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\ControlRecentFilesButton.resx">
-      <DependentUpon>ControlRecentFilesButton.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\ContainerExplorer.resx">
-      <DependentUpon>ContainerExplorer.vb</DependentUpon>
+    <EmbeddedResource Include="UI\MenuItemLarge.resx">
+      <DependentUpon>MenuItemLarge.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\ToolStrip\ControlToolStrip.resx">
       <DependentUpon>ControlToolStrip.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\ControlUsernameContructorChunk.resx">
-      <DependentUpon>ControlUsernameContructorChunk.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\ToolStrip\ControlToolStripButton.resx">
       <DependentUpon>ControlToolStripButton.vb</DependentUpon>
@@ -548,12 +578,20 @@
     <EmbeddedResource Include="UI\ToolStrip\ControlToolStripGroup.resx">
       <DependentUpon>ControlToolStripGroup.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\MenuItemLarge.resx">
-      <DependentUpon>MenuItemLarge.vb</DependentUpon>
+    <EmbeddedResource Include="UserControls\ControlRecentFilesButton.resx">
+      <DependentUpon>ControlRecentFilesButton.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\ContainerExplorer.resx">
+      <DependentUpon>ContainerExplorer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\ControlUsernameContructorChunk.resx">
+      <DependentUpon>ControlUsernameContructorChunk.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <EmbeddedResource Include="Config\Config.ini" />
+    <None Include="UserControls\app.config" />
     <None Include="My Project\app.manifest">
       <SubType>Designer</SubType>
     </None>
@@ -636,32 +674,42 @@
     <None Include="Resources\Wizard.ico" />
     <None Include="Resources\List.ico" />
     <None Include="Resources\Forward.ico" />
+    <None Include="Resources\report.ico" />
+    <None Include="Resources\DataProtection.ico" />
+    <None Include="Resources\SecurityLock.ico" />
+    <None Include="Resources\OUSelecetd1.ico" />
+    <None Include="Resources\Container1.ico" />
+    <None Include="Resources\LostAndFound.ico" />
+    <None Include="Resources\Quota.ico" />
+    <None Include="Resources\Builtin.ico" />
+    <None Include="Resources\Message.ico" />
+    <None Include="Resources\Unavailable.ico" />
+    <None Include="Resources\Lock.ico" />
+    <None Include="Resources\Responce.ico" />
+    <None Include="Resources\Info.ico" />
+    <None Include="Resources\Attention.ico" />
+    <None Include="Resources\LogonTime.ico" />
+    <None Include="Resources\Server.ico" />
+    <None Include="Resources\Client.ico" />
     <Content Include="SimpleADIcon.ico" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="BrightIdeasSoftware" />
-    <Import Include="MetroFramework" />
+    <Import Include="BrightIdeasSoftware.Design" />
     <Import Include="Microsoft.VisualBasic" />
-    <Import Include="Microsoft.Win32" />
-    <Import Include="SimpleLib" />
+    <Import Include="SimpleAD" />
     <Import Include="System" />
     <Import Include="System.Collections" />
     <Import Include="System.Collections.Generic" />
     <Import Include="System.Data" />
     <Import Include="System.Diagnostics" />
-    <Import Include="System.DirectoryServices" />
-    <Import Include="System.DirectoryServices.AccountManagement" />
-    <Import Include="System.Drawing" />
-    <Import Include="System.Linq" />
-    <Import Include="System.Text" />
-    <Import Include="System.Threading.Tasks" />
-    <Import Include="System.Windows.Forms" />
-    <Import Include="System.Xml.Linq" />
-    <Import Include="TSUSEREXLib" />
-    <Import Include="UNOLibs.Net" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Lib\ObjectListView\ObjectListView.csproj">
+      <Project>{18FEDA0C-D147-4286-B39A-01204808106A}</Project>
+      <Name>ObjectListView</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Lib\SimpleLib\SimpleLib.vbproj">
       <Project>{DB453F34-30D5-4713-A8AC-4786152A71A7}</Project>
       <Name>SimpleLib</Name>

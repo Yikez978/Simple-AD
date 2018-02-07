@@ -9,24 +9,42 @@
     Dim Styling As String =
 "<style>
 
-    th, td{
-        border-bottom: 1px solid #ddd;
-        padding: 4px;
-        font: menu;
-    }
+header {
+    font: menu;
+    font-size: 32px;
+}
 
-    th{
-	    height: 48px;
-	    font-weight: bold;
-    }
+table {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 32px;
+    margin-bottom: 32px;
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+    box-shadow: 0px 0px 28px -13px rgba(163,163,163,1);
+}
 
-    tr:nth-child(even) {
-	    background-color: #FBF8FA
-    }
+th, td{
+    border-bottom: 1px solid #ddd;
+    padding: 8px;
+    font: menu;
+    font-size: 14px;
+    text-overflow: ellipsis;
+}
 
-    tr:hover {
-	    background-color: #f5f5f5
-    }
+th{
+    height: 48px;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #FBFBFB
+}
+
+tr:hover {
+    background-color: #f5f5f5
+}
 
 </Style>"
 

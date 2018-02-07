@@ -1,4 +1,7 @@
-﻿Public Module FormHelper
+﻿Imports System.Drawing
+Imports System.Windows.Forms
+
+Public Module FormHelper
 
     Public Function GetDialogLocation(ByVal FormObject As Form) As Point
         Dim Location As Point = Cursor.Position

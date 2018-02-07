@@ -1,33 +1,12 @@
-﻿Public Class ADConnectionChecker
+﻿Imports System.Drawing
+Imports SimpleLib
 
-    Private ConnectionState As Boolean
-    Private IsRunning As Boolean
-    Private ErrorForm As FormAlert
+Public Class ADConnectionChecker
 
-    Public Sub InitiateTimer()
+    Private _ErrorForm As FormAlert
 
-        Dim ConnectionTimmer As Windows.Forms.Timer = New Windows.Forms.Timer With {
-            .Interval = 10000,
-            .Enabled = True
-        }
-
-        AddHandler ConnectionTimmer.Tick, AddressOf ConnectionTimmerTick
-
-        ConnectionTimmer.Start()
-        ConnectionTimmerTick(Me, Nothing)
-
-        Debug.WriteLine("[Debug] Network Check Thread Started")
-
-    End Sub
-
-    Private Sub ConnectionTimmerTick(sender As Object, e As EventArgs)
-
-        Debug.WriteLine("[Debug] AD Connection Checker Tick")
-
-        If Not IsRunning Then
-            IsRunning = True
-            UpdateUI(ValidateActiveDirectoryLogin(LoginUsername, LoginPassword, LoginUsernamePrefix))
-        End If
+    Public Sub RunCheck()
+        UpdateUI(ValidateActiveDirectoryLogin(LoginUsername, LoginPassword, LoginUsernamePrefix))
     End Sub
 
     Private Sub UpdateUI(ByVal State As Boolean)
@@ -51,15 +30,12 @@
                 FormMain.ConnectionToolStripStatusLabel.Image = New Icon(My.Resources.SystemTask, 16, 16).ToBitmap
                 FormMain.ConnectionToolStripStatusLabel.Text = "Unable to connect to any valid logon server"
 
-                If ErrorForm Is Nothing Then
-                    ErrorForm = New FormAlert("Unable to connect to a domain controller!", AlertType.ErrorAlert)
-                    ErrorForm.ShowDialog()
+                If _ErrorForm Is Nothing Then
+                    _ErrorForm = New FormAlert("Unable to connect to a domain controller!", AlertType.ErrorAlert)
+                    _ErrorForm.ShowDialog()
                 End If
             End If
         End If
-
-        IsRunning = False
-
     End Sub
 
 End Class

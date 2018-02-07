@@ -1,4 +1,7 @@
-﻿Public Module StatusStripHandler
+﻿Imports System.Drawing
+Imports SimpleLib
+
+Public Module StatusStripHandler
 
     Public WriteOnly Property WorkInProgress As Boolean
         Set(value As Boolean)

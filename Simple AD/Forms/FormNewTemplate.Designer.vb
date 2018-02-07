@@ -1,4 +1,10 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+﻿Imports System.Drawing
+Imports System.Windows.Forms
+Imports BrightIdeasSoftware
+Imports MetroFramework
+Imports SimpleLib
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FormNewTemplate
     Inherits System.Windows.Forms.Form
 
@@ -29,21 +35,21 @@ Partial Class FormNewTemplate
         Me.AuthorValLb = New System.Windows.Forms.Label()
         Me.AuthorLb = New System.Windows.Forms.Label()
         Me.IDLb = New System.Windows.Forms.Label()
-        Me.IDTb = New MetroFramework.Controls.MetroTextBox()
+        Me.IDTb = New SimpleAD.ControlTextBox()
         Me.LogoPb = New System.Windows.Forms.PictureBox()
-        Me.DescriptionTb = New MetroFramework.Controls.MetroTextBox()
-        Me.NameTb = New MetroFramework.Controls.MetroTextBox()
+        Me.DescriptionTb = New SimpleAD.ControlTextBox()
+        Me.NameTb = New SimpleAD.ControlTextBox()
         Me.DescriptionLb = New System.Windows.Forms.Label()
         Me.NameLb = New System.Windows.Forms.Label()
         Me.IconTabPage = New System.Windows.Forms.TabPage()
-        Me.IconListView = New SimpleAD.ControlListView()
+        Me.IconListView = New SimpleAD.ControlDomainListView()
         Me.NameColumn = CType(New BrightIdeasSoftware.OLVColumn(), BrightIdeasSoftware.OLVColumn)
         Me.BackPl = New System.Windows.Forms.Panel()
         Me.ControlFooterPl1 = New SimpleAD.ControlFooterPl()
-        Me.CnBt = New MetroFramework.Controls.MetroButton()
-        Me.OKBt = New MetroFramework.Controls.MetroButton()
-        Me.AcceptBn = New MetroFramework.Controls.MetroButton()
-        Me.CancelBn = New MetroFramework.Controls.MetroButton()
+        Me.CnBt = New System.Windows.Forms.Button()
+        Me.OKBt = New System.Windows.Forms.Button()
+        Me.AcceptBn = New System.Windows.Forms.Button()
+        Me.CancelBn = New System.Windows.Forms.Button()
         Me.Setup.SuspendLayout()
         Me.BasicTabPage.SuspendLayout()
         Me.DetailsGPl.SuspendLayout()
@@ -139,15 +145,6 @@ Partial Class FormNewTemplate
         '
         '
         '
-        Me.IDTb.CustomButton.Image = Nothing
-        Me.IDTb.CustomButton.Location = New System.Drawing.Point(256, 1)
-        Me.IDTb.CustomButton.Name = ""
-        Me.IDTb.CustomButton.Size = New System.Drawing.Size(21, 21)
-        Me.IDTb.CustomButton.Style = MetroFramework.MetroColorStyle.Blue
-        Me.IDTb.CustomButton.TabIndex = 1
-        Me.IDTb.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light
-        Me.IDTb.CustomButton.UseSelectable = True
-        Me.IDTb.CustomButton.Visible = False
         Me.IDTb.ForeColor = System.Drawing.SystemColors.ControlDarkDark
         Me.IDTb.Lines = New String(-1) {}
         Me.IDTb.Location = New System.Drawing.Point(117, 179)
@@ -161,13 +158,7 @@ Partial Class FormNewTemplate
         Me.IDTb.SelectionStart = 0
         Me.IDTb.ShortcutsEnabled = True
         Me.IDTb.Size = New System.Drawing.Size(278, 23)
-        Me.IDTb.Style = MetroFramework.MetroColorStyle.Purple
         Me.IDTb.TabIndex = 5
-        Me.IDTb.UseCustomBackColor = True
-        Me.IDTb.UseCustomForeColor = True
-        Me.IDTb.UseSelectable = True
-        Me.IDTb.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
-        Me.IDTb.WaterMarkFont = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel)
         '
         'LogoPb
         '
@@ -183,15 +174,6 @@ Partial Class FormNewTemplate
         '
         '
         '
-        Me.DescriptionTb.CustomButton.Image = Nothing
-        Me.DescriptionTb.CustomButton.Location = New System.Drawing.Point(166, 2)
-        Me.DescriptionTb.CustomButton.Name = ""
-        Me.DescriptionTb.CustomButton.Size = New System.Drawing.Size(109, 109)
-        Me.DescriptionTb.CustomButton.Style = MetroFramework.MetroColorStyle.Blue
-        Me.DescriptionTb.CustomButton.TabIndex = 1
-        Me.DescriptionTb.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light
-        Me.DescriptionTb.CustomButton.UseSelectable = True
-        Me.DescriptionTb.CustomButton.Visible = False
         Me.DescriptionTb.Lines = New String(-1) {}
         Me.DescriptionTb.Location = New System.Drawing.Point(117, 59)
         Me.DescriptionTb.MaxLength = 32767
@@ -204,26 +186,13 @@ Partial Class FormNewTemplate
         Me.DescriptionTb.SelectionStart = 0
         Me.DescriptionTb.ShortcutsEnabled = True
         Me.DescriptionTb.Size = New System.Drawing.Size(278, 114)
-        Me.DescriptionTb.Style = MetroFramework.MetroColorStyle.Purple
         Me.DescriptionTb.TabIndex = 3
-        Me.DescriptionTb.UseSelectable = True
-        Me.DescriptionTb.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
-        Me.DescriptionTb.WaterMarkFont = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel)
         '
         'NameTb
         '
         '
         '
         '
-        Me.NameTb.CustomButton.Image = Nothing
-        Me.NameTb.CustomButton.Location = New System.Drawing.Point(256, 1)
-        Me.NameTb.CustomButton.Name = ""
-        Me.NameTb.CustomButton.Size = New System.Drawing.Size(21, 21)
-        Me.NameTb.CustomButton.Style = MetroFramework.MetroColorStyle.Blue
-        Me.NameTb.CustomButton.TabIndex = 1
-        Me.NameTb.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light
-        Me.NameTb.CustomButton.UseSelectable = True
-        Me.NameTb.CustomButton.Visible = False
         Me.NameTb.Lines = New String(-1) {}
         Me.NameTb.Location = New System.Drawing.Point(117, 30)
         Me.NameTb.MaxLength = 32767
@@ -235,13 +204,7 @@ Partial Class FormNewTemplate
         Me.NameTb.SelectionStart = 0
         Me.NameTb.ShortcutsEnabled = True
         Me.NameTb.Size = New System.Drawing.Size(278, 23)
-        Me.NameTb.Style = MetroFramework.MetroColorStyle.Purple
         Me.NameTb.TabIndex = 2
-        Me.NameTb.UseCustomBackColor = True
-        Me.NameTb.UseCustomForeColor = True
-        Me.NameTb.UseSelectable = True
-        Me.NameTb.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
-        Me.NameTb.WaterMarkFont = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel)
         '
         'DescriptionLb
         '
@@ -340,7 +303,6 @@ Partial Class FormNewTemplate
         Me.CnBt.Size = New System.Drawing.Size(75, 23)
         Me.CnBt.TabIndex = 6
         Me.CnBt.Text = "Cancel"
-        Me.CnBt.UseSelectable = True
         '
         'OKBt
         '
@@ -349,7 +311,6 @@ Partial Class FormNewTemplate
         Me.OKBt.Size = New System.Drawing.Size(75, 23)
         Me.OKBt.TabIndex = 5
         Me.OKBt.Text = "OK"
-        Me.OKBt.UseSelectable = True
         '
         'AcceptBn
         '
@@ -359,7 +320,6 @@ Partial Class FormNewTemplate
         Me.AcceptBn.Size = New System.Drawing.Size(75, 23)
         Me.AcceptBn.TabIndex = 4
         Me.AcceptBn.Text = "Accept"
-        Me.AcceptBn.UseSelectable = True
         '
         'CancelBn
         '
@@ -370,7 +330,6 @@ Partial Class FormNewTemplate
         Me.CancelBn.Size = New System.Drawing.Size(75, 23)
         Me.CancelBn.TabIndex = 3
         Me.CancelBn.Text = "cancel"
-        Me.CancelBn.UseSelectable = True
         '
         'FormNewTemplate
         '
@@ -404,20 +363,20 @@ Partial Class FormNewTemplate
     Friend WithEvents DetailsGPl As GroupBox
     Friend WithEvents ControlFooterPl1 As ControlFooterPl
     Friend WithEvents BackPl As Panel
-    Friend WithEvents AcceptBn As Controls.MetroButton
-    Friend WithEvents CancelBn As Controls.MetroButton
+    Friend WithEvents AcceptBn As Button
+    Friend WithEvents CancelBn As Button
     Friend WithEvents LogoPb As PictureBox
-    Friend WithEvents DescriptionTb As Controls.MetroTextBox
-    Friend WithEvents NameTb As Controls.MetroTextBox
+    Friend WithEvents DescriptionTb As SimpleAD.ControlTextBox
+    Friend WithEvents NameTb As SimpleAD.ControlTextBox
     Friend WithEvents DescriptionLb As Label
     Friend WithEvents NameLb As Label
-    Friend WithEvents CnBt As Controls.MetroButton
-    Friend WithEvents OKBt As Controls.MetroButton
+    Friend WithEvents CnBt As Button
+    Friend WithEvents OKBt As Button
     Friend WithEvents IDLb As Label
-    Friend WithEvents IDTb As Controls.MetroTextBox
+    Friend WithEvents IDTb As SimpleAD.ControlTextBox
     Friend WithEvents AuthorValLb As Label
     Friend WithEvents AuthorLb As Label
     Friend WithEvents IconTabPage As TabPage
-    Friend WithEvents IconListView As ControlListView
+    Friend WithEvents IconListView As ControlDomainListView
     Friend WithEvents NameColumn As OLVColumn
 End Class

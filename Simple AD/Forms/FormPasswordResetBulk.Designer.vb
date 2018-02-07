@@ -1,6 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿Imports System.Windows.Forms
+Imports MetroFramework
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FormPasswordResetBulk
-    Inherits System.Windows.Forms.Form
+    Inherits Form
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -25,30 +28,32 @@ Partial Class FormPasswordResetBulk
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormPasswordResetBulk))
         Me.ForceResetLb = New System.Windows.Forms.Label()
         Me.ErrorLb = New System.Windows.Forms.Label()
-        Me.AcceptBn = New MetroFramework.Controls.MetroButton()
-        Me.CancelBn = New MetroFramework.Controls.MetroButton()
         Me.ForceResetToggle = New MetroFramework.Controls.MetroToggle()
-        Me.Password1Tb = New MetroFramework.Controls.MetroTextBox()
-        Me.Password0Tb = New MetroFramework.Controls.MetroTextBox()
+        Me.Password1Tb = New SimpleAD.ControlTextBox()
+        Me.Password0Tb = New SimpleAD.ControlTextBox()
         Me.SpecifyRadioBn = New System.Windows.Forms.RadioButton()
         Me.GenerateRadioBn = New System.Windows.Forms.RadioButton()
         Me.SpecifyPl = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.GeneratePl = New System.Windows.Forms.Panel()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.PasswordLengthTb = New MetroFramework.Controls.MetroTextBox()
+        Me.PasswordLengthTb = New SimpleAD.ControlTextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.UseSymbolsCheckBox = New System.Windows.Forms.CheckBox()
         Me.UseNumbersCheckBox = New System.Windows.Forms.CheckBox()
         Me.UseUpperCheckBox = New System.Windows.Forms.CheckBox()
         Me.FooterPl = New System.Windows.Forms.Panel()
+        Me.AcceptBn = New System.Windows.Forms.Button()
+        Me.CancelBn = New System.Windows.Forms.Button()
         Me.SpecifyPl.SuspendLayout()
         Me.GeneratePl.SuspendLayout()
+        Me.FooterPl.SuspendLayout()
         Me.SuspendLayout()
         '
         'ForceResetLb
         '
         Me.ForceResetLb.AutoSize = True
+        Me.ForceResetLb.BackColor = System.Drawing.SystemColors.Control
         Me.ForceResetLb.Location = New System.Drawing.Point(98, 333)
         Me.ForceResetLb.Name = "ForceResetLb"
         Me.ForceResetLb.Size = New System.Drawing.Size(114, 13)
@@ -66,30 +71,10 @@ Partial Class FormPasswordResetBulk
         Me.ErrorLb.Text = "The Passwords do not match."
         Me.ErrorLb.Visible = False
         '
-        'AcceptBn
-        '
-        Me.AcceptBn.Location = New System.Drawing.Point(260, 326)
-        Me.AcceptBn.Name = "AcceptBn"
-        Me.AcceptBn.Size = New System.Drawing.Size(75, 23)
-        Me.AcceptBn.Style = MetroFramework.MetroColorStyle.Purple
-        Me.AcceptBn.TabIndex = 11
-        Me.AcceptBn.Text = "Accept"
-        Me.AcceptBn.UseSelectable = True
-        '
-        'CancelBn
-        '
-        Me.CancelBn.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.CancelBn.Location = New System.Drawing.Point(341, 326)
-        Me.CancelBn.Name = "CancelBn"
-        Me.CancelBn.Size = New System.Drawing.Size(75, 23)
-        Me.CancelBn.Style = MetroFramework.MetroColorStyle.Purple
-        Me.CancelBn.TabIndex = 10
-        Me.CancelBn.Text = "Cancel"
-        Me.CancelBn.UseSelectable = True
-        '
         'ForceResetToggle
         '
         Me.ForceResetToggle.AutoSize = True
+        Me.ForceResetToggle.BackColor = System.Drawing.SystemColors.Control
         Me.ForceResetToggle.Location = New System.Drawing.Point(12, 332)
         Me.ForceResetToggle.Name = "ForceResetToggle"
         Me.ForceResetToggle.Size = New System.Drawing.Size(80, 17)
@@ -102,70 +87,22 @@ Partial Class FormPasswordResetBulk
         'Password1Tb
         '
         Me.Password1Tb.BackColor = System.Drawing.SystemColors.Window
-        '
-        '
-        '
-        Me.Password1Tb.CustomButton.Image = Nothing
-        Me.Password1Tb.CustomButton.Location = New System.Drawing.Point(330, 1)
-        Me.Password1Tb.CustomButton.Name = ""
-        Me.Password1Tb.CustomButton.Size = New System.Drawing.Size(21, 21)
-        Me.Password1Tb.CustomButton.Style = MetroFramework.MetroColorStyle.Blue
-        Me.Password1Tb.CustomButton.TabIndex = 1
-        Me.Password1Tb.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light
-        Me.Password1Tb.CustomButton.UseSelectable = True
-        Me.Password1Tb.CustomButton.Visible = False
-        Me.Password1Tb.Lines = New String(-1) {}
         Me.Password1Tb.Location = New System.Drawing.Point(14, 58)
-        Me.Password1Tb.MaxLength = 32767
         Me.Password1Tb.Name = "Password1Tb"
         Me.Password1Tb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(9679)
-        Me.Password1Tb.ScrollBars = System.Windows.Forms.ScrollBars.None
-        Me.Password1Tb.SelectedText = ""
-        Me.Password1Tb.SelectionLength = 0
-        Me.Password1Tb.SelectionStart = 0
-        Me.Password1Tb.ShortcutsEnabled = True
-        Me.Password1Tb.Size = New System.Drawing.Size(352, 23)
-        Me.Password1Tb.Style = MetroFramework.MetroColorStyle.Purple
+        Me.Password1Tb.PromptText = "Confirm New Password"
+        Me.Password1Tb.Size = New System.Drawing.Size(352, 20)
         Me.Password1Tb.TabIndex = 8
-        Me.Password1Tb.UseCustomBackColor = True
-        Me.Password1Tb.UseSelectable = True
-        Me.Password1Tb.WaterMark = "Confirm New Password"
-        Me.Password1Tb.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
-        Me.Password1Tb.WaterMarkFont = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         '
         'Password0Tb
         '
         Me.Password0Tb.BackColor = System.Drawing.SystemColors.Window
-        '
-        '
-        '
-        Me.Password0Tb.CustomButton.Image = Nothing
-        Me.Password0Tb.CustomButton.Location = New System.Drawing.Point(330, 1)
-        Me.Password0Tb.CustomButton.Name = ""
-        Me.Password0Tb.CustomButton.Size = New System.Drawing.Size(21, 21)
-        Me.Password0Tb.CustomButton.Style = MetroFramework.MetroColorStyle.Blue
-        Me.Password0Tb.CustomButton.TabIndex = 1
-        Me.Password0Tb.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light
-        Me.Password0Tb.CustomButton.UseSelectable = True
-        Me.Password0Tb.CustomButton.Visible = False
-        Me.Password0Tb.Lines = New String(-1) {}
         Me.Password0Tb.Location = New System.Drawing.Point(14, 29)
-        Me.Password0Tb.MaxLength = 32767
         Me.Password0Tb.Name = "Password0Tb"
         Me.Password0Tb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(9679)
-        Me.Password0Tb.ScrollBars = System.Windows.Forms.ScrollBars.None
-        Me.Password0Tb.SelectedText = ""
-        Me.Password0Tb.SelectionLength = 0
-        Me.Password0Tb.SelectionStart = 0
-        Me.Password0Tb.ShortcutsEnabled = True
-        Me.Password0Tb.Size = New System.Drawing.Size(352, 23)
-        Me.Password0Tb.Style = MetroFramework.MetroColorStyle.Purple
+        Me.Password0Tb.PromptText = "Type New Password"
+        Me.Password0Tb.Size = New System.Drawing.Size(352, 20)
         Me.Password0Tb.TabIndex = 7
-        Me.Password0Tb.UseCustomBackColor = True
-        Me.Password0Tb.UseSelectable = True
-        Me.Password0Tb.WaterMark = "Type New Password"
-        Me.Password0Tb.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
-        Me.Password0Tb.WaterMarkFont = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         '
         'SpecifyRadioBn
         '
@@ -238,36 +175,14 @@ Partial Class FormPasswordResetBulk
         '
         'PasswordLengthTb
         '
-        '
-        '
-        '
-        Me.PasswordLengthTb.CustomButton.Image = Nothing
-        Me.PasswordLengthTb.CustomButton.Location = New System.Drawing.Point(53, 1)
-        Me.PasswordLengthTb.CustomButton.Name = ""
-        Me.PasswordLengthTb.CustomButton.Size = New System.Drawing.Size(21, 21)
-        Me.PasswordLengthTb.CustomButton.Style = MetroFramework.MetroColorStyle.Blue
-        Me.PasswordLengthTb.CustomButton.TabIndex = 1
-        Me.PasswordLengthTb.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light
-        Me.PasswordLengthTb.CustomButton.UseSelectable = True
-        Me.PasswordLengthTb.CustomButton.Visible = False
         Me.PasswordLengthTb.Enabled = False
-        Me.PasswordLengthTb.Lines = New String() {"8"}
         Me.PasswordLengthTb.Location = New System.Drawing.Point(343, 104)
-        Me.PasswordLengthTb.MaxLength = 32767
         Me.PasswordLengthTb.Name = "PasswordLengthTb"
-        Me.PasswordLengthTb.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
-        Me.PasswordLengthTb.ScrollBars = System.Windows.Forms.ScrollBars.None
-        Me.PasswordLengthTb.SelectedText = ""
-        Me.PasswordLengthTb.SelectionLength = 0
-        Me.PasswordLengthTb.SelectionStart = 0
-        Me.PasswordLengthTb.ShortcutsEnabled = True
-        Me.PasswordLengthTb.Size = New System.Drawing.Size(75, 23)
+        Me.PasswordLengthTb.PromptText = Nothing
+        Me.PasswordLengthTb.Size = New System.Drawing.Size(75, 20)
         Me.PasswordLengthTb.TabIndex = 15
         Me.PasswordLengthTb.Text = "8"
         Me.PasswordLengthTb.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.PasswordLengthTb.UseSelectable = True
-        Me.PasswordLengthTb.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
-        Me.PasswordLengthTb.WaterMarkFont = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel)
         '
         'Label2
         '
@@ -315,6 +230,8 @@ Partial Class FormPasswordResetBulk
         'FooterPl
         '
         Me.FooterPl.BackColor = System.Drawing.SystemColors.Control
+        Me.FooterPl.Controls.Add(Me.CancelBn)
+        Me.FooterPl.Controls.Add(Me.AcceptBn)
         Me.FooterPl.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.FooterPl.Location = New System.Drawing.Point(0, 317)
         Me.FooterPl.MaximumSize = New System.Drawing.Size(0, 44)
@@ -322,6 +239,26 @@ Partial Class FormPasswordResetBulk
         Me.FooterPl.Name = "FooterPl"
         Me.FooterPl.Size = New System.Drawing.Size(428, 44)
         Me.FooterPl.TabIndex = 20
+        '
+        'AcceptBn
+        '
+        Me.AcceptBn.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.AcceptBn.Location = New System.Drawing.Point(260, 9)
+        Me.AcceptBn.Name = "AcceptBn"
+        Me.AcceptBn.Size = New System.Drawing.Size(75, 23)
+        Me.AcceptBn.TabIndex = 0
+        Me.AcceptBn.Text = "Accept"
+        Me.AcceptBn.UseVisualStyleBackColor = True
+        '
+        'CancelBn
+        '
+        Me.CancelBn.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.CancelBn.Location = New System.Drawing.Point(341, 9)
+        Me.CancelBn.Name = "CancelBn"
+        Me.CancelBn.Size = New System.Drawing.Size(75, 23)
+        Me.CancelBn.TabIndex = 1
+        Me.CancelBn.Text = "Cancel"
+        Me.CancelBn.UseVisualStyleBackColor = True
         '
         'FormPasswordResetBulk
         '
@@ -336,8 +273,6 @@ Partial Class FormPasswordResetBulk
         Me.Controls.Add(Me.GenerateRadioBn)
         Me.Controls.Add(Me.SpecifyRadioBn)
         Me.Controls.Add(Me.ForceResetLb)
-        Me.Controls.Add(Me.AcceptBn)
-        Me.Controls.Add(Me.CancelBn)
         Me.Controls.Add(Me.ForceResetToggle)
         Me.Controls.Add(Me.FooterPl)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
@@ -351,6 +286,7 @@ Partial Class FormPasswordResetBulk
         Me.SpecifyPl.PerformLayout()
         Me.GeneratePl.ResumeLayout(False)
         Me.GeneratePl.PerformLayout()
+        Me.FooterPl.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -358,21 +294,21 @@ Partial Class FormPasswordResetBulk
 
     Friend WithEvents ForceResetLb As Label
     Friend WithEvents ErrorLb As Label
-    Friend WithEvents AcceptBn As Controls.MetroButton
-    Friend WithEvents CancelBn As Controls.MetroButton
     Friend WithEvents ForceResetToggle As Controls.MetroToggle
-    Friend WithEvents Password1Tb As Controls.MetroTextBox
-    Friend WithEvents Password0Tb As Controls.MetroTextBox
+    Friend WithEvents Password1Tb As SimpleAD.ControlTextBox
+    Friend WithEvents Password0Tb As SimpleAD.ControlTextBox
     Friend WithEvents SpecifyRadioBn As RadioButton
     Friend WithEvents GenerateRadioBn As RadioButton
     Friend WithEvents SpecifyPl As Panel
     Friend WithEvents GeneratePl As Panel
     Friend WithEvents Label1 As Label
     Friend WithEvents Label3 As Label
-    Friend WithEvents PasswordLengthTb As Controls.MetroTextBox
+    Friend WithEvents PasswordLengthTb As SimpleAD.ControlTextBox
     Friend WithEvents Label2 As Label
     Friend WithEvents UseSymbolsCheckBox As CheckBox
     Friend WithEvents UseNumbersCheckBox As CheckBox
     Friend WithEvents UseUpperCheckBox As CheckBox
     Friend WithEvents FooterPl As Panel
+    Friend WithEvents CancelBn As Button
+    Friend WithEvents AcceptBn As Button
 End Class

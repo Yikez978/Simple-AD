@@ -1,34 +1,49 @@
-﻿Public Class MenuItemLarge
+﻿Imports System.Drawing
+Imports System.Windows.Forms
+
+Public Class MenuItemLarge
 
     Private Property Icon As Icon
     Private Property Title As String
     Private Property Description As String
 
+    Private IsHot As Boolean
+    Private IsSelected As Boolean
     Private IconRight As Icon
+
+    Private DefaultBackColor As Color = SystemColors.Control
+    Private HotColor As Color = Color.FromArgb(232, 239, 247)
+    Private HotBorderColor As Color = Color.FromArgb(164, 206, 249)
+    Private OnClickBackColor As Color = Color.FromArgb(201, 224, 247)
+    Private OnClickBorderColor As Color = Color.FromArgb(98, 162, 228)
 
     Public Sub New(ByVal t As String, ByVal d As String, ByVal i As Icon)
 
         InitializeComponent()
 
+        BackColor = DefaultBackColor
+
         Icon = i
         Title = t
         Description = d
 
-        BackColor = Color.FromArgb(241, 241, 241)
-
     End Sub
 
     Private Sub MenuItemLarge_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
-        BackColor = Color.FromArgb(197, 197, 197)
+        BackColor = HotColor
+        IsHot = True
     End Sub
 
     Private Sub MenuItemLarge_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
-        BackColor = Color.FromArgb(241, 241, 241)
+        BackColor = DefaultBackColor
+        IsHot = False
     End Sub
 
     Private Sub MenuItemLarge_Paint(sender As Object, e As PaintEventArgs) Handles MyBase.Paint
 
         Dim Rect As Rectangle = DisplayRectangle
+
+        Dim BorderColor As Color
 
         Dim ImageToDraw0 As Image = New Icon(Icon, New Size(48, 48)).ToBitmap
         Dim ImageToDraw1 As Image = New Icon(My.Resources.Forward, New Size(32, 32)).ToBitmap
@@ -71,8 +86,23 @@
             Font1.Dispose()
         End Try
 
-        e.Graphics.DrawRectangle(New Pen(Color.FromArgb(217, 217, 217)), New Rectangle(New Point(0, 0), New Size(Width - 1, Height - 1)))
+        If IsHot Or IsSelected Then
+
+            If IsSelected Then
+                BorderColor = OnClickBorderColor
+            Else
+                BorderColor = HotBorderColor
+            End If
+
+            e.Graphics.DrawRectangle(New Pen(BorderColor), New Rectangle(New Point(0, 0), New Size(Width - 1, Height - 1)))
+        End If
+
+        IsSelected = False
 
     End Sub
 
+    Private Sub MenuItemLarge_Click(sender As Object, e As EventArgs) Handles Me.Click
+        BackColor = OnClickBackColor
+        IsSelected = True
+    End Sub
 End Class

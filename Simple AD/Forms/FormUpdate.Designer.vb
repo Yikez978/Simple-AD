@@ -1,4 +1,8 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿Imports System.Windows.Forms
+Imports MetroFramework
+Imports SimpleLib
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FormUpdate
     Inherits Form
 
@@ -26,8 +30,8 @@ Partial Class FormUpdate
         Me.BodyLb = New System.Windows.Forms.Label()
         Me.UpdateToggle = New MetroFramework.Controls.MetroToggle()
         Me.MetroLabel2 = New System.Windows.Forms.Label()
-        Me.UpdateBn = New MetroFramework.Controls.MetroButton()
-        Me.CancelBn = New MetroFramework.Controls.MetroButton()
+        Me.UpdateBn = New System.Windows.Forms.Button()
+        Me.CancelBn = New System.Windows.Forms.Button()
         Me.MetroPanel1 = New MetroFramework.Controls.MetroPanel()
         Me.OldVerLb = New System.Windows.Forms.Label()
         Me.OldBuildLb = New System.Windows.Forms.Label()
@@ -80,7 +84,7 @@ Partial Class FormUpdate
         Me.UpdateBn.Size = New System.Drawing.Size(75, 23)
         Me.UpdateBn.TabIndex = 5
         Me.UpdateBn.Text = "Update"
-        Me.UpdateBn.UseSelectable = True
+        Me.UpdateBn.UseVisualStyleBackColor = True
         '
         'CancelBn
         '
@@ -91,11 +95,11 @@ Partial Class FormUpdate
         Me.CancelBn.Size = New System.Drawing.Size(75, 23)
         Me.CancelBn.TabIndex = 6
         Me.CancelBn.Text = "Close"
-        Me.CancelBn.UseSelectable = True
+        Me.CancelBn.UseVisualStyleBackColor = True
         '
         'MetroPanel1
         '
-        Me.MetroPanel1.BackColor = System.Drawing.SystemColors.ControlDark
+        Me.MetroPanel1.BackColor = System.Drawing.Color.WhiteSmoke
         Me.MetroPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.MetroPanel1.Controls.Add(Me.OldVerLb)
         Me.MetroPanel1.Controls.Add(Me.OldBuildLb)
@@ -117,10 +121,10 @@ Partial Class FormUpdate
         '
         Me.OldVerLb.AutoSize = True
         Me.OldVerLb.Dock = System.Windows.Forms.DockStyle.Left
-        Me.OldVerLb.Font = New System.Drawing.Font("Segoe UI Semilight", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.OldVerLb.Font = New System.Drawing.Font("Segoe UI Semibold", 11.25!, System.Drawing.FontStyle.Bold)
         Me.OldVerLb.Location = New System.Drawing.Point(110, 16)
         Me.OldVerLb.Name = "OldVerLb"
-        Me.OldVerLb.Size = New System.Drawing.Size(52, 21)
+        Me.OldVerLb.Size = New System.Drawing.Size(53, 20)
         Me.OldVerLb.TabIndex = 4
         Me.OldVerLb.Text = "0.0.1.0"
         '
@@ -129,6 +133,7 @@ Partial Class FormUpdate
         Me.OldBuildLb.AutoSize = True
         Me.OldBuildLb.Dock = System.Windows.Forms.DockStyle.Left
         Me.OldBuildLb.Font = New System.Drawing.Font("Segoe UI Semilight", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.OldBuildLb.ForeColor = System.Drawing.SystemColors.ControlDarkDark
         Me.OldBuildLb.Location = New System.Drawing.Point(10, 16)
         Me.OldBuildLb.Name = "OldBuildLb"
         Me.OldBuildLb.Size = New System.Drawing.Size(100, 21)
@@ -137,7 +142,7 @@ Partial Class FormUpdate
         '
         'NewBuildPl
         '
-        Me.NewBuildPl.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.NewBuildPl.BackColor = System.Drawing.SystemColors.ButtonFace
         Me.NewBuildPl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.NewBuildPl.Controls.Add(Me.NewVerLb)
         Me.NewBuildPl.Controls.Add(Me.NewBuildLb)
@@ -159,19 +164,19 @@ Partial Class FormUpdate
         'NewVerLb
         '
         Me.NewVerLb.AutoSize = True
-        Me.NewVerLb.Dock = System.Windows.Forms.DockStyle.Left
-        Me.NewVerLb.Font = New System.Drawing.Font("Segoe UI Semilight", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.NewVerLb.ForeColor = System.Drawing.SystemColors.ControlLightLight
-        Me.NewVerLb.Location = New System.Drawing.Point(10, 16)
+        Me.NewVerLb.Font = New System.Drawing.Font("Segoe UI Semibold", 11.25!, System.Drawing.FontStyle.Bold)
+        Me.NewVerLb.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.NewVerLb.Location = New System.Drawing.Point(97, 16)
         Me.NewVerLb.Name = "NewVerLb"
-        Me.NewVerLb.Size = New System.Drawing.Size(69, 21)
+        Me.NewVerLb.Size = New System.Drawing.Size(68, 20)
         Me.NewVerLb.TabIndex = 3
         Me.NewVerLb.Text = "Fetching"
         '
         'NewBuildLb
         '
         Me.NewBuildLb.AutoSize = True
-        Me.NewBuildLb.Font = New System.Drawing.Font("Segoe UI Semilight", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.NewBuildLb.Font = New System.Drawing.Font("Segoe UI Semilight", 12.0!)
+        Me.NewBuildLb.ForeColor = System.Drawing.SystemColors.ControlDarkDark
         Me.NewBuildLb.Location = New System.Drawing.Point(10, 16)
         Me.NewBuildLb.Name = "NewBuildLb"
         Me.NewBuildLb.Size = New System.Drawing.Size(89, 21)
@@ -235,8 +240,8 @@ Partial Class FormUpdate
 
     End Sub
     Friend WithEvents UpdateToggle As Controls.MetroToggle
-    Friend WithEvents UpdateBn As Controls.MetroButton
-    Friend WithEvents CancelBn As Controls.MetroButton
+    Friend WithEvents UpdateBn As Button
+    Friend WithEvents CancelBn As Button
     Friend WithEvents MetroPanel1 As Controls.MetroPanel
     Friend WithEvents NewBuildPl As Controls.MetroPanel
     Friend WithEvents Spinner As Controls.MetroProgressSpinner

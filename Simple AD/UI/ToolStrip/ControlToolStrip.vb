@@ -1,14 +1,17 @@
-﻿Public Class ControlToolStrip
+﻿Imports System.Drawing
+Imports System.Windows.Forms
+
+Public Class ControlToolStrip
 
     Public Sub New()
         InitializeComponent()
     End Sub
 
-    Public Sub LoadToolStrip()
-        If FormMain.InvokeRequired Then
-            FormMain.Invoke(New Action(AddressOf LoadToolStrip))
+    Public Sub LoadToolStrip(ByVal Handler As UIHandler)
+        If Parent.InvokeRequired Then
+            Parent.Invoke(New Action(Of UIHandler)(AddressOf LoadToolStrip), Handler)
         Else
-            For Each ToolStripGroup As ControlToolStripGroup In LoadToolStripItems()
+            For Each ToolStripGroup As ControlToolStripGroup In LoadToolStripItems(Handler)
                 Me.Controls.Add(ToolStripGroup)
             Next
         End If

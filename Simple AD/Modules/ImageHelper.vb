@@ -1,4 +1,6 @@
-﻿Module ImageHelper
+﻿Imports System.Drawing
+
+Module ImageHelper
 
     Public Function ConvertToGrayScale(ByVal Image As Image) As Image
         Dim grayscale As New Imaging.ColorMatrix(New Single()() _

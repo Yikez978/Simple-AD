@@ -1,4 +1,7 @@
-﻿Public Class ControlRecentFilesButton
+﻿Imports System.Drawing
+Imports System.Windows.Forms
+
+Public Class ControlRecentFilesButton
 
     Private _Path As String
 

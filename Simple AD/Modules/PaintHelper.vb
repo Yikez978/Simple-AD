@@ -1,4 +1,5 @@
-﻿Imports System.Drawing.Text
+﻿Imports System.Drawing
+Imports System.Drawing.Text
 
 Public Module PaintHelper
 
@@ -12,7 +13,6 @@ Public Module PaintHelper
 
         Font.Dispose()
         DrawBrush.Dispose()
-        Graphics.Dispose()
 
     End Sub
 

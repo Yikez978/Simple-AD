@@ -1,4 +1,7 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+﻿Imports System.Windows.Forms
+Imports MetroFramework
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FormObjectAttributesBulk
     Inherits Form
 
@@ -36,12 +39,12 @@ Partial Class FormObjectAttributesBulk
         Me.Attribute = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Value = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.DropDownFilter = New MetroFramework.Controls.MetroComboBox()
-        Me.SearchBoxTb = New MetroFramework.Controls.MetroTextBox()
+        Me.DropDownFilter = New System.Windows.Forms.ComboBox()
+        Me.SearchBoxTb = New SimpleAD.ControlTextBox()
         Me.MetroPanel1 = New MetroFramework.Controls.MetroPanel()
-        Me.AcceptBn = New MetroFramework.Controls.MetroButton()
+        Me.AcceptBn = New System.Windows.Forms.Button()
         Me.MetroProgressBar1 = New MetroFramework.Controls.MetroProgressBar()
-        Me.CancelBn = New MetroFramework.Controls.MetroButton()
+        Me.CancelBn = New System.Windows.Forms.Button()
         Me.StatusStrip.SuspendLayout()
         CType(Me.MainDataGrid, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
@@ -178,31 +181,19 @@ Partial Class FormObjectAttributesBulk
         'DropDownFilter
         '
         Me.DropDownFilter.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.DropDownFilter.FontSize = MetroFramework.MetroComboBoxSize.Small
         Me.DropDownFilter.FormattingEnabled = True
         Me.DropDownFilter.ItemHeight = 19
         Me.DropDownFilter.Items.AddRange(New Object() {"All", "Only those that have values"})
         Me.DropDownFilter.Location = New System.Drawing.Point(475, 3)
         Me.DropDownFilter.Name = "DropDownFilter"
         Me.DropDownFilter.Size = New System.Drawing.Size(170, 25)
-        Me.DropDownFilter.Style = MetroFramework.MetroColorStyle.Purple
         Me.DropDownFilter.TabIndex = 1
-        Me.DropDownFilter.UseSelectable = True
         '
         'SearchBoxTb
         '
         '
         '
         '
-        Me.SearchBoxTb.CustomButton.Image = Nothing
-        Me.SearchBoxTb.CustomButton.Location = New System.Drawing.Point(432, 1)
-        Me.SearchBoxTb.CustomButton.Name = ""
-        Me.SearchBoxTb.CustomButton.Size = New System.Drawing.Size(21, 21)
-        Me.SearchBoxTb.CustomButton.Style = MetroFramework.MetroColorStyle.Blue
-        Me.SearchBoxTb.CustomButton.TabIndex = 1
-        Me.SearchBoxTb.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light
-        Me.SearchBoxTb.CustomButton.UseSelectable = True
-        Me.SearchBoxTb.CustomButton.Visible = False
         Me.SearchBoxTb.Lines = New String(-1) {}
         Me.SearchBoxTb.Location = New System.Drawing.Point(15, 3)
         Me.SearchBoxTb.MaxLength = 32767
@@ -214,12 +205,8 @@ Partial Class FormObjectAttributesBulk
         Me.SearchBoxTb.SelectionStart = 0
         Me.SearchBoxTb.ShortcutsEnabled = True
         Me.SearchBoxTb.Size = New System.Drawing.Size(454, 23)
-        Me.SearchBoxTb.Style = MetroFramework.MetroColorStyle.Purple
         Me.SearchBoxTb.TabIndex = 0
-        Me.SearchBoxTb.UseSelectable = True
-        Me.SearchBoxTb.WaterMark = "Filter Attributes..."
-        Me.SearchBoxTb.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
-        Me.SearchBoxTb.WaterMarkFont = New System.Drawing.Font("Segoe UI Semilight", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+
         '
         'MetroPanel1
         '
@@ -247,7 +234,6 @@ Partial Class FormObjectAttributesBulk
         Me.AcceptBn.Size = New System.Drawing.Size(86, 23)
         Me.AcceptBn.TabIndex = 4
         Me.AcceptBn.Text = "Apply"
-        Me.AcceptBn.UseSelectable = True
         '
         'MetroProgressBar1
         '
@@ -266,7 +252,6 @@ Partial Class FormObjectAttributesBulk
         Me.CancelBn.Size = New System.Drawing.Size(86, 23)
         Me.CancelBn.TabIndex = 2
         Me.CancelBn.Text = "Cancel"
-        Me.CancelBn.UseSelectable = True
         '
         'FormUserAttributesBulk
         '
@@ -296,14 +281,14 @@ Partial Class FormObjectAttributesBulk
     Friend WithEvents StatusStrip As StatusStrip
     Friend WithEvents MainDataGrid As Controls.MetroGrid
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents DropDownFilter As Controls.MetroComboBox
-    Friend WithEvents SearchBoxTb As Controls.MetroTextBox
+    Friend WithEvents DropDownFilter As ComboBox
+    Friend WithEvents SearchBoxTb As SimpleAD.ControlTextBox
     Friend WithEvents StatusLb As ToolStripStatusLabel
     Friend WithEvents Ready As DataGridViewCheckBoxColumn
     Friend WithEvents Attribute As DataGridViewTextBoxColumn
     Friend WithEvents Value As DataGridViewTextBoxColumn
     Friend WithEvents MetroPanel1 As Controls.MetroPanel
     Friend WithEvents MetroProgressBar1 As Controls.MetroProgressBar
-    Friend WithEvents CancelBn As Controls.MetroButton
-    Friend WithEvents AcceptBn As Controls.MetroButton
+    Friend WithEvents CancelBn As Button
+    Friend WithEvents AcceptBn As Button
 End Class

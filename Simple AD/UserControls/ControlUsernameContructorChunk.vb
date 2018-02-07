@@ -1,5 +1,4 @@
 ﻿Public Class ControlUsernameContructorChunk
-    Inherits UserControl
 
     Public Sub New(ByVal Name As String)
 

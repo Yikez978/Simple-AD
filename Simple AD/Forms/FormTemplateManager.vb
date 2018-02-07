@@ -1,4 +1,7 @@
-﻿Imports System.IO
+﻿Imports System.Drawing
+Imports System.IO
+Imports System.Windows.Forms
+Imports BrightIdeasSoftware
 Imports SimpleLib
 
 Public Class FormTemplateManager
@@ -34,11 +37,6 @@ Public Class FormTemplateManager
     End Sub
 
     Private Sub ContainerTemplate_Load(sender As Object, e As EventArgs) Handles Me.Load
-
-        If Not Directory.Exists(".\Templates") Then
-            Directory.CreateDirectory(".\Templates")
-        End If
-
         RefreshTamplates()
     End Sub
 
@@ -62,7 +60,7 @@ Public Class FormTemplateManager
 
         Dim runTimeResourceSet As Resources.ResourceSet
         Dim dictEntry As DictionaryEntry
-        Dim IconImageList As ImageList = New ImageList With {.ColorDepth = ColorDepth.Depth24Bit}
+        Dim IconImageList As ImageList = New ImageList With {.ColorDepth = ColorDepth.Depth32Bit}
 
         runTimeResourceSet = My.Resources.ResourceManager.GetResourceSet(Globalization.CultureInfo.CurrentUICulture, False, True)
         For Each dictEntry In runTimeResourceSet
@@ -78,6 +76,10 @@ Public Class FormTemplateManager
         MainListView.SmallImageList = IconImageList
         MainListView.LargeImageList = IconImageList
         NameColRenderer.ImageList = IconImageList
+    End Sub
+
+    Private Sub CancelBn_Click(sender As Object, e As EventArgs) Handles CancelBn.Click
+        Me.Close()
     End Sub
 End Class
 

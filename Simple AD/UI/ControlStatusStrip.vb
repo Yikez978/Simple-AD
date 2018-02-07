@@ -1,4 +1,6 @@
-﻿Public Class ControlStatusStrip
+﻿Imports System.Windows.Forms
+
+Public Class ControlStatusStrip
     Inherits StatusStrip
 
     'Private Sub ControlHeaderPanel_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint

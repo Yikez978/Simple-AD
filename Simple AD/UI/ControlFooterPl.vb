@@ -1,4 +1,7 @@
-﻿Public Class ControlFooterPl
+﻿Imports System.Drawing
+Imports System.Windows.Forms
+
+Public Class ControlFooterPl
     Inherits Panel
 
     Private Sub ControlFooterPl_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
