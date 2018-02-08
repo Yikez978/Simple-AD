@@ -10,11 +10,11 @@ Imports SimpleLib.SystemHelper
 Public Class TaskBulkImport
     Inherits ActiveTask
 
-
-#Region "Declarations"
-
     Private DisplayNamebool As Boolean
     Private MainListView As ObjectListView
+
+    Private ImportErrorForm As FormImportValidation
+    Private Delegate Sub Delegate_ImportError()
 
     Public WithEvents ImportForm As FormImport
     Private WithEvents ImportWorker As BulkADWorker
@@ -30,7 +30,6 @@ Public Class TaskBulkImport
 
     Public Event ImportCompleted()
 
-#End Region
 
     Public Sub New(ByVal IFile As String, ByVal IForm As FormImport)
         MyBase.New
@@ -46,26 +45,27 @@ Public Class TaskBulkImport
 
         Debug.WriteLine("[Debug] File import setup begining")
 
-        Dim FileToImport As String
+        Dim FileToImport As String = String.Empty
+
         If String.IsNullOrEmpty(ImportPath) Then
             FileToImport = GetImportPath()
         Else
             FileToImport = ImportPath
         End If
 
-        If Not String.IsNullOrEmpty(FileToImport) Then
-
-            TaskType = ActiveTaskType.UserImport
-            TaskName = FileToImport.Split(New Char() {"\"c})(FileToImport.Split(New Char() {"\"c}).Count - 1)
-            FileName = TaskName
-
-            Dim FullName As String() = FileToImport.Split(New Char() {"\"c})
-
-            If Not String.IsNullOrEmpty(FileToImport) Then
-                Threading.ThreadPool.QueueUserWorkItem(AddressOf ImportCSV, FileToImport)
-            End If
-
+        If String.IsNullOrEmpty(FileToImport) Then
+            Exit Sub
         End If
+
+        ImportErrorForm = New FormImportValidation
+
+        TaskType = ActiveTaskType.UserImport
+        TaskName = FileToImport.Split(New Char() {"\"c})(FileToImport.Split(New Char() {"\"c}).Count - 1)
+        FileName = TaskName
+
+        Dim FullName As String() = FileToImport.Split(New Char() {"\"c})
+
+        Threading.ThreadPool.QueueUserWorkItem(AddressOf ImportCSV, FileToImport)
 
     End Sub
 
@@ -80,26 +80,28 @@ Public Class TaskBulkImport
 
         OpenFileDialogImport.ShowDialog()
 
-        Dim csvPathSs As String = OpenFileDialogImport.FileName
+        Dim ImportedPath As String = OpenFileDialogImport.FileName
 
-        If csvPathSs IsNot Nothing Then
-            Try
-                If IO.File.Exists(OpenFileDialogImport.FileName) Then
-                    If Not FileInUse(OpenFileDialogImport.FileName) Then
-
-                        RecentFiles.SaveRecentFile(OpenFileDialogImport.FileName)
-                        FilePath = OpenFileDialogImport.FileName
-
-                    Else
-                        Debug.WriteLine("[Error] Unable to open file as it is being used by another process")
-                        MsgBox("Unable to open file as it is being used by another process")
-                    End If
-                End If
-            Catch Ex As Exception
-                Debug.WriteLine("[Error] " & Ex.Message)
-            End Try
-
+        If String.IsNullOrEmpty(ImportedPath) Then
+            Return Nothing
         End If
+
+        Try
+            If IO.File.Exists(OpenFileDialogImport.FileName) Then
+                If Not FileInUse(OpenFileDialogImport.FileName) Then
+
+                    RecentFiles.SaveRecentFile(OpenFileDialogImport.FileName)
+                    FilePath = OpenFileDialogImport.FileName
+
+                Else
+
+                    Dim AlertForm As New FormAlert("Unable to open file as it is being used by another process", AlertType.Warning)
+                    AlertForm.ShowDialog()
+                End If
+            End If
+        Catch Ex As Exception
+            Debug.WriteLine("[Error] " & Ex.Message)
+        End Try
 
         ImportForm.MainTabControl.SelectTab(ImportForm.MainTabControl.TabPages.IndexOf(ImportForm.WelcomeTab))
 
@@ -118,8 +120,6 @@ Public Class TaskBulkImport
 
     Private Sub ImportCSV(ByVal stateInfo As Object)
 
-        Debug.WriteLine("[Debug] File import Started")
-
         Dim Datatable As New DataTable
         Dim FirstLine As Boolean = True
         Dim FirstRow As String() = {}
@@ -129,28 +129,28 @@ Public Class TaskBulkImport
         Dim UPNSuffix As String = "@" & GetLocalDomainName()
 
         Try
-            Using StreamReader As New IO.StreamReader(ImportFile)
+
+            Using StreamReader As New IO.StreamReader(ImportFile, True)
+
+                ''Debug.WriteLine(String.Format("[Debug] File '{0}' Encoding {1}", ImportFile, StreamReader.CurrentEncoding.EncodingName))
+
                 While Not StreamReader.EndOfStream
+
                     If FirstLine Then
                         FirstLine = False
+
                         Dim Cols As String() = StreamReader.ReadLine.Split(","c)
                         FirstRow = Cols
 
-                        Dim ErForm As New FormImportValidation
-
                         If Not FirstRow.Contains("sAMAccountName") Then
-                            ErForm.Add("Missing Property Exception", "The Imported File contains no 'Username' Column")
+                            ImportErrorForm.Add("Missing Property Exception", "The Imported File contains no 'Username' Column")
                         End If
                         If Not FirstRow.Contains("password") Then
-                            ErForm.Add("Missing Property Exception", "The Imported File contains no 'Password' Column, Account with no password will be disabled upon creation")
+                            ImportErrorForm.Add("Missing Property Alert", "The Imported File contains no 'Password' Column, Account with no password will be disabled upon creation")
                         End If
                         If Not FirstRow.Contains("name") Then
-                            ErForm.Add("Missing Property Exception", "The Imported File contains no 'Name' Column")
+                            ImportErrorForm.Add("Missing Property Alert", "The Imported File contains no 'Name' Column")
                         End If
-                        If ErForm.Errors.Count > 0 Then
-                            'FormMain.Invoke(Sub() ErForm.ShowDialog())
-                        End If
-
                         For Each col As String In Cols
                             Datatable.Columns.Add(New DataColumn(col, GetType(String)))
                         Next
@@ -159,14 +159,36 @@ Public Class TaskBulkImport
                         Datatable.Rows.Add(data.ToArray)
                     End If
                 End While
-                StreamReader.Close()
+
             End Using
+
+            If ImportErrorForm.Errors.Count > 0 Then
+                Throw New InvalidImportException
+            End If
+
+        Catch InvalidImportEx As InvalidImportException
+
+            If GetContainerExplorer.InvokeRequired Then
+                GetContainerExplorer.Invoke(New Delegate_ImportError(AddressOf InvalidImport))
+            End If
+
         Catch Ex As Exception
-            Debug.WriteLine("[Error] " & Ex.Message)
+
             ImportFailed(Ex.Message)
+
         End Try
 
-        For Each Row As DataRow In Datatable.Rows
+        If Datatable.Rows.Count = 0 Then
+            ImportFailed("Simple AD was unable to parse the user data from the supplied file")
+            Exit Sub
+        End If
+
+        Users.Clear()
+
+        For i as Integer = 0 to Datatable.Rows.Count - 1
+
+            Dim Row As DataRow = Datatable.Rows(i)
+
             Dim NewUserObject As New SimpleADBulkUserDomainObject With {
                 .Type = "user",
                 .TypeFriendly = "User"
@@ -238,9 +260,10 @@ Public Class TaskBulkImport
 
             NewUserObject.UserPrincipalName = NewUserObject.SAMAccountName & UPNSuffix
 
-            'Insert Name property if not supplied with csv
             If NewUserObject.Name Is Nothing AndAlso Not NewUserObject.DisplayName Is Nothing Then
                 NewUserObject.Name = NewUserObject.DisplayName
+            ElseIf Not NewUserObject.SAMAccountName Is Nothing Then
+                NewUserObject.Name = NewUserObject.SAMAccountName
             End If
 
             Users.Add(NewUserObject)
@@ -250,6 +273,27 @@ Public Class TaskBulkImport
         TaskProgressMax = Users.Count
 
         ImportForm.Invoke(Sub() ImportForm.SetObjects())
+
+    End Sub
+
+    Private Sub InvalidImport()
+        If ImportErrorForm Is Nothing Then
+            Exit Sub
+        End If
+
+        ImportErrorForm.ShowDialog()
+
+        If ImportErrorForm.DialogResult = DialogResult.Ignore Then
+            Exit Sub
+        End If
+
+        If ImportErrorForm.DialogResult = DialogResult.Retry Then
+
+            Dim ImportTask = New TaskBulkImport(Nothing, ImportForm)
+            ImportForm.ImportTask = ImportTask
+
+            ImportTask.BeginImport()
+        End If
 
     End Sub
 
@@ -271,13 +315,18 @@ Public Class TaskBulkImport
     End Sub
 
     Private Sub ImportFailed(ByVal ErrorMessage As String)
-        'If GetContainerExplorer.InvokeRequired Then
-        '    GetContainerExplorer.Invoke(New Action(Of String)(AddressOf ImportFailed), ErrorMessage)
-        'Else
-        '    Dim ImportFailedForm = New FormAlert("Import Failed - " & ErrorMessage, AlertType.ErrorAlert)
-        '    ImportFailedForm.StartPosition = FormStartPosition.CenterScreen
-        '    ImportFailedForm.ShowDialog()
-        'End If
+        If GetContainerExplorer.InvokeRequired Then
+            GetContainerExplorer.Invoke(New Action(Of String)(AddressOf ImportFailed), ErrorMessage)
+        Else
+
+            If ImportForm IsNot Nothing Then
+                ImportForm.Close()
+            End If
+
+            Dim ImportFailedForm = New FormAlert("Import Failed - " & ErrorMessage, AlertType.ErrorAlert)
+            ImportFailedForm.StartPosition = FormStartPosition.CenterScreen
+            ImportFailedForm.ShowDialog()
+        End If
     End Sub
 
 End Class

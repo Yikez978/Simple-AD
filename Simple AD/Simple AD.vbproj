@@ -285,6 +285,7 @@
     <Compile Include="Modules\PaintHelper.vb" />
     <Compile Include="Modules\ErrorHandling.vb" />
     <Compile Include="Modules\ToolStripHandler.vb" />
+    <Compile Include="System\InvalidImportException.vb" />
     <Compile Include="Tasks\TaskReport.vb" />
     <Compile Include="Tasks\TaskPing.vb" />
     <Compile Include="UserControls\UIHandler.vb" />
