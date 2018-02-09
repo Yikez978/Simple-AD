@@ -27,10 +27,9 @@ Public Class TaskExplorer
 
     Private _ColumnSizes As Integer() = {205, 137, 253}
 
-    Private Delegate Sub Delegate_AfterFindObjects(ByVal DomainObjectList As List(Of Object))
+    Private DomainObjectList As List(Of Object) = New List(Of Object)
 
-    '' Defines columns that should use the Date GroupGetter delegate
-    Private _DateAttributes As String() = {"whenCreated", "whenChanged", "pwdLastSet", "lastLogon", "lastLogonTimestamp"}
+    Private Delegate Sub Delegate_AfterFindObjects(ByVal DomainObjectList As List(Of Object))
 
     Public Sub New(ByVal Type As SimpleADReportType, Optional LDAPQuery As String = Nothing)
         MyBase.New
@@ -53,7 +52,7 @@ Public Class TaskExplorer
             .AspectName = "Name",
             .Text = "Name",
             .Width = _ColumnSizes(0),
-            .ImageGetter = New ImageGetterDelegate(AddressOf ImageGetter),
+            .ImageGetter = New ImageGetterDelegate(AddressOf _MainListView.ImageGetter),
             .GroupKeyGetter = New GroupKeyGetterDelegate(AddressOf SortByNameGroupKeyGetter)
         }
 
@@ -73,45 +72,10 @@ Public Class TaskExplorer
         }
 
         _MainListView.PrimarySortColumn = TypeCol
-
+        _MainListView.AttachToStatusBar()
         _MainListView.AllColumns.AddRange(New OLVColumn() {NameCol, TypeCol, DescriptionCol})
 
     End Sub
-
-    Public Function ImageGetter(rowObject As Object) As Object
-
-        Try
-
-            Dim DomainObject As DomainObject = DirectCast(rowObject, DomainObject)
-
-            Select Case DomainObject.Type
-                Case "user"
-                    Dim UserAccountControl As Integer = DomainObject.UserAccountControl
-                    If UserAccountControl = 546 Or UserAccountControl = 514 Or UserAccountControl = 66082 Or UserAccountControl = 66050 Then
-                        Return "DisabledUserImage"
-                    Else
-                        Return "UserImage"
-                    End If
-                Case "computer"
-                    Return "ComputerImage"
-                Case "group"
-                    Return "GroupImage"
-                Case "container"
-                    Return "ContainerImage"
-                Case "organizationalUnit"
-                    Return "OuImage"
-                Case "contact"
-                    Return "ContactImage"
-                Case Else
-                    Return "UnknownImage"
-            End Select
-
-        Catch Ex As Exception
-
-            Return Nothing
-        End Try
-
-    End Function
 
     Public Sub Refresh(Optional Path As String = Nothing, Optional JobReport As SimpleADReportType = Nothing)
 
@@ -147,6 +111,8 @@ Public Class TaskExplorer
             _LastCts.Cancel()
 
         End If
+
+        DomainObjectList = Nothing
 
         If My.Settings.UsePaging Then
             Select Case _Type
@@ -235,8 +201,6 @@ Public Class TaskExplorer
 
         SearchRequest.Controls.Add(searchOptions)
 
-        Dim NewDomainObjectList As List(Of Object) = New List(Of Object)
-
         While True
 
             pageCount = pageCount + 1
@@ -252,6 +216,7 @@ Public Class TaskExplorer
 
                 Dim pageResponse As PageResultResponseControl = DirectCast(SearchResponse.Controls(0), PageResultResponseControl)
 
+                DomainObjectList = New List(Of Object)
 
                 For Each entry As SearchResultEntry In SearchResponse.Entries
 
@@ -260,7 +225,7 @@ Public Class TaskExplorer
                     NewObject = GetObjectAttributesFromResultEntry(entry, Attributes)
 
                     If NewObject IsNot Nothing Then
-                        NewDomainObjectList.Add(DirectCast(NewObject, DomainObject))
+                        DomainObjectList.Add(DirectCast(NewObject, DomainObject))
                     End If
 
                 Next
@@ -279,7 +244,7 @@ Public Class TaskExplorer
         End While
 
         If Not CT.IsCancellationRequested Then
-            _MainListView.Invoke(New Delegate_AfterFindObjects(AddressOf AfterFindObjects), NewDomainObjectList)
+            _MainListView.Invoke(New Delegate_AfterFindObjects(AddressOf AfterFindObjects), DomainObjectList)
         End If
 
 
@@ -293,8 +258,6 @@ Public Class TaskExplorer
         End If
 
         Dim SearchResults As SearchResultCollection = Nothing
-
-        Dim NewDomainObjectList As List(Of Object) = New List(Of Object)
 
         Try
 
@@ -334,6 +297,8 @@ Public Class TaskExplorer
                 Throw New TaskCanceledException
             End If
 
+            DomainObjectList = New List(Of Object)
+
             For Each result As SearchResult In SearchResults
 
                 Dim NewObject As Object = Nothing
@@ -345,11 +310,10 @@ Public Class TaskExplorer
                 End If
 
                 If NewObject IsNot Nothing Then
-                    NewDomainObjectList.Add(NewObject)
+                    DomainObjectList.Add(NewObject)
                 End If
             Next
 
-            Debug.WriteLine("[Info] Get Objects Completed")
 
         Catch CancelEx As TaskCanceledException
             Debug.WriteLine("[Info] Get Objects Canceled: " & CancelEx.Message)
@@ -367,7 +331,7 @@ Public Class TaskExplorer
             End If
 
             If Not CT.IsCancellationRequested Then
-                _MainListView.Invoke(New Delegate_AfterFindObjects(AddressOf AfterFindObjects), NewDomainObjectList)
+                _MainListView.Invoke(New Delegate_AfterFindObjects(AddressOf AfterFindObjects), DomainObjectList)
             End If
 
         End Try
@@ -410,35 +374,56 @@ Public Class TaskExplorer
 
         _MainListView.AllColumns(1).IsVisible = True
 
-        If Report IsNot Nothing Then
+        If Report Is Nothing Then
+            Exit Sub
+        End If
 
-            If Report.AttributesToLoad IsNot Nothing Then
-                If Report.AttributesToLoad.Count > 0 Then
+        If Report.AttributesToLoad IsNot Nothing Then
+            If Report.AttributesToLoad.Count > 0 Then
 
-                    _MainListView.AllColumns(1).IsVisible = False
+                _MainListView.AllColumns(1).IsVisible = False
 
-                    For Each Attribute As String In Report.AttributesToLoad
+                For i As Integer = 0 To Report.AttributesToLoad.Count - 1
 
-                        Dim NewColumn As New OLVColumn With {
+                    Dim Attribute As String = Report.AttributesToLoad(i)
+
+                    Dim NewColumn As New OLVColumn With {
                             .AspectName = FirstCharToUpper(Attribute),
                             .Text = GetProperFromCamelCase(Attribute),
-                            .Width = 200
-                        }
+                            .Width = 200,
+                            .IsVisible = False
+                    }
 
-                        If _DateAttributes.Contains(Attribute) Then
+                    _MainListView.AllColumns.Add(NewColumn)
+
+                    If Attributes.ContainsKey(Attribute) Then
+
+                        Dim SortKey As SortType = ReportAttributeStore.Attributes(Attribute).SortKey
+
+                        If SortKey = SortType.Time Then
                             NewColumn.GroupKeyGetter = Function(rowObject As Object) SortByDateGroupKeyGetter(rowObject, Attribute)
                             NewColumn.GroupKeyToTitleConverter = Function(groupKey As Object) If(Not DirectCast(groupKey, DateTime).Year = 1694, DirectCast(groupKey, DateTime).ToString("MMMM yyyy"), "N/A")
-                        Else
+                        ElseIf SortKey = SortType.Alphabetic Then
                             NewColumn.GroupKeyGetter = Function(rowObject As Object) SortByNameDynamicGroupKeyGetter(rowObject, Attribute)
                         End If
 
-                        _MainListView.AllColumns.Add(NewColumn)
+                        If ReportAttributeStore.Attributes(Attribute).IsVisibleByDefault Then
+                            NewColumn.IsVisible = True
+                        End If
 
-                    Next
-                End If
+                        If Not String.IsNullOrEmpty(Report.PrimarySortCol) Then
+                            If Report.PrimarySortCol = Attribute Then
+                                _MainListView.PrimarySortColumn = NewColumn
+                            End If
+                        End If
+
+                    End If
+
+                Next
             End If
-
         End If
+
+
 
     End Sub
 

@@ -8,6 +8,8 @@
         SearchResultsListView.SetListStyle()
         SearchResultsListView.PrimarySortColumn = TypeCol
 
+        NameCol.ImageGetter = New ImageGetterDelegate(AddressOf SearchResultsListView.ImageGetter)
+
         InitEventHandlers()
 
     End Sub

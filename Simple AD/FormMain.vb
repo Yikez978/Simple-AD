@@ -43,6 +43,8 @@ Public Class FormMain
             Dim NewReport As TaskExplorer = New TaskExplorer(SimpleADReportType.Explorer)
             UserToolStripMenuItem.Text = GetDisplayName(True)
 
+            ReportAttributeStore.init()
+
             ADChecker = New ADConnectionChecker
             ADChecker.RunCheck()
         Else

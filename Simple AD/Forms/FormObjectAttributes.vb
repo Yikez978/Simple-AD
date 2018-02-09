@@ -41,30 +41,18 @@ Public Class FormObjectAttributes
 
         Show()
 
-        Try
-            Task.Run(Sub() LoadAttributes(_DomainObject, _CancelSource.Token))
-        Catch CanceledEx As OperationCanceledException
-            'Nothing to do here
-        Catch Ex As Exception
-            Debug.WriteLine("[Error] Attribute form paniced: " & Ex.Message)
-        End Try
+        Task.Run(Sub() LoadAttributes(_DomainObject, _CancelSource.Token))
 
     End Sub
 
     Private Sub LoadAttributes(ByVal DomainObjectAsObject As Object, ByVal CancelToken As CancellationToken)
 
         If CancelToken.IsCancellationRequested Then
-            CancelToken.ThrowIfCancellationRequested()
+            Exit Sub
         End If
 
         Dim DomainObject As DomainObject = DirectCast(DomainObjectAsObject, DomainObject)
         Dim ObjectDirEntry As DirectoryEntry = GetDirEntryFromDomainObject(DomainObject)
-
-        Try
-            Dim Temp As String = ObjectDirEntry.SchemaClassName
-        Catch ex As Exception
-            Exit Sub
-        End Try
 
         If ObjectDirEntry.SchemaClassName IsNot Nothing Then
 
@@ -77,8 +65,6 @@ Public Class FormObjectAttributes
                     Dim SchemaProperty As ActiveDirectorySchemaProperty = SchemaCollection.Item(i)
                     Dim Prop As String = SchemaProperty.Name
                     Dim Attr As New SimpleADAttributeFormItem With {.Name = Prop}
-
-                    'Attr.FriendlyName = GetFriendlyLDAPName(Prop)
 
                     If Not ObjectDirEntry.Properties(Prop).Value Is Nothing Then
 
@@ -102,23 +88,29 @@ Public Class FormObjectAttributes
                                 End If
                             ElseIf SchemaProperty.Syntax = ActiveDirectorySyntax.Int64 Then
                                 Attr.Value = ConvertADSLargeIntegerToInt64(ObjectDirEntry.Properties(Prop).Value)
+
                             ElseIf SchemaProperty.Syntax = ActiveDirectorySyntax.Sid Then
                                 Attr.Value = New SecurityIdentifier(DirectCast(ObjectDirEntry.Properties(Prop)(0), Byte()), 0).ToString
+
                             ElseIf SchemaProperty.Syntax = ActiveDirectorySyntax.GeneralizedTime Then
-                                Attr.Value = If(Not DateTime.Parse(
-                                    ObjectDirEntry.Properties(Prop).Value.ToString).Year = 1601,
-                                    ObjectDirEntry.Properties(Prop).Value.ToString,
-                                    "(Not Set)")
+                                Attr.Value = If(DirectCast(ObjectDirEntry.Properties(Prop).Value, DateTime).Year = 1601,
+                                    "(Not Set)",
+                                    ObjectDirEntry.Properties(Prop).Value.ToString)
+
                             ElseIf ObjectDirEntry.Properties(Prop).Value.GetType() = GetType(String) Then
                                 Attr.Value = ObjectDirEntry.Properties(Prop).Value.ToString
+
                             ElseIf ObjectDirEntry.Properties(Prop).Value.GetType() = GetType(Integer) Then
                                 Attr.Value = ObjectDirEntry.Properties(Prop).Value.ToString
+
                             ElseIf ObjectDirEntry.Properties(Prop).Value.GetType() = GetType(DateTime) Then
                                 Attr.Value = ObjectDirEntry.Properties(Prop).Value.ToString
+
                             ElseIf ObjectDirEntry.Properties(Prop).Value.GetType() = GetType(Boolean) Then
                                 Attr.Value = ObjectDirEntry.Properties(Prop).Value.ToString
+
                             Else
-                                Attr.Value = "[TODO] Attribute Parsing failed, unable to decode value"
+                                Attr.Value = "Attribute Parsing failed, unable to decode value"
                             End If
                         End If
                     End If
@@ -130,17 +122,11 @@ Public Class FormObjectAttributes
                 Next
             End If
 
-        Else
-            Dim AlertForm As FormAlert = New FormAlert("Simple AD was unbale to determin the schema class of the selected object", AlertType.Warning)
+            Invoke(New LoadFinished_Delegate(AddressOf LoadFinished))
+
+            Else
+                Dim AlertForm As FormAlert = New FormAlert("Simple AD was unbale to determin the schema class of the selected object", AlertType.Warning)
             AlertForm.ShowDialog()
-        End If
-
-        If Not CancelToken.IsCancellationRequested Then
-
-            If Not Me.IsDisposed Then
-                Me.Invoke(New LoadFinished_Delegate(AddressOf LoadFinished))
-            End If
-
         End If
 
     End Sub

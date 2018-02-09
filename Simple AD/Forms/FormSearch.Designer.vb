@@ -53,16 +53,16 @@ Partial Class FormSearch
         Me.NameCol = CType(New BrightIdeasSoftware.OLVColumn(), BrightIdeasSoftware.OLVColumn)
         Me.TypeCol = CType(New BrightIdeasSoftware.OLVColumn(), BrightIdeasSoftware.OLVColumn)
         Me.DescCol = CType(New BrightIdeasSoftware.OLVColumn(), BrightIdeasSoftware.OLVColumn)
-        Me.SearchPanel = New System.Windows.Forms.Panel()
         Me.SearchBn = New System.Windows.Forms.Button()
         Me.SearchTb = New SimpleAD.ControlTextBox()
         Me.ImagePl = New SimpleAD.ControlHeaderPanel()
         Me.TitleLb = New System.Windows.Forms.Label()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.ContentPl.SuspendLayout()
         Me.ListPl.SuspendLayout()
         CType(Me.SearchResultsListView, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SearchPanel.SuspendLayout()
         Me.ImagePl.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
         'RowObjectContextMenu
@@ -197,21 +197,20 @@ Partial Class FormSearch
         '
         Me.ContentPl.BackColor = System.Drawing.SystemColors.Control
         Me.ContentPl.Controls.Add(Me.ListPl)
-        Me.ContentPl.Controls.Add(Me.SearchPanel)
         Me.ContentPl.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ContentPl.Location = New System.Drawing.Point(0, 56)
+        Me.ContentPl.Location = New System.Drawing.Point(0, 116)
         Me.ContentPl.Name = "ContentPl"
-        Me.ContentPl.Size = New System.Drawing.Size(599, 351)
+        Me.ContentPl.Size = New System.Drawing.Size(599, 291)
         Me.ContentPl.TabIndex = 0
         '
         'ListPl
         '
         Me.ListPl.Controls.Add(Me.SearchResultsListView)
         Me.ListPl.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ListPl.Location = New System.Drawing.Point(0, 44)
+        Me.ListPl.Location = New System.Drawing.Point(0, 0)
         Me.ListPl.Name = "ListPl"
         Me.ListPl.Padding = New System.Windows.Forms.Padding(12)
-        Me.ListPl.Size = New System.Drawing.Size(599, 307)
+        Me.ListPl.Size = New System.Drawing.Size(599, 291)
         Me.ListPl.TabIndex = 4
         '
         'SearchResultsListView
@@ -229,7 +228,7 @@ Partial Class FormSearch
         Me.SearchResultsListView.OffRowContextMenu = Nothing
         Me.SearchResultsListView.RowContextMenu = Nothing
         Me.SearchResultsListView.ShowGroups = False
-        Me.SearchResultsListView.Size = New System.Drawing.Size(575, 283)
+        Me.SearchResultsListView.Size = New System.Drawing.Size(575, 267)
         Me.SearchResultsListView.TabIndex = 3
         Me.SearchResultsListView.UseCompatibleStateImageBehavior = False
         Me.SearchResultsListView.View = System.Windows.Forms.View.Details
@@ -252,21 +251,10 @@ Partial Class FormSearch
         Me.DescCol.Text = "Description"
         Me.DescCol.Width = 199
         '
-        'SearchPanel
-        '
-        Me.SearchPanel.Controls.Add(Me.SearchBn)
-        Me.SearchPanel.Controls.Add(Me.SearchTb)
-        Me.SearchPanel.Dock = System.Windows.Forms.DockStyle.Top
-        Me.SearchPanel.Location = New System.Drawing.Point(0, 0)
-        Me.SearchPanel.MinimumSize = New System.Drawing.Size(0, 44)
-        Me.SearchPanel.Name = "SearchPanel"
-        Me.SearchPanel.Size = New System.Drawing.Size(599, 44)
-        Me.SearchPanel.TabIndex = 3
-        '
         'SearchBn
         '
         Me.SearchBn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.SearchBn.Location = New System.Drawing.Point(512, 11)
+        Me.SearchBn.Location = New System.Drawing.Point(486, 20)
         Me.SearchBn.Name = "SearchBn"
         Me.SearchBn.Size = New System.Drawing.Size(75, 23)
         Me.SearchBn.TabIndex = 2
@@ -277,23 +265,23 @@ Partial Class FormSearch
         '
         Me.SearchTb.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.SearchTb.Location = New System.Drawing.Point(12, 12)
-        Me.SearchTb.MinimumSize = New System.Drawing.Size(0, 22)
+        Me.SearchTb.Location = New System.Drawing.Point(17, 20)
+        Me.SearchTb.MinimumSize = New System.Drawing.Size(4, 22)
         Me.SearchTb.Name = "SearchTb"
         Me.SearchTb.PromptText = "Enter Search Query"
-        Me.SearchTb.Size = New System.Drawing.Size(494, 22)
+        Me.SearchTb.Size = New System.Drawing.Size(463, 22)
         Me.SearchTb.TabIndex = 0
         '
         'ImagePl
         '
         Me.ImagePl.BackColor = System.Drawing.SystemColors.Window
         Me.ImagePl.Controls.Add(Me.TitleLb)
+        Me.ImagePl.Controls.Add(Me.GroupBox1)
         Me.ImagePl.Dock = System.Windows.Forms.DockStyle.Top
         Me.ImagePl.Location = New System.Drawing.Point(0, 0)
-        Me.ImagePl.MaximumSize = New System.Drawing.Size(0, 56)
         Me.ImagePl.MinimumSize = New System.Drawing.Size(0, 56)
         Me.ImagePl.Name = "ImagePl"
-        Me.ImagePl.Size = New System.Drawing.Size(599, 56)
+        Me.ImagePl.Size = New System.Drawing.Size(599, 116)
         Me.ImagePl.TabIndex = 31
         '
         'TitleLb
@@ -305,6 +293,17 @@ Partial Class FormSearch
         Me.TitleLb.Size = New System.Drawing.Size(157, 30)
         Me.TitleLb.TabIndex = 9
         Me.TitleLb.Text = "Search Directory"
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.SearchBn)
+        Me.GroupBox1.Controls.Add(Me.SearchTb)
+        Me.GroupBox1.Location = New System.Drawing.Point(12, 43)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(575, 59)
+        Me.GroupBox1.TabIndex = 4
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Query"
         '
         'FormSearch
         '
@@ -326,9 +325,9 @@ Partial Class FormSearch
         Me.ContentPl.ResumeLayout(False)
         Me.ListPl.ResumeLayout(False)
         CType(Me.SearchResultsListView, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SearchPanel.ResumeLayout(False)
         Me.ImagePl.ResumeLayout(False)
         Me.ImagePl.PerformLayout()
+        Me.GroupBox1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -360,10 +359,10 @@ Partial Class FormSearch
     Friend WithEvents NameCol As OLVColumn
     Friend WithEvents TypeCol As OLVColumn
     Friend WithEvents DescCol As OLVColumn
-    Friend WithEvents SearchPanel As Windows.Forms.Panel
     Friend WithEvents SearchBn As Windows.Forms.Button
     Friend WithEvents SearchTb As ControlTextBox
     Friend WithEvents ImagePl As ControlHeaderPanel
     Friend WithEvents TitleLb As Windows.Forms.Label
     Friend WithEvents PingMachineToolStripMenuItem As Windows.Forms.MenuItem
+    Friend WithEvents GroupBox1 As Windows.Forms.GroupBox
 End Class

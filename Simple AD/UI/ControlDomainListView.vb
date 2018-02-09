@@ -93,7 +93,12 @@ Public Class ControlDomainListView
 
     End Sub
 
-    Public Sub ControlListView_ItemsChanged(sender As Object, e As ItemsChangedEventArgs) Handles Me.ItemsChanged
+    Public Sub AttachToStatusBar()
+        AddHandler ItemsChanged, AddressOf ControlListView_ItemsChanged
+        AddHandler ItemSelectionChanged, AddressOf ControlListView_ItemSelectionChanged
+    End Sub
+
+    Public Sub ControlListView_ItemsChanged(sender As Object, e As ItemsChangedEventArgs)
         If Items.Count > 0 Then
             UpdateContextStripText(Items.Count & " Objects")
         Else
@@ -101,7 +106,7 @@ Public Class ControlDomainListView
         End If
     End Sub
 
-    Private Sub ControlListView_ItemSelectionChanged(sender As Object, e As ListViewItemSelectionChangedEventArgs) Handles Me.ItemSelectionChanged
+    Private Sub ControlListView_ItemSelectionChanged(sender As Object, e As ListViewItemSelectionChangedEventArgs)
         If SelectedItems.Count > 1 Then
             UpdateStatusStripText(SelectedItems.Count & " Objects Selected")
         Else
@@ -138,22 +143,34 @@ Public Class ControlDomainListView
 
         Dim Images As New ImageList()
         With Images
-            .Images.Add("OuImage", New Icon(My.Resources.Container, New Size(16, 16)).ToBitmap)
-            .Images.Add("DomainImage", New Icon(My.Resources.Domain, New Size(16, 16)).ToBitmap)
-            .Images.Add("ContainerImage", New Icon(My.Resources.Container, New Size(16, 16)).ToBitmap)
-            .Images.Add("GroupImage", New Icon(My.Resources.Group, New Size(16, 16)).ToBitmap)
-            .Images.Add("ComputerImage", New Icon(My.Resources.Computer, New Size(16, 16)).ToBitmap)
-            .Images.Add("UserImage", New Icon(My.Resources.User, New Size(16, 16)).ToBitmap)
-            .Images.Add("DisabledUserImage", New Icon(My.Resources.UserDisabled, New Size(16, 16)).ToBitmap)
-            .Images.Add("ContactImage", New Icon(My.Resources.Contact, New Size(16, 16)).ToBitmap)
-            .Images.Add("UnknownImage", New Icon(My.Resources.Unknown, New Size(16, 16)).ToBitmap)
+            .Images.Add("Container", New Icon(My.Resources.Container, New Size(16, 16)).ToBitmap)
+            .Images.Add("Domain", New Icon(My.Resources.Domain, New Size(16, 16)).ToBitmap)
+            .Images.Add("OrganizationalUnit", New Icon(My.Resources.Container, New Size(16, 16)).ToBitmap)
+            .Images.Add("Group", New Icon(My.Resources.Group, New Size(16, 16)).ToBitmap)
+            .Images.Add("Computer", New Icon(My.Resources.Computer, New Size(16, 16)).ToBitmap)
+            .Images.Add("User", New Icon(My.Resources.User, New Size(16, 16)).ToBitmap)
+            .Images.Add("UserDisabled", New Icon(My.Resources.UserDisabled, New Size(16, 16)).ToBitmap)
+            .Images.Add("Contact", New Icon(My.Resources.Contact, New Size(16, 16)).ToBitmap)
+            .Images.Add("Unknown", New Icon(My.Resources.Unknown, New Size(16, 16)).ToBitmap)
+            .Images.Add("Hidden", New Icon(My.Resources.DataProtection, New Size(16, 16)).ToBitmap)
+            .Images.Add("builtinDomain", New Icon(My.Resources.Builtin, New Size(16, 16)).ToBitmap)
+            .Images.Add("lostAndFound", New Icon(My.Resources.LostAndFound, New Size(16, 16)).ToBitmap)
+            .Images.Add("msDS-QuotaContainer", New Icon(My.Resources.Quota, New Size(16, 16)).ToBitmap)
+            .Images.Add("msTPM-InformationObjectsContainer", New Icon(My.Resources.SecurityLock, New Size(16, 16)).ToBitmap)
+            .Images.Add("msExchSystemObjectsContainer", New Icon(My.Resources.Message, New Size(16, 16)).ToBitmap)
             .ColorDepth = ColorDepth.Depth32Bit
             .ImageSize = New Size(16, 16)
         End With
 
         SmallImageList = Images
-        LargeImageList = Images
 
     End Sub
+
+    Public Function ImageGetter(rowObject As Object) As Object
+
+        Dim DomainObject As DomainObject = DirectCast(rowObject, DomainObject)
+        Return DomainObject.ImageKey
+
+    End Function
 
 End Class
