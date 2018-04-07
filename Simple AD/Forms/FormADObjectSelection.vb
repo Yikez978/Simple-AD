@@ -45,8 +45,8 @@ Public Class FormADObjectSelection
                 FilteredDataView = New DataView(DataTableSource, "Name LIKE '*" & Query & "*' ", "Name Desc", DataViewRowState.CurrentRows)
                 MainGrid.DataSource = FilteredDataView
             Catch Ex As Exception
-                Debug.WriteLine("[Error] Invalid Search String: " & Ex.Message)
-            End Try
+            Logger.Log("[Error] Invalid Search String: " & Ex.Message)
+        End Try
         End Sub
 
 

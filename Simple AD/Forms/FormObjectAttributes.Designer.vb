@@ -32,10 +32,10 @@ Partial Class FormObjectAttributes
         Me.MainTabControl = New System.Windows.Forms.TabControl()
         Me.AttrTab = New System.Windows.Forms.TabPage()
         Me.AttrPanel = New System.Windows.Forms.Panel()
-        Me.DropDownFilter = New System.Windows.Forms.ComboBox()
         Me.MainListView = New SimpleAD.ControlCustomListView()
         Me.NameCol = CType(New BrightIdeasSoftware.OLVColumn(), BrightIdeasSoftware.OLVColumn)
         Me.ValueCol = CType(New BrightIdeasSoftware.OLVColumn(), BrightIdeasSoftware.OLVColumn)
+        Me.DropDownFilter = New System.Windows.Forms.ComboBox()
         Me.SearchBoxTb = New SimpleAD.ControlTextBox()
         Me.ImagePl.SuspendLayout()
         Me.ContentPl.SuspendLayout()
@@ -123,18 +123,6 @@ Partial Class FormObjectAttributes
         Me.AttrPanel.TabIndex = 4
         Me.AttrPanel.Tag = "Property Inspector"
         '
-        'DropDownFilter
-        '
-        Me.DropDownFilter.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.DropDownFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.DropDownFilter.FormattingEnabled = True
-        Me.DropDownFilter.ItemHeight = 13
-        Me.DropDownFilter.Items.AddRange(New Object() {"All", "Only Attributes That Have Values"})
-        Me.DropDownFilter.Location = New System.Drawing.Point(382, 12)
-        Me.DropDownFilter.Name = "DropDownFilter"
-        Me.DropDownFilter.Size = New System.Drawing.Size(191, 21)
-        Me.DropDownFilter.TabIndex = 1
-        '
         'MainListView
         '
         Me.MainListView.Activation = System.Windows.Forms.ItemActivation.TwoClick
@@ -151,7 +139,6 @@ Partial Class FormObjectAttributes
         Me.MainListView.EmptyListMsgFont = New System.Drawing.Font("Segoe UI Semilight", 14.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.MainListView.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.MainListView.FullRowSelect = True
-        Me.MainListView.HeaderFont = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.MainListView.HeaderUsesThemes = True
         Me.MainListView.HideSelection = False
         Me.MainListView.IncludeColumnHeadersInCopy = True
@@ -190,6 +177,18 @@ Partial Class FormObjectAttributes
         Me.ValueCol.Text = "Value"
         Me.ValueCol.WordWrap = True
         '
+        'DropDownFilter
+        '
+        Me.DropDownFilter.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.DropDownFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.DropDownFilter.FormattingEnabled = True
+        Me.DropDownFilter.ItemHeight = 13
+        Me.DropDownFilter.Items.AddRange(New Object() {"All", "Only Attributes That Have Values"})
+        Me.DropDownFilter.Location = New System.Drawing.Point(382, 12)
+        Me.DropDownFilter.Name = "DropDownFilter"
+        Me.DropDownFilter.Size = New System.Drawing.Size(191, 21)
+        Me.DropDownFilter.TabIndex = 1
+        '
         'SearchBoxTb
         '
         Me.SearchBoxTb.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
@@ -199,7 +198,7 @@ Partial Class FormObjectAttributes
         Me.SearchBoxTb.MinimumSize = New System.Drawing.Size(4, 22)
         Me.SearchBoxTb.Name = "SearchBoxTb"
         Me.SearchBoxTb.PromptText = "Filter Attributes..."
-        Me.SearchBoxTb.Size = New System.Drawing.Size(364, 20)
+        Me.SearchBoxTb.Size = New System.Drawing.Size(364, 22)
         Me.SearchBoxTb.TabIndex = 0
         '
         'FormObjectAttributes
@@ -221,7 +220,6 @@ Partial Class FormObjectAttributes
         Me.MainTabControl.ResumeLayout(False)
         Me.AttrTab.ResumeLayout(False)
         Me.AttrPanel.ResumeLayout(False)
-        Me.AttrPanel.PerformLayout()
         CType(Me.MainListView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 

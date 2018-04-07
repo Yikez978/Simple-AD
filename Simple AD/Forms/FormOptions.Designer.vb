@@ -46,6 +46,9 @@ Partial Class FormOptions
         Me.CoCb = New MetroFramework.Controls.MetroCheckBox()
         Me.VbCb = New MetroFramework.Controls.MetroCheckBox()
         Me.MainTabControl = New MetroFramework.Controls.MetroTabControl()
+        Me.AdvancedTab = New System.Windows.Forms.TabPage()
+        Me.AdvancedListView = New SimpleAD.ControlCustomListView()
+        Me.NameCol = CType(New BrightIdeasSoftware.OLVColumn(), BrightIdeasSoftware.OLVColumn)
         Me.LDAPTabPage.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.ReportsGb.SuspendLayout()
@@ -53,6 +56,8 @@ Partial Class FormOptions
         Me.GroupBox2.SuspendLayout()
         Me.DbGb.SuspendLayout()
         Me.MainTabControl.SuspendLayout()
+        Me.AdvancedTab.SuspendLayout()
+        CType(Me.AdvancedListView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'OKBt
@@ -286,14 +291,61 @@ Partial Class FormOptions
         '
         Me.MainTabControl.Controls.Add(Me.Preferences)
         Me.MainTabControl.Controls.Add(Me.LDAPTabPage)
+        Me.MainTabControl.Controls.Add(Me.AdvancedTab)
         Me.MainTabControl.Location = New System.Drawing.Point(13, 13)
         Me.MainTabControl.Margin = New System.Windows.Forms.Padding(4)
         Me.MainTabControl.Name = "MainTabControl"
-        Me.MainTabControl.SelectedIndex = 1
+        Me.MainTabControl.SelectedIndex = 2
         Me.MainTabControl.Size = New System.Drawing.Size(511, 308)
         Me.MainTabControl.Style = MetroFramework.MetroColorStyle.Purple
         Me.MainTabControl.TabIndex = 0
         Me.MainTabControl.UseSelectable = True
+        '
+        'AdvancedTab
+        '
+        Me.AdvancedTab.BackColor = System.Drawing.SystemColors.Window
+        Me.AdvancedTab.Controls.Add(Me.AdvancedListView)
+        Me.AdvancedTab.Location = New System.Drawing.Point(4, 38)
+        Me.AdvancedTab.Name = "AdvancedTab"
+        Me.AdvancedTab.Padding = New System.Windows.Forms.Padding(8)
+        Me.AdvancedTab.Size = New System.Drawing.Size(503, 266)
+        Me.AdvancedTab.TabIndex = 2
+        Me.AdvancedTab.Text = "  Advanced  "
+        '
+        'AdvancedListView
+        '
+        Me.AdvancedListView.AllColumns.Add(Me.NameCol)
+        Me.AdvancedListView.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.AdvancedListView.CellEditUseWholeCell = False
+        Me.AdvancedListView.CheckBoxes = True
+        Me.AdvancedListView.CheckedAspectName = "Value"
+        Me.AdvancedListView.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.NameCol})
+        Me.AdvancedListView.CopySelectionOnControlC = False
+        Me.AdvancedListView.Cursor = System.Windows.Forms.Cursors.Default
+        Me.AdvancedListView.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.AdvancedListView.HasCollapsibleGroups = False
+        Me.AdvancedListView.HeaderMaximumHeight = 0
+        Me.AdvancedListView.HeaderMinimumHeight = 0
+        Me.AdvancedListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None
+        Me.AdvancedListView.Location = New System.Drawing.Point(8, 8)
+        Me.AdvancedListView.Name = "AdvancedListView"
+        Me.AdvancedListView.SelectAllOnControlA = False
+        Me.AdvancedListView.SelectColumnsOnRightClick = False
+        Me.AdvancedListView.SelectColumnsOnRightClickBehaviour = BrightIdeasSoftware.ObjectListView.ColumnSelectBehaviour.None
+        Me.AdvancedListView.ShowFilterMenuOnRightClick = False
+        Me.AdvancedListView.ShowHeaderInAllViews = False
+        Me.AdvancedListView.ShowItemToolTips = True
+        Me.AdvancedListView.Size = New System.Drawing.Size(487, 250)
+        Me.AdvancedListView.SpaceBetweenGroups = 2
+        Me.AdvancedListView.TabIndex = 4
+        Me.AdvancedListView.UseCompatibleStateImageBehavior = False
+        Me.AdvancedListView.View = System.Windows.Forms.View.Details
+        '
+        'NameCol
+        '
+        Me.NameCol.AspectName = "DisplayName"
+        Me.NameCol.Text = "Setting"
+        Me.NameCol.Width = 380
         '
         'FormOptions
         '
@@ -325,6 +377,8 @@ Partial Class FormOptions
         Me.DbGb.ResumeLayout(False)
         Me.DbGb.PerformLayout()
         Me.MainTabControl.ResumeLayout(False)
+        Me.AdvancedTab.ResumeLayout(False)
+        CType(Me.AdvancedListView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -348,4 +402,7 @@ Partial Class FormOptions
     Friend WithEvents CoCb As Controls.MetroCheckBox
     Friend WithEvents VbCb As Controls.MetroCheckBox
     Friend WithEvents MainTabControl As Controls.MetroTabControl
+    Friend WithEvents AdvancedTab As TabPage
+    Friend WithEvents AdvancedListView As ControlCustomListView
+    Friend WithEvents NameCol As OLVColumn
 End Class

@@ -263,7 +263,7 @@ Public Class FormBulkUser
                 StringToDraw = TabString
             End If
 
-            DrawString(e.Graphics, MainTabControl.SelectedTab.Tag.ToString, TitleFont, Color.White, 24, 8)
+            SimpleLib.DrawString(e.Graphics, MainTabControl.SelectedTab.Tag.ToString, TitleFont, Color.White, 24, 8)
 
         End If
 

@@ -2,7 +2,7 @@
 Imports SimpleLib
 
 Public Class TaskNewOu
-    Inherits ActiveTask
+    Inherits TaskBase
 
     Private TargetExplorerJob As TaskExplorer
     Private TargetContainer As String
@@ -50,7 +50,7 @@ Public Class TaskNewOu
 
     Private Sub NewOrganizationalUnitFinished(ByVal Result As SimpleResult)
 
-        Debug.WriteLine("[Info] New Organizational Unit Request Finished with state: " & Result.Status.ToString)
+        Logger.Log("[Info] New Organizational Unit Request Finished with state: " & Result.Status.ToString)
 
         If Result.IsSuccess = True Then
             TaskStatus = ActiveTaskStatus.Completed

@@ -5,9 +5,8 @@ Imports System.Windows.Forms
 Imports BrightIdeasSoftware
 Imports BrightIdeasSoftware.OLVExporter
 
-Imports SimpleAD.LocalData
-
 Imports SimpleLib
+Imports SimpleLib.SystemHelper
 
 Public Class FormImport
 
@@ -21,8 +20,8 @@ Public Class FormImport
 
     Public WithEvents ImportTask As TaskBulkImport = Nothing
 
-    Private TextMatchFilter As TextMatchFilter
-    Private ResultsTextMatchFilter As TextMatchFilter
+    Private _TextMatchFilter As TextMatchFilter
+    Private _ResultsTextMatchFilter As TextMatchFilter
 
     Public Property IsClosing As Boolean
 
@@ -32,8 +31,6 @@ Public Class FormImport
         MainListView.SetListStyle()
         ResultsListView.SetListStyle()
         MainTabControl.InitializeTabControl()
-
-        Debug.WriteLineIf(Not String.IsNullOrEmpty(File), "[Debug] New Form Import created with path: " & File)
 
         ImportTask = New TaskBulkImport(File, Me)
         Path = File
@@ -52,7 +49,6 @@ Public Class FormImport
     Private Sub FormImport_Load(sender As Object, e As EventArgs) Handles Me.Load
 
         If Not String.IsNullOrEmpty(Path) Then
-            Debug.WriteLine("[Debug] Import Path: " & Path)
             ImportTask.BeginImport()
         End If
 
@@ -96,7 +92,7 @@ Public Class FormImport
         DomainTreeView.InitialLoad()
 
         DomainTreeView.FullRowSelect = False
-        DomainTreeView.SelectedOU = Nothing
+        DomainTreeView.SelectedItem = Nothing
 
         MainTabControl_SelectedIndexChanged(Me, Nothing)
 
@@ -134,10 +130,7 @@ Public Class FormImport
     Private Sub AcceptBn_Click(sender As Object, e As EventArgs) Handles AcceptBn.Click
         If (MainTabControl.SelectedIndex + 1) < MainTabControl.TabCount Then
             If ValidateStage(MainTabControl.TabPages.IndexOf(MainTabControl.SelectedTab)) Then
-                Debug.WriteLine("[Debug] Validate Stage returned True")
                 MainTabControl.SelectTab(MainTabControl.TabPages(MainTabControl.SelectedIndex + 1))
-            Else
-                Debug.WriteLine("[Debug]  Validate Stage returned False")
             End If
         End If
     End Sub
@@ -158,7 +151,7 @@ Public Class FormImport
         End If
 
         If CurrentTabIndex = MainTabControl.TabPages.IndexOf(DomainTab) Then
-            If Not String.IsNullOrEmpty(DomainTreeView.SelectedOU) Then
+            If Not String.IsNullOrEmpty(DomainTreeView.SelectedItem) Then
                 Return True
             Else
                 Return False
@@ -167,7 +160,7 @@ Public Class FormImport
 
         If CurrentTabIndex = MainTabControl.TabPages.IndexOf(OptionsTab) Then
 
-            Path = DomainTreeView.SelectedOU
+            Path = DomainTreeView.SelectedItem
 
             CreateHomeFolders = CrHfldrTg.Checked
             ForcePasswordReset = FpwdTg.Checked
@@ -278,7 +271,7 @@ Public Class FormImport
 
             TaskBarProgress.SetState(Me.Handle, TaskbarStates.NoProgress)
         Else
-            Me.Close()
+            Close()
         End If
 
     End Sub
@@ -289,17 +282,21 @@ Public Class FormImport
 
         If MainTabControl.SelectedIndex = MainTabControl.TabPages.IndexOf(ProgressTab) Then
 
-            If ImportTask IsNot Nothing Then
-
-                TitleLb.Text = "Cancelling Import..."
-
-                CancelBn.Enabled = False
-                AcceptBn.Enabled = False
-                BackBn.Enabled = False
-                ExportBn.Enabled = False
-
-                ImportTask.Cancel()
+            If ImportTask Is Nothing Then
+                Exit Sub
             End If
+
+            e.Cancel = True
+
+            TitleLb.Text = "Cancelling Import..."
+
+            CancelBn.Enabled = False
+            AcceptBn.Enabled = False
+            BackBn.Enabled = False
+            ExportBn.Enabled = False
+
+            ImportTask.Cancel()
+
 
             TaskBarProgress.SetState(Me.Handle, TaskbarStates.NoProgress)
 
@@ -316,8 +313,8 @@ Public Class FormImport
     End Sub
 
     Private Sub ProgressChanged() Handles ImportTask.ProgressChanged
-        If Me.InvokeRequired Then
-            Me.Invoke(New Action(AddressOf ProgressChanged))
+        If InvokeRequired Then
+            BeginInvoke(New Action(AddressOf ProgressChanged))
         Else
             TaskBarProgress.SetValue(Me.Handle, MainProgresBar.Value, MainProgresBar.Maximum)
             MainProgresBar.PerformStep()
@@ -374,8 +371,8 @@ Public Class FormImport
 
     Private Sub SearchTb_TextChanged(sender As Object, e As EventArgs) Handles SearchTb.TextChanged
         If Not String.IsNullOrEmpty(SearchTb.Text) Then
-            TextMatchFilter = TextMatchFilter.Contains(MainListView, SearchTb.Text)
-            MainListView.ModelFilter = TextMatchFilter
+            _TextMatchFilter = TextMatchFilter.Contains(MainListView, SearchTb.Text)
+            MainListView.ModelFilter = _TextMatchFilter
         Else
             MainListView.ModelFilter = Nothing
         End If
@@ -383,8 +380,8 @@ Public Class FormImport
 
     Private Sub FilterTb_TextChanged(sender As Object, e As EventArgs) Handles FilterTb.TextChanged
         If Not String.IsNullOrEmpty(FilterTb.Text) Then
-            ResultsTextMatchFilter = TextMatchFilter.Contains(ResultsListView, FilterTb.Text)
-            ResultsListView.ModelFilter = ResultsTextMatchFilter
+            _ResultsTextMatchFilter = TextMatchFilter.Contains(ResultsListView, FilterTb.Text)
+            ResultsListView.ModelFilter = _ResultsTextMatchFilter
         Else
             ResultsListView.ModelFilter = Nothing
         End If

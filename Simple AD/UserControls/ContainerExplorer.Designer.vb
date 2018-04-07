@@ -321,7 +321,7 @@ Partial Class ContainerExplorer
         Me.DomainTreeView.Margin = New System.Windows.Forms.Padding(0)
         Me.DomainTreeView.Name = "DomainTreeView"
         Me.DomainTreeView.SelectedImageIndex = 0
-        Me.DomainTreeView.SelectedOU = Nothing
+        Me.DomainTreeView.SelectedItem = Nothing
         Me.DomainTreeView.ShowLines = False
         Me.DomainTreeView.Size = New System.Drawing.Size(264, 339)
         Me.DomainTreeView.TabIndex = 0
@@ -338,7 +338,6 @@ Partial Class ContainerExplorer
         Me.MainListView.EmptyListMsgFont = New System.Drawing.Font("Segoe UI Semilight", 14.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.MainListView.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.MainListView.FullRowSelect = True
-        Me.MainListView.HeaderFont = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.MainListView.HideSelection = False
         Me.MainListView.IncludeColumnHeadersInCopy = True
         Me.MainListView.Location = New System.Drawing.Point(0, 0)
@@ -350,7 +349,11 @@ Partial Class ContainerExplorer
         Me.MainListView.SelectedForeColor = System.Drawing.SystemColors.ControlText
         Me.MainListView.ShowFilterMenuOnRightClick = False
         Me.MainListView.ShowHeaderInAllViews = False
+        Me.MainListView.ShowImagesOnSubItems = True
+        Me.MainListView.ShowItemToolTips = True
         Me.MainListView.Size = New System.Drawing.Size(558, 339)
+        Me.MainListView.SortGroupItemsByPrimaryColumn = False
+        Me.MainListView.SpaceBetweenGroups = 4
         Me.MainListView.TabIndex = 1
         Me.MainListView.UseCellFormatEvents = True
         Me.MainListView.UseCompatibleStateImageBehavior = False

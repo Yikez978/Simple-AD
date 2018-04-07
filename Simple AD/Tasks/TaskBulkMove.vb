@@ -3,7 +3,7 @@ Imports System.Threading.Tasks
 Imports System.Windows.Forms
 
 Public Class TaskBulkMove
-    Inherits ActiveTask
+    Inherits TaskBase
 
     Private TargetDomainObjects As IList
     Private TargetExplorerJob As TaskExplorer
@@ -101,14 +101,5 @@ Public Class TaskBulkMove
         End If
 
     End Sub
-
-    Private Function DistToName(ByVal DistString As String) As String
-        Dim sDelimStart As String = "="
-        Dim sDelimEnd As String = ","
-        Dim nIndexStart As Integer = DistString.IndexOf(sDelimStart)
-        Dim nIndexEnd As Integer = DistString.IndexOf(sDelimEnd)
-
-        Return Mid(DistString, nIndexStart + sDelimStart.Length + 1, nIndexEnd - nIndexStart - sDelimStart.Length)
-    End Function
 
 End Class

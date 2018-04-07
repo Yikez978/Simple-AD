@@ -85,14 +85,14 @@ Public Class FormPasswordResetBulk
                 End Select
 
             Catch Ex As Exception
-                Debug.WriteLine("[Error] Unable to Set Password for User " & User.Name & ": " & Ex.Message)
+                Logger.Log("[Error] Unable to Set Password for User " & User.Name & ": " & Ex.Message)
             End Try
         Next
 
     End Sub
 
     Public Sub ResetUserPasswordBulk(ByVal UserObject As UserDomainObject, ByVal Password As String, ForceReset As Boolean)
-        Debug.WriteLine("[Info] Password reset requested on object: " & UserObject.Name)
+        Logger.Log("[Info] Password reset requested on object: " & UserObject.Name)
         Try
             Dim UserPr As UserPrincipal = UserPrincipal.FindByIdentity(_DomainPrincipal, IdentityType.DistinguishedName, UserObject.DistinguishedName)
 
@@ -102,13 +102,13 @@ Public Class FormPasswordResetBulk
                 UserPr.ExpirePasswordNow()
             End If
             UserPr.Save()
-            Debug.WriteLine("[Info] Succefully Reset Password for User " & UserObject.Name & " To: " & Password)
+            Logger.Log("[Info] Succefully Reset Password for User " & UserObject.Name & " To: " & Password)
             _ProgressForm.Status = "Succefully Set Password for User " & UserObject.Name & " To: " & Password
         Catch Ex As Exception
             Dim ErrorString As String = "[Error] Unable to Set Password for User (" & UserObject.Name & "): " & Ex.Message
-            Debug.WriteLine(ErrorString)
+            Logger.Log(ErrorString)
             If Not Ex.InnerException Is Nothing Then
-                Debug.WriteLine("[Inner Exception] " & Ex.InnerException.Message)
+                Logger.Log("[Inner Exception] " & Ex.InnerException.Message)
             End If
             _ProgressForm.Status = "Failed Setting Password for User " & UserObject.Name & ": " & ErrorString
         End Try

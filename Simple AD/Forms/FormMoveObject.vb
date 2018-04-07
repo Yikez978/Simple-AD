@@ -1,5 +1,4 @@
-﻿Imports System.Drawing
-Imports System.Windows.Forms
+﻿Imports System.Windows.Forms
 Imports SimpleLib
 
 Public Class FormMoveObject
@@ -28,8 +27,8 @@ Public Class FormMoveObject
         Me.Close()
     End Sub
 
-    Private Sub SelecetdOuChanged(SelecetedOU As String) Handles DomainTree.SelectedOUChanged
-        SelecetdOU = SelecetedOU
+    Private Sub SelecetdItemChanged(SelectedItem As String) Handles DomainTree.SelectedItemChanged
+        SelectedOU = SelectedItem
     End Sub
 
 End Class

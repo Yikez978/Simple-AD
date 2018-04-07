@@ -15,7 +15,7 @@ Public Class ControlToolStripButton
         Set(value As Boolean)
             _Enabled = value
             If Not value Then
-                Image = ConvertToGrayScale(Image)
+                Image = SimpleLib.ConvertToGrayScale(Image)
                 LabelColor = _DisabledLabelColor
             Else
                 Image = Image

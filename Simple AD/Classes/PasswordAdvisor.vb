@@ -17,10 +17,12 @@ End Enum
 Public Class PasswordAdvisor
 
     Public Shared Function CheckStrength(ByVal password As String) As PasswordScore
+
         Dim score As Integer = 0
         Dim blnMinLengthRequirementMet As Boolean = False
         Dim blnRequirement1Met As Boolean = False
         Dim blnRequirement2Met As Boolean = False
+
         If password.Length < 1 Then Return PasswordScore.Blank
         If password.Length < 6 Then
             Return PasswordScore.TooShort

@@ -35,7 +35,7 @@ Public Class BulkADWorker
     End Sub
 
     Private Async Sub SetupBulkCreationJob()
-        Debug.WriteLine("[Info] BulkADWorkers Class Main Worker Initiated")
+        Logger.Log("[Info] BulkADWorkers Class Main Worker Initiated")
 
         If String.IsNullOrEmpty(LoginUsernamePrefix) Then
             _StartPath = "LDAP://" & _Path
@@ -43,7 +43,7 @@ Public Class BulkADWorker
             _StartPath = "LDAP://" & LoginUsernamePrefix & "/" & _Path
         End If
 
-        Debug.WriteLine("[LDAP] Bind to: " & _StartPath)
+        Logger.Log("[LDAP] Bind to: " & _StartPath)
 
         TaskHost.TaskStatus = ActiveTaskStatus.InProgress
 
@@ -76,37 +76,30 @@ Public Class BulkADWorker
 
     End Sub
 
-    'Set up lock to ensure the directory server dosn't get flooded with password reset requests
-    Private SetPasswordLock As New Object
-    Private AddObjectLock As New Object
-    Private CloseObject As New Object
-
-    Private Function CreateADObject(ByVal UserObject As SimpleADBulkUserDomainObject, ByVal CancelToken As CancellationToken) As SimpleResult
+    Private Function CreateADObject(ByVal UserObject As SimpleADBulkUserDomainObject, Optional CancelToken As CancellationToken = Nothing) As SimpleResult
 
         Dim Result As SimpleResult = UserObject.Meta
 
         If CancelToken.IsCancellationRequested = True Then
 
-            Debug.WriteLine("Creating the user {0} was cancelled before it got started.", UserObject.Name)
+            Return Nothing
 
             Exit Function
         End If
 
-        Debug.WriteLine(Environment.NewLine & "[Info] Started user setup with user: " & UserObject.Name)
-
         UserObject.Errors = New List(Of String)
+
+        Dim DirEntry As DirectoryEntry = Nothing
+        Dim objUser As DirectoryEntry = Nothing
 
         Try
 
             RaiseEvent BulkImportStatusChanged(String.Format("Setting up user {0} ", UserObject.Name))
 
-            Dim DirEntry As DirectoryEntry = New DirectoryEntry(_StartPath, LoginUsername, LoginPassword, AuthenticationTypes.Secure)
+            DirEntry = New DirectoryEntry(_StartPath, LoginUsername, LoginPassword, AuthenticationTypes.Secure)
 
-            Dim objUser As DirectoryEntry
 
-            'SyncLock AddObjectLock
             objUser = DirEntry.Children.Add("CN=" & UserObject.Name, "user")
-            'End SyncLock
 
             If Not objUser Is Nothing Then
 
@@ -171,12 +164,6 @@ Public Class BulkADWorker
 
                 objUser.CommitChanges()
 
-                'Setting TSProfilePath
-
-                'Ensures that Simple ad only requests one password reset at a time
-                'All code is within Try/Catch to avoid thread deadlock
-                'TODO this still needs to be thorughly tested
-                'SyncLock SetPasswordLock
 
                 'Setting the Terminal services profile path
                 If UserObject.TsProfilePath IsNot Nothing Then
@@ -189,10 +176,18 @@ Public Class BulkADWorker
                         oUser.AllowLogon = 1
                         oUser.TerminalServicesProfilePath = UserObject.TsProfilePath
 
-                    Catch Ex As Exception
-                        Dim TSProfError As String = "Unable to set the Terminal Services Profile Path for User (" & UserObject.Name & "): " & Ex.Message
-                        Debug.WriteLine("[Error] " & TSProfError)
+                    Catch CastEx As InvalidCastException
+
+                        Dim TSProfError As String = "Unable to set the Terminal Services Profile Path for User (" & UserObject.Name & "): " & CastEx.Message
+                        Logger.Log("[Error] " & TSProfError)
                         UserObject.Errors.Add(TSProfError)
+
+                    Catch Ex As Exception
+
+                        Dim TSProfError As String = "Unable to set the Terminal Services Profile Path for User (" & UserObject.Name & "): " & Ex.Message
+                        Logger.Log("[Error] " & TSProfError)
+                        UserObject.Errors.Add(TSProfError)
+
                     End Try
                 End If
 
@@ -228,7 +223,7 @@ Public Class BulkADWorker
 
                     Catch Ex As Exception
                         Dim PasswordError As String = "Unable to set password and enable account on user (" & UserObject.Name & "):" & Ex.Message
-                        Debug.WriteLine("[Error] " & PasswordError)
+                        Logger.Log("[Error] " & PasswordError)
                         UserObject.Errors.Add(PasswordError)
                     End Try
 
@@ -246,7 +241,7 @@ Public Class BulkADWorker
                             IO.Directory.CreateDirectory(UserObject.HomeDirectory)
                         Catch Ex As Exception
                             Dim HomeFolderError As String = "Failed to create home folder for user: " & UserObject.Name & ": " & Ex.Message
-                            Debug.WriteLine("[Error] " & HomeFolderError)
+                            Logger.Log("[Error] " & HomeFolderError)
                             UserObject.Errors.Add(HomeFolderError)
                         End Try
 
@@ -258,7 +253,7 @@ Public Class BulkADWorker
                                 FolderInfo.SetAccessControl(FolderAcl)
                             Catch Ex As Exception
                                 Dim HomeFolderPermsError As String = "Unable to set permisions on home folder for user " & UserObject.Name & ": " & Ex.Message
-                                Debug.WriteLine("[Error] " & HomeFolderPermsError)
+                                Logger.Log("[Error] " & HomeFolderPermsError)
                                 UserObject.Errors.Add(HomeFolderPermsError)
                             End Try
                         End If
@@ -273,9 +268,6 @@ Public Class BulkADWorker
                     Result.Status = ActiveTaskStatus.Completed
                 End If
 
-                'SyncLock CloseObject
-                objUser.Close()
-                'End SyncLock
             End If
 
         Catch CanceledEx As OperationCanceledException
@@ -287,7 +279,7 @@ Public Class BulkADWorker
 
             Result.Status = ActiveTaskStatus.Canceled
 
-            Debug.WriteLine(ErrorMsgCon)
+            Logger.Log(ErrorMsgCon)
 
         Catch Exc As Exception
 
@@ -303,10 +295,20 @@ Public Class BulkADWorker
 
             Result.Status = ActiveTaskStatus.Failed
 
-            Debug.WriteLine("[Error] Unable to Create User: " & UserObject.SAMAccountName)
-            Debug.WriteLine("[Error] " & Exc.Message)
+            Logger.Log("[Error] Unable to Create User: " & UserObject.SAMAccountName)
+            Logger.Log("[Error] " & Exc.Message)
             If Not Exc.InnerException Is Nothing Then
-                Debug.WriteLine("[Inner Exception] " & Exc.InnerException.Message)
+                Logger.Log("[Inner Exception] " & Exc.InnerException.Message)
+            End If
+
+        Finally
+
+            If DirEntry IsNot Nothing Then
+                DirEntry.Close()
+            End If
+
+            If objUser IsNot Nothing Then
+                objUser.Close()
             End If
 
         End Try
@@ -326,7 +328,6 @@ Public Class BulkADWorker
     Private Sub BulkADWorker_Completed()
 
         TaskHost.TaskStatus = ActiveTaskStatus.Completed
-        Debug.WriteLine("[Info] All Tasks Completed")
 
         RaiseEvent BulkImportCompleted()
     End Sub

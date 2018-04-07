@@ -8,7 +8,7 @@ Imports SimpleLib
 Imports SimpleLib.SystemHelper
 
 Public Class TaskBulkImport
-    Inherits ActiveTask
+    Inherits TaskBase
 
     Private DisplayNamebool As Boolean
     Private MainListView As ObjectListView
@@ -30,20 +30,14 @@ Public Class TaskBulkImport
 
     Public Event ImportCompleted()
 
-
     Public Sub New(ByVal IFile As String, ByVal IForm As FormImport)
         MyBase.New
-
-        Debug.Write("[Debug] New file import job created")
-        Debug.WriteLineIf(Not String.IsNullOrEmpty(IFile), " with path: " & IFile)
 
         ImportPath = IFile
         ImportForm = IForm
     End Sub
 
     Public Sub BeginImport()
-
-        Debug.WriteLine("[Debug] File import setup begining")
 
         Dim FileToImport As String = String.Empty
 
@@ -90,8 +84,9 @@ Public Class TaskBulkImport
             If IO.File.Exists(OpenFileDialogImport.FileName) Then
                 If Not FileInUse(OpenFileDialogImport.FileName) Then
 
-                    RecentFiles.SaveRecentFile(OpenFileDialogImport.FileName)
                     FilePath = OpenFileDialogImport.FileName
+
+                    RecentFiles.SaveRecentFile(OpenFileDialogImport.FileName)
 
                 Else
 
@@ -100,7 +95,7 @@ Public Class TaskBulkImport
                 End If
             End If
         Catch Ex As Exception
-            Debug.WriteLine("[Error] " & Ex.Message)
+            Logger.Log("[Error] " & Ex.Message)
         End Try
 
         ImportForm.MainTabControl.SelectTab(ImportForm.MainTabControl.TabPages.IndexOf(ImportForm.WelcomeTab))
@@ -114,6 +109,14 @@ Public Class TaskBulkImport
 
         If ImportWorker IsNot Nothing Then
             ImportWorker.AbortTask()
+        End If
+
+        If ImportForm Is Nothing Then
+            Exit Sub
+        End If
+
+        If ImportForm.IsClosing Then
+            ImportForm.Close()
         End If
 
     End Sub
@@ -132,7 +135,7 @@ Public Class TaskBulkImport
 
             Using StreamReader As New IO.StreamReader(ImportFile, True)
 
-                ''Debug.WriteLine(String.Format("[Debug] File '{0}' Encoding {1}", ImportFile, StreamReader.CurrentEncoding.EncodingName))
+                ''Logger.Log(String.Format("[Debug] File '{0}' Encoding {1}", ImportFile, StreamReader.CurrentEncoding.EncodingName))
 
                 While Not StreamReader.EndOfStream
 
@@ -161,16 +164,6 @@ Public Class TaskBulkImport
                 End While
 
             End Using
-
-            If ImportErrorForm.Errors.Count > 0 Then
-                Throw New InvalidImportException
-            End If
-
-        Catch InvalidImportEx As InvalidImportException
-
-            If GetContainerExplorer.InvokeRequired Then
-                GetContainerExplorer.Invoke(New Delegate_ImportError(AddressOf InvalidImport))
-            End If
 
         Catch Ex As Exception
 
@@ -212,11 +205,21 @@ Public Class TaskBulkImport
             If Datatable.Columns.Contains("sn") Then
                 NewUserObject.Sn = CleanInput(Row.Item("sn").ToString)
             End If
+
             If Datatable.Columns.Contains("homeDirectory") Then
-                NewUserObject.HomeDirectory = Row.Item("homeDirectory").ToString
+
+                Dim HomeDir = Row.Item("homeDirectory").ToString
+
+                NewUserObject.HomeDirectory = HomeDir
+                ValidateHomeDir(NewUserObject, HomeDir)
+
             End If
+
             If Datatable.Columns.Contains("homeDrive") Then
-                NewUserObject.HomeDrive = Row.Item("homeDrive").ToString
+                Dim HomeDrive = Row.Item("homeDrive").ToString
+
+                NewUserObject.HomeDrive = HomeDrive
+                ValidateHomeDrive(NewUserObject, HomeDrive)
             End If
             If Datatable.Columns.Contains("pager") Then
                 NewUserObject.Pager = Row.Item("pager").ToString
@@ -224,9 +227,19 @@ Public Class TaskBulkImport
             If Datatable.Columns.Contains("scriptPath") Then
                 NewUserObject.ScriptPath = Row.Item("scriptPath").ToString
             End If
+
             If Datatable.Columns.Contains("password") Then
                 NewUserObject.Password = Row.Item("password").ToString
+
+                If String.IsNullOrWhiteSpace(NewUserObject.Password) Then
+                    ImportErrorForm.Add("Password not Specified",
+                               String.Format("No Password has been specified for user {0}. The account cannot be enabled without a password",
+                                             If(String.IsNullOrEmpty(NewUserObject.Name),
+                                             NewUserObject.SAMAccountName,
+                                             NewUserObject.Name)))
+                End If
             End If
+
             If Datatable.Columns.Contains("mail") Then
                 NewUserObject.Mail = Row.Item("mail").ToString
             End If
@@ -268,6 +281,12 @@ Public Class TaskBulkImport
 
             Users.Add(NewUserObject)
         Next
+
+        If ImportErrorForm.Errors.Count > 0 Then
+            If GetContainerExplorer.InvokeRequired Then
+                GetContainerExplorer.Invoke(New Delegate_ImportError(AddressOf InvalidImport))
+            End If
+        End If
 
         Datatable.Dispose()
         TaskProgressMax = Users.Count
@@ -327,6 +346,52 @@ Public Class TaskBulkImport
             ImportFailedForm.StartPosition = FormStartPosition.CenterScreen
             ImportFailedForm.ShowDialog()
         End If
+    End Sub
+
+    Public Sub ValidateHomeDir(ByVal NewUserObject As SimpleADBulkUserDomainObject, ByVal HomeDir As String)
+
+        If String.IsNullOrWhiteSpace(HomeDir) Then
+            ImportErrorForm.Add("Path Not Specified",
+                                String.Format("No Home Directory Path was Specified for user {0}",
+                                              If(String.IsNullOrEmpty(NewUserObject.Name),
+                                              NewUserObject.SAMAccountName,
+                                              NewUserObject.Name)))
+            Exit Sub
+        End If
+
+        If HomeDir.Contains(IO.Path.GetInvalidPathChars) Then
+            ImportErrorForm.Add("Invalid Path",
+                                String.Format("The home directory path ppecified for user {0} is invalid. Path specified: {1}",
+                                              If(String.IsNullOrEmpty(NewUserObject.Name),
+                                              NewUserObject.SAMAccountName,
+                                              NewUserObject.Name),
+                                              HomeDir))
+        End If
+
+    End Sub
+
+    Public Sub ValidateHomeDrive(ByVal NewUserObject As SimpleADBulkUserDomainObject, ByVal HomeDrive As String)
+
+        If String.IsNullOrWhiteSpace(HomeDrive) Then
+            ImportErrorForm.Add("Drive Letter Not Specified",
+                                String.Format("No drive letter was Specified for user {0}",
+                                              If(String.IsNullOrEmpty(NewUserObject.Name),
+                                              NewUserObject.SAMAccountName,
+                                              NewUserObject.Name)))
+            Exit Sub
+        End If
+
+        If EnvironmentHelper.ValidDriveLetters.Contains(HomeDrive.Trim()) Then
+            Exit Sub
+        End If
+
+        ImportErrorForm.Add("Invalid Drive Letter",
+                                String.Format("The home drive letter specified for user {0} is invalid. Letter specified: {1}",
+                                              If(String.IsNullOrEmpty(NewUserObject.Name),
+                                              NewUserObject.SAMAccountName,
+                                              NewUserObject.Name),
+                                              HomeDrive))
+
     End Sub
 
 End Class

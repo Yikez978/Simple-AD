@@ -38,7 +38,7 @@ Public Class FormLogin
             End If
 
         Catch Ex As Exception
-            Debug.WriteLine("[Error] " & Ex.Message)
+            Logger.Log("[Error] " & Ex.Message)
         End Try
     End Sub
 

@@ -1,4 +1,4 @@
-﻿Imports System.ComponentModel
+﻿Imports SimpleLib.SystemHelper
 
 Public Class FormProgressBar
 
@@ -10,19 +10,19 @@ Public Class FormProgressBar
 
     Public Property Maximum As Integer
         Set(value As Integer)
-            Me.MainProgressBar.Maximum = value
+            MainProgressBar.Maximum = value
         End Set
         Get
-            Return Me.MainProgressBar.Maximum
+            Return MainProgressBar.Maximum
         End Get
     End Property
 
     Public Property BarStep As Integer
         Set(value As Integer)
-            Me.MainProgressBar.Step = value
+            MainProgressBar.Step = value
         End Set
         Get
-            Return Me.MainProgressBar.Step
+            Return MainProgressBar.Step
         End Get
     End Property
 
@@ -35,35 +35,44 @@ Public Class FormProgressBar
         End Get
     End Property
 
-    Public Sub New(ByVal Title As String)
+    Public Sub New(ByVal Title As String, Optional IsMarquee As Boolean = False)
         InitializeComponent()
         Text = Title
+
+        If IsMarquee Then
+            MainProgressBar.Style = Windows.Forms.ProgressBarStyle.Marquee
+        End If
+
     End Sub
 
     Public Sub SetStatusText(ByVal Status As String)
-        If Me.InvokeRequired Then
-            Me.Invoke(New Action(Of String)(AddressOf SetStatusText), Status)
+        If InvokeRequired Then
+            BeginInvoke(New Action(Of String)(AddressOf SetStatusText), Status)
         Else
             StatusLb.Text = Status
         End If
     End Sub
 
     Public Sub PerformStep()
-        If Me.InvokeRequired Then
-            Me.Invoke(New Action(AddressOf PerformStep))
+        If InvokeRequired Then
+            BeginInvoke(New Action(AddressOf PerformStep))
         Else
             MainProgressBar.PerformStep()
-            TaskBarProgress.SetValue(Me.Handle, MainProgressBar.Value, Maximum)
+            SetValue(Handle, MainProgressBar.Value, Maximum)
 
             If MainProgressBar.Value > (Maximum - 1) Then
-                TaskBarProgress.SetState(FormMain.Handle, TaskbarStates.NoProgress)
+                SetState(FormMain.Handle, TaskbarStates.NoProgress)
             End If
 
         End If
     End Sub
 
     Private Sub FormProgressBar_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        TaskBarProgress.SetState(Me.Handle, TaskbarStates.Normal)
+        If InvokeRequired Then
+            BeginInvoke(New Action(Of Object, EventArgs)(AddressOf FormProgressBar_Load), sender, e)
+        Else
+            SetState(Handle, TaskbarStates.Normal)
+        End If
     End Sub
 
 End Class

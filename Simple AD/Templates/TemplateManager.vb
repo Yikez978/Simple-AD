@@ -34,7 +34,7 @@ Public Module TemplateManager
                         Dim LoadTemplate As UserTemplate = DirectCast(Formatter.Deserialize(Stream), UserTemplate)
                         TemplateList.Add(LoadTemplate)
                     Catch Ex As Exception
-                        Debug.WriteLine("[Error] Unable to load template from file, source data is corrupt: " & Ex.Message)
+                        Logger.Log("[Error] Unable to load template from file, source data is corrupt: " & Ex.Message)
                     End Try
 
                     Stream.Close()
@@ -44,7 +44,7 @@ Public Module TemplateManager
 
             End If
         Catch Ex As Exception
-            Debug.WriteLine("[Error] Failed to load templates: " & Ex.Message)
+            Logger.Log("[Error] Failed to load templates: " & Ex.Message)
         End Try
     End Sub
 

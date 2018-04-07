@@ -1,6 +1,6 @@
 ﻿Imports System.Windows.Forms
 Imports BrightIdeasSoftware.OLVExporter
-
+Imports SimpleLib
 
 Public Module ExportHandler
 
@@ -21,7 +21,7 @@ Public Module ExportHandler
                     .ListView = GetMainListView(),
                     .ModelObjects = DirectCast(GetMainListView.Objects, IList),
                     .IncludeColumnHeaders = True,
-                    .IncludeHiddenColumns = True
+                    .IncludeHiddenColumns = My.Settings.AdvIncludeHiddenColExports
                     }
 
                 Dim ExportedData As String = ListViewExporter.ExportTo(ExportFormat.CSV)
@@ -40,7 +40,7 @@ Public Module ExportHandler
 
             Dim ExportPath As String = Nothing
 
-            If My.Settings.OpenExports = True Then
+            If My.Settings.AdvOpenExports = True Then
                 ExportPath = IO.Path.GetTempPath() & Guid.NewGuid.ToString & ".html"
             Else
                 Dim SaveDialog As SaveFileDialog = New SaveFileDialog With {
@@ -58,7 +58,7 @@ Public Module ExportHandler
                     .ListView = GetMainListView(),
                     .ModelObjects = DirectCast(GetMainListView.Objects, IList),
                     .IncludeColumnHeaders = True,
-                    .IncludeHiddenColumns = True
+                    .IncludeHiddenColumns = My.Settings.AdvIncludeHiddenColExports
                     }
 
                 Dim ExportedData As String = StyleHTMLExport(ListViewExporter.ExportTo(ExportFormat.HTML))
@@ -86,7 +86,7 @@ Public Module ExportHandler
                     .ListView = GetMainListView(),
                     .ModelObjects = DirectCast(GetMainListView.Objects, IList),
                     .IncludeColumnHeaders = True,
-                    .IncludeHiddenColumns = True
+                    .IncludeHiddenColumns = My.Settings.AdvIncludeHiddenColExports
                     }
 
                 Dim ExportedData As String = ListViewExporter.ExportTo(ExportFormat.TabSeparated)
@@ -102,11 +102,13 @@ Public Module ExportHandler
         FileToWrite.WriteLine(Data)
         FileToWrite.Close()
 
-        Try
-            Process.Start(Path)
-        Catch ex As Exception
-            Debug.WriteLine("[Error] " & ex.Message)
-        End Try
+        If My.Settings.AdvOpenExports Then
+            Try
+                Process.Start(Path)
+            Catch ex As Exception
+                Logger.Log("[Error] " & ex.Message)
+            End Try
+        End If
 
     End Sub
 

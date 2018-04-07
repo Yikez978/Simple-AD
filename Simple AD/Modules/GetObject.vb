@@ -1,4 +1,5 @@
 ﻿Imports System.Windows.Forms
+Imports SimpleLib
 
 Public Module GetObject
 
@@ -6,7 +7,7 @@ Public Module GetObject
         Try
             Return FormMain.StatusStrip()
         Catch Ex As Exception
-            Debug.WriteLine("[Error] " & Ex.Message)
+            Logger.Log("[Error] " & Ex.Message)
             Return Nothing
         End Try
     End Function

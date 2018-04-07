@@ -2,7 +2,7 @@
 Imports SimpleLib
 
 Public Class TaskEnableDisable
-    Inherits ActiveTask
+    Inherits TaskBase
 
     Private TargetDomainObject As UserDomainObject
     Private TargetExplorerJob As TaskExplorer
@@ -43,7 +43,7 @@ Public Class TaskEnableDisable
 
     Private Sub EnableDisableObjectFinished(ByVal Result As SimpleResult)
 
-        Debug.WriteLine("[Info] New EnableDisableObject Request Finished with state: " & Result.Status.ToString)
+        Logger.Log("[Info] New EnableDisableObject Request Finished with state: " & Result.Status.ToString)
 
         If Result.IsSuccess = True Then
 

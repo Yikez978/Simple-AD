@@ -408,7 +408,7 @@ Partial Class FormImport
         Me.DomainTreeView.Margin = New System.Windows.Forms.Padding(0)
         Me.DomainTreeView.Name = "DomainTreeView"
         Me.DomainTreeView.SelectedImageIndex = 0
-        Me.DomainTreeView.SelectedOU = Nothing
+        Me.DomainTreeView.SelectedItem = Nothing
         Me.DomainTreeView.ShowLines = False
         Me.DomainTreeView.Size = New System.Drawing.Size(470, 288)
         Me.DomainTreeView.TabIndex = 7

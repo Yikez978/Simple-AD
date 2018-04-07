@@ -29,6 +29,8 @@ Partial Class FormReport
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormReport))
         Me.MainTabControl = New SimpleAD.CustomTabControlNoHeaders()
         Me.ConfigTab = New System.Windows.Forms.TabPage()
+        Me.RemoveRuleBn = New System.Windows.Forms.Button()
+        Me.AddRuleBn = New System.Windows.Forms.Button()
         Me.TypeLb = New System.Windows.Forms.Label()
         Me.ConfigFlow = New System.Windows.Forms.FlowLayoutPanel()
         Me.TypeCombo = New System.Windows.Forms.ComboBox()
@@ -44,8 +46,6 @@ Partial Class FormReport
         Me.BackBn = New System.Windows.Forms.Button()
         Me.AcceptBn = New System.Windows.Forms.Button()
         Me.CancelBn = New System.Windows.Forms.Button()
-        Me.AddRuleBn = New System.Windows.Forms.Button()
-        Me.RemoveRuleBn = New System.Windows.Forms.Button()
         Me.MainTabControl.SuspendLayout()
         Me.ConfigTab.SuspendLayout()
         Me.ProgressTab.SuspendLayout()
@@ -88,6 +88,25 @@ Partial Class FormReport
         Me.ConfigTab.Size = New System.Drawing.Size(558, 279)
         Me.ConfigTab.TabIndex = 2
         Me.ConfigTab.Text = "OptionsTab"
+        '
+        'RemoveRuleBn
+        '
+        Me.RemoveRuleBn.Enabled = False
+        Me.RemoveRuleBn.Location = New System.Drawing.Point(94, 22)
+        Me.RemoveRuleBn.Name = "RemoveRuleBn"
+        Me.RemoveRuleBn.Size = New System.Drawing.Size(75, 23)
+        Me.RemoveRuleBn.TabIndex = 4
+        Me.RemoveRuleBn.Text = "Remove Rule"
+        Me.RemoveRuleBn.UseVisualStyleBackColor = True
+        '
+        'AddRuleBn
+        '
+        Me.AddRuleBn.Location = New System.Drawing.Point(13, 22)
+        Me.AddRuleBn.Name = "AddRuleBn"
+        Me.AddRuleBn.Size = New System.Drawing.Size(75, 23)
+        Me.AddRuleBn.TabIndex = 3
+        Me.AddRuleBn.Text = "Add Rule"
+        Me.AddRuleBn.UseVisualStyleBackColor = True
         '
         'TypeLb
         '
@@ -240,25 +259,6 @@ Partial Class FormReport
         Me.CancelBn.TabIndex = 0
         Me.CancelBn.Text = "Cancel"
         Me.CancelBn.UseVisualStyleBackColor = True
-        '
-        'AddRuleBn
-        '
-        Me.AddRuleBn.Location = New System.Drawing.Point(13, 22)
-        Me.AddRuleBn.Name = "AddRuleBn"
-        Me.AddRuleBn.Size = New System.Drawing.Size(75, 23)
-        Me.AddRuleBn.TabIndex = 3
-        Me.AddRuleBn.Text = "Add Rule"
-        Me.AddRuleBn.UseVisualStyleBackColor = True
-        '
-        'RemoveRuleBn
-        '
-        Me.RemoveRuleBn.Enabled = False
-        Me.RemoveRuleBn.Location = New System.Drawing.Point(94, 22)
-        Me.RemoveRuleBn.Name = "RemoveRuleBn"
-        Me.RemoveRuleBn.Size = New System.Drawing.Size(75, 23)
-        Me.RemoveRuleBn.TabIndex = 4
-        Me.RemoveRuleBn.Text = "Remove Rule"
-        Me.RemoveRuleBn.UseVisualStyleBackColor = True
         '
         'FormReport
         '

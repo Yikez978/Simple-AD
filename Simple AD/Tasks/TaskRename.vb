@@ -2,7 +2,7 @@
 Imports SimpleLib
 
 Public Class TaskRename
-    Inherits ActiveTask
+    Inherits TaskBase
 
     Private _TargetDomainObject As DomainObject
     Private _ResetForm As FormPasswordReset
@@ -44,7 +44,7 @@ Public Class TaskRename
 
     Private Sub RenameFinished(ByVal Result As SimpleResult)
 
-        Debug.WriteLine("[Info] Rename request finished with state: " & Result.Status.ToString)
+        Logger.Log("[Info] Rename request finished with state: " & Result.Status.ToString)
 
         If Result.IsSuccess = True Then
 

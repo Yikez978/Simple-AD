@@ -1,13 +1,11 @@
 ﻿Imports System.Drawing
 Imports SimpleLib
 
-Imports SimpleAD.LocalData
-
 Public Module ToolStripHandler
 
     Dim StaticButtonsGroup As New ControlToolStripGroup With {.DisplayText = "Simple AD"}
     Dim ExportButtonsGroup As New ControlToolStripGroup With {.DisplayText = "Export", .Visible = True}
-    Dim CreateButtonsGroup As New ControlToolStripGroup With {.DisplayText = "New Object", .Visible = True}
+    Dim CreateButtonsGroup As New ControlToolStripGroup With {.DisplayText = "Create", .Visible = True}
     Dim ReportingButtonsGroup As New ControlToolStripGroup With {.DisplayText = "Reporting", .Visible = False}
     Dim DirectoryButtonsGroup As New ControlToolStripGroup With {.DisplayText = "Directory", .Visible = False}
     Dim SingleUserButtonsGroup As New ControlToolStripGroup With {.DisplayText = "User Actions", .Visible = False}
@@ -113,7 +111,7 @@ Public Module ToolStripHandler
         Dim ReportingButtons As New List(Of ControlToolStripButton)
 
         Dim NewReportBn As ControlToolStripButton = New ControlToolStripButton With
-            {.Name = "NewReportBn", .Text = "New Report", .Image = New Icon(My.Resources.report, New Size(32, 32)).ToBitmap, .Enabled = False}
+            {.Name = "NewReportBn", .Text = "New Report", .Image = New Icon(My.Resources.report, New Size(32, 32)).ToBitmap, .Enabled = True}
         AddHandler NewReportBn.ButtonClicked, AddressOf _ToolStripHandler.NewReport_Click
         ReportingButtons.Add(NewReportBn)
 

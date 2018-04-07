@@ -1,6 +1,5 @@
 ﻿Imports System.ComponentModel
 Imports System.Drawing
-Imports System.Threading
 Imports System.Windows.Forms
 Imports SimpleLib
 
@@ -9,7 +8,7 @@ Public Class FormPing
     Public Property PingTask As TaskPing
     Public Property Computer As ComputerDomainObject
 
-    Public Event FormClosed()
+    Public Shadows Event FormClosed()
 
     Public Sub New(Task As TaskPing, ComputerObject As ComputerDomainObject)
         InitializeComponent()

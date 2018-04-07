@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing
 Imports System.IO
 Imports System.Windows.Forms
+Imports SimpleLib
 
 Namespace LocalData
 
@@ -8,30 +9,37 @@ Namespace LocalData
 
         Public Shared Sub SaveRecentFile(Path As String)
 
-            SetupLocalData()
+            Try
 
-            Dim RecntFileStreamReader As New StreamReader(AppData & "\RecentFiles.txt")
-            Dim recentFilesList As New List(Of String)
+                SetupLocalData()
 
-            If File.Exists(Path) Then
+                Dim RecentFileStreamReader As New StreamReader(AppData & "\RecentFiles.txt")
+                Dim recentFilesList As New List(Of String)
 
-                While Not RecntFileStreamReader.EndOfStream
-                    Dim Line As String = RecntFileStreamReader.ReadLine
-                    If Not recentFilesList.Contains(Line) AndAlso Not String.IsNullOrEmpty(Line) Then
-                        recentFilesList.Add(Line)
+                If File.Exists(Path) Then
+
+                    While Not RecentFileStreamReader.EndOfStream
+                        Dim Line As String = RecentFileStreamReader.ReadLine
+                        If Not recentFilesList.Contains(Line) AndAlso Not String.IsNullOrEmpty(Line) Then
+                            recentFilesList.Add(Line)
+                        End If
+                    End While
+
+                    RecentFileStreamReader.Close()
+
+                    If Not recentFilesList.Contains(Path) Then
+                        Using RecntFileStreamWriter As StreamWriter = File.AppendText(AppData & "\RecentFiles.txt")
+                            RecntFileStreamWriter.WriteLine(Path)
+                            RecntFileStreamWriter.Close()
+                        End Using
                     End If
-                End While
 
-                RecntFileStreamReader.Close()
-
-                If Not recentFilesList.Contains(Path) Then
-                    Using RecntFileStreamWriter As StreamWriter = File.AppendText(AppData & "\RecentFiles.txt")
-                        RecntFileStreamWriter.WriteLine(Path)
-                        RecntFileStreamWriter.Close()
-                    End Using
                 End If
 
-            End If
+            Catch Ex As Exception
+                Logger.Log(String.Format("[Error] Faile to write path {0} to recent files: {1}", Path, Ex.Message))
+            End Try
+
         End Sub
 
         Public Shared Sub PopulateRecentFileList()
@@ -55,7 +63,7 @@ Namespace LocalData
                                 RecentFileItem.Image = New Bitmap(Icon.ExtractAssociatedIcon(Line).ToBitmap, New Size(17, 17))
                                 RecentFileItem.ImageScaling = ToolStripItemImageScaling.None
                             Catch Ex As Exception
-                                Debug.WriteLine("[Error] Unable to load image from file " & Line & " {0}" & Ex.Message)
+                                Logger.Log("[Error] Unable to load image from file " & Line & " {0}" & Ex.Message)
                             End Try
                         End If
                     End If

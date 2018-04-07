@@ -178,6 +178,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Security" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.ValueTuple.4.4.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms">
       <Private>False</Private>
@@ -211,6 +214,12 @@
     <Compile Include="Forms\FormPing.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\FormReportRule.Designer.vb">
+      <DependentUpon>FormReportRule.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormReportRule.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="LocalData\Config.vb" />
     <Compile Include="Forms\FormNewOu.Designer.vb">
       <DependentUpon>FormNewOu.vb</DependentUpon>
@@ -227,7 +236,6 @@
     <Compile Include="LocalData\Paths.vb" />
     <Compile Include="LocalData\RecentFiles.vb" />
     <Compile Include="Classes\PasswordAdvisor.vb" />
-    <Compile Include="Classes\TaskBarProgress.vb" />
     <Compile Include="Forms\FormImport.Designer.vb">
       <DependentUpon>FormImport.vb</DependentUpon>
     </Compile>
@@ -281,11 +289,11 @@
     </Compile>
     <Compile Include="Modules\StatusStripHandler.vb" />
     <Compile Include="Modules\GetObject.vb" />
-    <Compile Include="Modules\ImageHelper.vb" />
-    <Compile Include="Modules\PaintHelper.vb" />
     <Compile Include="Modules\ErrorHandling.vb" />
     <Compile Include="Modules\ToolStripHandler.vb" />
     <Compile Include="System\InvalidImportException.vb" />
+    <Compile Include="Tasks\IBatchTask.vb" />
+    <Compile Include="Tasks\TaskHandler.vb" />
     <Compile Include="Tasks\TaskReport.vb" />
     <Compile Include="Tasks\TaskPing.vb" />
     <Compile Include="UserControls\UIHandler.vb" />
@@ -370,7 +378,7 @@
     <Compile Include="Forms\FormOptions.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Tasks\ActiveTask.vb" />
+    <Compile Include="Tasks\TaskBase.vb" />
     <Compile Include="Tasks\TaskBulkDelete.vb" />
     <Compile Include="Tasks\TaskBulkEnableDisabled.vb" />
     <Compile Include="Tasks\TaskBulkImport.vb" />
@@ -382,7 +390,6 @@
     <Compile Include="Tasks\TaskNewOu.vb" />
     <Compile Include="Tasks\TaskNewUser.vb" />
     <Compile Include="Tasks\TaskPasswordReset.vb" />
-    <Compile Include="Tasks\TaskPool.vb" />
     <Compile Include="Tasks\TaskRename.vb" />
     <Compile Include="Tasks\TaskSearch.vb" />
     <Compile Include="Templates\TemplateManager.vb" />
@@ -536,6 +543,9 @@
     <EmbeddedResource Include="Forms\FormReport.resx">
       <DependentUpon>FormReport.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormReportRule.resx">
+      <DependentUpon>FormReportRule.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormSearch.resx">
       <DependentUpon>FormSearch.vb</DependentUpon>
     </EmbeddedResource>
@@ -649,7 +659,6 @@
     <None Include="Resources\Group.ico" />
     <None Include="Resources\Search.ico" />
     <None Include="Resources\Domain.ico" />
-    <None Include="Resources\Delete.ico" />
     <None Include="Resources\Exit.ico" />
     <None Include="Resources\Warning.ico" />
     <None Include="Resources\Failed.ico" />
@@ -674,7 +683,6 @@
     <None Include="Resources\colorFailed.ico" />
     <None Include="Resources\Wizard.ico" />
     <None Include="Resources\List.ico" />
-    <None Include="Resources\Forward.ico" />
     <None Include="Resources\report.ico" />
     <None Include="Resources\DataProtection.ico" />
     <None Include="Resources\SecurityLock.ico" />
@@ -692,6 +700,16 @@
     <None Include="Resources\LogonTime.ico" />
     <None Include="Resources\Server.ico" />
     <None Include="Resources\Client.ico" />
+    <None Include="Resources\Protect.ico" />
+    <None Include="Resources\Apple.ico" />
+    <None Include="Resources\Windows.ico" />
+    <None Include="Resources\Cogs.ico" />
+    <None Include="Resources\Forward.ico" />
+    <None Include="Resources\Organization.ico" />
+    <None Include="Resources\Timer.ico" />
+    <None Include="Resources\Bug.ico" />
+    <None Include="Resources\Delete.ico" />
+    <None Include="Resources\Registry.ico" />
     <Content Include="SimpleADIcon.ico" />
   </ItemGroup>
   <ItemGroup>

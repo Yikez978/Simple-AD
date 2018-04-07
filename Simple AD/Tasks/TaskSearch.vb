@@ -5,7 +5,7 @@ Imports System.Threading.Tasks
 Imports System.Threading
 
 Public Class TaskSearch
-    Inherits ActiveTask
+    Inherits TaskBase
 
     Private _SearchTerm As String
     Private _ListView As ObjectListView
@@ -14,6 +14,8 @@ Public Class TaskSearch
 
     Private _Cts As CancellationTokenSource
     Private _LastCts As CancellationTokenSource
+
+    Private AttributeParser As New AttributeParser
 
     Private Delegate Sub Delegate_AfterGetResults(ByVal DomainObjectList As List(Of Object))
 
@@ -37,7 +39,7 @@ Public Class TaskSearch
             _SearchTask.Status = Threading.Tasks.TaskStatus.WaitingToRun OrElse
             _SearchTask.Status = Threading.Tasks.TaskStatus.WaitingForActivation) Then
 
-            Debug.WriteLine("[Debug] Canceling previously running GetObjects task")
+            Logger.Log("[Debug] Canceling previously running GetObjects task")
 
             _LastCts.Cancel()
 
@@ -75,19 +77,19 @@ Public Class TaskSearch
 
                 Dim NewObject As Object = Nothing
 
-                NewObject = GetObjectAttributesFromResult(result, Nothing)
+                NewObject = AttributeParser.GetObjectAttributesFromResult(result, Nothing)
 
                 If NewObject IsNot Nothing Then
                     NewDomainObjectList.Add(NewObject)
                 End If
             Next
 
-            Debug.WriteLine("[Info] Get Objects Completed")
+            Logger.Log("[Info] Get Objects Completed")
 
         Catch ArgEx As ArgumentException
-            Debug.WriteLine("[Error] " & ArgEx.GetBaseException.ToString & ArgEx.Message)
+            Logger.Log("[Error] " & ArgEx.GetBaseException.ToString & ArgEx.Message)
         Catch Ex As Exception
-            Debug.WriteLine("[Error] " & Ex.GetBaseException.ToString & Ex.Message)
+            Logger.Log("[Error] " & Ex.GetBaseException.ToString & Ex.Message)
         Finally
             If Not CT.IsCancellationRequested Then
                 _ListView.Invoke(New Delegate_AfterGetResults(AddressOf AfterGetResults), NewDomainObjectList)
@@ -98,7 +100,7 @@ Public Class TaskSearch
 
     Private Sub AfterGetResults(Optional DomainObjectList As List(Of Object) = Nothing)
 
-        Debug.WriteLine("[Info] Find Objects After")
+        Logger.Log("[Info] Find Objects After")
 
         If DomainObjectList IsNot Nothing Then
 

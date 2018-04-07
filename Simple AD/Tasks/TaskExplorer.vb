@@ -7,7 +7,7 @@ Imports System.Threading.Tasks
 Imports SimpleLib
 
 Public Class TaskExplorer
-    Inherits ActiveTask
+    Inherits TaskBase
 
     Public JobPath As String
 
@@ -15,23 +15,29 @@ Public Class TaskExplorer
     Private _MainTreeView As ControlDomainTreeView
 
     Private _UserReportContainer As ContainerExplorer
-    Private _LastReportType As SimpleADReportType
+    Private _LastReportType As ReportManager.SimpleADReportType
 
     Private _Filter As String
-    Private _Type As SimpleADReportType
+    Private _Type As ReportManager.SimpleADReportType
 
     Private _GetTask As Task
 
     Private _Cts As CancellationTokenSource
     Private _LastCts As CancellationTokenSource
 
-    Private _ColumnSizes As Integer() = {205, 137, 253}
+    Private _ObjectListLock As New Object
 
-    Private DomainObjectList As List(Of Object) = New List(Of Object)
+    Private _ColumnSizes As Integer() = {205, 18, 137, 253}
+
+    Private _QueryStopwatch As New Stopwatch
+
+    Public DomainObjectList As List(Of Object) = New List(Of Object)
+
+    Public ExplorerAttrParser As New AttributeParser
 
     Private Delegate Sub Delegate_AfterFindObjects(ByVal DomainObjectList As List(Of Object))
 
-    Public Sub New(ByVal Type As SimpleADReportType, Optional LDAPQuery As String = Nothing)
+    Public Sub New(ByVal Type As ReportManager.SimpleADReportType, Optional LDAPQuery As String = Nothing)
         MyBase.New
 
         TaskType = ActiveTaskType.Explorer
@@ -56,36 +62,52 @@ Public Class TaskExplorer
             .GroupKeyGetter = New GroupKeyGetterDelegate(AddressOf SortByNameGroupKeyGetter)
         }
 
+        Dim FlagsCol As New OLVColumn With {
+            .AspectName = "Flags",
+            .Text = String.Empty,
+            .Width = _ColumnSizes(1),
+            .ImageGetter = New ImageGetterDelegate(AddressOf _MainListView.MetaImageGetter),
+            .GroupKeyGetter = New GroupKeyGetterDelegate(AddressOf SortByNameGroupKeyGetter),
+            .AspectToStringConverter = Function(rowObject As Object) String.Empty,
+            .MaximumWidth = 20,
+            .MinimumWidth = 20,
+            .Hideable = False,
+            .IsButton = False,
+            .Sortable = False
+        }
+
         Dim TypeCol As New OLVColumn With {
             .AspectName = "TypeFriendly",
             .Text = "Type",
             .IsTileViewColumn = True,
-            .Width = _ColumnSizes(1)
+            .Width = _ColumnSizes(2)
         }
 
         Dim DescriptionCol As New OLVColumn With {
             .AspectName = "Description",
             .Text = "Description",
             .IsTileViewColumn = True,
-            .Width = _ColumnSizes(2),
+            .Width = _ColumnSizes(3),
             .GroupKeyGetter = Function(rowObject As Object) SortByNameDynamicGroupKeyGetter(rowObject, "description")
         }
 
         _MainListView.PrimarySortColumn = TypeCol
         _MainListView.AttachToStatusBar()
-        _MainListView.AllColumns.AddRange(New OLVColumn() {NameCol, TypeCol, DescriptionCol})
+        _MainListView.AllColumns.AddRange(New OLVColumn() {NameCol, FlagsCol, TypeCol, DescriptionCol})
 
     End Sub
 
-    Public Sub Refresh(Optional Path As String = Nothing, Optional JobReport As SimpleADReportType = Nothing)
+    Public Sub Refresh(Optional Path As String = Nothing, Optional JobReport As ReportManager.SimpleADReportType = Nothing)
 
-        Debug.WriteLine("[Info] Get Objects Refreshed")
+        _QueryStopwatch.Start()
 
         TaskStatus = ActiveTaskStatus.InProgress
 
-        If (Not JobReport = Nothing) And (Not JobReport = SimpleADReportType.Explorer) Then
+        ExplorerAttrParser.EvaluateProtection = My.Settings.AdvEvaluateProtection
+
+        If (Not JobReport = Nothing) And (Not JobReport = ReportManager.SimpleADReportType.Explorer) Then
             _Type = JobReport
-            _Filter = GetReport(JobReport).ReportQuery
+            _Filter = ReportManager.GetReport(JobReport).ReportQuery
             JobPath = Nothing
         Else
             _Type = SimpleADReportType.Explorer
@@ -105,19 +127,24 @@ Public Class TaskExplorer
             _GetTask.Status = Threading.Tasks.TaskStatus.WaitingToRun OrElse
             _GetTask.Status = Threading.Tasks.TaskStatus.WaitingForActivation) Then
 
-            Debug.WriteLine("[Debug] Canceling previously running GetObjects task")
 
-            '' Send a cancel request to the previous task if it is still running so as not to cause a data race when updating the list view
+#If DEBUG Then
+            Logger.Log(String.Format("[Info] Canceling GetObjects task: {0}", _GetTask.Id))
+#End If
+
+            '' Send a cancel request to the previous task if it is still running 
+            '' so as not to cause a data race when updating the list view
             _LastCts.Cancel()
+        Else
 
         End If
 
         DomainObjectList = Nothing
 
-        If My.Settings.UsePaging Then
+        If My.Settings.AdvUsePaging Then
             Select Case _Type
                 Case SimpleADReportType.Explorer
-                    _GetTask = Task.Run(Sub() GetObjects(_Cts.Token))
+                    _GetTask = Task.Run(Sub() GetObjectsPaged(_Cts.Token))
                 Case Else
                     _GetTask = Task.Run(Sub() GetObjectsPaged(_Cts.Token))
             End Select
@@ -125,12 +152,24 @@ Public Class TaskExplorer
             _GetTask = Task.Run(Sub() GetObjects(_Cts.Token))
         End If
 
-        '' Save a reference to the last task incase it needs to be canceled
         _LastCts = _Cts
+
+        '' Save a reference to the last task incase it needs to be canceled
+
 
     End Sub
 
     Private Sub GetObjectsPaged(ByVal CT As CancellationToken)
+
+        If CT.IsCancellationRequested Then
+            Exit Sub
+        End If
+
+        Dim IsPageDirty As Boolean
+
+#If DEBUG Then
+        Dim PageSearchTime As Stopwatch = Stopwatch.StartNew
+#End If
 
         Dim hostOrDomainName As String = Nothing
 
@@ -148,7 +187,7 @@ Public Class TaskExplorer
 
 
         If String.IsNullOrEmpty(hostOrDomainName) Then
-            Debug.WriteLine("[Error] Unable to resolve hostname of domain controller")
+            Logger.Log("[Error] Unable to resolve hostname of domain controller")
             Exit Sub
         End If
 
@@ -167,7 +206,10 @@ Public Class TaskExplorer
             If(String.IsNullOrEmpty(LoginPassword), Net.CredentialCache.DefaultNetworkCredentials, New Net.NetworkCredential(LoginUsername, LoginPassword))
         )
 
-        Debug.WriteLine("[Debug] Performing a paged search ...")
+        Connection.Timeout = TimeSpan.FromSeconds(6)
+
+        Connection.SessionOptions.Sealing = True
+        Connection.SessionOptions.SendTimeout = TimeSpan.FromSeconds(3)
 
         Dim ldapSearchFilter As String = _Filter
 
@@ -194,12 +236,13 @@ Public Class TaskExplorer
         Dim SearchRequest As SearchRequest = New SearchRequest(startingDn, ldapSearchFilter, ScopeLvel, Attributes)
         Dim pageRequest As PageResultRequestControl = New PageResultRequestControl(pageSize)
 
-
         SearchRequest.Controls.Add(pageRequest)
 
         Dim searchOptions As SearchOptionsControl = New SearchOptionsControl(SearchOption.DomainScope)
 
         SearchRequest.Controls.Add(searchOptions)
+
+        DomainObjectList = New List(Of Object)
 
         While True
 
@@ -207,26 +250,38 @@ Public Class TaskExplorer
 
             Try
 
+                If CT.IsCancellationRequested Then
+
+                    DomainObjectList = Nothing
+
+                    Exit While
+                End If
+
                 Dim SearchResponse As SearchResponse = DirectCast(Connection.SendRequest(SearchRequest), SearchResponse)
 
                 If (Not SearchResponse.Controls.Length = 1 Or (SearchResponse.Controls(0).GetType IsNot GetType(PageResultResponseControl))) Then
-                    Debug.WriteLine("[Debug] The server cannot page the result set")
+                    Logger.Log("[Debug] The server cannot page the result set")
                     Return
                 End If
 
                 Dim pageResponse As PageResultResponseControl = DirectCast(SearchResponse.Controls(0), PageResultResponseControl)
 
-                DomainObjectList = New List(Of Object)
+                For i As Integer = 0 To SearchResponse.Entries.Count - 1
+                    Dim Entry As SearchResultEntry = SearchResponse.Entries(i)
 
-                For Each entry As SearchResultEntry In SearchResponse.Entries
+                    Dim NewObject As Object = Nothing
 
-                    Dim NewObject As DomainObject = Nothing
+                    NewObject = ExplorerAttrParser.GetObjectAttributesFromResultEntry(Entry, Report.AttributesToLoad)
 
-                    NewObject = GetObjectAttributesFromResultEntry(entry, Attributes)
-
-                    If NewObject IsNot Nothing Then
-                        DomainObjectList.Add(DirectCast(NewObject, DomainObject))
+                    If NewObject Is Nothing Then
+                        Continue For
                     End If
+
+                    If DomainObjectList Is Nothing Then
+                        Continue For
+                    End If
+
+                    DomainObjectList.Add(NewObject)
 
                 Next
 
@@ -237,29 +292,49 @@ Public Class TaskExplorer
                 pageRequest.Cookie = pageResponse.Cookie
 
             Catch Ex As Exception
-                Debug.WriteLine("[Error] Failed to complete paged LDAP search. Host: {0} Error Message: {1}", hostOrDomainName, Ex.Message)
+
+                IsPageDirty = True
+
+                Logger.Log(String.Format("[Error] Failed to complete paged LDAP search. Host: {0} Error Message: {1}", hostOrDomainName, Ex.Message))
                 Exit While
+
+            Finally
+
+                If CT.IsCancellationRequested Then
+                    IsPageDirty = True
+                End If
+
             End Try
 
         End While
 
-        If Not CT.IsCancellationRequested Then
-            _MainListView.Invoke(New Delegate_AfterFindObjects(AddressOf AfterFindObjects), DomainObjectList)
-        End If
+        Connection.Dispose()
 
+        SyncLock _ObjectListLock
 
+            If Not CT.IsCancellationRequested AndAlso Not IsPageDirty Then
+
+                _MainListView.Invoke(New Delegate_AfterFindObjects(AddressOf AfterFindObjects), DomainObjectList)
+
+            End If
+
+        End SyncLock
+
+#If DEBUG Then
+        Logger.Log(String.Format("[Info] Completed paged search in {0} ms", Convert.ToUInt32(PageSearchTime.ElapsedMilliseconds)))
+#End If
 
     End Sub
 
     Private Sub GetObjects(ByVal CT As CancellationToken)
 
-        If CT.IsCancellationRequested Then
-            Exit Sub
-        End If
-
         Dim SearchResults As SearchResultCollection = Nothing
 
         Try
+
+            If CT.IsCancellationRequested Then
+                Exit Try
+            End If
 
             Dim Entry As DirectoryEntry = GetDirEntry(JobPath)
             Dim Report As SimpleADReport = GetReport(_Type)
@@ -268,6 +343,9 @@ Public Class TaskExplorer
             With DirSearcher
                 .SearchRoot = Entry
                 .Filter = _Filter
+                .CacheResults = My.Settings.AdvEnableResultCaching
+                .ServerTimeLimit = TimeSpan.FromSeconds(5)
+                .ClientTimeout = TimeSpan.FromSeconds(6)
                 .PageSize = 1000
                 .SizeLimit = 10000
                 Select Case _Type
@@ -294,34 +372,46 @@ Public Class TaskExplorer
             SearchResults = DirSearcher.FindAll()
 
             If CT.IsCancellationRequested Then
-                Throw New TaskCanceledException
+                DirSearcher.Dispose()
+                Exit Try
             End If
 
             DomainObjectList = New List(Of Object)
+
+            If SearchResults Is Nothing Then
+                Exit Try
+            End If
 
             For Each result As SearchResult In SearchResults
 
                 Dim NewObject As Object = Nothing
 
-                If Report IsNot Nothing Then
-                    NewObject = GetObjectAttributesFromResult(result, Report.AttributesToLoad)
+                If Report Is Nothing Then
+                    NewObject = ExplorerAttrParser.GetObjectAttributesFromResult(result, Nothing)
                 Else
-                    NewObject = GetObjectAttributesFromResult(result, Nothing)
+                    NewObject = ExplorerAttrParser.GetObjectAttributesFromResult(result, Report.AttributesToLoad)
                 End If
 
-                If NewObject IsNot Nothing Then
-                    DomainObjectList.Add(NewObject)
+                If NewObject Is Nothing Then
+                    Continue For
                 End If
+
+                If DomainObjectList Is Nothing Then
+                    Exit For
+                End If
+
+                DomainObjectList.Add(NewObject)
+
             Next
 
 
         Catch CancelEx As TaskCanceledException
-            Debug.WriteLine("[Info] Get Objects Canceled: " & CancelEx.Message)
+            Logger.Log("[Info] Get Objects Canceled: " & CancelEx.Message)
         Catch ArgEx As ArgumentException
             ReportError(ArgEx)
-            Debug.WriteLine("[Error] " & ArgEx.GetBaseException.ToString & ArgEx.Message)
+            Logger.Log("[Error] " & ArgEx.GetBaseException.ToString & ArgEx.Message)
         Catch Ex As Exception
-            Debug.WriteLine("[Error] " & Ex.GetBaseException.ToString & Ex.Message)
+            Logger.Log("[Error] Get Objects unhandled error: " & Ex.GetBaseException.ToString & Ex.Message)
             ReportError(Ex)
         Finally
 
@@ -339,8 +429,6 @@ Public Class TaskExplorer
     End Sub
 
     Private Sub AfterFindObjects(Optional DomainObjectList As List(Of Object) = Nothing)
-
-        Debug.WriteLine("[Info] Find Objects After")
 
         If DomainObjectList IsNot Nothing Then
 
@@ -361,18 +449,22 @@ Public Class TaskExplorer
         _MainListView.RebuildColumns()
         _MainListView.EndUpdate()
 
+        UpdateQueryTimeText(String.Format("{0} ms", _QueryStopwatch.ElapsedMilliseconds))
+
+        _QueryStopwatch.Reset()
+
     End Sub
 
     Private Sub Setcolumns()
 
         _MainListView.BeginUpdate()
-        _MainListView.PrimarySortColumn = _MainListView.AllColumns(1)
-        _MainListView.AllColumns.RemoveRange(3, _MainListView.AllColumns.Count - 3)
+        _MainListView.PrimarySortColumn = _MainListView.AllColumns(2)
+        _MainListView.AllColumns.RemoveRange(4, _MainListView.AllColumns.Count - 4)
         _MainListView.RebuildColumns()
 
         Dim Report As SimpleADReport = GetReport(_Type)
 
-        _MainListView.AllColumns(1).IsVisible = True
+        _MainListView.AllColumns(2).IsVisible = True
 
         If Report Is Nothing Then
             Exit Sub
@@ -381,7 +473,7 @@ Public Class TaskExplorer
         If Report.AttributesToLoad IsNot Nothing Then
             If Report.AttributesToLoad.Count > 0 Then
 
-                _MainListView.AllColumns(1).IsVisible = False
+                _MainListView.AllColumns(2).IsVisible = False
 
                 For i As Integer = 0 To Report.AttributesToLoad.Count - 1
 
@@ -403,6 +495,7 @@ Public Class TaskExplorer
                         If SortKey = SortType.Time Then
                             NewColumn.GroupKeyGetter = Function(rowObject As Object) SortByDateGroupKeyGetter(rowObject, Attribute)
                             NewColumn.GroupKeyToTitleConverter = Function(groupKey As Object) If(Not DirectCast(groupKey, DateTime).Year = 1694, DirectCast(groupKey, DateTime).ToString("MMMM yyyy"), "N/A")
+                            NewColumn.AspectToStringConverter = New AspectToStringConverterDelegate(AddressOf DateToShortDelegate)
                         ElseIf SortKey = SortType.Alphabetic Then
                             NewColumn.GroupKeyGetter = Function(rowObject As Object) SortByNameDynamicGroupKeyGetter(rowObject, Attribute)
                         End If
@@ -423,8 +516,6 @@ Public Class TaskExplorer
             End If
         End If
 
-
-
     End Sub
 
     Private Sub ReportError(ByVal ErrorMessage As Exception)
@@ -436,10 +527,10 @@ Public Class TaskExplorer
             If _UserReportContainer.InvokeRequired Then
                 _UserReportContainer.Invoke(New Action(Of Exception)(AddressOf ReportError), ErrorMessage)
             Else
-                Debug.WriteLine("[Error] " & ErrorMessage.Message)
+                Logger.Log("[Error] " & ErrorMessage.Message)
 
                 If ErrorMessage.StackTrace IsNot Nothing Then
-                    Debug.WriteLine("[Error] " & ErrorMessage.StackTrace.ToString)
+                    Logger.Log("[Error] " & ErrorMessage.StackTrace.ToString)
                 End If
 
             End If
@@ -452,7 +543,7 @@ Public Class TaskExplorer
         Try
             _Cts.Cancel()
         Catch Ex As Exception
-            Debug.WriteLine("[Error] Failed to cancel the running explorer task: " & Ex.Message)
+            Logger.Log("[Error] Failed to cancel the running explorer task: " & Ex.Message)
         End Try
     End Sub
 

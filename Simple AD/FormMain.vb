@@ -23,8 +23,8 @@ Public Class FormMain
         ThowExxceptionToolStripMenuItem.Visible = True
 #End If
 
-        InitiateJobPool()
         RecentFiles.PopulateRecentFileList()
+
         MainFormStart()
         BuildUIHandlers()
 
@@ -36,14 +36,14 @@ Public Class FormMain
             Dim RunUpdateCheck As New FormUpdate
         End If
 
-        If ValidateActiveDirectoryLogin(LoginUsername, LoginPassword, LoginUsernamePrefix) = True Then
+        If ValidateActiveDirectoryLogin(LoginUsername, LoginPassword, LoginUsernamePrefix) Then
 
             MainDomainTreeViewHandle.RefreshNodes()
 
             Dim NewReport As TaskExplorer = New TaskExplorer(SimpleADReportType.Explorer)
             UserToolStripMenuItem.Text = GetDisplayName(True)
 
-            ReportAttributeStore.init()
+            ReportAttributeStore.RegisterReportAttributes()
 
             ADChecker = New ADConnectionChecker
             ADChecker.RunCheck()
@@ -72,14 +72,12 @@ Public Class FormMain
 #Region "Event Handlers"
 
     Private Sub OptionsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OptionsToolStripMenuItem.Click
-        FormOptions.ShowDialog()
+
+        Dim OptionsForm = New FormOptions
+        OptionsForm.ShowDialog()
     End Sub
 
     Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
-        Application.Exit()
-    End Sub
-
-    Private Sub ExitToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
         Application.Exit()
     End Sub
 
@@ -137,7 +135,7 @@ Public Class FormMain
     End Sub
 
     Private Sub FormMain_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-        If OngoingBulkJobs.Count > 0 Then
+        If TaskHandler.BatchTasks.Count > 0 Then
 
             Dim ClosePromptForm As FormConfirmation = New FormConfirmation("Are you sure you wish to close Simple AD? This will Cancel ongoing Jobs.", ConfirmationType.Close) With {
                 .StartPosition = FormStartPosition.CenterScreen
@@ -146,11 +144,11 @@ Public Class FormMain
 
             If ClosePromptForm.DialogResult = DialogResult.Yes Then
 
-                For Each ImportJob As BulkADWorker In OngoingBulkJobs
-                    ImportJob.TaskHost.TaskStatus = ActiveTaskStatus.Canceled
+                For Each Task As TaskBase In TaskHandler.BatchTasks
+                    Task.TaskStatus = ActiveTaskStatus.Canceled
                 Next
 
-                OngoingBulkJobs.Clear()
+                TaskHandler.BatchTasks.Clear()
                 Application.Exit()
             Else
                 e.Cancel = True

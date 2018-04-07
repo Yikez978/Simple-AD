@@ -1,9 +1,10 @@
 ﻿Imports System.Threading.Tasks
 Imports System.Windows.Forms
+
 Imports SimpleLib
 
 Public Class TaskBulkDelete
-    Inherits ActiveTask
+    Inherits TaskBase
 
     Private TargetDomainObjects As IList
     Private HostExplorerTask As TaskExplorer
@@ -30,6 +31,7 @@ Public Class TaskBulkDelete
 
         Dim DeleteForm As FormConfirmation = New FormConfirmation("Are you sure you wish to delete " & TargetDomainObjects.Count & " objects?", ConfirmationType.Delete)
         DeleteForm.ShowDialog()
+
         If DeleteForm.DialogResult = DialogResult.Yes Then
 
             TaskStatus = ActiveTaskStatus.InProgress

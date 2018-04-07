@@ -2,7 +2,7 @@
 Imports SimpleLib
 
 Public Class TaskPasswordReset
-    Inherits ActiveTask
+    Inherits TaskBase
 
     Public TargetUser As UserDomainObject
     Private TargetExplorerJob As TaskExplorer
@@ -49,7 +49,7 @@ Public Class TaskPasswordReset
 
     Private Sub ResetPasswordFinished(ByVal Result As SimpleResult)
 
-        Debug.WriteLine("[Info] New password reset request finished with state: " & Result.Status.ToString)
+        Logger.Log("[Info] New password reset request finished with state: " & Result.Status.ToString)
 
         If Result.IsSuccess = True Then
 

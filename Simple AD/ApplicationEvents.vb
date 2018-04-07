@@ -18,6 +18,8 @@ Namespace My
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
 
+            Logger.Init()
+
             If My.Settings.Username IsNot Nothing And My.Settings.Password IsNot Nothing Then
                 If My.Settings.ManualLogin = True Then
 
@@ -71,13 +73,15 @@ Namespace My
                 Dim o As String = e.Exception.Message
                 Dim s As String = e.Exception.StackTrace
 
-                Dim ErrorDialog As TaskDialog = New TaskDialog("Unhandled Exception", "Simple AD Error", "Simple AD has encountered an unexpected Error" & vbNewLine & vbNewLine & o, CommonButton.Cancel, CommonIcon.Stop)
+                Dim ErrorDialog As TaskDialog = New TaskDialog("Something went wrong  :(", "Simple AD Panicked", "Simple AD has encountered an unexpected Error" & vbNewLine & vbNewLine & o, CommonButton.Cancel, CommonIcon.Stop)
 
                 ErrorDialog.ExpandedInformation = s
-                ErrorDialog.CollapsedControlText = "Show Stack Trace"
-                ErrorDialog.ExpandedControlText = "Hide Stack Trace"
+                ErrorDialog.CollapsedControlText = "Show Debug Information"
+                ErrorDialog.ExpandedControlText = "Hide Debug Information"
                 ErrorDialog.IsExpanded = False
                 ErrorDialog.ShowExpandedInfoInFooter = False
+
+                ErrorDialog.CustomIcon = My.Resources.Bug
 
                 ErrorDialog.CustomButtons = New CustomButton() {
                     New CustomButton(100, "Copy To Clipboard")
@@ -90,7 +94,7 @@ Namespace My
                 End If
 
 
-                'Debug.WriteLine("[Error] " & o)
+                'Logger.Log("[Error] " & o)
                 'MessageBox.Show(o + vbNewLine + s, "Simple AD has encountered an unexpected Error", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error) ' use EventLog instead
             End If
         End Sub

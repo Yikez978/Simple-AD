@@ -2,7 +2,7 @@
 Imports SimpleLib
 
 Public Class TaskMove
-    Inherits ActiveTask
+    Inherits TaskBase
 
     Private TargetDomainObject As DomainObject
     Private TargetExplorerJob As TaskExplorer
@@ -50,7 +50,7 @@ Public Class TaskMove
 
     Private Sub MoveObjectFinished(ByVal Result As SimpleResult)
 
-        Debug.WriteLine("[Info] Move object request finished with state: " & Result.Status.ToString)
+        Logger.Log("[Info] Move object request finished with state: " & Result.Status.ToString)
 
         If Result.IsSuccess = True Then
             TaskStatus = ActiveTaskStatus.Completed

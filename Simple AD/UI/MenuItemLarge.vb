@@ -11,7 +11,7 @@ Public Class MenuItemLarge
     Private IsSelected As Boolean
     Private IconRight As Icon
 
-    Private DefaultBackColor As Color = SystemColors.Control
+    Private Shadows DefaultBackColor As Color = SystemColors.Control
     Private HotColor As Color = Color.FromArgb(232, 239, 247)
     Private HotBorderColor As Color = Color.FromArgb(164, 206, 249)
     Private OnClickBackColor As Color = Color.FromArgb(201, 224, 247)

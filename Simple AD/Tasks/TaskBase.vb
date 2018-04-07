@@ -1,14 +1,15 @@
 ﻿Imports SimpleLib
 Imports SimpleLib.Enums
 
-Public MustInherit Class ActiveTask
+Public MustInherit Class TaskBase
 
-#Region "Properties"
     Public Property TaskName As String
     Public Property TaskType As ActiveTaskType
+    Public Property TaskDescription As String
+
     Public Property TaskOwner As String
     Public Property TaskCreated As DateTime
-    Public Property TaskDescription As String
+
     Public Property TaskProgressMax As Integer
     Public Property TaskErrors As List(Of String)
 
@@ -17,10 +18,14 @@ Public MustInherit Class ActiveTask
         Set(value As ActiveTaskStatus)
             ActiveTaskStatusValue = value
 
-            If TaskStatus = ActiveTaskStatus.Canceled Or TaskStatus = ActiveTaskStatus.Completed Or TaskStatus = ActiveTaskStatus.Failed Then
-                If TaskPool.Pool.Contains(Me) Then
-                    TaskPool.Pool.Remove(Me)
+            If TaskStatus = ActiveTaskStatus.Canceled Or
+                TaskStatus = ActiveTaskStatus.Completed Or
+                TaskStatus = ActiveTaskStatus.Failed Then
+
+                If TaskHandler.TaskPool.Contains(Me) Then
+                    TaskHandler.TaskPool.Remove(Me)
                 End If
+
             End If
 
             RaiseEvent StatusChanged(ActiveTaskStatusValue)
@@ -53,19 +58,18 @@ Public MustInherit Class ActiveTask
     End Property
 
 
-#End Region
-
     Public Event StatusChanged(ByVal StatusChangedArgs As ActiveTaskStatus)
-    Public Event ProgressChanged()
     Public Event StatusMessageChanged(ByVal Message As String)
+
+    Public Event ProgressChanged()
 
     Public Sub New()
         TaskOwner = ActiveDirectoryHelper.GetDisplayName()
         TaskCreated = DateTime.Now
         TaskStatus = ActiveTaskStatus.Idle
 
-        If TaskType.ToString.Contains("Bulk") Then
-            'TaskPool.Pool.Add(Me)
+        If TypeOf Me Is IBatchTask Then
+            TaskHandler.BatchTasks.Add(Me)
         End If
 
     End Sub
@@ -73,7 +77,6 @@ Public MustInherit Class ActiveTask
     Public Overridable Sub Cancel()
         TaskStatus = ActiveTaskStatus.Canceled
     End Sub
-
 
 End Class
 

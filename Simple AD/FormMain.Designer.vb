@@ -81,6 +81,7 @@ Partial Class FormMain
         Me.ToolStripStatusLabelStatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ContainerToolStripStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.Filler = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.QueryToolStripLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.UpdateToolStripStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ConnectionToolStripStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.BackgroundPanel = New System.Windows.Forms.Panel()
@@ -120,7 +121,7 @@ Partial Class FormMain
         Me.SADMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.PreferencesToolStripMenuItem, Me.ToolsToolStripMenuItem, Me.UserToolStripMenuItem, Me.ViewToolStripMenuItem})
         Me.SADMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.SADMenuStrip.Name = "SADMenuStrip"
-        Me.SADMenuStrip.Size = New System.Drawing.Size(1299, 24)
+        Me.SADMenuStrip.Size = New System.Drawing.Size(831, 24)
         Me.SADMenuStrip.TabIndex = 14
         Me.SADMenuStrip.Text = "MenuStrip"
         '
@@ -363,11 +364,11 @@ Partial Class FormMain
         'StatusStrip
         '
         Me.StatusStrip.BackColor = System.Drawing.Color.FromArgb(CType(CType(124, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(153, Byte), Integer))
-        Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabelContext, Me.ToolStripStatusLabelStatus, Me.ContainerToolStripStatusLabel, Me.Filler, Me.UpdateToolStripStatusLabel, Me.ConnectionToolStripStatusLabel})
-        Me.StatusStrip.Location = New System.Drawing.Point(0, 592)
+        Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabelContext, Me.ToolStripStatusLabelStatus, Me.ContainerToolStripStatusLabel, Me.Filler, Me.QueryToolStripLabel, Me.UpdateToolStripStatusLabel, Me.ConnectionToolStripStatusLabel})
+        Me.StatusStrip.Location = New System.Drawing.Point(0, 420)
         Me.StatusStrip.Name = "StatusStrip"
         Me.StatusStrip.ShowItemToolTips = True
-        Me.StatusStrip.Size = New System.Drawing.Size(1299, 22)
+        Me.StatusStrip.Size = New System.Drawing.Size(831, 22)
         Me.StatusStrip.SizingGrip = False
         Me.StatusStrip.TabIndex = 18
         Me.StatusStrip.Text = "StatusStrip"
@@ -376,40 +377,52 @@ Partial Class FormMain
         '
         Me.ToolStripStatusLabelContext.ForeColor = System.Drawing.SystemColors.Window
         Me.ToolStripStatusLabelContext.Name = "ToolStripStatusLabelContext"
-        Me.ToolStripStatusLabelContext.Size = New System.Drawing.Size(0, 17)
+        Me.ToolStripStatusLabelContext.Size = New System.Drawing.Size(79, 17)
+        Me.ToolStripStatusLabelContext.Text = "Context Label"
         '
         'ToolStripStatusLabelStatus
         '
         Me.ToolStripStatusLabelStatus.ForeColor = System.Drawing.SystemColors.Window
         Me.ToolStripStatusLabelStatus.Name = "ToolStripStatusLabelStatus"
-        Me.ToolStripStatusLabelStatus.Size = New System.Drawing.Size(0, 17)
+        Me.ToolStripStatusLabelStatus.Size = New System.Drawing.Size(70, 17)
+        Me.ToolStripStatusLabelStatus.Text = "Status Label"
         '
         'ContainerToolStripStatusLabel
         '
         Me.ContainerToolStripStatusLabel.ForeColor = System.Drawing.SystemColors.Window
         Me.ContainerToolStripStatusLabel.Name = "ContainerToolStripStatusLabel"
         Me.ContainerToolStripStatusLabel.Padding = New System.Windows.Forms.Padding(24, 0, 0, 0)
-        Me.ContainerToolStripStatusLabel.Size = New System.Drawing.Size(24, 17)
+        Me.ContainerToolStripStatusLabel.Size = New System.Drawing.Size(91, 17)
+        Me.ContainerToolStripStatusLabel.Text = "StatusLabel"
         '
         'Filler
         '
         Me.Filler.Enabled = False
         Me.Filler.ForeColor = System.Drawing.SystemColors.Window
         Me.Filler.Name = "Filler"
-        Me.Filler.Size = New System.Drawing.Size(1260, 17)
+        Me.Filler.Size = New System.Drawing.Size(269, 17)
         Me.Filler.Spring = True
+        '
+        'QueryToolStripLabel
+        '
+        Me.QueryToolStripLabel.ForeColor = System.Drawing.SystemColors.Window
+        Me.QueryToolStripLabel.Name = "QueryToolStripLabel"
+        Me.QueryToolStripLabel.Size = New System.Drawing.Size(100, 17)
+        Me.QueryToolStripLabel.Text = "Query Time Label"
         '
         'UpdateToolStripStatusLabel
         '
         Me.UpdateToolStripStatusLabel.ForeColor = System.Drawing.SystemColors.Window
         Me.UpdateToolStripStatusLabel.Name = "UpdateToolStripStatusLabel"
-        Me.UpdateToolStripStatusLabel.Size = New System.Drawing.Size(0, 17)
+        Me.UpdateToolStripStatusLabel.Size = New System.Drawing.Size(76, 17)
+        Me.UpdateToolStripStatusLabel.Text = "Update Label"
         '
         'ConnectionToolStripStatusLabel
         '
         Me.ConnectionToolStripStatusLabel.ForeColor = System.Drawing.SystemColors.Window
         Me.ConnectionToolStripStatusLabel.Name = "ConnectionToolStripStatusLabel"
-        Me.ConnectionToolStripStatusLabel.Size = New System.Drawing.Size(0, 17)
+        Me.ConnectionToolStripStatusLabel.Size = New System.Drawing.Size(100, 17)
+        Me.ConnectionToolStripStatusLabel.Text = "Connection Label"
         '
         'BackgroundPanel
         '
@@ -419,7 +432,7 @@ Partial Class FormMain
         Me.BackgroundPanel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.BackgroundPanel.Location = New System.Drawing.Point(0, 24)
         Me.BackgroundPanel.Name = "BackgroundPanel"
-        Me.BackgroundPanel.Size = New System.Drawing.Size(1299, 568)
+        Me.BackgroundPanel.Size = New System.Drawing.Size(831, 396)
         Me.BackgroundPanel.TabIndex = 20
         '
         'ContainerExplorer
@@ -430,7 +443,7 @@ Partial Class FormMain
         Me.ContainerExplorer.Location = New System.Drawing.Point(0, 100)
         Me.ContainerExplorer.Name = "ContainerExplorer"
         Me.ContainerExplorer.Path = Nothing
-        Me.ContainerExplorer.Size = New System.Drawing.Size(1299, 468)
+        Me.ContainerExplorer.Size = New System.Drawing.Size(831, 296)
         Me.ContainerExplorer.TabIndex = 21
         '
         'ControlToolStrip
@@ -439,7 +452,7 @@ Partial Class FormMain
         Me.ControlToolStrip.Dock = System.Windows.Forms.DockStyle.Top
         Me.ControlToolStrip.Location = New System.Drawing.Point(0, 0)
         Me.ControlToolStrip.Name = "ControlToolStrip"
-        Me.ControlToolStrip.Size = New System.Drawing.Size(1299, 100)
+        Me.ControlToolStrip.Size = New System.Drawing.Size(831, 100)
         Me.ControlToolStrip.TabIndex = 20
         '
         'RowObjectContextMenu
@@ -559,7 +572,7 @@ Partial Class FormMain
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(214, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(233, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(1299, 614)
+        Me.ClientSize = New System.Drawing.Size(831, 442)
         Me.Controls.Add(Me.BackgroundPanel)
         Me.Controls.Add(Me.SADMenuStrip)
         Me.Controls.Add(Me.StatusStrip)
@@ -645,4 +658,5 @@ Partial Class FormMain
     Friend WithEvents RefreshMenuItem As MenuItem
     Friend WithEvents ContainerExplorer As ContainerExplorer
     Friend WithEvents ThowExxceptionToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents QueryToolStripLabel As ToolStripStatusLabel
 End Class

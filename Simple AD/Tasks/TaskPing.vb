@@ -7,7 +7,7 @@ Imports System.Windows.Forms
 Imports SimpleLib
 
 Public Class TaskPing
-    Inherits ActiveTask
+    Inherits TaskBase
 
     Private _TargetComputer As ComputerDomainObject
 

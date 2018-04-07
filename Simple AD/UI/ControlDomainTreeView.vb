@@ -10,11 +10,12 @@ Public Class ControlDomainTreeView
 
     Private _DomainName As String
     Private _DomainController As String
-    Private _SelectedOU As String
+    Private _SelectedItem As String
 
     Public RootNode As TreeNode
 
-    Public Event SelectedOUChanged(ByVal Path As String)
+    Public Event SelectedItemChanged(ByVal Path As String)
+    Public Event SelectedContainerChanged(ByVal Name As String, ByVal FormatPath As Boolean)
     Public Event ReportRequested(ByVal ReportType As SimpleADReportType)
     Public Event NodeClicked(sender As Object, e As TreeNodeMouseClickEventArgs)
 
@@ -38,13 +39,13 @@ Public Class ControlDomainTreeView
         End Get
     End Property
 
-    Public Property SelectedOU As String
+    Public Property SelectedItem As String
         Set(value As String)
-            _SelectedOU = value
-            RaiseEvent SelectedOUChanged(_SelectedOU)
+            _SelectedItem = value
+            RaiseEvent SelectedItemChanged(_SelectedItem)
         End Set
         Get
-            Return _SelectedOU
+            Return _SelectedItem
         End Get
     End Property
 
@@ -84,18 +85,18 @@ Public Class ControlDomainTreeView
 
     Public Sub New()
 
-        Me.Margin = New Padding(0, 0, 0, 0)
-        Me.HotTracking = True
-        Me.ShowLines = False
-        Me.ItemHeight = 22
-        Me.FullRowSelect = True
-        Me.Font = SystemFonts.DefaultFont
-        Me.HideSelection = False
-        Me.Nodes.Clear()
-        Me.LabelEdit = True
-        Me.BorderStyle = BorderStyle.None
+        Margin = New Padding(0, 0, 0, 0)
+        HotTracking = True
+        ShowLines = False
+        ItemHeight = 22
+        FullRowSelect = True
+        Font = SystemFonts.DefaultFont
+        HideSelection = False
+        Nodes.Clear()
+        LabelEdit = False
+        BorderStyle = BorderStyle.None
 
-        NativeWinAPI.SetWindowTheme(Me.Handle, "explorer", Nothing)
+        NativeMethods.SetWindowTheme(Me.Handle, "explorer", Nothing)
 
         Try
             Dim AdImages As New ImageList()
@@ -111,8 +112,10 @@ Public Class ControlDomainTreeView
             AdImages.Images.Add("AllEnabledUsers", New Icon(My.Resources.User, New Size(16, 16)).ToBitmap)
             AdImages.Images.Add("AllAdmins", New Icon(My.Resources.Admin, New Size(16, 16)).ToBitmap)
             AdImages.Images.Add("AllDeletedObjects", New Icon(My.Resources.Delete, New Size(16, 16)).ToBitmap)
+            AdImages.Images.Add("ProtectedObjects", New Icon(My.Resources.Protect, New Size(16, 16)).ToBitmap)
             AdImages.Images.Add("AllComputers", New Icon(My.Resources.Computer, New Size(16, 16)).ToBitmap)
             AdImages.Images.Add("AllServers", New Icon(My.Resources.Server, New Size(16, 16)).ToBitmap)
+            AdImages.Images.Add("AllDomainControllers", New Icon(My.Resources.Organization, New Size(16, 16)).ToBitmap)
             AdImages.Images.Add("AllClients", New Icon(My.Resources.Client, New Size(16, 16)).ToBitmap)
             AdImages.Images.Add("AllUsersNotLoggedOn", New Icon(My.Resources.LogonTime, New Size(16, 16)).ToBitmap)
             AdImages.Images.Add("Import", New Icon(My.Resources.JobImport, New Size(16, 16)).ToBitmap)
@@ -133,7 +136,7 @@ Public Class ControlDomainTreeView
 
     Public Sub RefreshNodes()
 
-        Debug.WriteLine("[Info] Refreshing Domain TreeView")
+        Logger.Log("[Info] Refreshing Domain TreeView")
 
         ControlHelper.BeginControlUpdate(Me)
         Nodes.Clear()
@@ -147,7 +150,7 @@ Public Class ControlDomainTreeView
 
     Private Function GetReportNodes() As TreeNode
 
-        Dim BuiltInTreeNode As ReportTreeNode = New ReportTreeNode("Built In Views", "DomainImage", "DomainImage", Nothing)
+        Dim BuiltInTreeNode As ReportTreeNode = New ReportTreeNode("Quick Reports", "DomainImage", "DomainImage", Nothing)
 
         For Each Report As SimpleADReport In GetReports()
             Dim ReportNode As ReportTreeNode = New ReportTreeNode(Report.ReportName, Report.ImageKey, Report.SelecetdImageKey, Report)
@@ -196,7 +199,7 @@ Public Class ControlDomainTreeView
             InitialLoadFinished(RootNode, Nothing)
 
         Catch Ex As Exception
-            Debug.WriteLine("[Erorr] An error occured during the domain tree Inital Load: " & Ex.Message)
+            Logger.Log("[Erorr] An error occured during the domain tree Inital Load: " & Ex.Message)
             InitialLoadFinished(Nothing, Ex.Message)
         End Try
     End Sub
@@ -235,7 +238,7 @@ Public Class ControlDomainTreeView
 
                         Dim ChildObjectType As String = ChildObject.SchemaClassName
 
-                        'Debug.WriteLine(String.Format("[Schema Info] {0} - {1}", ChildObject.Name, ChildObject.SchemaClassName))
+                        'Logger.Log(String.Format("[Schema Info] {0} - {1}", ChildObject.Name, ChildObject.SchemaClassName))
 
                         If (ChildObjectType = "organizationalUnit" OrElse ChildObjectType = "container" OrElse ChildObjectType = "builtinDomain" OrElse ChildObjectType = "lostAndFound" _
                                                         OrElse ChildObjectType = "msDS-QuotaContainer" OrElse ChildObjectType = "msTPM-InformationObjectsContainer" OrElse ChildObjectType = "msExchSystemObjectsContainer") Then
@@ -313,10 +316,10 @@ Public Class ControlDomainTreeView
                             Node.Nodes.Add(NewChildren(i))
                         Next
                     Else
-                        Debug.WriteLine("[Error] Error Encountered During domain Tree View Load")
+                        Logger.Log("[Error] Error Encountered During domain Tree View Load")
                     End If
                 Catch ex As Exception
-                    Debug.WriteLine("[Error] Error adding completed node to tree: " & ex.Message)
+                    Logger.Log("[Error] Error adding completed node to tree: " & ex.Message)
                 Finally
                     Me.TopNode.Expand()
                     ControlHelper.EndControlUpdate(Me)
@@ -338,15 +341,18 @@ Public Class ControlDomainTreeView
                 End If
             End If
         Catch ex As Exception
-            Debug.WriteLine("[Error] Internal Error - Failed to get required information from expanded container node: " & ex.Message)
+            Logger.Log("[Error] Internal Error - Failed to get required information from expanded container node: " & ex.Message)
         End Try
     End Sub
 
     Private Sub ControlDomainTreeView_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles Me.AfterSelect
+
         Try
             If Not CInt(e.Node.Tag) = 0 Then
 
-                SelectedOU = SelectedNode.ToolTipText
+                RaiseEvent SelectedContainerChanged(SelectedNode.ToolTipText, True)
+
+                SelectedItem = SelectedNode.ToolTipText
                 Exit Sub
 
             Else
@@ -357,19 +363,21 @@ Public Class ControlDomainTreeView
 
                     If ReportNode.SimpleADReport IsNot Nothing Then
 
-                        Debug.WriteLine("[Info] ReportRequested (" & e.Node.Text & ")")
+                        RaiseEvent SelectedContainerChanged(ReportNode.SimpleADReport.ReportName, False)
+
+                        Logger.Log("[Info] ReportRequested (" & e.Node.Text & ")")
                         RaiseEvent ReportRequested(DirectCast([Enum].Parse(GetType(SimpleADReportType), ReportNode.SimpleADReport.ImageKey), SimpleADReportType))
 
                     End If
 
                 Catch Ex As Exception
-                    Debug.WriteLine("[Error] Failed to cast (" & e.Node.Text & ") to Type SimpleADReportType: " & Ex.Message)
+                    Logger.Log("[Error] Failed to cast (" & e.Node.Text & ") to Type SimpleADReportType: " & Ex.Message)
                 End Try
 
             End If
 
         Catch Ex As Exception
-            Debug.WriteLine("[Error] :" & Ex.Message)
+            Logger.Log("[Error] :" & Ex.Message)
         End Try
     End Sub
 

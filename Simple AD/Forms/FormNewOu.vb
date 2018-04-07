@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports System.Windows
 
 Public Class FormNewOu
 
@@ -8,7 +9,7 @@ Public Class FormNewOu
 
         InitializeComponent()
 
-        DialogResult = DialogResult.Cancel
+        DialogResult = Forms.DialogResult.Cancel
         ContainerLb.Text = GetMainDomainTreeView.SelectedNode.Text
         NameTb.Select()
 
@@ -24,7 +25,7 @@ Public Class FormNewOu
 
         If Not String.IsNullOrEmpty(NameTb.Text) Then
             OuName = NameTb.Text
-            DialogResult = DialogResult.Yes
+            DialogResult = Forms.DialogResult.Yes
         End If
 
     End Sub

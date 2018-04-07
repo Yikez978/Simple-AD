@@ -2,7 +2,7 @@
 Imports SimpleLib
 
 Public Class TaskNewUser
-    Inherits ActiveTask
+    Inherits TaskBase
 
     Private TargetExplorerJob As TaskExplorer
     Private TargetContainer As String
@@ -52,7 +52,7 @@ Public Class TaskNewUser
 
     Private Sub NewUserObjectFinished(Result As SimpleResult)
 
-        Debug.WriteLine("[Info] New User Request Finished with state: " & Result.Status.ToString)
+        Logger.Log("[Info] New User Request Finished with state: " & Result.Status.ToString)
 
         If Result.IsSuccess = True Then
             TaskStatus = ActiveTaskStatus.Completed

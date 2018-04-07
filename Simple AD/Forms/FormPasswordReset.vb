@@ -1,4 +1,4 @@
-﻿Imports System
+﻿Imports System.Windows
 
 Public Class FormPasswordReset
 
@@ -16,7 +16,7 @@ Public Class FormPasswordReset
             If Not String.IsNullOrEmpty(Me.Password0Tb.Text) AndAlso Not String.IsNullOrEmpty(Password1Tb.Text) Then
                 Me.Password = Password1Tb.Text
                 Me.UnlockAccount = UnlockCb.Checked
-                Me.DialogResult = DialogResult.Yes
+                Me.DialogResult = Forms.DialogResult.Yes
             Else
                 ErrorLb.Text = "Please enter passwords into the text boxes below."
                 ErrorLb.Visible = True
@@ -28,7 +28,7 @@ Public Class FormPasswordReset
     End Sub
 
     Private Sub CancelBn_Click(sender As Object, e As EventArgs) Handles CancelBn.Click
-        Me.DialogResult = DialogResult.Cancel
+        Me.DialogResult = Forms.DialogResult.Cancel
         Me.Close()
     End Sub
 

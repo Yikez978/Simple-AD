@@ -31,7 +31,7 @@ Public Module StatusStripHandler
 
         FormMain.Invoke(Sub()
                             FormMain.ConnectionToolStripStatusLabel.Image = New Icon(My.Resources.SystemTask, 16, 16).ToBitmap
-                            FormMain.ConnectionToolStripStatusLabel.Text = "  Connected to " & GetLocalDomainName()
+                            FormMain.ConnectionToolStripStatusLabel.Text = "  Connected to " & GetDomainNetBiosName()
                         End Sub)
     End Sub
 
@@ -57,9 +57,31 @@ Public Module StatusStripHandler
                         End Sub)
     End Sub
 
-    Public Sub ContainerUpdated(ByVal Path As String)
+    Public Sub UpdateQueryTimeText(ByVal Text As String)
+        FormMain.Invoke(Sub()
+                            FormMain.QueryToolStripLabel.Text = "  " & Text & "  "
+                            FormMain.QueryToolStripLabel.Image = New Icon(My.Resources.Timer, 16, 16).ToBitmap
+
+                            If String.IsNullOrEmpty(FormMain.QueryToolStripLabel.ToolTipText) Then
+                                FormMain.QueryToolStripLabel.ToolTipText = "Query Time" & Environment.NewLine & Environment.NewLine & "Displays the time spent on the last domain query, " & Environment.NewLine & "including time taken to parse the results the rebuild the list."
+                            End If
+
+                        End Sub)
+    End Sub
+
+    Public Sub ContainerUpdated(ByVal Path As String, ByVal FormatPath As Boolean)
 
         If Not String.IsNullOrEmpty(Path) Then
+
+            If Not FormatPath Then
+                FormMain.Invoke(Sub()
+                                    FormMain.ContainerToolStripStatusLabel.Text = Path
+                                    FormMain.ContainerToolStripStatusLabel.Image = New Icon(My.Resources.Repository, 16, 16).ToBitmap
+                                End Sub)
+                Exit Sub
+            End If
+
+
             Dim sDelimStart As String = "="
             Dim sDelimEnd As String = ","
             Dim nIndexStart As Integer = Path.IndexOf(sDelimStart)

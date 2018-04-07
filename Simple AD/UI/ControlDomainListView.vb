@@ -126,7 +126,30 @@ Public Class ControlDomainListView
         If e.ColumnIndex = 0 Then
             e.SubItem.ForeColor = SystemColors.ControlText
         Else
-            e.SubItem.ForeColor = Color.FromArgb(42, 42, 42)
+            e.SubItem.ForeColor = Color.FromArgb(60, 60, 73)
+        End If
+
+        If My.Settings.AdvEnableListHighlighting Then
+
+            Dim DomainObject As DomainObject = TryCast(e.Model, DomainObject)
+
+            If DomainObject IsNot Nothing Then
+
+                If DomainObject.IsCriticalSystemObject Then
+                    e.Item.Font = New Font(DefaultFont, FontStyle.Regular)
+                    e.Item.ForeColor = Color.Purple
+                    e.Item.SelectedForeColor = Color.Purple
+                    e.Item.ToolTipText = "Crytical System Object"
+                End If
+
+                If DomainObject.IsProtected Then
+                    e.Item.ForeColor = Color.FromArgb(13, 61, 86)
+                    e.Item.SelectedForeColor = Color.FromArgb(13, 61, 86)
+                    e.Item.ToolTipText = e.Item.Text & "Protecetd From Deletion"
+                End If
+
+            End If
+
         End If
     End Sub
 
@@ -144,6 +167,7 @@ Public Class ControlDomainListView
         Dim Images As New ImageList()
         With Images
             .Images.Add("Container", New Icon(My.Resources.Container, New Size(16, 16)).ToBitmap)
+            .Images.Add("Container", New Icon(My.Resources.Container, New Size(16, 16)).ToBitmap)
             .Images.Add("Domain", New Icon(My.Resources.Domain, New Size(16, 16)).ToBitmap)
             .Images.Add("OrganizationalUnit", New Icon(My.Resources.Container, New Size(16, 16)).ToBitmap)
             .Images.Add("Group", New Icon(My.Resources.Group, New Size(16, 16)).ToBitmap)
@@ -158,6 +182,10 @@ Public Class ControlDomainListView
             .Images.Add("msDS-QuotaContainer", New Icon(My.Resources.Quota, New Size(16, 16)).ToBitmap)
             .Images.Add("msTPM-InformationObjectsContainer", New Icon(My.Resources.SecurityLock, New Size(16, 16)).ToBitmap)
             .Images.Add("msExchSystemObjectsContainer", New Icon(My.Resources.Message, New Size(16, 16)).ToBitmap)
+            .Images.Add("Critical", New Icon(My.Resources.Cogs, New Size(16, 16)).ToBitmap)
+            .Images.Add("Protected", New Icon(My.Resources.SecurityLock, New Size(16, 16)).ToBitmap)
+            .Images.Add("Windows", New Icon(My.Resources.Windows, New Size(16, 16)).ToBitmap)
+            .Images.Add("OSX", New Icon(My.Resources.Apple, New Size(16, 16)).ToBitmap)
             .ColorDepth = ColorDepth.Depth32Bit
             .ImageSize = New Size(16, 16)
         End With
@@ -173,4 +201,18 @@ Public Class ControlDomainListView
 
     End Function
 
+    Public Function MetaImageGetter(rowObject As Object) As Object
+        Dim DomainObject As DomainObject = DirectCast(rowObject, DomainObject)
+
+        If My.Settings.AdvEvaluateSystemObjects Then
+            Return DomainObject.Flags
+        Else
+            Return If(Not DomainObject.Flags = "Critical", DomainObject.Flags, Nothing)
+        End If
+
+    End Function
+
+    Private Sub ControlDomainListView_ColumnClick(sender As Object, e As ColumnClickEventArgs) Handles Me.ColumnClick
+        PrimarySortColumn = AllColumns.Item(e.Column)
+    End Sub
 End Class

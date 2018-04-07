@@ -5,9 +5,9 @@ Public Class ControlMenuStrip
     Inherits MenuStrip
 
     Public Sub New()
-        Dim style As Integer = NativeWinAPI.GetWindowLong(Me.Handle, NativeWinAPI.GWL_EXSTYLE)
-        style = style Or NativeWinAPI.WS_EX_COMPOSITE
-        NativeWinAPI.SetWindowLong(Me.Handle, NativeWinAPI.GWL_EXSTYLE, style)
+        Dim style As Integer = NativeMethods.GetWindowLong(Me.Handle, NativeMethods.GWL_EXSTYLE)
+        style = style Or NativeMethods.WS_EX_COMPOSITE
+        NativeMethods.SetWindowLong(Me.Handle, NativeMethods.GWL_EXSTYLE, style)
         SetDoubleBuffered(Me)
     End Sub
 

@@ -4,38 +4,28 @@ Public Module Delegates
 
     Public Function NameImageGetter(rowObject As Object) As Object
 
-        Try
+        Dim DomainObject As DomainObject = DirectCast(rowObject, DomainObject)
 
-            Dim DomainObject As DomainObject = DirectCast(rowObject, DomainObject)
-
-            Select Case DomainObject.Type
-                Case "user"
-                    Dim UserAccountControl As Integer = DomainObject.UserAccountControl
-                    If UserAccountControl = 546 Or UserAccountControl = 514 Or UserAccountControl = 66082 Or UserAccountControl = 66050 Then
-                        Return "DisabledUserImage"
-                    Else
-                        Return "UserImage"
-                    End If
-                Case "computer"
-                    Return "ComputerImage"
-                Case "group"
-                    Return "GroupImage"
-                Case "container"
-                    Return "ContainerImage"
-                Case "organizationalUnit"
-                    Return "OuImage"
-                Case "contact"
-                    Return "ContactImage"
-                Case Else
-                    Return "UnknownImage"
-            End Select
-
-        Catch Ex As Exception
-
-            Debug.WriteLine("[Error] Failed to get image: " & Ex.Message)
-
-            Return Nothing
-        End Try
+        Select Case DomainObject.Type
+            Case "user"
+                If DomainObject.IsEnabled Then
+                    Return "UserImage"
+                Else
+                    Return "DisabledUserImage"
+                End If
+            Case "computer"
+                Return "ComputerImage"
+            Case "group"
+                Return "GroupImage"
+            Case "container"
+                Return "ContainerImage"
+            Case "organizationalUnit"
+                Return "OuImage"
+            Case "contact"
+                Return "ContactImage"
+            Case Else
+                Return "UnknownImage"
+        End Select
 
     End Function
 
@@ -75,7 +65,7 @@ Public Module Delegates
         If ObjectVal Is Nothing Then
             Return String.Empty
         Else
-            Return CStr(ObjectVal).Substring(0, 1)
+            Return CStr(ObjectVal).Substring(0, 1).ToUpper
         End If
 
     End Function
@@ -107,9 +97,21 @@ Public Module Delegates
 
         If groupKey.GetType = GetType(DateTime) Then
             Return DirectCast(groupKey, DateTime).ToString("MMMM yyyy")
+        Else
+            Return Nothing
         End If
     End Function
 
+    Function DateToShortDelegate(Aspect As Object) As String
 
+        Dim result As DateTime = Nothing
+
+        If Aspect IsNot Nothing AndAlso TypeOf Aspect Is DateTime Then
+            Return CType(Aspect, DateTime).ToLongDateString()
+        Else
+            Return "(Not Set)"
+        End If
+
+    End Function
 
 End Module

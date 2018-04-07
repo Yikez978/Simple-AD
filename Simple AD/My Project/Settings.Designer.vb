@@ -201,24 +201,84 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property OpenExports() As Boolean
+        Public Property AdvOpenExports() As Boolean
             Get
-                Return CType(Me("OpenExports"),Boolean)
+                Return CType(Me("AdvOpenExports"),Boolean)
             End Get
             Set
-                Me("OpenExports") = value
+                Me("AdvOpenExports") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property AdvUsePaging() As Boolean
+            Get
+                Return CType(Me("AdvUsePaging"),Boolean)
+            End Get
+            Set
+                Me("AdvUsePaging") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property AdvEnableListHighlighting() As Boolean
+            Get
+                Return CType(Me("AdvEnableListHighlighting"),Boolean)
+            End Get
+            Set
+                Me("AdvEnableListHighlighting") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property UsePaging() As Boolean
+        Public Property AdvEvaluateProtection() As Boolean
             Get
-                Return CType(Me("UsePaging"),Boolean)
+                Return CType(Me("AdvEvaluateProtection"),Boolean)
             End Get
             Set
-                Me("UsePaging") = value
+                Me("AdvEvaluateProtection") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property AdvEnableResultCaching() As Boolean
+            Get
+                Return CType(Me("AdvEnableResultCaching"),Boolean)
+            End Get
+            Set
+                Me("AdvEnableResultCaching") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property AdvIncludeHiddenColExports() As Boolean
+            Get
+                Return CType(Me("AdvIncludeHiddenColExports"),Boolean)
+            End Get
+            Set
+                Me("AdvIncludeHiddenColExports") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property AdvEvaluateSystemObjects() As Boolean
+            Get
+                Return CType(Me("AdvEvaluateSystemObjects"),Boolean)
+            End Get
+            Set
+                Me("AdvEvaluateSystemObjects") = value
             End Set
         End Property
     End Class

@@ -36,7 +36,7 @@ Public Class ContainerExplorer
 
     Private Sub ContainerExplorer_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-        AddHandler _ControlDomainTreeView.SelectedOUChanged, AddressOf SelecetdOu_changed
+        AddHandler _ControlDomainTreeView.SelectedItemChanged, AddressOf SelectedItem_Changed
         AddHandler _ControlDomainTreeView.ReportRequested, AddressOf ReportRequested
 
     End Sub
@@ -66,20 +66,18 @@ Public Class ContainerExplorer
                 End Select
             End If
         Catch Ex As Exception
-            Debug.WriteLine("[Error] Unable to load object properties Form: " & Ex.Message)
+            Logger.Log("[Error] Unable to load object properties Form: " & Ex.Message)
         End Try
     End Sub
 
-    Private Sub SelecetdOu_changed(ByVal Path As String)
+    Private Sub SelectedItem_Changed(ByVal Path As String)
         If Not _Job Is Nothing Then
             Me.Path = Path
-            Debug.WriteLine("[Info] Selected OU changed to: " & Path)
             _Job.Refresh(Path, SimpleADReportType.Explorer)
         End If
     End Sub
 
     Private Sub ReportRequested(ByVal ReportType As SimpleADReportType)
-        Debug.WriteLine("[Info] Report Requested: " & ReportType.ToString)
         _Job.Refresh(Nothing, ReportType)
     End Sub
 
@@ -117,7 +115,7 @@ Public Class ContainerExplorer
 
         AddHandler MainListView.CellEditFinishing, AddressOf _UIHandler.CellEditFinishing
 
-        AddHandler DomainTreeView.SelectedOUChanged, AddressOf ContainerUpdated
+        AddHandler DomainTreeView.SelectedContainerChanged, AddressOf ContainerUpdated
 
     End Sub
 
@@ -127,8 +125,6 @@ Public Class ContainerExplorer
             GetDomianConextMenu(e.Node, DomainViewContextMenu)
         End If
     End Sub
-
-#Region "ListView Context Menu Handlers"
 
     Private Sub RefreshMenuItem_Click(sender As Object, e As EventArgs) Handles RefreshMenuItem.Click
         If Job IsNot Nothing Then
@@ -143,13 +139,11 @@ Public Class ContainerExplorer
             Try
                 MainListView.EditModel(MainListView.SelectedObject)
             Catch Ex As Exception
-                Debug.WriteLine("[Error] Unable to begin edit on selected object: " & Ex.Message)
+                Logger.Log("[Error] Unable to begin edit on selected object: " & Ex.Message)
             End Try
         End If
 
     End Sub
-
-#End Region
 
     Private Sub ContainerExplorer_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
         Dim s As ContainerExplorer = Me

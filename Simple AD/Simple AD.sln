@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+# SharpDevelop 4.4
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Simple AD", "Simple AD.vbproj", "{4D3E1E43-097F-49C9-A6EA-B1E84BD8246A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4D3E1E43-097F-49C9-A6EA-B1E84BD8246A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D3E1E43-097F-49C9-A6EA-B1E84BD8246A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D3E1E43-097F-49C9-A6EA-B1E84BD8246A}.Debug|x64.Build.0 = Debug|x64
+		{4D3E1E43-097F-49C9-A6EA-B1E84BD8246A}.Debug|x64.ActiveCfg = Debug|x64
+		{4D3E1E43-097F-49C9-A6EA-B1E84BD8246A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D3E1E43-097F-49C9-A6EA-B1E84BD8246A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D3E1E43-097F-49C9-A6EA-B1E84BD8246A}.Release|x64.Build.0 = Release|x64
+		{4D3E1E43-097F-49C9-A6EA-B1E84BD8246A}.Release|x64.ActiveCfg = Release|x64
+	EndGlobalSection
+EndGlobal

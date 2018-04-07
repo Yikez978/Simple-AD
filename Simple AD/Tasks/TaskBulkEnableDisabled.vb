@@ -3,7 +3,7 @@ Imports System.Windows.Forms
 Imports SimpleLib
 
 Public Class JobEnableDisableBulk
-    Inherits ActiveTask
+    Inherits TaskBase
 
 
     Private TargetDomainObjects As IList

@@ -2,7 +2,7 @@
 Imports SimpleLib
 
 Public Class TaskDelete
-    Inherits ActiveTask
+    Inherits TaskBase
 
     Private TargetDomainObject As DomainObject
     Private TargetExplorerJob As TaskExplorer
@@ -50,7 +50,7 @@ Public Class TaskDelete
 
     Private Sub DeleteObjectFinished(ByVal Result As SimpleResult)
 
-        Debug.WriteLine("[Info] Delete object request finished with state: " & Result.Status.ToString)
+        Logger.Log("[Info] Delete object request finished with state: " & Result.Status.ToString)
 
         If Result.IsSuccess = True Then
             TaskStatus = ActiveTaskStatus.Completed

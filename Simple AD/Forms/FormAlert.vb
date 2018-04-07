@@ -29,6 +29,15 @@ Public Class FormAlert
 
     End Sub
 
+    Public Overloads Shared Sub Show(ByVal Message As String, AlertType As AlertType)
+
+        Dim AlertForm As FormAlert =
+                New FormAlert(Message, AlertType)
+
+        AlertForm.ShowDialog()
+
+    End Sub
+
     Private Sub CloseBn_Click(sender As Object, e As EventArgs) Handles CloseBn.Click
         Me.Close()
     End Sub

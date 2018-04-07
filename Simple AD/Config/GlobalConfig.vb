@@ -4,8 +4,6 @@
 
     Public Property Office365Username As String
     Public Property Office365Password As String
-
-    Public OngoingBulkJobs As New List(Of BulkADWorker)
     Public ColumnRebuildRequired As Boolean
 
 End Module

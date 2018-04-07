@@ -20,22 +20,15 @@ Public Module ContextMenuHelper
 
             If ListView.SelectedItems.Count > 1 Then
 
-                Debug.WriteLine("[INFO] Multiple Objects Selected Object Selected")
                 EnableMenuItems(ContextMenuStrip, BulkUserMenuItems)
 
             Else
-                Debug.WriteLine("[INFO] " & RowObject.Type & " Object Selected")
+
                 Select Case RowObject.Type
                     Case "user"
-                        Dim User As UserDomainObject = DirectCast(RowObject, UserDomainObject)
-
-                        Dim UserAccountControl As Integer = User.UserAccountControl
-                        If UserAccountControl = 546 Or UserAccountControl = 514 Or UserAccountControl = 66082 Or UserAccountControl = 66050 Then
-                            EnableMenuItems(ContextMenuStrip, SingleUserMenuItemsDisabled)
-                        Else
-                            EnableMenuItems(ContextMenuStrip, SingleUserMenuItemsEnabled)
-                        End If
-
+                        EnableMenuItems(ContextMenuStrip, SingleUserMenuItemsEnabled)
+                    Case "userDisabled"
+                        EnableMenuItems(ContextMenuStrip, SingleUserMenuItemsDisabled)
                     Case "computer"
                         EnableMenuItems(ContextMenuStrip, ComputerMenuItems)
                     Case "container"

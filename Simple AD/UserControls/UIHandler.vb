@@ -13,7 +13,7 @@ Public Class UIHandler
             If Controls(i).GetType Is GetType(ControlDomainListView) Then
 
                 _ControlList = DirectCast(Controls(i), ControlDomainListView)
-                Debug.WriteLine("[Info] New Handler joined to " & _ControlList.Name)
+                Logger.Log("[Info] New Handler joined to " & _ControlList.Name)
             End If
 
             If Controls(i).GetType Is GetType(ContainerExplorer) Then
@@ -25,8 +25,8 @@ Public Class UIHandler
     End Sub
 
     Public Sub NewUserButton_Click(sender As Object, e As EventArgs)
-        If Not String.IsNullOrEmpty(_Explorer.DomainTreeView.SelectedOU) Then
-            Dim NewUserJob As TaskNewUser = New TaskNewUser(_Explorer.DomainTreeView.SelectedOU, _Explorer.Job)
+        If Not String.IsNullOrEmpty(_Explorer.DomainTreeView.SelectedItem) Then
+            Dim NewUserJob As TaskNewUser = New TaskNewUser(_Explorer.DomainTreeView.SelectedItem, _Explorer.Job)
         End If
     End Sub
 
@@ -106,7 +106,7 @@ Public Class UIHandler
             Dim ImportForm As FormImport = New FormImport()
             ImportForm.ShowDialog()
         Catch Ex As Exception
-            Debug.WriteLine("[Error] Unable to create new Import Form: " & Ex.Message)
+            Logger.Log("[Error] Unable to create new Import Form: " & Ex.Message)
         End Try
     End Sub
 
@@ -115,7 +115,7 @@ Public Class UIHandler
     End Sub
 
     Public Sub NewReport_Click(sender As Object, e As EventArgs)
-        FormReport.ShowDialog()
+        Dim ReportTask As TaskReport = New TaskReport
     End Sub
 
     Public Sub OpenActiveDirectory_Click(sender As Object, e As EventArgs)
@@ -128,7 +128,7 @@ Public Class UIHandler
 
             Process.Start(procInfo)
         Catch ex As Exception
-            Debug.WriteLine("[Error] Unable to open active diretory users and computers" & ex.Message)
+            Logger.Log("[Error] Unable to open active diretory users and computers" & ex.Message)
         End Try
     End Sub
 
@@ -151,7 +151,7 @@ Public Class UIHandler
 
             End If
         Catch Ex As Exception
-            Debug.WriteLine("[Error] Unable to load object properties Form: " & Ex.Message)
+            Logger.Log("[Error] Unable to load object properties Form: " & Ex.Message)
         End Try
     End Sub
 
