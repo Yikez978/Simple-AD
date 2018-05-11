@@ -43,8 +43,10 @@ Partial Class FormPasswordResetBulk
         Me.UseNumbersCheckBox = New System.Windows.Forms.CheckBox()
         Me.UseUpperCheckBox = New System.Windows.Forms.CheckBox()
         Me.FooterPl = New System.Windows.Forms.Panel()
-        Me.AcceptBn = New System.Windows.Forms.Button()
         Me.CancelBn = New System.Windows.Forms.Button()
+        Me.AcceptBn = New System.Windows.Forms.Button()
+        Me.UnlockLb = New System.Windows.Forms.Label()
+        Me.UnlockToggle = New MetroFramework.Controls.MetroToggle()
         Me.SpecifyPl.SuspendLayout()
         Me.GeneratePl.SuspendLayout()
         Me.FooterPl.SuspendLayout()
@@ -53,7 +55,7 @@ Partial Class FormPasswordResetBulk
         'ForceResetLb
         '
         Me.ForceResetLb.AutoSize = True
-        Me.ForceResetLb.BackColor = System.Drawing.SystemColors.Control
+        Me.ForceResetLb.BackColor = System.Drawing.SystemColors.Window
         Me.ForceResetLb.Location = New System.Drawing.Point(98, 333)
         Me.ForceResetLb.Name = "ForceResetLb"
         Me.ForceResetLb.Size = New System.Drawing.Size(114, 13)
@@ -74,7 +76,7 @@ Partial Class FormPasswordResetBulk
         'ForceResetToggle
         '
         Me.ForceResetToggle.AutoSize = True
-        Me.ForceResetToggle.BackColor = System.Drawing.SystemColors.Control
+        Me.ForceResetToggle.BackColor = System.Drawing.SystemColors.Window
         Me.ForceResetToggle.Location = New System.Drawing.Point(12, 332)
         Me.ForceResetToggle.Name = "ForceResetToggle"
         Me.ForceResetToggle.Size = New System.Drawing.Size(80, 17)
@@ -233,22 +235,12 @@ Partial Class FormPasswordResetBulk
         Me.FooterPl.Controls.Add(Me.CancelBn)
         Me.FooterPl.Controls.Add(Me.AcceptBn)
         Me.FooterPl.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.FooterPl.Location = New System.Drawing.Point(0, 317)
+        Me.FooterPl.Location = New System.Drawing.Point(0, 362)
         Me.FooterPl.MaximumSize = New System.Drawing.Size(0, 44)
         Me.FooterPl.MinimumSize = New System.Drawing.Size(0, 44)
         Me.FooterPl.Name = "FooterPl"
         Me.FooterPl.Size = New System.Drawing.Size(428, 44)
         Me.FooterPl.TabIndex = 20
-        '
-        'AcceptBn
-        '
-        Me.AcceptBn.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.AcceptBn.Location = New System.Drawing.Point(260, 9)
-        Me.AcceptBn.Name = "AcceptBn"
-        Me.AcceptBn.Size = New System.Drawing.Size(75, 23)
-        Me.AcceptBn.TabIndex = 0
-        Me.AcceptBn.Text = "Accept"
-        Me.AcceptBn.UseVisualStyleBackColor = True
         '
         'CancelBn
         '
@@ -260,6 +252,39 @@ Partial Class FormPasswordResetBulk
         Me.CancelBn.Text = "Cancel"
         Me.CancelBn.UseVisualStyleBackColor = True
         '
+        'AcceptBn
+        '
+        Me.AcceptBn.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.AcceptBn.Location = New System.Drawing.Point(260, 9)
+        Me.AcceptBn.Name = "AcceptBn"
+        Me.AcceptBn.Size = New System.Drawing.Size(75, 23)
+        Me.AcceptBn.TabIndex = 0
+        Me.AcceptBn.Text = "Accept"
+        Me.AcceptBn.UseVisualStyleBackColor = True
+        '
+        'UnlockLb
+        '
+        Me.UnlockLb.AutoSize = True
+        Me.UnlockLb.BackColor = System.Drawing.SystemColors.Window
+        Me.UnlockLb.Location = New System.Drawing.Point(302, 333)
+        Me.UnlockLb.Name = "UnlockLb"
+        Me.UnlockLb.Size = New System.Drawing.Size(89, 13)
+        Me.UnlockLb.TabIndex = 22
+        Me.UnlockLb.Text = "Unlock Accounts"
+        '
+        'UnlockToggle
+        '
+        Me.UnlockToggle.AutoSize = True
+        Me.UnlockToggle.BackColor = System.Drawing.SystemColors.Window
+        Me.UnlockToggle.Location = New System.Drawing.Point(216, 332)
+        Me.UnlockToggle.Name = "UnlockToggle"
+        Me.UnlockToggle.Size = New System.Drawing.Size(80, 17)
+        Me.UnlockToggle.Style = MetroFramework.MetroColorStyle.Purple
+        Me.UnlockToggle.TabIndex = 21
+        Me.UnlockToggle.Text = "Off"
+        Me.UnlockToggle.UseCustomBackColor = True
+        Me.UnlockToggle.UseSelectable = True
+        '
         'FormPasswordResetBulk
         '
         Me.AcceptButton = Me.AcceptBn
@@ -267,7 +292,9 @@ Partial Class FormPasswordResetBulk
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Window
         Me.CancelButton = Me.CancelBn
-        Me.ClientSize = New System.Drawing.Size(428, 361)
+        Me.ClientSize = New System.Drawing.Size(428, 406)
+        Me.Controls.Add(Me.UnlockLb)
+        Me.Controls.Add(Me.UnlockToggle)
         Me.Controls.Add(Me.GeneratePl)
         Me.Controls.Add(Me.SpecifyPl)
         Me.Controls.Add(Me.GenerateRadioBn)
@@ -311,4 +338,6 @@ Partial Class FormPasswordResetBulk
     Friend WithEvents FooterPl As Panel
     Friend WithEvents CancelBn As Button
     Friend WithEvents AcceptBn As Button
+    Friend WithEvents UnlockLb As Label
+    Friend WithEvents UnlockToggle As Controls.MetroToggle
 End Class

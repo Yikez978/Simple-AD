@@ -348,7 +348,7 @@ Partial Class FormImport
         Me.MainListView.EmptyListMsg = "Empty"
         Me.MainListView.EmptyListMsgFont = New System.Drawing.Font("Segoe UI Semilight", 14.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.MainListView.FullRowSelect = True
-        Me.MainListView.HeaderFont = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.MainListView.HeaderFormatStyle.Normal.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.MainListView.HideSelection = False
         Me.MainListView.IncludeColumnHeadersInCopy = True
         Me.MainListView.Location = New System.Drawing.Point(12, 40)
@@ -395,8 +395,6 @@ Partial Class FormImport
         'DomainTreeView
         '
         Me.DomainTreeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.DomainTreeView.DomainController = Nothing
-        Me.DomainTreeView.DomainName = Nothing
         Me.DomainTreeView.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DomainTreeView.FullRowSelect = True
         Me.DomainTreeView.HideSelection = False
@@ -607,7 +605,7 @@ Partial Class FormImport
         Me.ResultsListView.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ResNameCol, Me.ResStatusCol, Me.ResInfoCol})
         Me.ResultsListView.Cursor = System.Windows.Forms.Cursors.Default
         Me.ResultsListView.FullRowSelect = True
-        Me.ResultsListView.HeaderFont = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ResultsListView.HeaderFormatStyle.Normal.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ResultsListView.HideSelection = False
         Me.ResultsListView.Location = New System.Drawing.Point(12, 40)
         Me.ResultsListView.MultiSelect = False

@@ -1,4 +1,5 @@
 ﻿Imports System.Windows.Forms
+Imports BrightIdeasSoftware
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FormObjectAttributes

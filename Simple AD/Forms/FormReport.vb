@@ -1,5 +1,7 @@
 ﻿
 
+Imports System
+
 Public Class FormReport
 
     Public Property ReportTask As TaskReport

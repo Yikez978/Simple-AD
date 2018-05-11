@@ -1,4 +1,5 @@
-﻿Imports System.Windows.Forms
+﻿Imports System
+Imports System.Windows.Forms
 Imports SimpleLib
 
 Public Class TaskPasswordReset
@@ -41,9 +42,7 @@ Public Class TaskPasswordReset
 
         Dim Result As SimpleResult = ResetUserPassword(TargetUser, ResetForm.Password, ResetForm.ForceResetToggle.Checked, ResetForm.UnlockAccount)
 
-        If GetContainerExplorer.InvokeRequired Then
-            GetContainerExplorer.Invoke(New Delegate_ResetPassword(AddressOf ResetPasswordFinished), Result)
-        End If
+        GetContainerExplorer.Invoke(New Delegate_ResetPassword(AddressOf ResetPasswordFinished), Result)
 
     End Sub
 

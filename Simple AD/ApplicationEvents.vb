@@ -20,10 +20,10 @@ Namespace My
 
             Logger.Init()
 
-            If My.Settings.Username IsNot Nothing And My.Settings.Password IsNot Nothing Then
-                If My.Settings.ManualLogin = True Then
+            If Settings.Username IsNot Nothing And Settings.Password IsNot Nothing Then
+                If Settings.ManualLogin = True Then
 
-                    Dim Username As String = DataProtection.Unprotect(My.Settings.Username, "Letme1n$")
+                    Dim Username As String = DataProtection.Unprotect(Settings.Username, "Letme1n$")
 
                     If Username.Contains("\") Then
                         Dim UsernameArray As String() = Username.Split(New Char() {"\"c})
@@ -34,15 +34,15 @@ Namespace My
                         LoginUsername = Username
                     End If
 
-                    LoginPassword = DataProtection.Unprotect(My.Settings.Password, "Letme1n$")
+                    LoginPassword = DataProtection.Unprotect(Settings.Password, "Letme1n$")
                 End If
             End If
 
-            FormMain.WindowState = DirectCast(My.Settings.FormWindowState, FormWindowState)
+            FormMain.WindowState = DirectCast(Settings.FormWindowState, FormWindowState)
 
             If Not FormMain.WindowState = FormWindowState.Maximized Then
 
-                Dim FormLocation As Point = My.Settings.FormLocation
+                Dim FormLocation As Point = Settings.FormLocation
 
                 If (FormLocation.X = -1) And (FormLocation.Y = -1) Then
                     Return
@@ -62,7 +62,7 @@ Namespace My
 
                 FormMain.StartPosition = FormStartPosition.Manual
                 FormMain.Location = FormLocation
-                FormMain.Size = My.Settings.FormSize
+                FormMain.Size = Settings.FormSize
 
             End If
 
@@ -70,10 +70,16 @@ Namespace My
 
         Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
             If e.ExitApplication Then
+
                 Dim o As String = e.Exception.Message
                 Dim s As String = e.Exception.StackTrace
 
-                Dim ErrorDialog As TaskDialog = New TaskDialog("Something went wrong  :(", "Simple AD Panicked", "Simple AD has encountered an unexpected Error" & vbNewLine & vbNewLine & o, CommonButton.Cancel, CommonIcon.Stop)
+                Dim ErrorDialog As TaskDialog =
+                    New TaskDialog("Something went wrong  :(",
+                                   "Simple AD Panicked",
+                                   "Simple AD has encountered an unexpected Error" &
+                                   vbNewLine & vbNewLine & o,
+                                   CommonButton.Cancel, CommonIcon.Stop)
 
                 ErrorDialog.ExpandedInformation = s
                 ErrorDialog.CollapsedControlText = "Show Debug Information"
@@ -81,7 +87,7 @@ Namespace My
                 ErrorDialog.IsExpanded = False
                 ErrorDialog.ShowExpandedInfoInFooter = False
 
-                ErrorDialog.CustomIcon = My.Resources.Bug
+                ErrorDialog.CustomIcon = Resources.Bug
 
                 ErrorDialog.CustomButtons = New CustomButton() {
                     New CustomButton(100, "Copy To Clipboard")
@@ -90,13 +96,11 @@ Namespace My
                 Dim Results As TaskDialogResult = ErrorDialog.Show(FormMain.Handle)
 
                 If Results.ButtonID = 100 Then
-                    My.Computer.Clipboard.SetText(o & vbNewLine & vbNewLine & s)
+                    Computer.Clipboard.SetText(o & vbNewLine & vbNewLine & s)
                 End If
 
-
-                'Logger.Log("[Error] " & o)
-                'MessageBox.Show(o + vbNewLine + s, "Simple AD has encountered an unexpected Error", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error) ' use EventLog instead
             End If
+
         End Sub
     End Class
 End Namespace

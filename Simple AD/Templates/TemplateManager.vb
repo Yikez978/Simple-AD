@@ -1,10 +1,13 @@
-﻿Imports System.IO
+﻿Imports System
+Imports System.IO
 Imports System.Environment
+Imports System.Collections.Generic
 Imports System.Runtime.Serialization
 Imports System.Runtime.Serialization.Formatters.Binary
 
 Imports SimpleLib
 Imports SimpleLib.SystemHelper
+
 
 Public Module TemplateManager
 

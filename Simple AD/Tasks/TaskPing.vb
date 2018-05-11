@@ -1,4 +1,6 @@
-﻿Imports System.Net.NetworkInformation
+﻿Imports System
+Imports System.Collections.Generic
+Imports System.Net.NetworkInformation
 Imports System.Text
 Imports System.Threading
 Imports System.Threading.Tasks
@@ -73,7 +75,7 @@ Public Class TaskPing
         _CancellationSource = New CancellationTokenSource
 
         IsRunning = True
-        TaskStatus = TaskStatus.InProgress
+        TaskStatus = ActiveTaskStatus.InProgress
 
         _PingTask = Task.Run(Sub() PingComputer(_TargetComputer, _CancellationSource.Token))
     End Sub
@@ -194,7 +196,7 @@ Public Class TaskPing
                 Exit Sub
             End If
 
-            If TaskStatus = TaskStatus.Canceled Then
+            If TaskStatus = ActiveTaskStatus.Canceled Then
 
                 If _PingForm IsNot Nothing Or (Not _PingForm.IsDisposed) Then
                     OutList(PingMessageType.Canceled, "Ping Canceled")
@@ -207,7 +209,7 @@ Public Class TaskPing
                 Exit Sub
             End If
 
-            TaskStatus = TaskStatus.Idle
+            TaskStatus = ActiveTaskStatus.Idle
 
             If PingCount < PingCountMax Or PingCountMax = -1 Then
 
@@ -244,7 +246,7 @@ Public Class TaskPing
         _PingSender.SendAsyncCancel()
         _CancellationSource.Cancel()
 
-        TaskStatus = TaskStatus.Canceled
+        TaskStatus = ActiveTaskStatus.Canceled
     End Sub
 
     Private Sub OutList(ByVal Item As PingListItem)

@@ -1,4 +1,6 @@
-﻿Public Module TaskHandler
+﻿Imports System.Collections.Generic
+
+Public Module TaskHandler
 
     Public Property BatchTasks As New List(Of TaskBase)
     Public Property TaskPool As New List(Of TaskBase)

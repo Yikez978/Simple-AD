@@ -1,4 +1,7 @@
-﻿Imports System.Windows
+﻿Imports System
+Imports System.Windows
+
+Imports SimpleLib
 
 Public Class FormPasswordReset
 

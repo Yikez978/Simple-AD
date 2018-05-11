@@ -1,4 +1,7 @@
-﻿Imports System.Drawing
+﻿Imports System
+Imports System.Collections
+Imports System.Data
+Imports System.Drawing
 Imports System.Windows.Forms
 Imports BrightIdeasSoftware
 Imports SimpleLib

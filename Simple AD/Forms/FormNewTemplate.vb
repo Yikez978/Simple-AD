@@ -1,4 +1,7 @@
-﻿Imports System.Drawing
+﻿Imports System
+Imports System.Collections
+Imports System.Collections.Generic
+Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.Serialization
 Imports System.Runtime.Serialization.Formatters.Binary

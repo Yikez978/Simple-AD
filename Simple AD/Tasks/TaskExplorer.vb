@@ -1,9 +1,12 @@
-﻿Imports System.DirectoryServices
+﻿Imports System
+Imports System.Collections.Generic
+Imports System.Diagnostics
+Imports System.DirectoryServices
 Imports System.DirectoryServices.Protocols
 Imports System.Linq
 Imports System.Threading
 Imports System.Threading.Tasks
-
+Imports BrightIdeasSoftware
 Imports SimpleLib
 
 Public Class TaskExplorer
@@ -429,6 +432,8 @@ Public Class TaskExplorer
     End Sub
 
     Private Sub AfterFindObjects(Optional DomainObjectList As List(Of Object) = Nothing)
+
+        Dim ScrollPos As Integer = _MainListView.LowLevelScrollPosition.Y
 
         If DomainObjectList IsNot Nothing Then
 

@@ -1,7 +1,10 @@
-﻿Imports System.Drawing
+﻿Imports System
+Imports System.Collections.Generic
+Imports System.Drawing
 Imports System.Linq
 Imports System.Text
 Imports System.Windows.Forms
+
 Imports Microsoft.WindowsAPICodePack.Dialogs
 
 Public Class FormBulkUser

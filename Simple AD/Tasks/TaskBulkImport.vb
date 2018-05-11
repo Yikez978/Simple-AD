@@ -1,10 +1,15 @@
-﻿Imports System.Linq
+﻿Imports System
+Imports System.Collections.Generic
+Imports System.Data
+Imports System.Linq
 Imports System.Windows.Forms
+
 Imports BrightIdeasSoftware
 
 Imports SimpleAD.LocalData
 
 Imports SimpleLib
+Imports SimpleLib.BulkADWorker
 Imports SimpleLib.SystemHelper
 
 Public Class TaskBulkImport
@@ -18,10 +23,6 @@ Public Class TaskBulkImport
 
     Public WithEvents ImportForm As FormImport
     Private WithEvents ImportWorker As BulkADWorker
-
-    Public ForcePasswordReset As Boolean
-    Public CreateHomeFolders As Boolean
-    Public EnableAccounts As Boolean
 
     Public Property ImportPath As String
 
@@ -149,7 +150,7 @@ Public Class TaskBulkImport
                             ImportErrorForm.Add("Missing Property Exception", "The Imported File contains no 'Username' Column")
                         End If
                         If Not FirstRow.Contains("password") Then
-                            ImportErrorForm.Add("Missing Property Alert", "The Imported File contains no 'Password' Column, Account with no password will be disabled upon creation")
+                            ImportErrorForm.Add("Missing Property Alert", "The Imported File contains no 'Password' Column, Accounts with no password will be disabled upon creation")
                         End If
                         If Not FirstRow.Contains("name") Then
                             ImportErrorForm.Add("Missing Property Alert", "The Imported File contains no 'Name' Column")
@@ -178,7 +179,7 @@ Public Class TaskBulkImport
 
         Users.Clear()
 
-        For i as Integer = 0 to Datatable.Rows.Count - 1
+        For i As Integer = 0 To Datatable.Rows.Count - 1
 
             Dim Row As DataRow = Datatable.Rows(i)
 
@@ -318,11 +319,14 @@ Public Class TaskBulkImport
 
     Private Sub ADImportStarted() Handles ImportForm.BeginImport
 
-        CreateHomeFolders = ImportForm.CreateHomeFolders
-        EnableAccounts = ImportForm.EnableAccounts
-        ForcePasswordReset = ImportForm.ForcePasswordReset
+        Dim Options As New ImportOptions With {
+            .CreateHomeFolders = ImportForm.CreateHomeFolders,
+            .EnableAccounts = ImportForm.EnableAccounts,
+            .ForcePasswordReset = ImportForm.ForcePasswordReset
+        }
 
-        ImportWorker = New BulkADWorker(MainListView, Me, ImportForm.Path)
+        ImportWorker = New BulkADWorker(Users, ImportForm.Path, Options)
+
     End Sub
 
     Private Sub ADImportFinished() Handles ImportWorker.BulkImportCompleted
@@ -331,6 +335,10 @@ Public Class TaskBulkImport
 
     Private Sub ADImportStatuschanged(ByVal Message As String) Handles ImportWorker.BulkImportStatusChanged
         StatusMessage = Message
+    End Sub
+
+    Private Sub ADImportProgressChanged() Handles ImportWorker.BulkImportProgressChanged
+        JobProgress = JobProgress + 1
     End Sub
 
     Private Sub ImportFailed(ByVal ErrorMessage As String)

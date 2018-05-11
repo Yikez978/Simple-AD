@@ -1,4 +1,6 @@
-﻿Imports System.Threading.Tasks
+﻿Imports System.Collections
+Imports System.Collections.Generic
+Imports System.Threading.Tasks
 Imports System.Windows.Forms
 Imports SimpleLib
 
@@ -86,7 +88,7 @@ Public Class JobEnableDisableBulk
             TargetExplorerJob.Refresh(Nothing)
             TaskStatus = ActiveTaskStatus.Completed
 
-            Dim ResultForm As FormAlert = New FormAlert("Success", AlertType.Success) With {.Location = GetDialogLocation(FormMain)}
+            Dim ResultForm As FormAlert = New FormAlert("Success", AlertType.Success)
             ResultForm.StartPosition = FormStartPosition.CenterScreen
             ResultForm.ShowDialog()
 

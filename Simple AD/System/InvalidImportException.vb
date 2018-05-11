@@ -1,4 +1,6 @@
-﻿Public Class InvalidImportException
+﻿Imports System
+
+Public Class InvalidImportException
     Inherits Exception
 
     Public Sub New()

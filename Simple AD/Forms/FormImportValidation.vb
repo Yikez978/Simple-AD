@@ -1,4 +1,7 @@
-﻿Imports System.Drawing
+﻿Imports System
+Imports System.Collections.Generic
+Imports System.Data
+Imports System.Drawing
 
 Public Class FormImportValidation
 

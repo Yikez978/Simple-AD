@@ -3,6 +3,9 @@ Imports SimpleLib.Enums
 Imports SimpleLib
 Imports System.Threading.Tasks
 Imports System.Threading
+Imports BrightIdeasSoftware
+Imports System.Collections.Generic
+Imports System
 
 Public Class TaskSearch
     Inherits TaskBase
@@ -38,8 +41,6 @@ Public Class TaskSearch
             _SearchTask.Status = Threading.Tasks.TaskStatus.Running OrElse
             _SearchTask.Status = Threading.Tasks.TaskStatus.WaitingToRun OrElse
             _SearchTask.Status = Threading.Tasks.TaskStatus.WaitingForActivation) Then
-
-            Logger.Log("[Debug] Canceling previously running GetObjects task")
 
             _LastCts.Cancel()
 
@@ -84,23 +85,23 @@ Public Class TaskSearch
                 End If
             Next
 
-            Logger.Log("[Info] Get Objects Completed")
-
         Catch ArgEx As ArgumentException
+
             Logger.Log("[Error] " & ArgEx.GetBaseException.ToString & ArgEx.Message)
         Catch Ex As Exception
+
             Logger.Log("[Error] " & Ex.GetBaseException.ToString & Ex.Message)
         Finally
+
             If Not CT.IsCancellationRequested Then
                 _ListView.Invoke(New Delegate_AfterGetResults(AddressOf AfterGetResults), NewDomainObjectList)
             End If
+
         End Try
 
     End Sub
 
     Private Sub AfterGetResults(Optional DomainObjectList As List(Of Object) = Nothing)
-
-        Logger.Log("[Info] Find Objects After")
 
         If DomainObjectList IsNot Nothing Then
 

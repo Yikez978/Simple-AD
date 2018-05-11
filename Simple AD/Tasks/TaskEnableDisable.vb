@@ -1,4 +1,5 @@
-﻿Imports System.Windows.Forms
+﻿Imports System
+Imports System.Windows.Forms
 Imports SimpleLib
 
 Public Class TaskEnableDisable
@@ -35,9 +36,7 @@ Public Class TaskEnableDisable
             Result = DisableADUserUsingUserAccountControl(TargetDomainObject)
         End If
 
-        If GetContainerExplorer.InvokeRequired Then
-            GetContainerExplorer.Invoke(New Delegate_EnableDisableObject(AddressOf EnableDisableObjectFinished), Result)
-        End If
+        GetContainerExplorer.Invoke(New Delegate_EnableDisableObject(AddressOf EnableDisableObjectFinished), Result)
 
     End Sub
 

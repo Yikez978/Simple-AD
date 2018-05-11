@@ -5,9 +5,9 @@ Imports System.Windows.Forms
 Imports SimpleLib
 Imports SimpleAD.LocalData
 
-Public Class FormMain
+Imports System
 
-    Public ADChecker As ADConnectionChecker
+Public Class FormMain
 
     Public Sub New()
         InitializeComponent()
@@ -19,12 +19,6 @@ Public Class FormMain
 
     Private Sub FormMain_Load(ByVal sender As System.Object, ByVal e As EventArgs) Handles MyBase.Load
 
-#If DEBUG Then
-        ThowExxceptionToolStripMenuItem.Visible = True
-#End If
-
-        RecentFiles.PopulateRecentFileList()
-
         MainFormStart()
         BuildUIHandlers()
 
@@ -32,21 +26,22 @@ Public Class FormMain
 
     Public Sub MainFormStart()
 
+        RecentFiles.PopulateRecentFileList()
+
         If My.Settings.CheckForUpdatesOnStart = True Then
             Dim RunUpdateCheck As New FormUpdate
         End If
 
         If ValidateActiveDirectoryLogin(LoginUsername, LoginPassword, LoginUsernamePrefix) Then
 
-            MainDomainTreeViewHandle.RefreshNodes()
+            ContainerExplorer.DomainTreeView.RefreshNodes()
 
             Dim NewReport As TaskExplorer = New TaskExplorer(SimpleADReportType.Explorer)
             UserToolStripMenuItem.Text = GetDisplayName(True)
 
             ReportAttributeStore.RegisterReportAttributes()
 
-            ADChecker = New ADConnectionChecker
-            ADChecker.RunCheck()
+            UpdateConnectionStatus()
         Else
 
             ConnectionToolStripStatusLabel.Image = New Icon(My.Resources.SystemTask, 16, 16).ToBitmap
@@ -55,11 +50,46 @@ Public Class FormMain
             Dim ErrorForm As FormAlert = New FormAlert("Unable to connect to a domain controller!", AlertType.ErrorAlert)
             ErrorForm.ShowDialog()
         End If
+
+    End Sub
+
+    Private Sub UpdateConnectionStatus()
+
+        Dim State As Boolean = ValidateActiveDirectoryLogin(LoginUsername, LoginPassword, LoginUsernamePrefix)
+
+        If StatusStrip.InvokeRequired Then
+            StatusStrip.Invoke(New Action(AddressOf UpdateConnectionStatus))
+        Else
+
+            If State Then
+
+                Dim DomainName As String = GetLocalDomainName()
+
+                With ConnectionToolStripStatusLabel
+                    .Image = New Icon(My.Resources.SystemTask, 16, 16).ToBitmap
+                    .Text = "Connected to " & GetSingleDomainController()
+                    .ToolTipText = "Domain: " &
+                        DomainName & Environment.NewLine &
+                        "FQDN: " & GetFQDN() & Environment.NewLine &
+                        "DC Net BIOS: " & GetSingleDomainController()
+                End With
+
+            Else
+                With ConnectionToolStripStatusLabel
+                    .Image = New Icon(My.Resources.SystemTask, 16, 16).ToBitmap
+                    .Text = "Unable to connect to any valid logon server"
+                End With
+
+                Dim ErrorForm = New FormAlert("Unable to connect to a domain controller!", AlertType.ErrorAlert)
+                ErrorForm.ShowDialog()
+
+            End If
+        End If
     End Sub
 
     Private Sub BuildUIHandlers()
 
-        Dim _ToolStripHandler As UIHandler = New UIHandler(GetMainListView, GetContainerExplorer)
+        Dim _ToolStripHandler As UIHandler = New UIHandler(ContainerExplorer.MainListView, ContainerExplorer)
 
         AddHandler ImportCSVToolStripMenuItem.Click, AddressOf _ToolStripHandler.ImportCSV_Click
         AddHandler TemplateManagerToolStripMenuItem.Click, AddressOf _ToolStripHandler.TemplateManager_Click
@@ -68,6 +98,8 @@ Public Class FormMain
         ControlToolStrip.LoadToolStrip(_ToolStripHandler)
 
     End Sub
+
+
 
 #Region "Event Handlers"
 
@@ -91,7 +123,7 @@ Public Class FormMain
     End Sub
 
     Private Sub DomainPanelToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DomainPanelToolStripMenuItem.Click
-        GetExplorerSplitContainer.Panel1Collapsed = Not GetExplorerSplitContainer.Panel1Collapsed
+        ContainerExplorer.MainSplitContainer.Panel1Collapsed = Not ContainerExplorer.MainSplitContainer.Panel1Collapsed
     End Sub
 
     Private Sub BulkUserWizardToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BulkUserWizardToolStripMenuItem.Click
@@ -104,11 +136,11 @@ Public Class FormMain
     End Sub
 
     Private Sub ShowGroupsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowGroupsToolStripMenuItem.Click
-        GetMainListView().ShowGroups = ShowGroupsToolStripMenuItem.Checked
+        ContainerExplorer.MainListView.ShowGroups = ShowGroupsToolStripMenuItem.Checked
     End Sub
 
     Private Sub FormMain_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        If GetMainListView() IsNot Nothing Then
+        If ContainerExplorer.MainListView IsNot Nothing Then
 
             My.Settings.FormWindowState = WindowState
             If Not WindowState = FormWindowState.Maximized Then
@@ -144,7 +176,7 @@ Public Class FormMain
 
             If ClosePromptForm.DialogResult = DialogResult.Yes Then
 
-                For Each Task As TaskBase In TaskHandler.BatchTasks
+                For Each Task As TaskBase In BatchTasks
                     Task.TaskStatus = ActiveTaskStatus.Canceled
                 Next
 
@@ -158,7 +190,7 @@ Public Class FormMain
 
     Private Sub FormMain_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         Try
-            GetContainerExplorer.DomainTreeView.SelectedNode = GetContainerExplorer.DomainTreeView.RootNode
+            ContainerExplorer.DomainTreeView.SelectedNode = ContainerExplorer.DomainTreeView.RootNode
         Catch
             Exit Sub
         End Try
@@ -175,10 +207,6 @@ Public Class FormMain
     Private Sub RibbonToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RibbonToolStripMenuItem.Click
         ControlToolStrip.Visible = Not ControlToolStrip.Visible
         SADMenuStrip.Invalidate()
-    End Sub
-
-    Private Sub ThowExxceptionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ThowExxceptionToolStripMenuItem.Click
-        Throw New Exception
     End Sub
 
 #End Region

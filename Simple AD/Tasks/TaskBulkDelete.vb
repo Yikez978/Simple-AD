@@ -1,4 +1,6 @@
-﻿Imports System.Threading.Tasks
+﻿Imports System.Collections
+Imports System.Collections.Generic
+Imports System.Threading.Tasks
 Imports System.Windows.Forms
 
 Imports SimpleLib
@@ -88,7 +90,7 @@ Public Class TaskBulkDelete
             HostExplorerTask.Refresh()
             TaskStatus = ActiveTaskStatus.Completed
 
-            Dim ResultForm As FormAlert = New FormAlert("Deleted the selected objects", AlertType.Success) With {.Location = GetDialogLocation(FormMain)}
+            Dim ResultForm As FormAlert = New FormAlert("Deleted the selected objects", AlertType.Success)
             ResultForm.StartPosition = FormStartPosition.CenterScreen
             ResultForm.ShowDialog()
 
@@ -101,7 +103,7 @@ Public Class TaskBulkDelete
                 TaskStatus = ActiveTaskStatus.Errors
             End If
 
-            Dim ResultForm As FormAlert = New FormAlert("Failed to Delete " & FailedObjects.Count & " Objects", AlertType.ErrorAlert) With {.Location = GetDialogLocation(FormMain)}
+            Dim ResultForm As FormAlert = New FormAlert("Failed to Delete " & FailedObjects.Count & " Objects", AlertType.ErrorAlert)
             ResultForm.ShowDialog()
         End If
 

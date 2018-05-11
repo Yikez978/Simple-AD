@@ -1,4 +1,5 @@
-﻿Imports System.Windows.Forms
+﻿Imports System
+Imports System.Windows.Forms
 Imports SimpleLib
 
 Public Class TaskMove
@@ -42,9 +43,7 @@ Public Class TaskMove
 
         Dim Result As SimpleResult = MoveADObject(ObjectToMove, Container)
 
-        If GetContainerExplorer.InvokeRequired Then
-            GetContainerExplorer.Invoke(New Delegate_MoveObject(AddressOf MoveObjectFinished), Result)
-        End If
+        GetContainerExplorer.Invoke(New Delegate_MoveObject(AddressOf MoveObjectFinished), Result)
 
     End Sub
 

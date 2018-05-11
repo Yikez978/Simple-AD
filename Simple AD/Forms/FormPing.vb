@@ -1,6 +1,8 @@
-﻿Imports System.ComponentModel
+﻿Imports System
+Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Windows.Forms
+Imports BrightIdeasSoftware
 Imports SimpleLib
 
 Public Class FormPing

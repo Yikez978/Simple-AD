@@ -1,4 +1,5 @@
-﻿Imports System.Windows.Forms
+﻿Imports System
+Imports System.Windows.Forms
 Imports SimpleLib
 
 Public Class TaskNewOu
@@ -43,9 +44,8 @@ Public Class TaskNewOu
     Private Sub NewOrganizationalUnit(ByVal Container As String, ByVal Name As String)
         Dim Result As SimpleResult = CreateNewOu(Container, Name)
 
-        If GetContainerExplorer.InvokeRequired Then
-            GetContainerExplorer.Invoke(New Delegate_NewOrganizationalUnit(AddressOf NewOrganizationalUnitFinished), Result)
-        End If
+        GetContainerExplorer.Invoke(New Delegate_NewOrganizationalUnit(AddressOf NewOrganizationalUnitFinished), Result)
+
     End Sub
 
     Private Sub NewOrganizationalUnitFinished(ByVal Result As SimpleResult)

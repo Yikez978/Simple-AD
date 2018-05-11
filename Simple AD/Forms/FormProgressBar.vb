@@ -1,4 +1,5 @@
-﻿Imports SimpleLib.SystemHelper
+﻿Imports System
+Imports SimpleLib.SystemHelper
 
 Public Class FormProgressBar
 

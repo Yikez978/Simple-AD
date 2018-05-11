@@ -1,4 +1,5 @@
-﻿Imports System.Windows.Forms
+﻿Imports System
+Imports System.Windows.Forms
 Imports SimpleLib
 
 Public Class TaskRename
@@ -36,9 +37,7 @@ Public Class TaskRename
 
         Dim Result As SimpleResult = RenameObject(_TargetDomainObject, NewName)
 
-        If GetContainerExplorer.InvokeRequired Then
-            GetContainerExplorer.Invoke(New Delegate_Rename(AddressOf RenameFinished), Result)
-        End If
+        GetContainerExplorer.Invoke(New Delegate_Rename(AddressOf RenameFinished), Result)
 
     End Sub
 

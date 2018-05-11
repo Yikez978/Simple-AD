@@ -1,4 +1,6 @@
-﻿Imports System.Windows.Forms
+﻿Imports System
+Imports System.Collections.Generic
+Imports System.Windows.Forms
 Imports SimpleLib
 
 Public Class FormReportRule

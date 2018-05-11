@@ -1,4 +1,5 @@
 ﻿Imports System.Windows.Forms
+Imports BrightIdeasSoftware
 Imports MetroFramework
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>

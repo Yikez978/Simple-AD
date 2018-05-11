@@ -1,4 +1,6 @@
-﻿Imports System.Drawing
+﻿Imports System
+Imports System.Collections.Generic
+Imports System.Drawing
 Imports System.IO
 Imports System.Windows.Forms
 Imports SimpleLib

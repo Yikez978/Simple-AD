@@ -1,4 +1,5 @@
-﻿Imports System.Windows.Forms
+﻿Imports System
+Imports System.Windows.Forms
 Imports SimpleLib
 
 Public Class TaskDelete
@@ -42,9 +43,7 @@ Public Class TaskDelete
 
         Dim Result As SimpleResult = DeleteADObject(ObjectToDelete)
 
-        If GetContainerExplorer.InvokeRequired Then
-            GetContainerExplorer.Invoke(New Delegate_DeleteObject(AddressOf DeleteObjectFinished), Result)
-        End If
+        GetContainerExplorer.Invoke(New Delegate_DeleteObject(AddressOf DeleteObjectFinished), Result)
 
     End Sub
 

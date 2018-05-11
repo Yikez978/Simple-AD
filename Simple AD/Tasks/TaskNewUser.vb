@@ -1,4 +1,5 @@
-﻿Imports System.Windows.Forms
+﻿Imports System
+Imports System.Windows.Forms
 Imports SimpleLib
 
 Public Class TaskNewUser
@@ -42,11 +43,10 @@ Public Class TaskNewUser
     End Sub
 
     Private Sub NewUserObject(ByVal UserObject As UserDomainObject, ByVal Container As String)
+
         Dim Result As SimpleResult = CreateNewUser(UserObject, Container)
 
-        If GetContainerExplorer.InvokeRequired Then
-            GetContainerExplorer.Invoke(New Delegate_NewUserObjectFinished(AddressOf NewUserObjectFinished), Result)
-        End If
+        GetContainerExplorer.Invoke(New Delegate_NewUserObjectFinished(AddressOf NewUserObjectFinished), Result)
 
     End Sub
 

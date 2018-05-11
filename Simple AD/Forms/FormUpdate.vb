@@ -1,4 +1,5 @@
-﻿Imports System.Drawing
+﻿Imports System
+Imports System.Drawing
 Imports AutoUpdaterDotNET
 
 Public Class FormUpdate

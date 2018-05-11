@@ -1,4 +1,7 @@
 ﻿Imports SimpleLib
+Imports System
+Imports System.Collections
+Imports System.Collections.Generic
 Imports System.Threading.Tasks
 Imports System.Windows.Forms
 
@@ -27,7 +30,6 @@ Public Class TaskBulkMove
     Private Async Sub MoveBulk()
 
         Dim MoveForm As FormMoveObject = New FormMoveObject
-        MoveForm.Location = GetDialogLocation(MoveForm)
         MoveForm.ShowDialog(FormMain)
         If MoveForm.DialogResult = DialogResult.Yes Then
 

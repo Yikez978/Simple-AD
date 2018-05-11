@@ -1,4 +1,7 @@
-﻿Public Class FormSearch
+﻿Imports System
+Imports BrightIdeasSoftware
+
+Public Class FormSearch
 
     Private _UIHandler As UIHandler
 

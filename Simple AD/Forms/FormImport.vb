@@ -1,10 +1,13 @@
-﻿Imports System.ComponentModel
+﻿Imports System
+Imports System.Collections
+Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Text
 Imports System.Windows.Forms
 Imports BrightIdeasSoftware
 Imports BrightIdeasSoftware.OLVExporter
 
+Imports SimpleAD.LocalData.Export
 Imports SimpleLib
 Imports SimpleLib.SystemHelper
 
@@ -432,7 +435,7 @@ Public Class FormImport
                 End Select
 
                 If Not String.IsNullOrEmpty(ExportedData) Then
-                    Threading.ThreadPool.QueueUserWorkItem(Sub() ExportHandler.ExportData(ExportedData, SaveDialog.FileName))
+                    Threading.ThreadPool.QueueUserWorkItem(Sub() ExportData(ExportedData, SaveDialog.FileName))
                 End If
             End If
 

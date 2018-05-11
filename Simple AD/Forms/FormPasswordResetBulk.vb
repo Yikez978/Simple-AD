@@ -1,9 +1,12 @@
-﻿Imports System.DirectoryServices.AccountManagement
+﻿Imports System
+Imports System.Collections
+Imports System.DirectoryServices
+Imports System.DirectoryServices.AccountManagement
 Imports System.Drawing
 Imports System.Text
 Imports System.Threading.Tasks
 Imports System.Windows.Forms
-Imports BrightIdeasSoftware
+
 Imports SimpleLib
 
 Public Class FormPasswordResetBulk
@@ -37,11 +40,13 @@ Public Class FormPasswordResetBulk
     End Sub
 
     Private Sub AcceptBn_Click(sender As Object, e As EventArgs) Handles AcceptBn.Click
+
         If SpecifyRadioBn.Checked = True Then
-            If Me.Password0Tb.Text = Me.Password1Tb.Text Then
+
+            If Password0Tb.Text = Password1Tb.Text Then
                 If Not String.IsNullOrEmpty(Me.Password0Tb.Text) AndAlso Not String.IsNullOrEmpty(Password1Tb.Text) Then
 
-                    _Password = Me.Password0Tb.Text
+                    _Password = Password0Tb.Text
 
                 Else
                     ErrorLb.Text = "Please enter passwords into the text boxes below."
@@ -66,7 +71,7 @@ Public Class FormPasswordResetBulk
         Dim Tasks(_SelectedUsers.Count) As Task
         _ProgressForm.Maximum = _SelectedUsers.Count
         _ProgressForm.BarStep = 1
-        _ProgressForm.StatusLb.Text = "Establishing User Principal Connection..."
+        _ProgressForm.StatusLb.Text = "Running Batch Password Reset Operation..."
         _ProgressForm.Show()
 
         _DomainPrincipal = GetPrincipalContext()
@@ -79,9 +84,9 @@ Public Class FormPasswordResetBulk
             Try
                 Select Case SpecifyRadioBn.Checked
                     Case True
-                        Tasks(i) = Task.Run(Sub() ResetUserPasswordBulk(User, _Password, ForceResetToggle.Checked))
+                        Tasks(i) = Task.Run(Sub() ResetUserPasswordBulk(User, _Password, ForceResetToggle.Checked, UnlockToggle.Checked))
                     Case False
-                        Tasks(i) = Task.Run(Sub() ResetUserPasswordBulk(User, GeneratePassword(), ForceResetToggle.Checked))
+                        Tasks(i) = Task.Run(Sub() ResetUserPasswordBulk(User, GeneratePassword(), ForceResetToggle.Checked, UnlockToggle.Checked))
                 End Select
 
             Catch Ex As Exception
@@ -91,27 +96,33 @@ Public Class FormPasswordResetBulk
 
     End Sub
 
-    Public Sub ResetUserPasswordBulk(ByVal UserObject As UserDomainObject, ByVal Password As String, ForceReset As Boolean)
+    Public Sub ResetUserPasswordBulk(ByVal UserObject As UserDomainObject, ByVal Password As String, ForceReset As Boolean, UnlockAccount As Boolean)
         Logger.Log("[Info] Password reset requested on object: " & UserObject.Name)
-        Try
-            Dim UserPr As UserPrincipal = UserPrincipal.FindByIdentity(_DomainPrincipal, IdentityType.DistinguishedName, UserObject.DistinguishedName)
 
-            _ProgressForm.Status = "Setting Password for User " & UserObject.Name
-            UserPr.SetPassword(Password)
-            If ForceReset = True Then
-                UserPr.ExpirePasswordNow()
+        Dim Result = New SimpleResult
+
+        Using userEntry As DirectoryEntry = GetDirEntryFromDomainObject(UserObject)
+
+            'Setting user password
+            Dim oPassword As Object() = New Object() {UserObject.Password}
+            Dim Ret As Object = userEntry.Invoke("SetPassword", oPassword)
+
+            If UnlockAccount Then
+                userEntry.Properties("LockOutTime").Value = 0
             End If
-            UserPr.Save()
-            Logger.Log("[Info] Succefully Reset Password for User " & UserObject.Name & " To: " & Password)
-            _ProgressForm.Status = "Succefully Set Password for User " & UserObject.Name & " To: " & Password
-        Catch Ex As Exception
-            Dim ErrorString As String = "[Error] Unable to Set Password for User (" & UserObject.Name & "): " & Ex.Message
-            Logger.Log(ErrorString)
-            If Not Ex.InnerException Is Nothing Then
-                Logger.Log("[Inner Exception] " & Ex.InnerException.Message)
+
+            userEntry.CommitChanges()
+
+            If UserObject.ForcePasswordReset Then
+                'Forcing user to change password on next logon
+                userEntry.Properties("pwdLastSet").Value = 0
+                userEntry.CommitChanges()
             End If
-            _ProgressForm.Status = "Failed Setting Password for User " & UserObject.Name & ": " & ErrorString
-        End Try
+
+            Result.IsSuccess = True
+
+        End Using
+
         PasswordResetFinished()
     End Sub
 

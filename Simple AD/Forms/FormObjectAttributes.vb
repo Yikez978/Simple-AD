@@ -1,4 +1,6 @@
-﻿Imports System.DirectoryServices
+﻿Imports System
+Imports System.Collections.Generic
+Imports System.DirectoryServices
 Imports System.DirectoryServices.ActiveDirectory
 Imports System.Drawing
 Imports System.Security.Principal
@@ -6,7 +8,7 @@ Imports System.Text
 Imports System.Threading
 Imports System.Threading.Tasks
 Imports System.Windows.Forms
-
+Imports BrightIdeasSoftware
 Imports SimpleLib
 
 Public Class FormObjectAttributes

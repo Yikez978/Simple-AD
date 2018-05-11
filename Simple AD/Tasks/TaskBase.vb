@@ -1,4 +1,6 @@
-﻿Imports SimpleLib
+﻿Imports System
+Imports System.Collections.Generic
+Imports SimpleLib
 Imports SimpleLib.Enums
 
 Public MustInherit Class TaskBase
